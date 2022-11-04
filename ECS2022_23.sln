@@ -1,6 +1,6 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECS2022_23", "ECS2022_23\ECS2022_23.csproj", "{ED933F0C-9D79-4DD1-A7AA-783409FD4842}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECS2022_23", "ECS2022_23.csproj", "{ED933F0C-9D79-4DD1-A7AA-783409FD4842}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
