@@ -6,7 +6,9 @@ namespace ECS2022_23.Core.entities.items;
 
 public class Weapon : Item
 {
-    public Animation Animation { get; }
+    public float DamagePoints;
+    public float Range;
+    private Animation Animation { get; }
 
     public Weapon(Texture2D texture, Vector2 startPos, Animation animation) : base(texture)
     {
