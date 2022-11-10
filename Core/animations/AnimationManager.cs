@@ -63,21 +63,23 @@ public class AnimationManager
     {
         if (CurrentAnimation == null) return;
         var frame = CurrentFrame + CurrentAnimation.StartFrame.X;
+        var width = CurrentAnimation.Width;
+        var height = CurrentAnimation.Height;
         
         if (CurrentAnimation.FlipX == true)
         {
-            spriteBatch.Draw(CurrentAnimation.Texture, position, new Rectangle( (int)frame * 16, (int)CurrentAnimation.StartFrame.Y*16, 16, 16),
+            spriteBatch.Draw(CurrentAnimation.Texture, position, new Rectangle( (int)frame * width, (int)CurrentAnimation.StartFrame.Y*height, width, height),
                 Color.White,
                 0.0f, Vector2.Zero, new Vector2(1, 1), SpriteEffects.FlipHorizontally, 0f);
         } else if (CurrentAnimation.FlipY == true)
         {
-            spriteBatch.Draw(CurrentAnimation.Texture, position, new Rectangle((int)frame * 16, (int)CurrentAnimation.StartFrame.Y*16, 16, 16),
+            spriteBatch.Draw(CurrentAnimation.Texture, position, new Rectangle((int)frame * width, (int)CurrentAnimation.StartFrame.Y*height, width, height),
                 Color.White,
                 0.0f, Vector2.Zero, new Vector2(1, 1), SpriteEffects.FlipVertically, 0f);
         }
         else
         {
-            spriteBatch.Draw(CurrentAnimation.Texture, position, new Rectangle((int)frame * 16, (int)CurrentAnimation.StartFrame.Y*16, 16, 16),
+            spriteBatch.Draw(CurrentAnimation.Texture, position, new Rectangle((int)frame * width, (int)CurrentAnimation.StartFrame.Y*height, width, height),
                 Color.White,
                 0.0f, Vector2.Zero, new Vector2(1, 1), SpriteEffects.None, 0f);
         }
