@@ -1,4 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using ECS2022_23.Core.animations;
+using ECS2022_23.Core.entities.characters;
+using ECS2022_23.Core.entities.items;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGameLevelGenerator.Core;
@@ -44,7 +48,18 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         
         _camera = new Camera();
-        _player = new Player(Content.Load<Texture2D>("sprites/astro"));
+        _player = new Player(Content.Load<Texture2D>("sprites/astro"), new Dictionary<string, Animation>()
+        {
+            { "WalkUp", new Animation(Content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 6, new Vector2(1,5), true) },
+            { "WalkRight", new Animation(Content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 6, new Vector2(1,4), true) },
+            { "WalkLeft", new Animation(Content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 6, new Vector2(1,4),true, true, false) },
+            { "WalkDown", new Animation(Content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 6, new Vector2(1,3), true) },
+            { "AttackRight", new Animation(Content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 2, new Vector2(7,6), false) },
+            { "Default", new Animation(Content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 7, new Vector2(1,2), true) }
+        });
+        
+        _player.SetWeapon(new Weapon(Content.Load<Texture2D>("sprites/spritesheet"), Vector2.Zero, 
+            new Animation(Content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 3, new Vector2(13, 6), false)));
         
         ContentLoader.Load(Content);
         _level = new Level(5);
