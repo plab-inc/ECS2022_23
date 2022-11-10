@@ -9,19 +9,25 @@ namespace ECS2022_23.Core.entities.characters;
 
 public class Player : Character
 {
+    public float Armor;
+    public bool IsAlive;
+    public float Level;
+    public float XpToNextLevel;
+    public float Money;
+    public List<Item> Items;
     private Weapon _weapon;
     public Player(Texture2D texture) : base(texture)
     {
         Velocity = 0.5f;
         HP = 10;
-        pixelWidth = 16;
+        SpriteWidth = 16;
     }
     
     public Player(Texture2D texture, Dictionary<string, Animation> animations) : base(texture, animations)
     {
         Velocity = 0.5f;
         HP = 10;
-        pixelWidth = 16;
+        SpriteWidth = 16;
     }
 
     public override void Move()
@@ -84,7 +90,7 @@ public class Player : Character
     {
         if (_weapon != null)
         {
-            _weapon.Position = new Vector2(Position.X+pixelWidth, Position.Y);
+            _weapon.Position = new Vector2(Position.X+SpriteWidth, Position.Y);
             _weapon.SetAnimation("Attack");
         }
       
@@ -94,5 +100,21 @@ public class Player : Character
     public void SetWeapon(Weapon weapon)
     {
         _weapon = weapon;
+    }
+
+    public void AddItem(Item item)
+    {
+        Items ??= new List<Item>();
+        Items.Add(item);
+    }
+
+    public void RemoveItem(Item item)
+    {
+        Items?.Remove(item);
+    }
+
+    public void UseItem(Item item)
+    {
+        item.Use();
     }
 }
