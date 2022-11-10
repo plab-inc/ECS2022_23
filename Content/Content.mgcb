@@ -79,6 +79,11 @@
 /processor:TiledProcessor
 /build:../Assets/rooms/room013.tmx;rooms/room013.tmx
 
+#begin ../Assets/rooms/start001.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/rooms/start001.tmx;rooms/start001.tmx
+
 #begin ../Assets/sprites/astro.png
 /importer:TextureImporter
 /processor:TextureProcessor
