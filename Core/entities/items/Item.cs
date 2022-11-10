@@ -9,4 +9,9 @@ public abstract class Item : Entity
     protected Item(Texture2D texture) : base(texture)
     {
     }
+
+    public virtual void Use()
+    {
+        
+    }
 }
