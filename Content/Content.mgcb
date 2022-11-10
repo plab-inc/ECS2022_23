@@ -91,6 +91,18 @@
 /processorParam:TextureFormat=Color
 /build:../Assets/sprites/astro.png;sprites/astro.png
 
+#begin ../Assets/sprites/spritesheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Assets/sprites/spritesheet.png;sprites/spritesheet.png
+
 #begin ../Assets/tilesets/images/tileset001_image_purple.png
 /importer:TextureImporter
 /processor:TextureProcessor
