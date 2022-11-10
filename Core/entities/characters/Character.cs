@@ -10,7 +10,7 @@ public abstract class Character : Entity
     public float HP;
     public float Strength;
     public float Velocity;
-    protected int pixelWidth;
+    protected int SpriteWidth;
 
     public virtual void Attack()
     {
