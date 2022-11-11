@@ -58,8 +58,8 @@ public class Room
             
             foreach (var door in doorsObjects)
             {
-                var doorX = (int) door.x + _renderPos.X * 16;
-                var doorY = (int) door.y + _renderPos.Y * 16;
+                var doorX = (int) (Math.Floor(door.x / _map.TileWidth)) + _renderPos.X;
+                var doorY = (int) (Math.Floor(door.y / _map.TileHeight)) + _renderPos.Y;
                 var doorDirection = Enum.Parse<Direction>(door.name);
                 
                 doors.Add(new Door(this,doorDirection,doorX,doorY));
@@ -76,6 +76,7 @@ public class Room
     {
         _map = ContentLoader.Tilemaps[mapName];
         this._renderPos = renderPos;
+        roomMapName = mapName;
         
         getTiledTilesets();
     }

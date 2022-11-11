@@ -19,6 +19,7 @@ public class LevelGenerator
     private Room startRoom;
 
     public List<Room> rooms = new List<Room>();
+    public List<Rectangle> collisionLayer = new List<Rectangle>();
     
     private Random random = new Random((int)DateTime.Now.Ticks);
 
@@ -32,9 +33,8 @@ public class LevelGenerator
     public void generateLevel()
     {
         //Build start room
-        //var startMapName = "start" + random.Next(1,possibleStarts).ToString("000");
-        var startMapName = "start001";
-        
+        var startMapName = "start" + random.Next(1,possibleStarts).ToString("000");
+
         Room start = new Room(startMapName, new Point(0, 0));
         rooms.Add(start);
         
@@ -49,27 +49,26 @@ public class LevelGenerator
         
         while (generatedRooms < maxRooms)
         {
-            Console.Write(" Generating...Try " + trys++);
             
             var currentDoor = openDoors.Peek();
             
             var tryRoomNumber = random.Next(0, possibleRooms-1);
             var tryRoomName = allRooms[tryRoomNumber];
-            
-            //var tryRoomName = "room009";
-            
+
             var tryMap = ContentLoader.Tilemaps[tryRoomName];
+
+            Console.Write(trys++ + ": Generating..." + tryRoomName);
             
             if (canRoomsConnect(currentDoor, tryMap))
             {
                 var newRenderPos = calculateRenderPos(currentDoor, currentDoor.room, tryMap);
                 var newRoom = new Room(tryRoomName, newRenderPos);
-
-                openDoors.Dequeue();
                 
                 if (!doesIntersect(newRoom))
                 {
                     rooms.Add(newRoom);
+                    addToCollisionLayer(newRoom);
+                    
                     foreach (var newRoomDoor in newRoom.Doors)
                     {
                         if (newRoomDoor.Direction != (~currentDoor.Direction + 1))
@@ -78,12 +77,30 @@ public class LevelGenerator
                         }
                     }
                     generatedRooms++;
+                    openDoors.Dequeue();
                     Console.Write(" Success \n");
+                }
+                else
+                {
+                    openDoors.Dequeue();
                 }
                 
             }
         }
         Console.Write("Done");
+    }
+
+    private void addToCollisionLayer(Room room)
+    {
+        foreach (var rect in room.CollisionLayer)
+        {
+            collisionLayer.Add(rect);
+        }
+    }
+
+    private void addToCollisionLayer(Rectangle rectangle)
+    {
+        collisionLayer.Add(rectangle);
     }
 
     private bool canRoomsConnect(Door exitDoor, TiledMap connectingMap)
@@ -126,7 +143,7 @@ public class LevelGenerator
     {
         var roomsWithExtension = Directory.GetFiles("Content/rooms","room*.xnb");
         var roomsWithoutExtension = new List<string>();
-
+        
         foreach (var room in roomsWithExtension)
         {
             roomsWithoutExtension.Add(Path.GetFileNameWithoutExtension(room));
@@ -137,9 +154,9 @@ public class LevelGenerator
     
     private Point calculateRenderPos(Door exitDoor, Room exitRoom, TiledMap connectingMap)
     {
-        int entryDoorX;
-        int entryDoorY;
-
+        int connectingDoorX;
+        int connectingDoorY;
+        
         var renderPosX = 0;
         var renderPosY = 0;
         
@@ -149,37 +166,37 @@ public class LevelGenerator
         {
             case "up":
                 
-                entryDoorX = (int) connectingMapDoors.First(door => door.name == "Down").x / 16;
+                connectingDoorX = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Down").x / 16);
                 
-                renderPosX =  (int) (exitDoor.x / 16 - entryDoorX);
-                renderPosY = exitRoom.Position.Y - connectingMap.Height;
+                renderPosX =  (int) (exitDoor.x - connectingDoorX);
+                renderPosY = (exitRoom.Position.Y - connectingMap.Height);
                 
                 break;
                             
             case "down":
 
-                entryDoorX = (int) connectingMapDoors.First(door => door.name == "Up").x / 16;
+                connectingDoorX = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Up").x / 16);
                 
-                renderPosX =  (int) (exitDoor.x / 16 - entryDoorX);
-                renderPosY = exitRoom.Position.Y + connectingMap.Height;
+                renderPosX =  (int) (exitDoor.x - connectingDoorX );
+                renderPosY = (exitRoom.Position.Y + connectingMap.Height);
                 
                 break;
             
             case "right":
 
-                entryDoorY = (int) connectingMapDoors.First(door => door.name == "Left").y / 16;
+                connectingDoorY = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Left").y / 16);
 
-                renderPosY = exitDoor.y / 16 - entryDoorY; 
-                renderPosX = exitRoom.Position.X + exitRoom._map.Width;
+                renderPosY = (exitDoor.y - connectingDoorY); 
+                renderPosX = (exitRoom.Position.X + exitRoom._map.Width);
 
                 break;
                             
             case "left":
                 
-                entryDoorY = (int) connectingMapDoors.First(door => door.name == "Right").y / 16;
+                connectingDoorY = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Right").y / 16);
                 
-                renderPosY = exitDoor.y / 16 - entryDoorY;
-                renderPosX = exitRoom.Position.X - connectingMap.Width;
+                renderPosY = (exitDoor.y - connectingDoorY);
+                renderPosX = (exitRoom.Position.X - connectingMap.Width);
                 
                 break;
         }

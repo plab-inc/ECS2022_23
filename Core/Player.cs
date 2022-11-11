@@ -20,7 +20,7 @@ public class Player : Entity
     {
         var velocity = new Vector2();
 
-        var speed = 3f;
+        var speed = 8f;
 
         if (Keyboard.GetState().IsKeyDown(Keys.W))
             velocity.Y = -speed;

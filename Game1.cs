@@ -47,7 +47,7 @@ public class Game1 : Game
         _player = new Player(Content.Load<Texture2D>("sprites/astro"));
         
         ContentLoader.Load(Content);
-        generator = new LevelGenerator(10, 3);
+        generator = new LevelGenerator(50, 3);
         generator.generateLevel();
 
     }
@@ -62,6 +62,14 @@ public class Game1 : Game
 
         // Check if mouse is in the bounds of a Tiled object
         debugRect = null;
+        
+        foreach (var obj in generator.collisionLayer)
+        {
+            if (obj.Contains(mousePos))
+            {
+                debugRect = obj;
+            }
+        }
         
         _player.Update(gameTime);
         _camera.Follow(_player);
