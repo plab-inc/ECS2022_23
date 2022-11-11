@@ -12,12 +12,12 @@ public class Game1 : Game
     
     private Player _player;
     private Camera _camera;
+
+    private LevelGenerator generator;
     
     private Rectangle? debugRect;
     const int scaleFactor = 1;
     private Matrix transformMatrix;
-
-    private Level _level;
     
     public static int ScreenHeight;
     public static int ScreenWidth;
@@ -47,7 +47,8 @@ public class Game1 : Game
         _player = new Player(Content.Load<Texture2D>("sprites/astro"));
         
         ContentLoader.Load(Content);
-        _level = new Level(5);
+        generator = new LevelGenerator(200, 3);
+        generator.generateLevel();
 
     }
 
@@ -62,15 +63,6 @@ public class Game1 : Game
         // Check if mouse is in the bounds of a Tiled object
         debugRect = null;
         
-        foreach (var obj in _level.collisionLayer)
-        {
-            
-            if (obj.Contains(mousePos))
-            {
-                debugRect = obj;
-            }
-        }
-        
         _player.Update(gameTime);
         _camera.Follow(_player);
         
@@ -81,10 +73,15 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
         
-        _spriteBatch.Begin(transformMatrix: transformMatrix);
-        
-        _level.Draw(_spriteBatch);
+        _spriteBatch.Begin(transformMatrix: _camera.Transform);
+
+        foreach (var room in generator.rooms)
+        {
+            room.Draw(_spriteBatch);
+        }
         _player.Draw(_spriteBatch);
+        
+        
         
         if (debugRect != null)
         {
@@ -93,6 +90,7 @@ public class Game1 : Game
 
             _spriteBatch.Draw(_texture, (Rectangle)debugRect, Color.White);
         }
+        
         
         _spriteBatch.End();
         

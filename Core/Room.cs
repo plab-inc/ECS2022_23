@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TiledCS;
@@ -11,7 +12,10 @@ namespace MonoGameLevelGenerator.Core;
 public class Room
 {
     public TiledMap _map;
+    public string roomMapName;
+    
     private Dictionary<int, TiledTileset> _tilesets = new();
+
 
     public Point Position
     {
@@ -45,25 +49,32 @@ public class Room
         
     }
     
-    public TiledObject[] Doors
+    public List<Door> Doors
     {
         get
         {
-            var Doors = _map.Layers.First(x => x.name == "Doors").objects;
+            var doorsObjects = _map.Layers.First(x => x.name == "Doors").objects;
+            var doors = new List<Door>();
             
-            foreach (var door in Doors)
+            foreach (var door in doorsObjects)
             {
-                door.x += _renderPos.X;
-                door.y += _renderPos.Y;
+                var doorX = (int) door.x + _renderPos.X * 16;
+                var doorY = (int) door.y + _renderPos.Y * 16;
+                var doorDirection = Enum.Parse<Direction>(door.name);
+                
+                doors.Add(new Door(this,doorDirection,doorX,doorY));
+
             }
             
-            return Doors;
+            return doors;
         }
     }
 
-    public Room(TiledMap map, Point renderPos)
+    public int doorCount => Doors.Count;
+
+    public Room(string mapName, Point renderPos)
     {
-        _map = map;
+        _map = ContentLoader.Tilemaps[mapName];
         this._renderPos = renderPos;
         
         getTiledTilesets();
