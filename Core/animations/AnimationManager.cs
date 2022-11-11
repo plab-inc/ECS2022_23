@@ -1,14 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Diagnostics;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.animations;
 
 public class AnimationManager
 {
-    
-    protected float Timer;
-    public Animation CurrentAnimation { get; set; }
-    protected int CurrentFrame;
+    private float _timer;
+    private Animation CurrentAnimation { get; set; }
+    private int _currentFrame;
     private bool _animationFinished = true;
 
     public void Play(Animation animation)
@@ -22,35 +22,35 @@ public class AnimationManager
             return;
         }
 
-        Timer = 0;
+        _timer = 0;
         CurrentAnimation = animation;
-        CurrentFrame = 0;
+        _currentFrame = 0;
         if (!CurrentAnimation.IsLooped) _animationFinished = false;
     }
 
-    public void Stop()
+    private void Stop()
     {
         _animationFinished = true;
         CurrentAnimation = null;
-        CurrentFrame = 0;
-        Timer = 0;
+        _currentFrame = 0;
+        _timer = 0;
     }
 
     public void Update(GameTime gameTime)
     {
         if (CurrentAnimation == null) return;
-        Timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+        _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
         
-        if(Timer > CurrentAnimation.FrameSpeed)
+        if(_timer > CurrentAnimation.FrameSpeed)
         {
-            Timer = 0f;
+            _timer = 0f;
 
-            CurrentFrame++;
+            _currentFrame++;
 
-            if (CurrentFrame >= CurrentAnimation.FrameCount)
+            if (_currentFrame >= CurrentAnimation.FrameCount)
                 if (CurrentAnimation.IsLooped)
                 {   
-                    CurrentFrame = 0;
+                    _currentFrame = 0;
                 }
                 else
                 {
@@ -62,26 +62,19 @@ public class AnimationManager
     public void Draw(SpriteBatch spriteBatch, Vector2 position)
     {
         if (CurrentAnimation == null) return;
-        var frame = CurrentFrame + CurrentAnimation.StartFrame.X;
-        var width = CurrentAnimation.Width;
-        var height = CurrentAnimation.Height;
-        
+        var sourceRec = new Rectangle((int)(_currentFrame + CurrentAnimation.StartFrame.X) * CurrentAnimation.Width, (int)CurrentAnimation.StartFrame.Y * CurrentAnimation.Height, CurrentAnimation.Width, CurrentAnimation.Height);
+        var scale = new Vector2(1, 1);
+
         if (CurrentAnimation.FlipX == true)
         {
-            spriteBatch.Draw(CurrentAnimation.Texture, position, new Rectangle( (int)frame * width, (int)CurrentAnimation.StartFrame.Y*height, width, height),
-                Color.White,
-                0.0f, Vector2.Zero, new Vector2(1, 1), SpriteEffects.FlipHorizontally, 0f);
+            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.FlipHorizontally, 0f);
         } else if (CurrentAnimation.FlipY == true)
         {
-            spriteBatch.Draw(CurrentAnimation.Texture, position, new Rectangle((int)frame * width, (int)CurrentAnimation.StartFrame.Y*height, width, height),
-                Color.White,
-                0.0f, Vector2.Zero, new Vector2(1, 1), SpriteEffects.FlipVertically, 0f);
+            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.FlipVertically, 0f);
         }
         else
         {
-            spriteBatch.Draw(CurrentAnimation.Texture, position, new Rectangle((int)frame * width, (int)CurrentAnimation.StartFrame.Y*height, width, height),
-                Color.White,
-                0.0f, Vector2.Zero, new Vector2(1, 1), SpriteEffects.None, 0f);
+            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
         }
     }
 }
