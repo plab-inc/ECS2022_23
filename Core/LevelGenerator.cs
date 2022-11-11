@@ -33,8 +33,7 @@ public class LevelGenerator
     {
         //Build start room
         //var startMapName = "start" + random.Next(1,possibleStarts).ToString("000");
-
-        var startMapName = "room009";
+        var startMapName = "start001";
         
         Room start = new Room(startMapName, new Point(0, 0));
         rooms.Add(start);
@@ -44,20 +43,20 @@ public class LevelGenerator
         
         //Que of open doors
         var openDoors = new Queue<Door>(start.Doors);
-
         
         var generatedRooms = 0;
         var trys = 0;
         
         while (generatedRooms < maxRooms)
         {
-            Console.Write("\n Generating...Try: " + trys++);
+            Console.Write(" Generating...Try " + trys++);
             
             var currentDoor = openDoors.Peek();
             
-            //var tryRoomNumber = random.Next(0, possibleRooms-1);
-            //var tryRoomName = allRooms[tryRoomNumber];
-            var tryRoomName = "room009";
+            var tryRoomNumber = random.Next(0, possibleRooms-1);
+            var tryRoomName = allRooms[tryRoomNumber];
+            
+            //var tryRoomName = "room009";
             
             var tryMap = ContentLoader.Tilemaps[tryRoomName];
             
@@ -79,11 +78,12 @@ public class LevelGenerator
                         }
                     }
                     generatedRooms++;
+                    Console.Write(" Success \n");
                 }
                 
             }
         }
-        Console.Write("woo");
+        Console.Write("Done");
     }
 
     private bool canRoomsConnect(Door exitDoor, TiledMap connectingMap)
@@ -101,7 +101,7 @@ public class LevelGenerator
             }
         }
 
-        Console.Write("\n Rooms can't connect");
+        Console.Write(" Failed: Rooms can't connect \n");
         return false;
 
     }
@@ -112,7 +112,7 @@ public class LevelGenerator
         {
             if (room.Rectangle.Intersects(newRoom.Rectangle))
             {
-                Console.Write("Rooms intersect");
+                Console.Write("Failed: Rooms intersect \n");
                 return true;
             }
         }
@@ -168,8 +168,8 @@ public class LevelGenerator
             case "right":
 
                 entryDoorY = (int) connectingMapDoors.First(door => door.name == "Left").y / 16;
-                
-                renderPosY = entryDoorY - (int) exitDoor.y / 16;
+
+                renderPosY = exitDoor.y / 16 - entryDoorY; 
                 renderPosX = exitRoom.Position.X + exitRoom._map.Width;
 
                 break;
@@ -178,7 +178,7 @@ public class LevelGenerator
                 
                 entryDoorY = (int) connectingMapDoors.First(door => door.name == "Right").y / 16;
                 
-                renderPosY = entryDoorY - (int) exitDoor.y / 16;
+                renderPosY = exitDoor.y / 16 - entryDoorY;
                 renderPosX = exitRoom.Position.X - connectingMap.Width;
                 
                 break;
