@@ -67,15 +67,15 @@ public class LevelGenerator
 
             Console.Write(trys++ + ": Generating..." + tryRoomName);
             
-            if (canRoomsConnect(currentDoor, tryMap))
+            if (RoomsCanConnect(currentDoor, tryMap))
             {
-                var newRenderPos = calculateRenderPos(currentDoor, currentDoor.room, tryMap);
+                var newRenderPos = CalculateRenderPos(currentDoor, tryMap);
                 var newRoom = new Room(tryRoomName, newRenderPos);
                 
-                if (!doesIntersect(newRoom))
+                if (!DoesIntersect(newRoom))
                 {
                     rooms.Add(newRoom);
-                    addToCollisionLayer(newRoom);
+                    AddToCollisionLayer(newRoom);
                     
                     foreach (var newRoomDoor in newRoom.Doors)
                     {
@@ -98,7 +98,7 @@ public class LevelGenerator
         Console.Write("Done");
     }
 
-    private void addToCollisionLayer(Room room)
+    private void AddToCollisionLayer(Room room)
     {
         foreach (var rect in room.CollisionLayer)
         {
@@ -106,12 +106,12 @@ public class LevelGenerator
         }
     }
 
-    private void addToCollisionLayer(Rectangle rectangle)
+    private void AddToCollisionLayer(Rectangle rectangle)
     {
         collisionLayer.Add(rectangle);
     }
 
-    private bool canRoomsConnect(Door exitDoor, TiledMap connectingMap)
+    private bool RoomsCanConnect(Door exitDoor, TiledMap connectingMap)
     {
         var exitDoorOpposite = ~exitDoor.Direction+1;
         var connectingDoors = connectingMap.Layers.First(layer => layer.name == "Doors").objects;
@@ -131,19 +131,13 @@ public class LevelGenerator
 
     }
     
-    private bool doesIntersect(Room newRoom)
+    private bool DoesIntersect(Room newRoom)
     {
-        foreach (var room in rooms)
-        {
-            if (room.Rectangle.Intersects(newRoom.Rectangle))
-            {
-                Console.Write("Failed: Rooms intersect \n");
-                return true;
-            }
-        }
-
-        return false;
+        if (!rooms.Any(room => room.Rectangle.Intersects(newRoom.Rectangle))) return false;
         
+        Console.Write("Failed: Rooms intersect \n");
+        return true;
+
     }
     
     
@@ -160,53 +154,54 @@ public class LevelGenerator
         return roomsWithoutExtension;
     }
     
-    private Point calculateRenderPos(Door exitDoor, Room exitRoom, TiledMap connectingMap)
+    private static Point CalculateRenderPos(Door exitDoor, TiledMap connectingMap)
     {
         int connectingDoorX;
         int connectingDoorY;
-        
-        var renderPosX = 0;
-        var renderPosY = 0;
+        int renderPosX;
+        int renderPosY;
         
         var connectingMapDoors = connectingMap.Layers.First(layer => layer.name == "Doors").objects;
         
-        switch (exitDoor.Direction.ToString().ToLower()) //TODO cleanup Enum
+        switch (exitDoor.Direction)
         {
-            case "up":
+            case Direction.Up:
                 
                 connectingDoorX = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Down").x / 16);
                 
-                renderPosX =  (int) (exitDoor.x - connectingDoorX);
-                renderPosY = (exitRoom.Position.Y - connectingMap.Height);
+                renderPosX =  exitDoor.x - connectingDoorX;
+                renderPosY = exitDoor.room.Position.Y - connectingMap.Height;
                 
                 break;
                             
-            case "down":
+            case Direction.Down:
 
                 connectingDoorX = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Up").x / 16);
                 
-                renderPosX =  (int) (exitDoor.x - connectingDoorX );
-                renderPosY = (exitRoom.Position.Y + exitRoom._map.Height);
+                renderPosX = exitDoor.x - connectingDoorX;
+                renderPosY = exitDoor.room.Position.Y + exitDoor.room._map.Height;
                 
                 break;
             
-            case "right":
+            case Direction.Right:
 
                 connectingDoorY = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Left").y / 16);
 
-                renderPosY = (exitDoor.y - connectingDoorY); 
-                renderPosX = (exitRoom.Position.X + exitRoom._map.Width);
+                renderPosY = exitDoor.y - connectingDoorY; 
+                renderPosX = exitDoor.room.Position.X + exitDoor.room._map.Width;
 
                 break;
                             
-            case "left":
+            case Direction.Left:
                 
                 connectingDoorY = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Right").y / 16);
                 
-                renderPosY = (exitDoor.y - connectingDoorY);
-                renderPosX = (exitRoom.Position.X - connectingMap.Width);
+                renderPosY = exitDoor.y - connectingDoorY;
+                renderPosX = exitDoor.room.Position.X - connectingMap.Width;
                 
                 break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
 
         return new Point(renderPosX, renderPosY);
