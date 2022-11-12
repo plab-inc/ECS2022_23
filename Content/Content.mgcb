@@ -14,6 +14,11 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin ../Assets/rooms/room000.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/rooms/room000.tmx;rooms/room000.tmx
+
 #begin ../Assets/rooms/room001.tmx
 /importer:TiledImporter
 /processor:TiledProcessor
@@ -83,6 +88,11 @@
 /importer:TiledImporter
 /processor:TiledProcessor
 /build:../Assets/rooms/start001.tmx;rooms/start001.tmx
+
+#begin ../Assets/rooms/start002.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/rooms/start002.tmx;rooms/start002.tmx
 
 #begin ../Assets/sprites/astro.png
 /importer:TextureImporter
