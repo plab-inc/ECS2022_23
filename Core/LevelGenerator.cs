@@ -49,8 +49,16 @@ public class LevelGenerator
         
         while (generatedRooms < maxRooms)
         {
+
+            Door currentDoor;
             
-            var currentDoor = openDoors.Peek();
+            if(openDoors.Count> 0){
+                currentDoor = openDoors.Peek();
+            }
+            else
+            {
+                break;
+            }
             
             var tryRoomNumber = random.Next(0, possibleRooms-1);
             var tryRoomName = allRooms[tryRoomNumber];
