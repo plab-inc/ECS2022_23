@@ -38,8 +38,8 @@ public class Room
 
             foreach (var obj in groundLayer.objects)
             {
-                var x = (int) obj.x + _renderPos.X * 16;
-                var y = (int) obj.y + _renderPos.Y * 16;
+                var x = (int) obj.x + _renderPos.X * _map.TileWidth;
+                var y = (int) obj.y + _renderPos.Y * _map.TileHeight;
                 
                 collisionLayer.Add(new Rectangle(x,y,(int) obj.width,(int) obj.height));
             }

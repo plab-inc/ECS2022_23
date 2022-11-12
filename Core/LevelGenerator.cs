@@ -34,7 +34,7 @@ public class LevelGenerator
     {
         //Build start room
         var startMapName = "start" + random.Next(1,possibleStarts).ToString("000");
-
+        
         Room start = new Room(startMapName, new Point(0, 0));
         rooms.Add(start);
         
@@ -186,7 +186,7 @@ public class LevelGenerator
                 connectingDoorX = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Up").x / 16);
                 
                 renderPosX =  (int) (exitDoor.x - connectingDoorX );
-                renderPosY = (exitRoom.Position.Y + connectingMap.Height);
+                renderPosY = (exitRoom.Position.Y + exitRoom._map.Height);
                 
                 break;
             
