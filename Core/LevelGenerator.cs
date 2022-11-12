@@ -12,16 +12,13 @@ public class LevelGenerator
 {
     private int maxRooms;
     private int minRooms;
-
-    private int possibleRooms = Directory.GetFiles("Content/rooms", "room*.xnb").Length;
-    private int possibleStarts = Directory.GetFiles("Content/rooms","start*.xnb").Length;
-
-    private Room startRoom;
-
-    public List<Room> rooms = new List<Room>();
-    public List<Rectangle> collisionLayer = new List<Rectangle>();
     
-    private Random random = new Random((int)DateTime.Now.Ticks);
+    private int possibleStarts = Directory.GetFiles("Content/rooms","start*.xnb").Length;
+    
+    public List<Room> Rooms = new();
+    public List<Rectangle> CollisionLayer = new();
+    
+    private readonly Random _random = new((int)DateTime.Now.Ticks);
 
 
     public LevelGenerator(int maxRooms, int minRooms)
@@ -33,13 +30,13 @@ public class LevelGenerator
     public void generateLevel()
     {
         //Build start room
-        var startMapName = "start" + random.Next(1,possibleStarts).ToString("000");
+        var startMapName = "start" + _random.Next(1,possibleStarts).ToString("000");
         
         Room start = new Room(startMapName, new Point(0, 0));
-        rooms.Add(start);
+        Rooms.Add(start);
         
         //Get all roomnames in rooms folder
-        var allRooms = getAllRoomNames().ToArray();
+        var roomNames = getAllRoomNames();
         
         //Que of open doors
         var openDoors = new Queue<Door>(start.Doors);
@@ -52,17 +49,24 @@ public class LevelGenerator
 
             Door currentDoor;
             
-            if(openDoors.Count> 0){
+            if(openDoors.Count > 0){
                 currentDoor = openDoors.Peek();
-            }
-            else
+            }else
             {
                 break;
             }
-            
-            var tryRoomNumber = random.Next(0, possibleRooms-1);
-            var tryRoomName = allRooms[tryRoomNumber];
 
+            if (roomNames.Count == 0)
+            {
+                roomNames = getAllRoomNames();
+            }
+
+            
+            var tryRoomNumber = _random.Next(0, roomNames.Count);
+            var tryRoomName = roomNames[tryRoomNumber];
+            roomNames.RemoveAt(tryRoomNumber);
+            
+            
             var tryMap = ContentLoader.Tilemaps[tryRoomName];
 
             Console.Write(trys++ + ": Generating..." + tryRoomName);
@@ -72,9 +76,9 @@ public class LevelGenerator
                 var newRenderPos = CalculateRenderPos(currentDoor, tryMap);
                 var newRoom = new Room(tryRoomName, newRenderPos);
                 
-                if (!DoesIntersect(newRoom))
+                if (!RoomsIntersect(newRoom))
                 {
-                    rooms.Add(newRoom);
+                    Rooms.Add(newRoom);
                     AddToCollisionLayer(newRoom);
                     
                     foreach (var newRoomDoor in newRoom.Doors)
@@ -102,13 +106,13 @@ public class LevelGenerator
     {
         foreach (var rect in room.CollisionLayer)
         {
-            collisionLayer.Add(rect);
+            CollisionLayer.Add(rect);
         }
     }
 
     private void AddToCollisionLayer(Rectangle rectangle)
     {
-        collisionLayer.Add(rectangle);
+        CollisionLayer.Add(rectangle);
     }
 
     private bool RoomsCanConnect(Door exitDoor, TiledMap connectingMap)
@@ -130,28 +134,23 @@ public class LevelGenerator
         return false;
 
     }
-    
-    private bool DoesIntersect(Room newRoom)
+    private bool RoomsIntersect(Room newRoom)
     {
-        if (!rooms.Any(room => room.Rectangle.Intersects(newRoom.Rectangle))) return false;
+        if (!Rooms.Any(room => room.Rectangle.Intersects(newRoom.Rectangle))) return false;
         
         Console.Write("Failed: Rooms intersect \n");
         return true;
 
     }
     
-    
     private List<string> getAllRoomNames()
     {
-        var roomsWithExtension = Directory.GetFiles("Content/rooms","room*.xnb");
-        var roomsWithoutExtension = new List<string>();
+        //TODO Maybe move this into Contentmanager
         
-        foreach (var room in roomsWithExtension)
-        {
-            roomsWithoutExtension.Add(Path.GetFileNameWithoutExtension(room));
-        }
-
-        return roomsWithoutExtension;
+        var roomNames = Directory.GetFiles("Content/rooms", "room*.xnb").
+            Select(Path.GetFileNameWithoutExtension).ToList();
+        
+        return roomNames;
     }
     
     private static Point CalculateRenderPos(Door exitDoor, TiledMap connectingMap)

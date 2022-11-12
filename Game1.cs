@@ -63,7 +63,7 @@ public class Game1 : Game
         // Check if mouse is in the bounds of a Tiled object
         debugRect = null;
         
-        foreach (var obj in generator.collisionLayer)
+        foreach (var obj in generator.CollisionLayer)
         {
             if (obj.Contains(mousePos))
             {
@@ -83,7 +83,7 @@ public class Game1 : Game
         
         _spriteBatch.Begin(transformMatrix: _camera.Transform);
 
-        foreach (var room in generator.rooms)
+        foreach (var room in generator.Rooms)
         {
             room.Draw(_spriteBatch);
         }
