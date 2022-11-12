@@ -30,7 +30,7 @@ public class LevelGenerator
     public void generateLevel()
     {
         //Build start room
-        var startMapName = "start" + _random.Next(1,possibleStarts).ToString("000");
+        var startMapName = "start" + _random.Next(possibleStarts).ToString("000");
         
         Room start = new Room(startMapName, new Point(0, 0));
         Rooms.Add(start);
