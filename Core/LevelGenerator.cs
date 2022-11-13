@@ -12,16 +12,13 @@ public class LevelGenerator
 {
     private int maxRooms;
     private int minRooms;
-
-    private int possibleRooms = Directory.GetFiles("Content/rooms", "room*.xnb").Length;
-    private int possibleStarts = Directory.GetFiles("Content/rooms","start*.xnb").Length;
-
-    private Room startRoom;
-
-    public List<Room> rooms = new List<Room>();
-    public List<Rectangle> collisionLayer = new List<Rectangle>();
     
-    private Random random = new Random((int)DateTime.Now.Ticks);
+    private int possibleStarts = Directory.GetFiles("Content/rooms","start*.xnb").Length;
+    
+    public List<Room> Rooms = new();
+    public List<Rectangle> CollisionLayer = new();
+    
+    private readonly Random _random = new((int)DateTime.Now.Ticks);
 
 
     public LevelGenerator(int maxRooms, int minRooms)
@@ -33,13 +30,13 @@ public class LevelGenerator
     public void generateLevel()
     {
         //Build start room
-        var startMapName = "start" + random.Next(1,possibleStarts).ToString("000");
+        var startMapName = "start" + _random.Next(possibleStarts).ToString("000");
         
         Room start = new Room(startMapName, new Point(0, 0));
-        rooms.Add(start);
+        Rooms.Add(start);
         
         //Get all roomnames in rooms folder
-        var allRooms = getAllRoomNames().ToArray();
+        var roomNames = getAllRoomNames();
         
         //Que of open doors
         var openDoors = new Queue<Door>(start.Doors);
@@ -52,30 +49,37 @@ public class LevelGenerator
 
             Door currentDoor;
             
-            if(openDoors.Count> 0){
+            if(openDoors.Count > 0){
                 currentDoor = openDoors.Peek();
-            }
-            else
+            }else
             {
                 break;
             }
-            
-            var tryRoomNumber = random.Next(0, possibleRooms-1);
-            var tryRoomName = allRooms[tryRoomNumber];
 
+            if (roomNames.Count == 0)
+            {
+                roomNames = getAllRoomNames();
+            }
+
+            
+            var tryRoomNumber = _random.Next(0, roomNames.Count);
+            var tryRoomName = roomNames[tryRoomNumber];
+            roomNames.RemoveAt(tryRoomNumber);
+            
+            
             var tryMap = ContentLoader.Tilemaps[tryRoomName];
 
             Console.Write(trys++ + ": Generating..." + tryRoomName);
             
-            if (canRoomsConnect(currentDoor, tryMap))
+            if (RoomsCanConnect(currentDoor, tryMap))
             {
-                var newRenderPos = calculateRenderPos(currentDoor, currentDoor.room, tryMap);
+                var newRenderPos = CalculateRenderPos(currentDoor, tryMap);
                 var newRoom = new Room(tryRoomName, newRenderPos);
                 
-                if (!doesIntersect(newRoom))
+                if (!RoomsIntersect(newRoom))
                 {
-                    rooms.Add(newRoom);
-                    addToCollisionLayer(newRoom);
+                    Rooms.Add(newRoom);
+                    AddToCollisionLayer(newRoom);
                     
                     foreach (var newRoomDoor in newRoom.Doors)
                     {
@@ -98,20 +102,20 @@ public class LevelGenerator
         Console.Write("Done");
     }
 
-    private void addToCollisionLayer(Room room)
+    private void AddToCollisionLayer(Room room)
     {
         foreach (var rect in room.CollisionLayer)
         {
-            collisionLayer.Add(rect);
+            CollisionLayer.Add(rect);
         }
     }
 
-    private void addToCollisionLayer(Rectangle rectangle)
+    private void AddToCollisionLayer(Rectangle rectangle)
     {
-        collisionLayer.Add(rectangle);
+        CollisionLayer.Add(rectangle);
     }
 
-    private bool canRoomsConnect(Door exitDoor, TiledMap connectingMap)
+    private bool RoomsCanConnect(Door exitDoor, TiledMap connectingMap)
     {
         var exitDoorOpposite = ~exitDoor.Direction+1;
         var connectingDoors = connectingMap.Layers.First(layer => layer.name == "Doors").objects;
@@ -130,83 +134,73 @@ public class LevelGenerator
         return false;
 
     }
-    
-    private bool doesIntersect(Room newRoom)
+    private bool RoomsIntersect(Room newRoom)
     {
-        foreach (var room in rooms)
-        {
-            if (room.Rectangle.Intersects(newRoom.Rectangle))
-            {
-                Console.Write("Failed: Rooms intersect \n");
-                return true;
-            }
-        }
-
-        return false;
+        if (!Rooms.Any(room => room.Rectangle.Intersects(newRoom.Rectangle))) return false;
         
+        Console.Write("Failed: Rooms intersect \n");
+        return true;
+
     }
-    
     
     private List<string> getAllRoomNames()
     {
-        var roomsWithExtension = Directory.GetFiles("Content/rooms","room*.xnb");
-        var roomsWithoutExtension = new List<string>();
+        //TODO Maybe move this into Contentmanager
         
-        foreach (var room in roomsWithExtension)
-        {
-            roomsWithoutExtension.Add(Path.GetFileNameWithoutExtension(room));
-        }
-
-        return roomsWithoutExtension;
+        var roomNames = Directory.GetFiles("Content/rooms", "room*.xnb").
+            Select(Path.GetFileNameWithoutExtension).ToList();
+        
+        return roomNames;
     }
     
-    private Point calculateRenderPos(Door exitDoor, Room exitRoom, TiledMap connectingMap)
+    private static Point CalculateRenderPos(Door exitDoor, TiledMap connectingMap)
     {
         int connectingDoorX;
         int connectingDoorY;
-        
-        var renderPosX = 0;
-        var renderPosY = 0;
+        int renderPosX;
+        int renderPosY;
         
         var connectingMapDoors = connectingMap.Layers.First(layer => layer.name == "Doors").objects;
         
-        switch (exitDoor.Direction.ToString().ToLower()) //TODO cleanup Enum
+        switch (exitDoor.Direction)
         {
-            case "up":
+            case Direction.Up:
                 
                 connectingDoorX = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Down").x / 16);
                 
-                renderPosX =  (int) (exitDoor.x - connectingDoorX);
-                renderPosY = (exitRoom.Position.Y - connectingMap.Height);
+                renderPosX =  exitDoor.x - connectingDoorX;
+                renderPosY = exitDoor.room.Position.Y - connectingMap.Height;
                 
                 break;
                             
-            case "down":
+            case Direction.Down:
 
                 connectingDoorX = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Up").x / 16);
                 
-                renderPosX =  (int) (exitDoor.x - connectingDoorX );
-                renderPosY = (exitRoom.Position.Y + exitRoom._map.Height);
+                renderPosX = exitDoor.x - connectingDoorX;
+                renderPosY = exitDoor.room.Position.Y + exitDoor.room._map.Height;
                 
                 break;
             
-            case "right":
+            case Direction.Right:
 
                 connectingDoorY = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Left").y / 16);
 
-                renderPosY = (exitDoor.y - connectingDoorY); 
-                renderPosX = (exitRoom.Position.X + exitRoom._map.Width);
+                renderPosY = exitDoor.y - connectingDoorY; 
+                renderPosX = exitDoor.room.Position.X + exitDoor.room._map.Width;
 
                 break;
                             
-            case "left":
+            case Direction.Left:
                 
                 connectingDoorY = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Right").y / 16);
                 
-                renderPosY = (exitDoor.y - connectingDoorY);
-                renderPosX = (exitRoom.Position.X - connectingMap.Width);
+                renderPosY = exitDoor.y - connectingDoorY;
+                renderPosX = exitDoor.room.Position.X - connectingMap.Width;
                 
                 break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
 
         return new Point(renderPosX, renderPosY);
