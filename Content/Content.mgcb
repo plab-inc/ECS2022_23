@@ -10,6 +10,121 @@
 
 #-------------------------------- References --------------------------------#
 
+/reference:../lib/TiledPipelineExtension.dll
 
 #---------------------------------- Content ---------------------------------#
+
+#begin ../Assets/rooms/room000.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/rooms/room000.tmx;rooms/room000.tmx
+
+#begin ../Assets/rooms/room001.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/rooms/room001.tmx;rooms/room001.tmx
+
+#begin ../Assets/rooms/room002.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/rooms/room002.tmx;rooms/room002.tmx
+
+#begin ../Assets/rooms/room003.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/rooms/room003.tmx;rooms/room003.tmx
+
+#begin ../Assets/rooms/room004.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/rooms/room004.tmx;rooms/room004.tmx
+
+#begin ../Assets/rooms/room005.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/rooms/room005.tmx;rooms/room005.tmx
+
+#begin ../Assets/rooms/room006.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/rooms/room006.tmx;rooms/room006.tmx
+
+#begin ../Assets/rooms/room007.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/rooms/room007.tmx;rooms/room007.tmx
+
+#begin ../Assets/rooms/room008.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/rooms/room008.tmx;rooms/room008.tmx
+
+#begin ../Assets/rooms/room009.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/rooms/room009.tmx;rooms/room009.tmx
+
+#begin ../Assets/rooms/room010.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/rooms/room010.tmx;rooms/room010.tmx
+
+#begin ../Assets/rooms/room011.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/rooms/room011.tmx;rooms/room011.tmx
+
+#begin ../Assets/rooms/room012.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/rooms/room012.tmx;rooms/room012.tmx
+
+#begin ../Assets/rooms/room013.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/rooms/room013.tmx;rooms/room013.tmx
+
+#begin ../Assets/rooms/start000.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/rooms/start000.tmx;rooms/start000.tmx
+
+#begin ../Assets/rooms/start001.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/rooms/start001.tmx;rooms/start001.tmx
+
+#begin ../Assets/rooms/start002.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/rooms/start002.tmx;rooms/start002.tmx
+
+#begin ../Assets/sprites/astro.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Assets/sprites/astro.png;sprites/astro.png
+
+#begin ../Assets/tilesets/images/tileset001_image_purple.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Assets/tilesets/images/tileset001_image_purple.png;tilesets/images/tileset001_image_purple.png
+
+#begin ../Assets/tilesets/tilesets/tileset001_tileset_purple.tsx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/tilesets/tilesets/tileset001_tileset_purple.tsx;tilesets/tilesets/tileset001_tileset_purple.tsx
 
