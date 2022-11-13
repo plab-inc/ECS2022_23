@@ -55,6 +55,7 @@ public static class ContentLoader
     private static void LoadRooms()
     {
         var rooms = Directory.GetFiles("Content/rooms","room*.xnb");
+        var starts = Directory.GetFiles("Content/rooms","start*.xnb");
 
         foreach (var room in rooms)
         {
@@ -63,5 +64,12 @@ public static class ContentLoader
             Tilemaps.Add(fileName, _content.Load<TiledMap>("rooms/" + Path.GetFileNameWithoutExtension(fileName)));
             
         }
+
+        foreach (var start in starts)
+        {
+            var fileName = Path.GetFileNameWithoutExtension(start);
+            Tilemaps.Add(fileName, _content.Load<TiledMap>("rooms/" + Path.GetFileNameWithoutExtension(fileName)));
+        }
+        
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TiledCS;
@@ -11,7 +12,10 @@ namespace MonoGameLevelGenerator.Core;
 public class Room
 {
     public TiledMap _map;
+    public string roomMapName;
+    
     private Dictionary<int, TiledTileset> _tilesets = new();
+
 
     public Point Position
     {
@@ -34,8 +38,8 @@ public class Room
 
             foreach (var obj in groundLayer.objects)
             {
-                var x = (int) obj.x + _renderPos.X * 16;
-                var y = (int) obj.y + _renderPos.Y * 16;
+                var x = (int) obj.x + _renderPos.X * _map.TileWidth;
+                var y = (int) obj.y + _renderPos.Y * _map.TileHeight;
                 
                 collisionLayer.Add(new Rectangle(x,y,(int) obj.width,(int) obj.height));
             }
@@ -45,26 +49,34 @@ public class Room
         
     }
     
-    public TiledObject[] Doors
+    public List<Door> Doors
     {
         get
         {
-            var Doors = _map.Layers.First(x => x.name == "Doors").objects;
+            var doorsObjects = _map.Layers.First(x => x.name == "Doors").objects;
+            var doors = new List<Door>();
             
-            foreach (var door in Doors)
+            foreach (var door in doorsObjects)
             {
-                door.x += _renderPos.X;
-                door.y += _renderPos.Y;
+                var doorX = (int) (Math.Floor(door.x / _map.TileWidth)) + _renderPos.X;
+                var doorY = (int) (Math.Floor(door.y / _map.TileHeight)) + _renderPos.Y;
+                var doorDirection = Enum.Parse<Direction>(door.name);
+                
+                doors.Add(new Door(this,doorDirection,doorX,doorY));
+
             }
             
-            return Doors;
+            return doors;
         }
     }
 
-    public Room(TiledMap map, Point renderPos)
+    public int doorCount => Doors.Count;
+
+    public Room(string mapName, Point renderPos)
     {
-        _map = map;
+        _map = ContentLoader.Tilemaps[mapName];
         this._renderPos = renderPos;
+        roomMapName = mapName;
         
         getTiledTilesets();
     }
