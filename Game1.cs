@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using ECS2022_23.Core.animations;
 using ECS2022_23.Core.entities.characters;
+using ECS2022_23.Core.entities.characters.enemy;
 using ECS2022_23.Core.entities.items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,6 +17,7 @@ public class Game1 : Game
     
     private Player _player;
     private Camera _camera;
+    private Enemy _enemy;
 
     private LevelGenerator generator;
     
@@ -60,6 +62,9 @@ public class Game1 : Game
         
         _player.SetWeapon(new Weapon(Content.Load<Texture2D>("sprites/spritesheet"), Vector2.Zero, 
             new Animation(Content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 3, new Vector2(13, 6), false)));
+
+        _enemy = new Enemy(Content.Load<Texture2D>("sprites/astro"), new ChaseMotor(_player));
+        _enemy.Position = (new Vector2(_player.Position.X + 20, _player.Position.Y + 20));
         
         ContentLoader.Load(Content);
         generator = new LevelGenerator(50, 3);
@@ -88,7 +93,7 @@ public class Game1 : Game
         
         _player.Update(gameTime);
         _camera.Follow(_player);
-        
+        _enemy.Update(gameTime);
         base.Update(gameTime);
     }
 
@@ -103,7 +108,7 @@ public class Game1 : Game
             room.Draw(_spriteBatch);
         }
         _player.Draw(_spriteBatch);
-        
+        _enemy.Draw(_spriteBatch);
         
         
         if (debugRect != null)
