@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Numerics;
+using Comora;
 using ECS2022_23.Core.animations;
 using ECS2022_23.Core.entities.characters;
-using ECS2022_23.Core.entities.characters.enemy;
 using ECS2022_23.Core.entities.items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGameLevelGenerator.Core;
+using Transform;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace ECS2022_23;
 
@@ -17,16 +21,14 @@ public class Game1 : Game
     
     private Player _player;
     private Camera _camera;
-    private Enemy _enemy;
-
+    
     private LevelGenerator generator;
     
     private Rectangle? debugRect;
-    const int scaleFactor = 1;
-    private Matrix transformMatrix;
+
+    public static int ScreenWidth = 1280;
+    public static int ScreenHeight = 720;
     
-    public static int ScreenHeight;
-    public static int ScreenWidth;
     
     public Game1()
     {
@@ -37,10 +39,13 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        ScreenHeight = _graphics.PreferredBackBufferHeight;
-        ScreenWidth = _graphics.PreferredBackBufferWidth;
+        _graphics.PreferredBackBufferWidth = ScreenWidth;
+        _graphics.PreferredBackBufferHeight = ScreenHeight;
+        _graphics.ApplyChanges();
         
-        transformMatrix = Matrix.CreateScale(scaleFactor, scaleFactor, 1f);
+        _camera = new Camera(_graphics.GraphicsDevice);
+        _camera.LoadContent();
+        _camera.Debug.IsVisible = true;
         
         base.Initialize();
     }
@@ -48,8 +53,6 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        
-        _camera = new Camera();
         _player = new Player(Content.Load<Texture2D>("sprites/astro"), new Dictionary<string, Animation>()
         {
             { "WalkUp", new Animation(Content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 6, new Vector2(1,5), true) },
@@ -62,9 +65,6 @@ public class Game1 : Game
         
         _player.SetWeapon(new Weapon(Content.Load<Texture2D>("sprites/spritesheet"), Vector2.Zero, 
             new Animation(Content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 3, new Vector2(13, 6), false)));
-
-        _enemy = new Enemy(Content.Load<Texture2D>("sprites/astro"), new ChaseMotor(_player));
-        _enemy.Position = (new Vector2(_player.Position.X + 20, _player.Position.Y + 20));
         
         ContentLoader.Load(Content);
         generator = new LevelGenerator(50, 3);
@@ -78,22 +78,21 @@ public class Game1 : Game
             Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
         
-        var mousePos = Mouse.GetState().Position.ToVector2();
-
-        // Check if mouse is in the bounds of a Tiled object
         debugRect = null;
+
+        _player.Update(gameTime);
+        
+        _camera.Position = _player.Position;
+        _camera.Update(gameTime);
         
         foreach (var obj in generator.CollisionLayer)
         {
-            if (obj.Contains(mousePos))
+            if (obj.Contains(_player.Position))
             {
                 debugRect = obj;
             }
         }
         
-        _player.Update(gameTime);
-        _camera.Follow(_player);
-        _enemy.Update(gameTime);
         base.Update(gameTime);
     }
 
@@ -101,15 +100,12 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
         
-        _spriteBatch.Begin(transformMatrix: _camera.Transform);
-
+        _spriteBatch.Begin(_camera, samplerState: SamplerState.PointClamp);
+        
         foreach (var room in generator.Rooms)
         {
             room.Draw(_spriteBatch);
         }
-        _player.Draw(_spriteBatch);
-        _enemy.Draw(_spriteBatch);
-        
         
         if (debugRect != null)
         {
@@ -119,6 +115,7 @@ public class Game1 : Game
             _spriteBatch.Draw(_texture, (Rectangle)debugRect, Color.White);
         }
         
+        _player.Draw(_spriteBatch);
         
         _spriteBatch.End();
         

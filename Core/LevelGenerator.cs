@@ -34,6 +34,7 @@ public class LevelGenerator
         
         Room start = new Room(startMapName, new Point(0, 0));
         Rooms.Add(start);
+        AddToCollisionLayer(start);
         
         //Get all roomnames in rooms folder
         var roomNames = getAllRoomNames();

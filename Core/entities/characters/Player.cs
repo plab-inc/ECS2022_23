@@ -18,7 +18,7 @@ public class Player : Character
     private Weapon _weapon;
     public Player(Texture2D texture) : base(texture)
     {
-        Velocity = 0.5f;
+        Velocity = 10f;
         HP = 10;
         SpriteWidth = 16;
     }
