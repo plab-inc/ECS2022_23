@@ -14,18 +14,20 @@ public class Player : Character
     public float Level;
     public float XpToNextLevel;
     public float Money;
+    
+    private float speed = 3;
     public List<Item> Items;
     private Weapon _weapon;
+
+    private Level level;
+    
     public Player(Texture2D texture) : base(texture)
     {
-        Velocity = 10f;
         HP = 10;
         SpriteWidth = 16;
     }
-    
     public Player(Texture2D texture, Dictionary<string, Animation> animations) : base(texture, animations)
     {
-        Velocity = 0.5f;
         HP = 10;
         SpriteWidth = 16;
     }
@@ -33,7 +35,7 @@ public class Player : Character
     public override void Move()
     {
         var velocity = new Vector2();
-        var speed = 3f;
+        
         var animation = "Default";
 
         if (Keyboard.GetState().IsKeyDown(Keys.W))
@@ -55,21 +57,49 @@ public class Player : Character
         } else if (Keyboard.GetState().IsKeyDown(Keys.X))
         {
             Attack();
-        } 
-        
-        bool canMove = true;
-        
-        if (canMove)
+        }
+
+        if (Collides(velocity))
         {
             Position += velocity;
             SetAnimation(animation);
         }
+
+    }
+
+    public void setLevel(Level level)
+    {
+        this.level = level;
+    }
+    
+
+    private bool Collides(Vector2 velocity)
+    {
+
+        var newPoint = (Position + velocity).ToPoint();
+        
+        var rect = new Rectangle(newPoint, new Point(16, 16));
+        
+        
+
+        
+        foreach (var rectangle in level.CollisionLayer)
+        {
+            if (rectangle.Contains(new Point(rect.Center.X,rect.Bottom)))
+            {
+                return true;
+            }
+            
+            
+            
+        }
+        return false;
     }
 
     public override void Update(GameTime gameTime)
     {
-        Move();
         AnimationManager.Update(gameTime);
+        Move();
         _weapon?.Update(gameTime);
     }
     public override void Draw(SpriteBatch spriteBatch)

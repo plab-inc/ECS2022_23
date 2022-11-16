@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using Comora;
+using ECS2022_23.Core;
 using ECS2022_23.Core.animations;
 using ECS2022_23.Core.entities.characters;
 using ECS2022_23.Core.entities.items;
@@ -22,9 +24,10 @@ public class Game1 : Game
     private Player _player;
     private Camera _camera;
     
-    private LevelGenerator generator;
-    
     private Rectangle? debugRect;
+
+    private List<Level> levels = new();
+    
 
     public static int ScreenWidth = 1280;
     public static int ScreenHeight = 720;
@@ -45,7 +48,7 @@ public class Game1 : Game
         
         _camera = new Camera(_graphics.GraphicsDevice);
         _camera.LoadContent();
-        _camera.Debug.IsVisible = true;
+        _camera.Zoom = 2f;
         
         base.Initialize();
     }
@@ -67,9 +70,9 @@ public class Game1 : Game
             new Animation(Content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 3, new Vector2(13, 6), false)));
         
         ContentLoader.Load(Content);
-        generator = new LevelGenerator(50, 3);
-        generator.generateLevel();
-
+        var level = LevelGenerator.GenerateLevel(5, 20);
+        _player.setLevel(level);
+        levels.Add(level);
     }
 
     protected override void Update(GameTime gameTime)
@@ -85,9 +88,9 @@ public class Game1 : Game
         _camera.Position = _player.Position;
         _camera.Update(gameTime);
         
-        foreach (var obj in generator.CollisionLayer)
+        foreach (var obj in levels.First().CollisionLayer)
         {
-            if (obj.Contains(_player.Position))
+            if (obj.Intersects(_player.Rectangle))
             {
                 debugRect = obj;
             }
@@ -102,17 +105,19 @@ public class Game1 : Game
         
         _spriteBatch.Begin(_camera, samplerState: SamplerState.PointClamp);
         
-        foreach (var room in generator.Rooms)
-        {
-            room.Draw(_spriteBatch);
-        }
+        levels.First().Draw(_spriteBatch);
         
         if (debugRect != null)
         {
-            Texture2D _texture = new Texture2D(GraphicsDevice, 1, 1);
-            _texture.SetData(new Color[] { Color.Green });
+            Texture2D _textureGreen = new Texture2D(GraphicsDevice, 1, 1);
+            Texture2D _textureRed = new Texture2D(GraphicsDevice, 1, 1);
+            
+            _textureGreen.SetData(new Color[] { Color.Green * 0.5f });
+            _textureRed.SetData(new Color[] { Color.Red * 0.5f });
 
-            _spriteBatch.Draw(_texture, (Rectangle)debugRect, Color.White);
+            _spriteBatch.Draw(_textureGreen, (Rectangle)debugRect, Color.White);
+            _spriteBatch.Draw(_textureGreen, _player.Rectangle, Color.White);
+            
         }
         
         _player.Draw(_spriteBatch);
