@@ -88,7 +88,4 @@ public class Input
             character.AimDirection = (int) Direction.Right;
         } 
     }
-
-
-
 }
