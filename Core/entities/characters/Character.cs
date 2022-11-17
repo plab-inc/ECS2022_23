@@ -11,6 +11,7 @@ public abstract class Character : Entity
     public float Strength;
     public float Velocity;
     protected int SpriteWidth;
+    public int AimDirection;
 
     public virtual void Attack()
     {

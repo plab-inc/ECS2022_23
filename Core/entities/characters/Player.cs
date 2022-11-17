@@ -4,6 +4,7 @@ using ECS2022_23.Core.entities.items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGameLevelGenerator.Core;
 
 namespace ECS2022_23.Core.entities.characters;
 
@@ -16,6 +17,8 @@ public class Player : Character
     public float Money;
     public List<Item> Items;
     private Weapon _weapon;
+    private Input _input = new Input();
+    
     public Player(Texture2D texture) : base(texture)
     {
         Velocity = 0.5f;
@@ -29,46 +32,11 @@ public class Player : Character
         HP = 10;
         SpriteWidth = 16;
     }
-
-    public override void Move()
-    {
-        var velocity = new Vector2();
-        var speed = 3f;
-        var animation = "Default";
-
-        if (Keyboard.GetState().IsKeyDown(Keys.W))
-        {
-            velocity.Y = -speed;
-            animation = "WalkUp";
-        } else if (Keyboard.GetState().IsKeyDown(Keys.S))
-        {
-            velocity.Y = speed;
-            animation = "WalkDown";
-        } else if (Keyboard.GetState().IsKeyDown(Keys.A))
-        {
-            velocity.X = -speed;
-            animation = "WalkLeft";
-        } else if (Keyboard.GetState().IsKeyDown(Keys.D))
-        {
-            velocity.X = speed;
-            animation = "WalkRight";
-        } else if (Keyboard.GetState().IsKeyDown(Keys.X))
-        {
-            Attack();
-        } 
-        
-        bool canMove = true;
-        
-        if (canMove)
-        {
-            Position += velocity;
-            SetAnimation(animation);
-        }
-    }
-
+    
     public override void Update(GameTime gameTime)
     {
-        Move();
+        _input.Move(this);
+        _input.Aim(this);
         AnimationManager.Update(gameTime);
         _weapon?.Update(gameTime);
     }

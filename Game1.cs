@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using ECS2022_23.Core.animations;
 using ECS2022_23.Core.entities.characters;
 using ECS2022_23.Core.entities.characters.enemy;
@@ -94,6 +95,7 @@ public class Game1 : Game
         _player.Update(gameTime);
         _camera.Follow(_player);
         _enemy.Update(gameTime);
+        Debug.WriteLine(_player.AimDirection);
         base.Update(gameTime);
     }
 
