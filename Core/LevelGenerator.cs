@@ -19,6 +19,7 @@ static class LevelGenerator
     {
         List<Room> rooms = new();
         List<Rectangle> collisionLayer = new();
+        List<Door> deadEndDoors = new();
         
         //Build start room
         var startMapName = "start" + _random.Next(possibleStarts).ToString("000");
@@ -86,12 +87,22 @@ static class LevelGenerator
                 }
                 else
                 {
-                    openDoors.Dequeue();
+                    deadEndDoors.Add(openDoors.Dequeue());
                 }
                 
             }
         }
         Console.Write("Done");
+        deadEndDoors.AddRange(openDoors);
+        Console.Write(deadEndDoors.Count);
+
+        foreach (var deadEndDoor in deadEndDoors)
+        {
+            var rect = collisionLayer.Find(x => x.Contains(deadEndDoor.marker));
+            collisionLayer.Remove(rect);
+        }
+        
+        
         return new Level(rooms, collisionLayer);
     }
     

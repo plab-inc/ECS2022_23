@@ -70,7 +70,7 @@ public class Game1 : Game
             new Animation(Content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 3, new Vector2(13, 6), false)));
         
         ContentLoader.Load(Content);
-        var level = LevelGenerator.GenerateLevel(5, 20);
+        var level = LevelGenerator.GenerateLevel(5, 5);
         _player.setLevel(level);
         levels.Add(level);
     }

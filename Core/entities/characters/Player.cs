@@ -80,18 +80,12 @@ public class Player : Character
         
         var rect = new Rectangle(newPoint, new Point(16, 16));
         
-        
-
-        
         foreach (var rectangle in level.CollisionLayer)
         {
             if (rectangle.Contains(new Point(rect.Center.X,rect.Bottom)))
             {
                 return true;
             }
-            
-            
-            
         }
         return false;
     }
