@@ -70,7 +70,7 @@ public class Game1 : Game
             new Animation(Content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 3, new Vector2(13, 6), false)));
         
         ContentLoader.Load(Content);
-        var level = LevelGenerator.GenerateLevel(5, 5);
+        var level = LevelGenerator.GenerateLevel(5, 50);
         _player.setLevel(level);
         levels.Add(level);
     }
@@ -110,15 +110,18 @@ public class Game1 : Game
         if (debugRect != null)
         {
             Texture2D _textureGreen = new Texture2D(GraphicsDevice, 1, 1);
-            Texture2D _textureRed = new Texture2D(GraphicsDevice, 1, 1);
             
             _textureGreen.SetData(new Color[] { Color.Green * 0.5f });
-            _textureRed.SetData(new Color[] { Color.Red * 0.5f });
-
+            
             _spriteBatch.Draw(_textureGreen, (Rectangle)debugRect, Color.White);
-            _spriteBatch.Draw(_textureGreen, _player.Rectangle, Color.White);
+            
+            Texture2D _textureRed = new Texture2D(GraphicsDevice, 1, 1);
+            _textureRed.SetData(new Color[] { Color.Red * 0.5f });
+            
+            _spriteBatch.Draw(_textureRed,_player.Rectangle, Color.White);
             
         }
+
         
         _player.Draw(_spriteBatch);
         
