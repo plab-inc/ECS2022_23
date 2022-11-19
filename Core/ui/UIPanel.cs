@@ -10,7 +10,6 @@ namespace ECS2022_23.Core.ui;
 public class UiPanel : Component
 {
     private List<Component> _components;
-    private int _childrenCount;
     private Texture2D _texture2D;
     public UiPanel(Rectangle sourceRec, Rectangle destRec, Labels label) : base(sourceRec)
     {
@@ -36,14 +35,12 @@ public class UiPanel : Component
     {
         _components.Add(component);
         component.DestinationRec = DestinationRec;
-        _childrenCount++;
         SetPositions();
     }
 
     public void Remove(Component component)
     {
         _components.Remove(component);
-        _childrenCount--;
     }
 
     public void Update(GameTime gameTime)
@@ -66,7 +63,7 @@ public class UiPanel : Component
 
     private void SetPositions()
     {
-        if (_childrenCount <= 0)
+        if (_components.Count <= 0)
         {
             return;
         }
@@ -92,7 +89,6 @@ public class UiPanel : Component
     public void InsertAtIndex(Component component, int index)
     {
         _components.Insert(index, component);
-        _childrenCount++;
         SetPositions();
     }
 
@@ -105,7 +101,6 @@ public class UiPanel : Component
             if (component.Label == componentLabel)
             {
                 _components.RemoveAt(index);
-                _childrenCount--;
                 SetPositions();
             }
             
