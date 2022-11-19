@@ -116,4 +116,27 @@ public class UiPanel : Component
         }
       
     }
+
+    public int GetIndexFromLabel(Labels label)
+    {
+        var index = 0;
+        foreach (var component in _components)
+        {
+            if (component.Label == label)
+            {
+                return index;
+            }
+
+            index++;
+        }
+
+        return -1;
+    }
+
+    public void RemoveAll(Predicate<Component> cPredicate)
+    {
+        _components.RemoveAll(cPredicate);
+        SetPositions();
+    }
+    
 }
