@@ -3,6 +3,7 @@ using ECS2022_23.Core.animations;
 using ECS2022_23.Core.entities.characters;
 using ECS2022_23.Core.entities.characters.enemy;
 using ECS2022_23.Core.entities.items;
+using ECS2022_23.Core.ui;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -20,7 +21,7 @@ public class Game1 : Game
     private Enemy _enemy;
 
     private LevelGenerator generator;
-    
+    private UiManager _uiManager;
     private Rectangle? debugRect;
     const int scaleFactor = 1;
     private Matrix transformMatrix;
@@ -69,7 +70,8 @@ public class Game1 : Game
         ContentLoader.Load(Content);
         generator = new LevelGenerator(50, 3);
         generator.generateLevel();
-
+        _uiManager = new UiManager();
+        UiLoader.Load(_uiManager, Content);
     }
 
     protected override void Update(GameTime gameTime)
@@ -94,6 +96,7 @@ public class Game1 : Game
         _player.Update(gameTime);
         _camera.Follow(_player);
         _enemy.Update(gameTime);
+        _uiManager.Update(gameTime, _player);
         base.Update(gameTime);
     }
 
@@ -120,6 +123,10 @@ public class Game1 : Game
         }
         
         
+        _spriteBatch.End();
+        
+        _spriteBatch.Begin();
+        _uiManager.Draw(_spriteBatch);
         _spriteBatch.End();
         
         base.Draw(gameTime);
