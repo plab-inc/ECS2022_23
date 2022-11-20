@@ -100,6 +100,8 @@ static class LevelGenerator
         {
             var rect = collisionLayer.Find(x => x.Contains(deadEndDoor.marker));
             collisionLayer.Remove(rect);
+            CloseDoor(deadEndDoor);
+            //TODO ContentLoader überarbeiten
         }
         
         
@@ -133,7 +135,6 @@ static class LevelGenerator
         return true;
 
     }
-    
     private static List<string> GetAllRoomNames()
     {
         //TODO Maybe move this into Contentmanager
@@ -142,6 +143,103 @@ static class LevelGenerator
             Select(Path.GetFileNameWithoutExtension).ToList();
         
         return roomNames;
+    }
+
+    public static void CloseDoor(Door door)
+    {
+        var layer = "walls";
+        var room = door.room;
+        var roomHeight = room._map.Height;
+        var roomWidth = room._map.Width;
+        
+        var x = door.NormaizedPosition().X;
+        var y = door.NormaizedPosition().Y;
+        
+        switch (door.Direction)
+        {
+            case Direction.Up:
+                for (int i = 0; i < 3; i++)
+                { 
+                    room.ChangeTile(x - 1 + i , y, 2, layer);
+                    room.ChangeTile(x - 1 + i , y+1, 14, layer);
+                    room.ChangeTile(x - 1 + i , y+2, 14, layer);
+                    room.ChangeTile(x - 1 + i , y+3, 20, layer);
+                }
+                if (x == roomWidth - 2)
+                {
+                    for (int i = 0; i < 4; i++)
+                    { 
+                        room.ChangeTile(x + 1 , i, 16, layer);
+                    }
+                    room.ChangeTile(roomWidth - 1 , 0, 3, layer);
+                }
+                
+                //TODO cases for corner doors
+
+                break;
+            case Direction.Down:
+                
+                for (int i = 0; i < 3; i++)
+                { 
+                    room.ChangeTile(x - 1 + i , y, 40, layer);
+                }
+                
+                //TODO cases for corner doors
+                
+                break;
+            case Direction.Left:
+                
+                for (int i = 0; i < 5; i++)
+                {
+                    room.ChangeTile(x,y + 1 - i,13,layer);
+                }
+                if (y < 4) 
+                {
+                    //door on highest corner
+                    room.ChangeTile(0,0,0,layer);
+                    room.ChangeTile(1,3,22,layer);
+                    room.ChangeTile(1,4,35,layer);
+                }else if (y == roomHeight - 2)
+                {
+                    //door on lowest corner
+                    room.ChangeTile(x,roomHeight - 1,39,layer);
+                    room.ChangeTile(x+1,roomHeight - 1,40,layer);
+                    room.ChangeTile(x+1,roomHeight - 2,35,layer);
+                }
+                else
+                {
+                    room.ChangeTile(x+1,y,35,layer);
+                    room.ChangeTile(x+1,y+1,35,layer);
+                }
+                break;
+            case Direction.Right:
+                
+                for (int i = 0; i < 5; i++)
+                {
+                    room.ChangeTile(x,y + 1 - i,16,layer);
+                }
+
+                if (y < 4)
+                { 
+                    //door on highest corner
+                    room.ChangeTile(x,y-3,3,layer);
+                    room.ChangeTile(x,y+1,42,layer); 
+                }
+                if (y > roomHeight - 3)
+                { 
+                    //door on lowest corner
+                    room.ChangeTile(x,roomHeight-1,42,layer); 
+                }
+                break;
+        }
+    }
+    
+    private static bool IsCorner(Room room, int x, int y, string layer)
+    {
+        var gid = room.getTileGid(x, y, layer);
+        
+
+        return true;
     }
     
     private static Point CalculateRenderPos(Door exitDoor, TiledMap connectingMap)
@@ -197,5 +295,4 @@ static class LevelGenerator
         return new Point(renderPosX, renderPosY);
 
     }
-    
 }

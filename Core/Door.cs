@@ -32,4 +32,8 @@ public class Door
     {
         return new Rectangle(x, y, 16, 16);
     }
+    public Point NormaizedPosition()
+    {
+        return new Point(x - room._renderPos.X, y - room._renderPos.Y);
+    }
 }
