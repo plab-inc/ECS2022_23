@@ -15,8 +15,7 @@ public class Room
     public string roomMapName;
     
     private Dictionary<int, TiledTileset> _tilesets = new();
-
-
+    
     public Point Position
     {
         get { return _renderPos; }
@@ -60,10 +59,9 @@ public class Room
             {
                 var doorX = (int) (Math.Floor(door.x / _map.TileWidth)) + _renderPos.X;
                 var doorY = (int) (Math.Floor(door.y / _map.TileHeight)) + _renderPos.Y;
+                var marker = new Point((int) doorX * _map.TileWidth, (int) doorY * _map.TileHeight);
                 var doorDirection = Enum.Parse<Direction>(door.name);
-                
-                doors.Add(new Door(this,doorDirection,doorX,doorY));
-
+                doors.Add(new Door(this,marker,doorDirection,doorX,doorY));
             }
             
             return doors;
@@ -92,11 +90,19 @@ public class Room
             }
         }
     }
+
+    public void ChangeTile(int x, int y, int newGID, string layerName)
+    {
+        var layer = _map.Layers.First(layer => layer.name == layerName);
+        var index = (y * layer.width) + x;
+
+        layer.data[index] = newGID;
+    }
     
     public void Draw(SpriteBatch spriteBatch)
     {
         var tileLayers = _map.Layers.Where(x => x.type == TiledLayerType.TileLayer);
-
+        
         foreach (var layer in tileLayers)
         {
             for (var y = 0; y < layer.height; y++)
@@ -120,7 +126,6 @@ public class Room
                     var mapTileset = _map.GetTiledMapTileset(gid);
                     var tileset = _tilesets[mapTileset.firstgid];
                     var tilesetFilename = Path.GetFileNameWithoutExtension(mapTileset.source);
-                    
                     
                     var tilesetImageName = tilesetFilename.Replace("_tileset", "_image");
                     var tilesetTexture = ContentLoader.TilesetTextures[tilesetImageName];
