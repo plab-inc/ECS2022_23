@@ -55,7 +55,7 @@ public class Game1 : Game
         _player.SetWeapon(new Weapon(Content.Load<Texture2D>("sprites/spritesheet"),Vector2.Zero, AnimationLoader.LoadBasicWeaponAnimation(Content)));
 
         ContentLoader.Load(Content);
-        var level = LevelGenerator.GenerateLevel(3, 150);
+        var level = LevelGenerator.GenerateLevel(3, 30);
         _player.setLevel(level);
         levels.Add(level);
     }
