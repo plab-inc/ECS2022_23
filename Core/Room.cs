@@ -29,7 +29,7 @@ public class Room
         get { return new Rectangle(_renderPos.X, _renderPos.Y, _map.Width, _map.Height);  }
     }
     
-    public List<Rectangle> CollisionLayer
+    public List<Rectangle> GroundLayer
     {
         get
         { 
