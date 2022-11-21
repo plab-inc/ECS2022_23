@@ -98,7 +98,7 @@ public class Player : Character
 
         var feetOnGround = false;
 
-        foreach (var rectangle in level.CollisionLayer)
+        foreach (var rectangle in level.GroundLayer)
         {
             if (rectangle.Contains(feet))
             {
@@ -108,7 +108,7 @@ public class Player : Character
 
         if (!feetOnGround) return false;
 
-        foreach (var rectangle in level.CollisionLayer)
+        foreach (var rectangle in level.GroundLayer)
         {
             if (velocity.Y == 0 && velocity.X > 0)
             {
