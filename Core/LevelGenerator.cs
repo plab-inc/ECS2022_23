@@ -153,8 +153,8 @@ internal static class LevelGenerator
         var roomHeight = room._map.Height;
         var roomWidth = room._map.Width;
         
-        var x = door.NormaizedPosition().X;
-        var y = door.NormaizedPosition().Y;
+        var x = door.NormalizedPosition().X;
+        var y = door.NormalizedPosition().Y;
         
         switch (door.Direction)
         {
