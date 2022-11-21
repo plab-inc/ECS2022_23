@@ -163,7 +163,12 @@ static class LevelGenerator
                     room.ChangeTile(x - 1 + i , y, 2, layer);
                     room.ChangeTile(x - 1 + i , y+1, 14, layer);
                     room.ChangeTile(x - 1 + i , y+2, 14, layer);
-                    room.ChangeTile(x - 1 + i , y+3, 20, layer);
+                    
+                    if (roomHeight > 8)
+                    {
+                        room.ChangeTile(x - 1 + i , y+3, 20, layer);
+                    }
+                    
                 }
                 if (x == roomWidth - 2)
                 {
@@ -172,7 +177,17 @@ static class LevelGenerator
                         room.ChangeTile(x + 1 , i, 16, layer);
                     }
                     room.ChangeTile(roomWidth - 1 , 0, 3, layer);
+                    room.ChangeTile(x , 3, 20, layer);
                 }
+                if (x == 1)
+                {
+                    //TODO Schatten
+                    room.ChangeTile(0 , 0, 0, layer);
+                    room.ChangeTile(0 , 1, 13, layer);
+                    room.ChangeTile(0 , 2, 13, layer);
+                    room.ChangeTile(0 , 3, 13, layer);
+                }
+                
                 
                 //TODO cases for corner doors
 
