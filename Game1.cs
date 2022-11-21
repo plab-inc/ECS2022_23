@@ -73,7 +73,7 @@ public class Game1 : Game
         _camera.Position = _player.Position;
         _camera.Update(gameTime);
         
-        foreach (var obj in levels.First().CollisionLayer)
+        foreach (var obj in levels.First().GroundLayer)
         {
             if (obj.Intersects(_player.Rectangle))
             {
@@ -86,7 +86,7 @@ public class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
+        GraphicsDevice.Clear(new Color(24, 33, 93));
         
         _spriteBatch.Begin(_camera, samplerState: SamplerState.PointClamp);
         
