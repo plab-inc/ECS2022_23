@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
-using Comora;
+﻿using Comora;
 using ECS2022_23.Core.animations;
 using ECS2022_23.Core.entities.characters;
 using ECS2022_23.Core.entities.items;
@@ -52,7 +49,7 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         _player = new Player(Content.Load<Texture2D>("sprites/astro"), AnimationLoader.LoadPlayerAnimations(Content));
         
-        _player.SetWeapon(new Weapon(Content.Load<Texture2D>("sprites/spritesheet"), Vector2.Zero, AnimationLoader.LoadBasicWeaponAnimation(Content)));
+        _player.SetWeapon(new Weapon(Content.Load<Texture2D>("sprites/spritesheet"),Vector2.Zero, AnimationLoader.LoadBasicWeaponAnimation(Content)));
 
         ContentLoader.Load(Content);
         generator = new LevelGenerator(50, 3);
