@@ -30,7 +30,11 @@ public static class AnimationLoader
             },
             {
                 "AttackRight",
-                new Animation(content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 2, new Vector2(7, 6), false)
+                new Animation(content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 3, new Vector2(6, 6), false)
+            },
+            {
+                "AttackLeft",
+                new Animation(content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 3, new Vector2(6, 6), false, true, false)
             },
             {
                 "Default",
@@ -42,5 +46,22 @@ public static class AnimationLoader
     public static Animation LoadBasicWeaponAnimation(ContentManager content)
     {
         return new Animation(content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 3, new Vector2(13, 6), false);
+    }
+    public static Animation LoadCrowbarAnimation(ContentManager content)
+    {
+        return new Animation(content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 3, new Vector2(16, 6), false);
+    }
+    public static Animation LoadKnifeAnimation(ContentManager content)
+    {
+        return new Animation(content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 3, new Vector2(13, 5), false);
+    }
+    public static Animation LoadPhaserAnimation(ContentManager content)
+    {
+        return new Animation(content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 3, new Vector2(16, 5), false);
+    }
+    
+    public static Animation LoadStickAnimation(ContentManager content)
+    {
+        return new Animation(content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 3, new Vector2(19, 6), false);
     }
 }
