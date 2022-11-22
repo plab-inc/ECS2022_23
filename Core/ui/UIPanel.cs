@@ -11,19 +11,19 @@ public class UiPanel : Component
 {
     private List<Component> _components;
     private Texture2D _texture2D;
-    public UiPanel(Rectangle sourceRec, Rectangle destRec, Labels label) : base(sourceRec)
+    public UiPanel(Rectangle sourceRec, Rectangle destRec, UiLabels uiLabel) : base(sourceRec)
     {
         DestinationRec = destRec;
         _components = new List<Component>();
-        this.Label = label;
+        UiLabel = uiLabel;
     }
     
-    public UiPanel(Rectangle sourceRec, Rectangle destRec, Texture2D texture2D, Labels label) : base(sourceRec)
+    public UiPanel(Rectangle sourceRec, Rectangle destRec, Texture2D texture2D, UiLabels uiLabel) : base(sourceRec)
     {
         DestinationRec = destRec;
         _components = new List<Component>();
         _texture2D = texture2D;
-        this.Label = label;
+        UiLabel = uiLabel;
     }
 
     public void AddTexture(Texture2D texture)
@@ -45,7 +45,7 @@ public class UiPanel : Component
 
     public void Update(GameTime gameTime)
     {
-        //SetPositions();
+        SetPositions();
     }
 
     public override void Draw(SpriteBatch spriteBatch)
@@ -69,7 +69,6 @@ public class UiPanel : Component
         }
 
         int preWidth = 0;
-        
         foreach (var component in _components)
         {
             component.DestinationRec.X = DestinationRec.X + preWidth;
@@ -77,7 +76,6 @@ public class UiPanel : Component
             preWidth += component.SourceRec.Width;
             SetLength(component);
         }
-        
     }
 
     private void SetLength(Component component)
@@ -88,17 +86,20 @@ public class UiPanel : Component
 
     public void InsertAtIndex(Component component, int index)
     {
+        if (index < 0) return;
         _components.Insert(index, component);
         SetPositions();
     }
 
-    public void RemoveAtIndex(int index, Labels componentLabel)
+    public void RemoveAtIndex(int index, UiLabels componentUiLabel)
     {
+        if (index < 0 || index > _components.Count) return;
+        
         try
         {
             var component = _components[index];
 
-            if (component.Label == componentLabel)
+            if (component.UiLabel == componentUiLabel)
             {
                 _components.RemoveAt(index);
                 SetPositions();
@@ -112,19 +113,19 @@ public class UiPanel : Component
       
     }
 
-    public int GetIndexFromLabel(Labels label)
+    public int GetIndexFromLabel(UiLabels uiLabel)
     {
         var index = 0;
         foreach (var component in _components)
         {
-            if (component.Label == label)
+            
+            if (component.UiLabel == uiLabel)
             {
                 return index;
             }
 
             index++;
         }
-
         return -1;
     }
 
@@ -132,6 +133,15 @@ public class UiPanel : Component
     {
         _components.RemoveAll(cPredicate);
         SetPositions();
+    }
+
+    public Component GetComponentAtIndex(int index)
+    {
+        if(index >= 0 && index < _components.Count)
+        {
+            return _components[index];
+        }
+        return null;
     }
     
 }
