@@ -1,4 +1,5 @@
-﻿using ECS2022_23.Core.entities.characters;
+﻿using System;
+using ECS2022_23.Core.entities.characters;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -8,7 +9,9 @@ public class UiManager
 {
     private UiPanel _panel;
     private int _preHeartCount;
-    
+    private float _preMoneyCount;
+    private float _preXpCount;
+    private bool _hasChanged;
     public void AddPanel(UiPanel panel)
     {
         _panel = panel;
@@ -16,10 +19,15 @@ public class UiManager
 
     public void Update(GameTime gameTime, Player player)
     {
+        //TODO ggf später Observer einbauen für Updates, falls es mehr panels werden, die verwaltet werden müssen
+        _hasChanged = false;
         UpdateHearts(player);
-        UpdateCoinText(player);
+        UpdateMoneyText(player);
         UpdateXpText(player);
-        _panel.Update(gameTime);
+        if (_hasChanged)
+        {
+            _panel.Update(gameTime);
+        }
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -58,28 +66,37 @@ public class UiManager
             _preHeartCount = 0;
             _panel.RemoveAll(HasHeartLabel);
         }
-      
+
+        _hasChanged = true;
     }
-    private void UpdateCoinText(Player player)
+    private void UpdateMoneyText(Player player)
     {
+        var money = player.Money;
+        if (Math.Abs(_preMoneyCount - money) == 0) return;
         var index = _panel.GetIndexFromLabel(UiLabels.CoinText);
         if (index < 0) return;
         UiText uiText = (UiText) _panel.GetComponentAtIndex(index);
         if (uiText == null) return;
-        uiText.Text = player.Money <= 0 ? "0.00" : $"{player.Money:0.##}";
+        uiText.Text = player.Money <= 0 ? "0.00" : $"{money:0.##}";
         uiText.SourceRec.Width = (int) uiText.Font.MeasureString(uiText.Text).X;
         uiText.SourceRec.Height = (int) uiText.Font.MeasureString(uiText.Text).Y;
+        _preMoneyCount = money;
+        _hasChanged = true;
     }
     
     private void UpdateXpText(Player player)
     {
+        var xp = player.XpToNextLevel;
+        if (Math.Abs(_preXpCount - xp) == 0) return;
         var index = _panel.GetIndexFromLabel(UiLabels.XpText);
         if (index < 0) return;
         UiText uiText = (UiText) _panel.GetComponentAtIndex(index);
         if (uiText == null) return;
-        uiText.Text = player.XpToNextLevel <= 0 ? "0.00" : $"{player.XpToNextLevel:0.##}";
+        uiText.Text = player.XpToNextLevel <= 0 ? "0.00" : $"{xp:0.##}";
         uiText.SourceRec.Width = (int) uiText.Font.MeasureString(uiText.Text).X;
         uiText.SourceRec.Height = (int) uiText.Font.MeasureString(uiText.Text).Y;
+        _preXpCount = xp;
+        _hasChanged = true;
     }
     
     private static bool HasHeartLabel(Component component)
