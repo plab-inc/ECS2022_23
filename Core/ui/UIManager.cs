@@ -11,13 +11,15 @@ public class UiManager
     
     public void AddPanel(UiPanel panel)
     {
-        this._panel = panel;
+        _panel = panel;
     }
 
     public void Update(GameTime gameTime, Player player)
     {
         UpdateHearts(player);
-       //_panel.Update(gameTime);
+        UpdateCoinText(player);
+        UpdateXpText(player);
+        _panel.Update(gameTime);
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -27,10 +29,10 @@ public class UiManager
     private void UpdateHearts(Player player)
     {
         var heartCount = (int) player.HP;
-        var index = _panel.GetIndexFromLabel(Labels.HpIcon);
-        if (index < 0) return;
         if (heartCount == _preHeartCount) return;
-        
+        var index = _panel.GetIndexFromLabel(UiLabels.HpIcon);
+        if (index < 0) return;
+
         if (heartCount > 0)
         {
           
@@ -47,7 +49,7 @@ public class UiManager
                 change *= -1;
                 for (int i = 1; i <= change; i++)
                 {
-                    _panel.RemoveAtIndex(index+i,Labels.Heart);
+                    _panel.RemoveAtIndex(index+i,UiLabels.Heart);
                 }
             }
             _preHeartCount = heartCount;
@@ -58,9 +60,31 @@ public class UiManager
         }
       
     }
-    private bool HasHeartLabel(Component component)
+    private void UpdateCoinText(Player player)
     {
-        return component.Label == Labels.Heart;
+        var index = _panel.GetIndexFromLabel(UiLabels.CoinText);
+        if (index < 0) return;
+        UiText uiText = (UiText) _panel.GetComponentAtIndex(index);
+        if (uiText == null) return;
+        uiText.Text = player.Money <= 0 ? "0.00" : $"{player.Money:0.##}";
+        uiText.SourceRec.Width = (int) uiText.Font.MeasureString(uiText.Text).X;
+        uiText.SourceRec.Height = (int) uiText.Font.MeasureString(uiText.Text).Y;
+    }
+    
+    private void UpdateXpText(Player player)
+    {
+        var index = _panel.GetIndexFromLabel(UiLabels.XpText);
+        if (index < 0) return;
+        UiText uiText = (UiText) _panel.GetComponentAtIndex(index);
+        if (uiText == null) return;
+        uiText.Text = player.XpToNextLevel <= 0 ? "0.00" : $"{player.XpToNextLevel:0.##}";
+        uiText.SourceRec.Width = (int) uiText.Font.MeasureString(uiText.Text).X;
+        uiText.SourceRec.Height = (int) uiText.Font.MeasureString(uiText.Text).Y;
+    }
+    
+    private static bool HasHeartLabel(Component component)
+    {
+        return component.UiLabel == UiLabels.Heart;
     }
 
 }
