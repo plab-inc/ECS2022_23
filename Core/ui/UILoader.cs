@@ -22,8 +22,8 @@ internal static class UiLoader
         _content = content;
         try
         {
-        _texture2D = _content.Load<Texture2D>("sprites/spritesheet");
-        _font = _content.Load<SpriteFont>("fonts/rainyhearts");
+            _texture2D = _content.Load<Texture2D>("sprites/spritesheet");
+            _font = _content.Load<SpriteFont>("fonts/rainyhearts");
         
             UiPanel topContainer = CreateTopContainer();
             topContainer.Add(CreateHpIcon());
