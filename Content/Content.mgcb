@@ -91,6 +91,11 @@
 /processor:TiledProcessor
 /build:../Assets/rooms/room013.tmx;rooms/room013.tmx
 
+#begin ../Assets/rooms/room014.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/rooms/room014.tmx;rooms/room014.tmx
+
 #begin ../Assets/rooms/start000.tmx
 /importer:TiledImporter
 /processor:TiledProcessor
