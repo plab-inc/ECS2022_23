@@ -7,10 +7,10 @@ public class UiElement : Component
 {
     private Texture2D _texture;
  
-    public UiElement(Rectangle sourceRec, Texture2D texture, Labels label) : base(sourceRec)
+    public UiElement(Rectangle sourceRec, Texture2D texture, UiLabels uiLabel) : base(sourceRec)
     {
         _texture = texture;
-        this.Label = label;
+        this.UiLabel = uiLabel;
     }
 
     public override void Draw(SpriteBatch spriteBatch)

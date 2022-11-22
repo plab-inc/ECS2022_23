@@ -7,7 +7,7 @@ public abstract class Component
 {
     public Rectangle SourceRec;
     public Rectangle DestinationRec;
-    public Labels Label;
+    public UiLabels UiLabel;
 
     protected Component(Rectangle sourceRec)
     {
@@ -15,13 +15,4 @@ public abstract class Component
     }
 
     public abstract void Draw(SpriteBatch spriteBatch);
-}
-
-public enum Labels
-{
-    HpIcon,
-    CoinIcon,
-    XpIcon,
-    Heart,
-    TopContainer
 }
