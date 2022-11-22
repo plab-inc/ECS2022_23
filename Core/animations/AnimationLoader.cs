@@ -59,7 +59,6 @@ public static class AnimationLoader
     {
         return new Animation(content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 3, new Vector2(16, 5), false);
     }
-    
     public static Animation LoadStickAnimation(ContentManager content)
     {
         return new Animation(content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 3, new Vector2(19, 6), false);
