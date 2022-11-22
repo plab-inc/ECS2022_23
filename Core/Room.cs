@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ECS2022_23.Enums;
+using ECS2022_23.Helper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TiledCS;
@@ -11,24 +12,24 @@ namespace MonoGameLevelGenerator.Core;
 
 public class Room
 {
-    public TiledMap _map;
-    public string roomMapName;
-    
     private Dictionary<int, TiledTileset> _tilesets = new();
+    
+    public TiledMap _map;
+    public string roomMapName; 
+    public Point _renderPos;
     
     public Point Position
     {
+        //TODO fix usage of _renderPos
         get { return _renderPos; }
     }
-
-    private Point _renderPos;
-
+    
     public Rectangle Rectangle
     {
         get { return new Rectangle(_renderPos.X, _renderPos.Y, _map.Width, _map.Height);  }
     }
     
-    public List<Rectangle> CollisionLayer
+    public List<Rectangle> GroundLayer
     {
         get
         { 
@@ -48,6 +49,16 @@ public class Room
         
     }
     
+    public Room(string mapName, Point renderPos)
+    {
+        _map = Helper.CreateDeepCopy(ContentLoader.Tilemaps[mapName]);
+        _renderPos = renderPos;
+        roomMapName = mapName;
+
+        getTiledTilesets();
+    }
+    
+    
     public List<Door> Doors
     {
         get
@@ -60,7 +71,9 @@ public class Room
                 var doorX = (int) (Math.Floor(door.x / _map.TileWidth)) + _renderPos.X;
                 var doorY = (int) (Math.Floor(door.y / _map.TileHeight)) + _renderPos.Y;
                 var marker = new Point((int) doorX * _map.TileWidth, (int) doorY * _map.TileHeight);
+                
                 var doorDirection = Enum.Parse<Direction>(door.name);
+                
                 doors.Add(new Door(this,marker,doorDirection,doorX,doorY));
             }
             
@@ -69,16 +82,6 @@ public class Room
     }
 
     public int doorCount => Doors.Count;
-
-    public Room(string mapName, Point renderPos)
-    {
-        _map = ContentLoader.Tilemaps[mapName];
-        this._renderPos = renderPos;
-        roomMapName = mapName;
-        
-        getTiledTilesets();
-    }
-    
     private void getTiledTilesets()
     {
         foreach (var mapTileset in _map.Tilesets)
@@ -95,10 +98,16 @@ public class Room
     {
         var layer = _map.Layers.First(layer => layer.name == layerName);
         var index = (y * layer.width) + x;
-
-        layer.data[index] = newGID;
+        layer.data[index] = newGID+1;
     }
-    
+
+    public int getTileGid(int x, int y, string layerName)
+    {
+        var layer = _map.Layers.First(layer => layer.name == layerName);
+        var index = (y * layer.width) + x;
+
+        return layer.data[index];
+    }
     public void Draw(SpriteBatch spriteBatch)
     {
         var tileLayers = _map.Layers.Where(x => x.type == TiledLayerType.TileLayer);
@@ -175,6 +184,7 @@ public class Room
         }
     }
 }
+
 [Flags] internal enum Trans
 {
     None = 0,
