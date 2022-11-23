@@ -22,7 +22,6 @@ public class Level
             background.Inflate(50,50);
 
             return background;
-
         }
     }
     
