@@ -10,7 +10,12 @@ public class Weapon : Item
     public float Range;
     private Animation Animation { get; }
 
-    public Weapon(Texture2D texture, Vector2 startPos, Animation animation) : base(texture)
+    public Weapon(Vector2 spawn, Texture2D texture, Vector2 startPos, Animation animation) : base(spawn, texture)
+    {
+        Animation = animation;
+        AddAnimation("Attack", animation);
+    }
+    public Weapon(Texture2D texture, Vector2 startPos, Animation animation) : base(Vector2.Zero, texture)
     {
         Animation = animation;
         AddAnimation("Attack", animation);

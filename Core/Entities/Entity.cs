@@ -7,24 +7,21 @@ namespace ECS2022_23.Core.Entities;
 
 public abstract class Entity
 {
-    protected Texture2D _texture; 
+    protected Texture2D Texture; 
     public Vector2 Position { get; set; }
+    
     protected Dictionary<string, Animation> Animations;
-    protected readonly AnimationManager AnimationManager;
+    protected readonly AnimationManager AnimationManager = new();
     
-    public Rectangle Rectangle
-    {
-        get { return new Rectangle((int)Position.X, (int)Position.Y, _texture.Width, _texture.Height); }
-    }
+    public Rectangle Rectangle => new((int) Position.X,(int) Position.Y, Texture.Width, Texture.Height);
 
-    protected Entity(Texture2D texture)
+    protected Entity(Vector2 spawn, Texture2D texture)
     {
-        _texture = texture;
-        Position = new Vector2(60, 60);
-        AnimationManager = new AnimationManager();
+        Texture = texture;
+        Position = spawn;
     }
     
-    protected Entity(Texture2D texture, Dictionary<string, Animation> animations) : this(texture)
+    protected Entity(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations) : this(spawn, texture)
     {
         Animations = animations;
     }
@@ -53,6 +50,6 @@ public abstract class Entity
     public abstract void Update(GameTime gameTime);
 
     public virtual void Draw(SpriteBatch spriteBatch) {
-        spriteBatch.Draw(_texture,Position,Color.White);
+        spriteBatch.Draw(Texture, Position, Color.White);
     }
 }

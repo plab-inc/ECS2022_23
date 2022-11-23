@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using TiledCS;
@@ -8,20 +9,18 @@ namespace ECS2022_23.Core;
 
 public static class ContentLoader
 {
-
     private static ContentManager _content;
     
     public static Dictionary<string, TiledMap> Tilemaps =  new();
-    
     public static Dictionary<string, TiledTileset> Tilesets =  new();
     public static Dictionary<string, Texture2D> TilesetTextures = new ();
-    public static void Load(ContentManager content)
     
+    public static void Load(ContentManager content)
     {
         if (!Directory.Exists("Content")) throw new DirectoryNotFoundException();
-
-        _content = content;
         
+        _content = content;
+
         LoadTilemaps();
         LoadTilesets();
     }

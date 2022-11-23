@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -8,11 +9,25 @@ public class Level
     public List<Room> Rooms;
     public List<Rectangle> GroundLayer;
     
+    public Level(List<Room> rooms, List<Rectangle> groundLayer)
+    {
+        Rooms = rooms;
+        GroundLayer = groundLayer;
+    }
+    
+    public Room StartRoom
+    {
+        get
+        {
+            return Rooms.First(x => x.RoomMapName.Contains("start"));
+        }
+    }
+    
     public Rectangle Background {
         
         get
         {
-            Rectangle background = new Rectangle();
+            var background = new Rectangle();
 
             foreach (var rectangle in GroundLayer)
             {
@@ -24,11 +39,6 @@ public class Level
         }
     }
     
-    public Level(List<Room> rooms, List<Rectangle> groundLayer)
-    {
-        Rooms = rooms;
-        GroundLayer = groundLayer;
-    }
 
     public void Draw(SpriteBatch spriteBatch)
     {

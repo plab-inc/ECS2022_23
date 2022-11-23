@@ -12,7 +12,7 @@ public  class Enemy : Character
     private Motor _motor;
     public bool IsActive=true;
 
-    public Enemy(Texture2D texture, Motor motor) : base(texture)
+    public Enemy(Vector2 spawn, Texture2D texture, Motor motor) : base(spawn, texture)
     {
         Velocity = 2f;
         HP = 10;
@@ -20,7 +20,7 @@ public  class Enemy : Character
         _motor = motor;
     }
 
-    public Enemy(Texture2D texture, Dictionary<string, Animation> animations, Motor motor) : base(texture, animations)
+    public Enemy(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations, Motor motor) : base(spawn, texture, animations)
     {
         Velocity = 3f;
         HP = 10;

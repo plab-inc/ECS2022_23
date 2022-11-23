@@ -69,6 +69,26 @@ public class Room
             return doors;
         }
     }
+
+    public List<Vector2> Spawns
+    {
+        get
+        {
+            var spawnObjects = _map.Layers.First(x => x.name == "Spawn").objects;
+            var spawns = new List<Vector2>();
+
+            foreach (var spawnObject in spawnObjects)
+            {
+                var spawnX = spawnObject.x + _renderPos.X;
+                var spawnY = spawnObject.y + _renderPos.Y;
+                spawns.Add(new Vector2(spawnX,spawnY));
+            }
+
+            return spawns;
+
+        }
+    }
+    
     
     private void GetTiledTilesets()
     {

@@ -21,14 +21,13 @@ public class Player : Character
     private Weapon _weapon;
 
     private Level level;
-
-    public Player(Texture2D texture) : base(texture)
+    
+    public Player(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations) : base(spawn, texture, animations)
     {
         HP = 10;
         SpriteWidth = 16;
     }
-
-    public Player(Texture2D texture, Dictionary<string, Animation> animations) : base(texture, animations)
+    public Player(Texture2D texture, Dictionary<string, Animation> animations) : base(Vector2.Zero,texture, animations)
     {
         HP = 10;
         SpriteWidth = 16;
@@ -80,14 +79,14 @@ public class Player : Character
     private bool Collides(Vector2 velocity)
     {
         var newPoint = (Position + velocity).ToPoint();
-        var rect = new Rectangle(newPoint, new Point(_texture.Width, _texture.Height));
+        var rect = new Rectangle(newPoint, new Point(Texture.Width, Texture.Height));
 
         //TODO clean this mess up
         
         var armHitBoxLeft =
-            new Rectangle(newPoint.X + 4, newPoint.Y + _texture.Height / 2 + 2, 1, _texture.Height / 2 - 2);
-        var armHitBoxRight = new Rectangle(newPoint.X + _texture.Width - 5, newPoint.Y + _texture.Height / 2 + 2, 1,
-            _texture.Height / 2 - 2);
+            new Rectangle(newPoint.X + 4, newPoint.Y + Texture.Height / 2 + 2, 1, Texture.Height / 2 - 2);
+        var armHitBoxRight = new Rectangle(newPoint.X + Texture.Width - 5, newPoint.Y + Texture.Height / 2 + 2, 1,
+            Texture.Height / 2 - 2);
 
         var feet = new Point(rect.Center.X, rect.Bottom);
 
