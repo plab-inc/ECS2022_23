@@ -143,5 +143,18 @@ public class UiPanel : Component
         }
         return null;
     }
+
+    public Component GetComponentByLabel(UiLabels label)
+    {
+        foreach (var component in _components)
+        {
+            if (component.UiLabel == label)
+            {
+                return component;
+            }
+        }
+
+        return null;
+    }
     
 }
