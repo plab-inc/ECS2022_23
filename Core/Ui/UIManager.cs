@@ -1,8 +1,7 @@
-﻿using ECS2022_23.Core.entities.characters;
-using Microsoft.Xna.Framework;
+﻿using ECS2022_23.Core.Entities.Characters;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.ui;
+namespace ECS2022_23.Core.Ui;
 
 public class UiManager
 {

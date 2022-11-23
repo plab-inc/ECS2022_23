@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using MonoGameLevelGenerator.Core;
 
-namespace ECS2022_23.Core.entities.items;
+namespace ECS2022_23.Core.Entities.Items;
 
 public abstract class Item : Entity
 {

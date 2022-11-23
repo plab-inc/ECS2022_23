@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGameLevelGenerator.Core;
 
-namespace ECS2022_23.Core;
+namespace ECS2022_23.Core.World;
 public class Level
 {
     public List<Room> Rooms;
     public List<Rectangle> GroundLayer;
-
+    
     public Rectangle Background {
         
         get

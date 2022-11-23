@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 
-namespace ECS2022_23.Core.entities.characters.enemy;
+namespace ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
 
 public class RandomMotor : Motor
 {

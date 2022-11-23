@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.ui;
+namespace ECS2022_23.Core.Ui;
 
 internal static class UiLoader
 {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using MonoGameLevelGenerator.Core;
+using ECS2022_23.Core.World;
 
-namespace ECS2022_23.Core.entities.characters.enemy;
+namespace ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
 
 public class Pathfinding
 {

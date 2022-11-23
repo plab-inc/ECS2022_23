@@ -4,10 +4,9 @@ using System.IO;
 using System.Linq;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
-using MonoGameLevelGenerator.Core;
 using TiledCS;
 
-namespace ECS2022_23.Core;
+namespace ECS2022_23.Core.World;
 
 internal static class LevelGenerator
 {
@@ -34,7 +33,7 @@ internal static class LevelGenerator
         
         foreach (var deadEndDoor in deadEndDoors)
         {
-            var rect = collisionLayer.Find(x => x.Contains(deadEndDoor.marker));
+            var rect = collisionLayer.Find(x => x.Contains(deadEndDoor.Marker));
             collisionLayer.Remove(rect);
             CloseDoor(deadEndDoor);
             //TODO ContentLoader rework
@@ -149,12 +148,12 @@ internal static class LevelGenerator
     private static void CloseDoor(Door door)
     {
         const string layer = "walls";
-        var room = door.room;
-        var roomHeight = room._map.Height;
-        var roomWidth = room._map.Width;
+        var room = door.Room;
+        var roomHeight = room.Height;
+        var roomWidth = room.Width;
         
-        var x = door.NormalizedPosition().X;
-        var y = door.NormalizedPosition().Y;
+        var x = door.NormalizedPosition.X;
+        var y = door.NormalizedPosition.Y;
         
         switch (door.Direction)
         {
@@ -253,7 +252,7 @@ internal static class LevelGenerator
                     room.ChangeTile(roomWidth - 1 , roomHeight - 1, 42, layer);
                 }
 
-                if (x < 2 && room.getTileGid(0, roomHeight -2, layer) != 20)
+                if (x < 2 && room.GetTileGid(0, roomHeight -2, layer) != 20)
                 {
                     room.ChangeTile(0 , roomHeight-1, 39, layer);
                 }
@@ -277,8 +276,8 @@ internal static class LevelGenerator
                 
                 connectingDoorX = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Down").x / 16);
                 
-                renderPosX =  exitDoor.x - connectingDoorX;
-                renderPosY = exitDoor.room.Position.Y - connectingMap.Height;
+                renderPosX =  exitDoor.Position.X - connectingDoorX;
+                renderPosY = exitDoor.Room.Position.Y - connectingMap.Height;
                 
                 break;
                             
@@ -286,8 +285,8 @@ internal static class LevelGenerator
 
                 connectingDoorX = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Up").x / 16);
                 
-                renderPosX = exitDoor.x - connectingDoorX;
-                renderPosY = exitDoor.room.Position.Y + exitDoor.room._map.Height;
+                renderPosX = exitDoor.Position.X - connectingDoorX;
+                renderPosY = exitDoor.Room.Position.Y + exitDoor.Room.Height;
                 
                 break;
             
@@ -295,8 +294,8 @@ internal static class LevelGenerator
 
                 connectingDoorY = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Left").y / 16);
 
-                renderPosY = exitDoor.y - connectingDoorY; 
-                renderPosX = exitDoor.room.Position.X + exitDoor.room._map.Width;
+                renderPosY = exitDoor.Position.Y - connectingDoorY; 
+                renderPosX = exitDoor.Room.Position.X + exitDoor.Room.Width;
 
                 break;
                             
@@ -304,8 +303,8 @@ internal static class LevelGenerator
                 
                 connectingDoorY = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Right").y / 16);
                 
-                renderPosY = exitDoor.y - connectingDoorY;
-                renderPosX = exitDoor.room.Position.X - connectingMap.Width;
+                renderPosY = exitDoor.Position.Y - connectingDoorY;
+                renderPosX = exitDoor.Room.Position.X - connectingMap.Width;
                 
                 break;
             default:

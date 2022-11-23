@@ -1,8 +1,8 @@
-﻿using ECS2022_23.Core.animations;
+﻿using ECS2022_23.Core.Animations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.entities.items;
+namespace ECS2022_23.Core.Entities.Items;
 
 public class Weapon : Item
 {

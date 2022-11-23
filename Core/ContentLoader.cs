@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using TiledCS;
 
-namespace MonoGameLevelGenerator.Core;
+namespace ECS2022_23.Core;
 
 public static class ContentLoader
 {

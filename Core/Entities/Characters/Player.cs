@@ -1,12 +1,12 @@
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using ECS2022_23.Core.animations;
-using ECS2022_23.Core.entities.items;
+using ECS2022_23.Core.Animations;
+using ECS2022_23.Core.Entities.Items;
+using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace ECS2022_23.Core.entities.characters;
+namespace ECS2022_23.Core.Entities.Characters;
 
 public class Player : Character
 {

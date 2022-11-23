@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.ui;
+namespace ECS2022_23.Core.Ui;
 
 public class UiText : Component
 {

@@ -1,39 +1,28 @@
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
-using TiledCS;
 
-namespace MonoGameLevelGenerator.Core;
+namespace ECS2022_23.Core.World;
 
 public class Door
 {
-    public Room room;
-    
+    public Room Room;
+
     public Direction Direction;
-    public Point marker;
-    public int x;
-    public int y;
+    public Point Marker;
 
-
+    private int _x;
+    private int _y;
+    
     public Door(Room room, Point marker, Direction direction, int x, int y)
     {
-        this.room = room;
-        this.marker = marker;
-        this.Direction = direction;
-        this.x = x;
-        this.y = y;
+        Room = room;
+        Marker = marker;
+        Direction = direction;
+        _x = x;
+        _y = y;
     }
 
-    public Point ToPoint()
-    {
-        return new Point(x, y);
-    }
-
-    public Rectangle ToRectangle()
-    {
-        return new Rectangle(x, y, 16, 16);
-    }
-    public Point NormalizedPosition()
-    {
-        return new Point(x - room._renderPos.X, y - room._renderPos.Y);
-    }
+    public Point Position => new(_x, _y);
+    public Rectangle Rectangle => new(_x, _y, 16, 16);
+    public Point NormalizedPosition => new(_x - Room.Position.X, _y - Room.Position.Y);
 }

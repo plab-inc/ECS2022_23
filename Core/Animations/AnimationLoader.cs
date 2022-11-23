@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.animations;
+namespace ECS2022_23.Core.Animations;
 
 public static class AnimationLoader
 {

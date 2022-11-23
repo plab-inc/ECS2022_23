@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
-using ECS2022_23.Core.animations;
+using ECS2022_23.Core.Animations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MonoGameLevelGenerator.Core;
+namespace ECS2022_23.Core.Entities;
 
 public abstract class Entity
 {

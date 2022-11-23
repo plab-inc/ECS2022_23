@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using ECS2022_23.Core.animations;
+using ECS2022_23.Core.Animations;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGameLevelGenerator.Core;
 
-namespace ECS2022_23.Core.entities.characters;
+namespace ECS2022_23.Core.Entities.Characters;
 
 public abstract class Character : Entity
 {

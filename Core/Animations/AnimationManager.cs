@@ -1,8 +1,7 @@
-﻿using System.Diagnostics;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.animations;
+namespace ECS2022_23.Core.Animations;
 
 public class AnimationManager
 {

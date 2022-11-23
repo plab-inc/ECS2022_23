@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using MonoGameLevelGenerator.Core;
 
-namespace ECS2022_23.Core.entities.characters.enemy;
+namespace ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
 
 public class ChaseMotor : Motor
 {
