@@ -5,6 +5,7 @@ using ECS2022_23.Core;
 using ECS2022_23.Core.animations;
 using ECS2022_23.Core.entities.characters;
 using ECS2022_23.Core.entities.items;
+using ECS2022_23.Core.ui;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -19,6 +20,7 @@ public class Game1 : Game
     
     private Player _player;
     private Camera _camera;
+    private UiManager _uiManager;
     
     private Rectangle? debugRect;
     private List<Level> levels = new();
@@ -58,6 +60,8 @@ public class Game1 : Game
         var level = LevelGenerator.GenerateLevel(3, 30);
         _player.setLevel(level);
         levels.Add(level);
+        _uiManager = new UiManager();
+        UiLoader.Load(_uiManager, Content);
     }
 
     protected override void Update(GameTime gameTime)
@@ -72,7 +76,7 @@ public class Game1 : Game
         
         _camera.Position = _player.Position;
         _camera.Update(gameTime);
-        
+        _uiManager.Update(_player);
         foreach (var obj in levels.First().GroundLayer)
         {
             if (obj.Intersects(_player.Rectangle))
@@ -109,6 +113,10 @@ public class Game1 : Game
         
         _player.Draw(_spriteBatch);
         
+        _spriteBatch.End();
+        
+        _spriteBatch.Begin();
+        _uiManager.Draw(_spriteBatch);
         _spriteBatch.End();
         
         base.Draw(gameTime);
