@@ -43,7 +43,7 @@ public class UiPanel : Component
         _components.Remove(component);
     }
 
-    public void Update(GameTime gameTime)
+    public void Update()
     {
         SetPositions();
     }

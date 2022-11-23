@@ -14,7 +14,7 @@ public class UiManager
         _panel = panel;
     }
 
-    public void Update(GameTime gameTime, Player player)
+    public void Update(Player player)
     {
         _hasChanged = false;
         UpdateHearts(player);
@@ -22,7 +22,7 @@ public class UiManager
         UpdateText(UiLabels.XpText, player.XpToNextLevel);
         if (_hasChanged)
         {
-            _panel.Update(gameTime);
+            _panel.Update();
         }
     }
 
@@ -82,14 +82,5 @@ public class UiManager
     {
         return component.UiLabel == UiLabels.Heart;
     }
-    /*
-    private void UpdateWeaponIcon(Player player)
-    {
-        var weapon = player.Weapon;
-        var weaponIcon = _panel.GetComponentByLabel(UiLabels.WeaponIcon);
-        if (weaponIcon == null) return;
-        weaponIcon.SourceRec.X = (int) weapon.IconPosition.X;
-        weaponIcon.SourceRec.Y = (int) weapon.IconPosition.Y;
-    }
-    */
+
 }

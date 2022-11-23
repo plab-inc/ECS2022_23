@@ -76,7 +76,7 @@ public class Game1 : Game
         
         _camera.Position = _player.Position;
         _camera.Update(gameTime);
-        _uiManager.Update(gameTime, _player);
+        _uiManager.Update(_player);
         foreach (var obj in levels.First().GroundLayer)
         {
             if (obj.Intersects(_player.Rectangle))
