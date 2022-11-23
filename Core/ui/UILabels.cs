@@ -8,6 +8,5 @@ public enum UiLabels
     Heart,
     TopContainer,
     CoinText,
-    XpText,
-    WeaponIcon
+    XpText
 }

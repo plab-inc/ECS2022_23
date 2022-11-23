@@ -69,8 +69,4 @@ internal static class UiLoader
         return new UiText(new Rectangle(0,0, PixelSize, PixelSize), _font, "0", uiLabel);
     }
     
-    private static UiElement CreateWeaponIcon()
-    {
-        return new UiElement(new Rectangle(13*16, 6*16, PixelSize, PixelSize), _texture2D, UiLabels.WeaponIcon);
-    }
 }
