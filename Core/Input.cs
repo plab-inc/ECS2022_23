@@ -8,11 +8,11 @@ namespace MonoGameLevelGenerator.Core;
 
 public class Input
 {
-    private Character _character;
+    private Player _player;
 
-    public Input(Character character)
+    public Input(Player character)
     {
-        _character = character;
+        _player = character;
     }
 
     public void Move()
@@ -24,7 +24,7 @@ public class Input
         // Attack & Actions
         if (Keyboard.GetState().IsKeyDown(Keys.Space))
         {
-            _character.Attack();
+            _player.Attack();
         } 
         
         // Diagonal Movement
@@ -73,25 +73,28 @@ public class Input
                 animation = "WalkRight";
             } 
         }
+
+        if (!_player.Collides(velocity)) 
+            return;
         
-        _character.Position += velocity;
-        _character.SetAnimation(animation);
+        _player.Position += velocity;
+        _player.SetAnimation(animation);
     }
     public void Aim()
     {
         if (Keyboard.GetState().IsKeyDown(Keys.Up))
         {
-            _character.AimDirection = (int) Direction.Up;
+            _player.AimDirection = (int) Direction.Up;
 
         } else if (Keyboard.GetState().IsKeyDown(Keys.Down))
         {
-            _character.AimDirection = (int) Direction.Down;
+            _player.AimDirection = (int) Direction.Down;
         } else if (Keyboard.GetState().IsKeyDown(Keys.Left))
         {
-            _character.AimDirection = (int) Direction.Left;
+            _player.AimDirection = (int) Direction.Left;
         } else if (Keyboard.GetState().IsKeyDown(Keys.Right))
         {
-            _character.AimDirection = (int) Direction.Right;
+            _player.AimDirection = (int) Direction.Right;
         } 
     }
 }

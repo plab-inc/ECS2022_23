@@ -46,7 +46,7 @@ public class Player : Character
         this.level = level;
     }
 
-    private bool Collides(Vector2 velocity)
+    public bool Collides(Vector2 velocity)
     {
         var newPoint = (Position + velocity).ToPoint();
         var rect = new Rectangle(newPoint, new Point(_texture.Width, _texture.Height));
