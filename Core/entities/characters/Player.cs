@@ -17,11 +17,12 @@ public class Player : Character
     public float Money;
     public List<Item> Items;
     private Weapon _weapon;
-    private Input _input = new Input();
+    private Input _input;
     
     public Player(Texture2D texture) : base(texture)
     {
         Velocity = 0.5f;
+        _input = new Input(this);
         HP = 10;
         SpriteWidth = 16;
     }
@@ -29,14 +30,15 @@ public class Player : Character
     public Player(Texture2D texture, Dictionary<string, Animation> animations) : base(texture, animations)
     {
         Velocity = 0.5f;
+        _input = new Input(this);
         HP = 10;
         SpriteWidth = 16;
     }
     
     public override void Update(GameTime gameTime)
     {
-        _input.Move(this);
-        _input.Aim(this);
+        _input.Move();
+        _input.Aim();
         AnimationManager.Update(gameTime);
         _weapon?.Update(gameTime);
     }

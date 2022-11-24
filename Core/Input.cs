@@ -8,12 +8,26 @@ namespace MonoGameLevelGenerator.Core;
 
 public class Input
 {
-    public void Move(Character character)
+    private Character _character;
+
+    public Input(Character character)
+    {
+        _character = character;
+    }
+
+    public void Move()
     {
         var velocity = new Vector2();
         var speed = 3f;
         var animation = "Default";
 
+        // Attack & Actions
+        if (Keyboard.GetState().IsKeyDown(Keys.Space))
+        {
+            _character.Attack();
+        } 
+        
+        // Diagonal Movement
         if (Keyboard.GetState().IsKeyDown(Keys.W) && Keyboard.GetState().IsKeyDown(Keys.D))
         {
             // UP + RIGHT
@@ -39,7 +53,7 @@ public class Input
             velocity.Y = speed;
             animation = "WalkLeft";
         }
-        else
+        else // Straight Movement & Attack
         {
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
@@ -57,35 +71,27 @@ public class Input
             {
                 velocity.X = speed;
                 animation = "WalkRight";
-            } else if (Keyboard.GetState().IsKeyDown(Keys.X))
-            {
-                character.Attack();
             } 
         }
         
-        bool canMove = true;
-        if (canMove)
-        {
-            character.Position += velocity;
-            character.SetAnimation(animation);
-        }
+        _character.Position += velocity;
+        _character.SetAnimation(animation);
     }
-
-    public void Aim(Character character)
+    public void Aim()
     {
-        if (Keyboard.GetState().IsKeyDown(Keys.W))
+        if (Keyboard.GetState().IsKeyDown(Keys.Up))
         {
-            character.AimDirection = (int) Direction.Up;
+            _character.AimDirection = (int) Direction.Up;
 
-        } else if (Keyboard.GetState().IsKeyDown(Keys.S))
+        } else if (Keyboard.GetState().IsKeyDown(Keys.Down))
         {
-            character.AimDirection = (int) Direction.Down;
-        } else if (Keyboard.GetState().IsKeyDown(Keys.A))
+            _character.AimDirection = (int) Direction.Down;
+        } else if (Keyboard.GetState().IsKeyDown(Keys.Left))
         {
-            character.AimDirection = (int) Direction.Left;
-        } else if (Keyboard.GetState().IsKeyDown(Keys.D))
+            _character.AimDirection = (int) Direction.Left;
+        } else if (Keyboard.GetState().IsKeyDown(Keys.Right))
         {
-            character.AimDirection = (int) Direction.Right;
+            _character.AimDirection = (int) Direction.Right;
         } 
     }
 }
