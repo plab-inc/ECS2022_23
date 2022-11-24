@@ -5,6 +5,7 @@ using ECS2022_23.Core.entities.items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGameLevelGenerator.Core;
 
 namespace ECS2022_23.Core.entities.characters;
 
@@ -19,65 +20,33 @@ public class Player : Character
     private float speed = 3;
     public List<Item> Items;
     private Weapon _weapon;
+    private Input _input;
+    
 
     private Level level;
 
     public Player(Texture2D texture) : base(texture)
     {
+        Velocity = 0.5f;
+        _input = new Input(this);
         HP = 10;
         SpriteWidth = 16;
     }
 
     public Player(Texture2D texture, Dictionary<string, Animation> animations) : base(texture, animations)
     {
+        Velocity = 0.5f;
+        _input = new Input(this);
         HP = 10;
         SpriteWidth = 16;
     }
-
-    public override void Move()
-    {
-        var velocity = new Vector2();
-
-        var animation = "Default";
-
-        if (Keyboard.GetState().IsKeyDown(Keys.W))
-        {
-            velocity.Y = -speed;
-            animation = "WalkUp";
-        }
-        else if (Keyboard.GetState().IsKeyDown(Keys.S))
-        {
-            velocity.Y = speed;
-            animation = "WalkDown";
-        }
-        else if (Keyboard.GetState().IsKeyDown(Keys.A))
-        {
-            velocity.X = -speed;
-            animation = "WalkLeft";
-        }
-        else if (Keyboard.GetState().IsKeyDown(Keys.D))
-        {
-            velocity.X = speed;
-            animation = "WalkRight";
-        }
-        else if (Keyboard.GetState().IsKeyDown(Keys.X))
-        {
-            Attack();
-        }
-
-        if (Collides(velocity))
-        {
-            Position += velocity;
-            SetAnimation(animation);
-        }
-    }
-
+    
     public void setLevel(Level level)
     {
         this.level = level;
     }
 
-    private bool Collides(Vector2 velocity)
+    public bool Collides(Vector2 velocity)
     {
         var newPoint = (Position + velocity).ToPoint();
         var rect = new Rectangle(newPoint, new Point(_texture.Width, _texture.Height));
@@ -140,11 +109,11 @@ public class Player : Character
 
     public override void Update(GameTime gameTime)
     {
+        _input.Move();
+        _input.Aim();
         AnimationManager.Update(gameTime);
-        Move();
         _weapon?.Update(gameTime);
     }
-
     public override void Draw(SpriteBatch spriteBatch)
     {
         if (Animations == null)
