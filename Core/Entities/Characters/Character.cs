@@ -11,6 +11,8 @@ public abstract class Character : Entity
     public float Strength;
     public float Velocity;
     protected int SpriteWidth;
+    public int AimDirection;
+
     
     protected Character(Vector2 spawn, Texture2D texture) : base(spawn, texture)
     {
