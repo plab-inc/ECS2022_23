@@ -71,6 +71,7 @@ public class Game1 : Game
             Exit();
         
         _escape.Update(gameTime);
+        _uiManager.Update(_player);
         
         base.Update(gameTime);
     }
