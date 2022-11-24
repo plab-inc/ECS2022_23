@@ -1,5 +1,4 @@
-﻿using System;
-using ECS2022_23.Core.entities.characters;
+﻿using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
