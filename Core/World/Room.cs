@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ECS2022_23.Core.Entities;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -87,6 +88,23 @@ public class Room
             return spawns;
 
         }
+    }
+    public Vector2 GetRandomSpawnPos(Entity entity)
+    {
+        var random = new Random((int)DateTime.Now.Ticks);
+        var index = random.Next(Spawns.Count);
+
+        var spawnPos = new Vector2(Spawns[index].X - entity.Rectangle.Center.X,Spawns[index].Y - entity.Rectangle.Center.X);
+        var spawnRect = new Rectangle((int) spawnPos.X, (int) spawnPos.Y, entity.Rectangle.Width, entity.Rectangle.Height);
+
+        foreach (var rectangle in GroundLayer)
+        {
+            if (rectangle.Contains(spawnRect))
+            {
+                return spawnPos;
+            }
+        }
+        throw new InvalidOperationException("Spawn of entity failed");
     }
     
     

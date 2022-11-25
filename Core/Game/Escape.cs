@@ -27,10 +27,8 @@ public class Escape
         _player = player;
         _level = LevelGenerator.GenerateLevel((int) (difficulty * 2), (int) (difficulty * 4));
         _player.setLevel(_level);
-        player.Position = _level.StartRoom.Spawns.First();
+        player.Position = _level.StartRoom.GetRandomSpawnPos(player);
         _debugOn = debugOn;
-        
-        //TODO Spawnsystem a little buggy and can be improved
     }
     public void AttachCamera(Camera camera)
     {
