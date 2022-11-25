@@ -150,8 +150,8 @@ internal static class LevelGenerator
     {
         const string layer = "walls";
         var room = door.room;
-        var roomHeight = room._map.Height;
-        var roomWidth = room._map.Width;
+        var roomHeight = room.Map.Height;
+        var roomWidth = room.Map.Width;
         
         var x = door.NormalizedPosition().X;
         var y = door.NormalizedPosition().Y;
@@ -253,7 +253,7 @@ internal static class LevelGenerator
                     room.ChangeTile(roomWidth - 1 , roomHeight - 1, 42, layer);
                 }
 
-                if (x < 2 && room.getTileGid(0, roomHeight -2, layer) != 20)
+                if (x < 2 && room.GetTileGid(0, roomHeight -2, layer) != 20)
                 {
                     room.ChangeTile(0 , roomHeight-1, 39, layer);
                 }
@@ -287,7 +287,7 @@ internal static class LevelGenerator
                 connectingDoorX = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Up").x / 16);
                 
                 renderPosX = exitDoor.x - connectingDoorX;
-                renderPosY = exitDoor.room.Position.Y + exitDoor.room._map.Height;
+                renderPosY = exitDoor.room.Position.Y + exitDoor.room.Map.Height;
                 
                 break;
             
@@ -296,7 +296,7 @@ internal static class LevelGenerator
                 connectingDoorY = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Left").y / 16);
 
                 renderPosY = exitDoor.y - connectingDoorY; 
-                renderPosX = exitDoor.room.Position.X + exitDoor.room._map.Width;
+                renderPosX = exitDoor.room.Position.X + exitDoor.room.Map.Width;
 
                 break;
                             

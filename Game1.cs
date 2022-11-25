@@ -44,7 +44,7 @@ public class Game1 : Game
         
         _camera = new Camera(_graphics.GraphicsDevice);
         _camera.LoadContent();
-        _camera.Zoom = 2f;
+        _camera.Zoom = 3f;
         
         base.Initialize();
     }
@@ -57,7 +57,7 @@ public class Game1 : Game
         _player.SetWeapon(new Weapon(Content.Load<Texture2D>("sprites/spritesheet"),Vector2.Zero, AnimationLoader.LoadBasicWeaponAnimation(Content)));
 
         ContentLoader.Load(Content);
-        var level = LevelGenerator.GenerateLevel(3, 30);
+        var level = LevelGenerator.GenerateLevel(3, 20);
         _player.setLevel(level);
         levels.Add(level);
         _uiManager = new UiManager();
@@ -90,7 +90,7 @@ public class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(new Color(24, 33, 93));
+        GraphicsDevice.Clear(Color.CornflowerBlue);
         
         _spriteBatch.Begin(_camera, samplerState: SamplerState.PointClamp);
         
