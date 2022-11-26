@@ -47,14 +47,11 @@ public class Level
 
     private void DrawBackground(SpriteBatch spriteBatch)
     {
-
-        //Slows down game insane
-        
         var startroom = Rooms.First(room => room.MapName.Contains("start"));
         
-        var gid = 92;
+        var gid =  91;
         
-        var mapTileset = startroom.Map.GetTiledMapTileset(gid);
+        var mapTileset = startroom.Map.GetTiledMapTileset(++gid);
         var tileset = startroom.Tilesets[mapTileset.firstgid];
         var tilesetFilename = Path.GetFileNameWithoutExtension(mapTileset.source);
         var tilesetImageName = tilesetFilename.Replace("_tileset", "_image");
@@ -65,7 +62,6 @@ public class Level
         
         var destination = new Rectangle(Background.X,Background.Y, Background.Width, Background.Height);
         spriteBatch.Draw(tilesetTexture, destination, source, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0);
-
         
     }
 }
