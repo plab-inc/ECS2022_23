@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace ECS2022_23.Helper;
 public static class DeepCopy
 {
-    public static T CreateDeepCopy<T>(T obj)
+    public static T Create<T>(T obj)
     {
         using var ms = new MemoryStream();
         XmlSerializer serializer = new XmlSerializer(obj.GetType());

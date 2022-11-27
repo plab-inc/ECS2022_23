@@ -24,7 +24,7 @@ public class Room
     
     public Room(string mapName, Point renderPos)
     {
-        Map = Helper.DeepCopy.CreateDeepCopy(ContentLoader.Tilemaps[mapName]);
+        Map = Helper.DeepCopy.Create(ContentLoader.Tilemaps[mapName]);
         
         _renderPos = renderPos;
         MapName = mapName;
