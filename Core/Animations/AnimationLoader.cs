@@ -13,10 +13,10 @@ public static class AnimationLoader
     private static Texture2D _texture;
     public static Dictionary<string, Animation> PlayerAnimations { get; private set; }
     public static Dictionary<string, Animation> SwordAnimations { get; private set; }
-    public static Animation KnifeAnimation { get; private set; }
-    public static Animation StickAnimation { get; private set; }
-    public static Animation PhaserAnimation { get; private set; }
-    public static Animation CrowbarAnimation { get; private set; }
+    public static  Dictionary<string, Animation> KnifeAnimations { get; private set; }
+    public static  Dictionary<string, Animation> StickAnimations { get; private set; }
+    public static  Dictionary<string, Animation> PhaserAnimations { get; private set; }
+    public static  Dictionary<string, Animation> CrowbarAnimations { get; private set; }
     public static void Load(ContentManager content)
     {
         if (!Directory.Exists("Content")) throw new DirectoryNotFoundException();
@@ -24,7 +24,6 @@ public static class AnimationLoader
         _texture = _content.Load<Texture2D>("sprites/spritesheet");
         LoadPlayerAnimations();
         LoadWeaponAnimations();
-        LoadSwordAnimations();
     }
     
     private static void LoadPlayerAnimations()
@@ -73,10 +72,36 @@ public static class AnimationLoader
 
     private static void LoadWeaponAnimations()
     {
-        CrowbarAnimation = new Animation(_texture, 16, 16, 3, new Vector2(16, 6), false);
-        KnifeAnimation = new Animation(_texture, 16, 16, 3, new Vector2(13, 5), false);
-        PhaserAnimation = new Animation(_texture, 16, 16, 3, new Vector2(16, 5), false);
-        StickAnimation = new Animation(_texture, 16, 16, 3, new Vector2(19, 6), false);
+        CrowbarAnimations = new Dictionary<string, Animation>()
+        {
+            {
+                "AttackRight",
+                new Animation(_texture, 16, 16, 3, new Vector2(16, 6), false)
+            }
+        };
+        KnifeAnimations = new Dictionary<string, Animation>()
+        {
+            {
+                "AttackRight",
+                new Animation(_texture, 16, 16, 3, new Vector2(13, 5), false)
+            }
+        };
+        PhaserAnimations = new Dictionary<string, Animation>()
+        {
+            {
+                "AttackRight",
+                new Animation(_texture, 16, 16, 3, new Vector2(16, 5), false)
+            }
+        };
+        StickAnimations = new Dictionary<string, Animation>()
+        {
+            {
+                "AttackRight",
+                new Animation(_texture, 16, 16, 3, new Vector2(19, 6), false)
+            }
+        };
+        
+        LoadSwordAnimations();
     }
 
     private static void LoadSwordAnimations()
