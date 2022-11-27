@@ -20,8 +20,6 @@ public class Escape
     private bool _debugOn;
     private Rectangle? debugRect;
     
-    //private long _time;
-    //private EntityManager _entityManager;
     public Escape(Player player, int difficulty, bool debugOn)
     {
         _player = player;

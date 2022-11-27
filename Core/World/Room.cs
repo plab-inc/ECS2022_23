@@ -11,36 +11,38 @@ using TiledCS;
 namespace ECS2022_23.Core.World;
 public class Room
 {
-    private Dictionary<int, TiledTileset> _tilesets = new();
-    private TiledMap _map;
+    public TiledMap Map;
+    public Dictionary<int, TiledTileset> Tilesets = new();
+    public string MapName; 
+    
     private Point _renderPos;
     
-    public string RoomMapName; 
+    public int Height => Map.Height;
+    public int Width => Map.Width;
+    public Point Position => _renderPos;
+    public Rectangle Rectangle => new (_renderPos.X, _renderPos.Y, Map.Width, Map.Height);
     
     public Room(string mapName, Point renderPos)
     {
-        _map = Helper.Helper.CreateDeepCopy(ContentLoader.Tilemaps[mapName]);
+        Map = Helper.DeepCopy.Create(ContentLoader.Tilemaps[mapName]);
+        
         _renderPos = renderPos;
-        RoomMapName = mapName;
+        MapName = mapName;
 
         GetTiledTilesets();
     }
     
-    public int Height => _map.Height;
-    public int Width => _map.Width;
-    public Point Position => _renderPos;
-    public Rectangle Rectangle => new Rectangle(_renderPos.X, _renderPos.Y, _map.Width, _map.Height);
     public List<Rectangle> GroundLayer
     {
         get
         { 
-            var groundLayer = _map.Layers.First(l => l.name == "Ground");
+            var groundLayer = Map.Layers.First(l => l.name == "Ground");
             var collisionLayer = new List<Rectangle>();
 
             foreach (var obj in groundLayer.objects)
             {
-                var x = (int) obj.x + _renderPos.X * _map.TileWidth;
-                var y = (int) obj.y + _renderPos.Y * _map.TileHeight;
+                var x = (int) obj.x + _renderPos.X * Map.TileWidth;
+                var y = (int) obj.y + _renderPos.Y * Map.TileHeight;
                 
                 collisionLayer.Add(new Rectangle(x,y,(int) obj.width,(int) obj.height));
             }
@@ -53,14 +55,14 @@ public class Room
     {
         get
         {
-            var doorsObjects = _map.Layers.First(x => x.name == "Doors").objects;
+            var doorsObjects = Map.Layers.First(x => x.name == "Doors").objects;
             var doors = new List<Door>();
             
             foreach (var door in doorsObjects)
             {
-                var doorX = (int) (Math.Floor(door.x / _map.TileWidth)) + _renderPos.X;
-                var doorY = (int) (Math.Floor(door.y / _map.TileHeight)) + _renderPos.Y;
-                var marker = new Point((int) doorX * _map.TileWidth, (int) doorY * _map.TileHeight);
+                var doorX = (int) (Math.Floor(door.x / Map.TileWidth)) + _renderPos.X;
+                var doorY = (int) (Math.Floor(door.y / Map.TileHeight)) + _renderPos.Y;
+                var marker = new Point((int) doorX * Map.TileWidth, (int) doorY * Map.TileHeight);
                 
                 var doorDirection = Enum.Parse<Direction>(door.name);
                 
@@ -75,7 +77,7 @@ public class Room
     {
         get
         {
-            var spawnObjects = _map.Layers.First(x => x.name == "Spawn").objects;
+            var spawnObjects = Map.Layers.First(x => x.name == "Spawn").objects;
             var spawns = new List<Vector2>();
 
             foreach (var spawnObject in spawnObjects)
@@ -110,31 +112,31 @@ public class Room
     
     private void GetTiledTilesets()
     {
-        foreach (var mapTileset in _map.Tilesets)
+        foreach (var mapTileset in Map.Tilesets)
         {
             if (mapTileset.source == null) continue;
             var filename = Path.GetFileNameWithoutExtension(mapTileset.source);
-            _tilesets.Add(mapTileset.firstgid, ContentLoader.Tilesets[filename]);
+            Tilesets.Add(mapTileset.firstgid, ContentLoader.Tilesets[filename]);
         }
     }
 
     public void ChangeTile(int x, int y, int newGid, string layerName)
     {
-        var layer = _map.Layers.First(layer => layer.name == layerName);
+        var layer = Map.Layers.First(layer => layer.name == layerName);
         var index = (y * layer.width) + x;
         layer.data[index] = newGid+1;
     }
 
     public int GetTileGid(int x, int y, string layerName)
     {
-        var layer = _map.Layers.First(layer => layer.name == layerName);
+        var layer = Map.Layers.First(layer => layer.name == layerName);
         var index = (y * layer.width) + x;
 
         return layer.data[index];
     }
     public void Draw(SpriteBatch spriteBatch)
     {
-        var tileLayers = _map.Layers.Where(x => x.type == TiledLayerType.TileLayer);
+        var tileLayers = Map.Layers.Where(x => x.type == TiledLayerType.TileLayer);
         
         foreach (var layer in tileLayers)
         {
@@ -145,8 +147,8 @@ public class Room
                     var index = (y * layer.width) + x; // Assuming the default render order is used which is from right to bottom
                     var gid = layer.data[index]; // The tileset tile index
                     
-                    var tileX = (x + _renderPos.X) * _map.TileWidth;
-                    var tileY = (y + _renderPos.Y) * _map.TileHeight;
+                    var tileX = (x + _renderPos.X) * Map.TileWidth;
+                    var tileY = (y + _renderPos.Y) * Map.TileHeight;
                     
                     var effects = SpriteEffects.None;
                     float rotation = 0f;
@@ -156,22 +158,22 @@ public class Room
                         continue;
                     }
 
-                    var mapTileset = _map.GetTiledMapTileset(gid);
-                    var tileset = _tilesets[mapTileset.firstgid];
+                    var mapTileset = Map.GetTiledMapTileset(gid);
+                    var tileset = Tilesets[mapTileset.firstgid];
                     var tilesetFilename = Path.GetFileNameWithoutExtension(mapTileset.source);
                     
                     var tilesetImageName = tilesetFilename.Replace("_tileset", "_image");
                     var tilesetTexture = ContentLoader.TilesetTextures[tilesetImageName];
                     
-                    var rect = _map.GetSourceRect(mapTileset, tileset, gid);
+                    var rect = Map.GetSourceRect(mapTileset, tileset, gid);
                     var source = new Rectangle(rect.x, rect.y, rect.width, rect.height);
                     
-                    var destination = new Rectangle(tileX, tileY, _map.TileWidth, _map.TileHeight);
+                    var destination = new Rectangle(tileX, tileY, Map.TileWidth, Map.TileHeight);
                     
                     Trans tileTrans = Trans.None;
-                    if (_map.IsTileFlippedHorizontal(layer, x, y)) tileTrans |= Trans.Flip_H;
-                    if (_map.IsTileFlippedVertical(layer, x, y)) tileTrans |= Trans.Flip_V;
-                    if (_map.IsTileFlippedDiagonal(layer, x, y)) tileTrans |= Trans.Flip_D;
+                    if (Map.IsTileFlippedHorizontal(layer, x, y)) tileTrans |= Trans.Flip_H;
+                    if (Map.IsTileFlippedVertical(layer, x, y)) tileTrans |= Trans.Flip_V;
+                    if (Map.IsTileFlippedDiagonal(layer, x, y)) tileTrans |= Trans.Flip_D;
                     
                     switch (tileTrans)
                     {
@@ -180,24 +182,24 @@ public class Room
 
                         case Trans.Rotate_90:
                             rotation = (float) Math.PI * .5f;
-                            destination.X += _map.TileWidth;
+                            destination.X += Map.TileWidth;
                             break;
 
                         case Trans.Rotate_180:
                             rotation = (float) Math.PI;
-                            destination.X += _map.TileWidth;
-                            destination.Y += _map.TileHeight;
+                            destination.X += Map.TileWidth;
+                            destination.Y += Map.TileHeight;
                             break;
 
                         case Trans.Rotate_270:
                             rotation = (float) Math.PI * 3 / 2;
-                            destination.Y += _map.TileHeight;
+                            destination.Y += Map.TileHeight;
                             break;
 
                         case Trans.Rotate_90AndFlip_H:
                             effects = SpriteEffects.FlipHorizontally;
                             rotation = (float) Math.PI * .5f;
-                            destination.X += _map.TileWidth;
+                            destination.X += Map.TileWidth;
                             break;
                     }
                     
