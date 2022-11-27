@@ -1,12 +1,13 @@
 using Comora;
-using ECS2022_23.Core.animations;
-using ECS2022_23.Core.entities.characters;
-using ECS2022_23.Core.entities.items;
-using ECS2022_23.Core.ui;
+using ECS2022_23.Core;
+using ECS2022_23.Core.Animations;
+using ECS2022_23.Core.Entities.Characters;
+using ECS2022_23.Core.Entities.Items;
+using ECS2022_23.Core.Game;
+using ECS2022_23.Core.Ui;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoGameLevelGenerator.Core;
 
 namespace ECS2022_23;
 

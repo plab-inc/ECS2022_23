@@ -11,16 +11,26 @@ using TiledCS;
 namespace ECS2022_23.Core.World;
 public class Room
 {
-    public readonly Dictionary<int, TiledTileset> Tilesets = new();
     public TiledMap Map;
-    
+    public Dictionary<int, TiledTileset> Tilesets = new();
     public string MapName; 
+    
     private Point _renderPos;
     
     public int Height => Map.Height;
     public int Width => Map.Width;
     public Point Position => _renderPos;
     public Rectangle Rectangle => new (_renderPos.X, _renderPos.Y, Map.Width, Map.Height);
+    
+    public Room(string mapName, Point renderPos)
+    {
+        Map = Helper.DeepCopy.CreateDeepCopy(ContentLoader.Tilemaps[mapName]);
+        
+        _renderPos = renderPos;
+        MapName = mapName;
+
+        GetTiledTilesets();
+    }
     
     public List<Rectangle> GroundLayer
     {
@@ -41,17 +51,6 @@ public class Room
         }
         
     }
-    
-    public Room(string mapName, Point renderPos)
-    {
-        Map = Helper.CreateDeepCopy(ContentLoader.Tilemaps[mapName]);
-        _renderPos = renderPos;
-        MapName = mapName;
-
-        GetTiledTilesets();
-    }
-    
-    
     public List<Door> Doors
     {
         get
@@ -73,24 +72,59 @@ public class Room
             return doors;
         }
     }
+
+    public List<Vector2> Spawns
+    {
+        get
+        {
+            var spawnObjects = Map.Layers.First(x => x.name == "Spawn").objects;
+            var spawns = new List<Vector2>();
+
+            foreach (var spawnObject in spawnObjects)
+            {
+                var spawnX = spawnObject.x + _renderPos.X;
+                var spawnY = spawnObject.y + _renderPos.Y;
+                spawns.Add(new Vector2(spawnX,spawnY));
+            }
+
+            return spawns;
+
+        }
+    }
+    public Vector2 GetRandomSpawnPos(Entity entity)
+    {
+        var random = new Random((int)DateTime.Now.Ticks);
+        var index = random.Next(Spawns.Count);
+
+        var spawnPos = new Vector2(Spawns[index].X - entity.Rectangle.Center.X,Spawns[index].Y - entity.Rectangle.Center.X);
+        var spawnRect = new Rectangle((int) spawnPos.X, (int) spawnPos.Y, entity.Rectangle.Width, entity.Rectangle.Height);
+
+        foreach (var rectangle in GroundLayer)
+        {
+            if (rectangle.Contains(spawnRect))
+            {
+                return spawnPos;
+            }
+        }
+        throw new InvalidOperationException("Spawn of entity failed");
+    }
+    
     
     private void GetTiledTilesets()
     {
         foreach (var mapTileset in Map.Tilesets)
         {
-            if (mapTileset.source != null)
-            {
-                var filename = Path.GetFileNameWithoutExtension(mapTileset.source);
-                Tilesets.Add(mapTileset.firstgid, ContentLoader.Tilesets[filename]);
-            }
+            if (mapTileset.source == null) continue;
+            var filename = Path.GetFileNameWithoutExtension(mapTileset.source);
+            Tilesets.Add(mapTileset.firstgid, ContentLoader.Tilesets[filename]);
         }
     }
 
-    public void ChangeTile(int x, int y, int newGID, string layerName)
+    public void ChangeTile(int x, int y, int newGid, string layerName)
     {
         var layer = Map.Layers.First(layer => layer.name == layerName);
         var index = (y * layer.width) + x;
-        layer.data[index] = newGID+1;
+        layer.data[index] = newGid+1;
     }
 
     public int GetTileGid(int x, int y, string layerName)

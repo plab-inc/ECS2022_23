@@ -10,6 +10,15 @@ public class Level
 {
     public List<Room> Rooms;
     public List<Rectangle> GroundLayer;
+
+    public Room StartRoom
+    {
+        get
+        {
+            return Rooms.First(room => room.MapName.Contains("start"));
+        }
+    }
+    
     public Rectangle Background {
         
         get

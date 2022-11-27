@@ -2,7 +2,7 @@ using System.IO;
 using System.Xml.Serialization;
 
 namespace ECS2022_23.Helper;
-public static class Helper
+public static class DeepCopy
 {
     public static T CreateDeepCopy<T>(T obj)
     {
