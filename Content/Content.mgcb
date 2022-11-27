@@ -14,6 +14,13 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin ../Assets/fonts/rainyhearts.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:../Assets/fonts/rainyhearts.spritefont;fonts/rainyhearts.spritefont
+
 #begin ../Assets/rooms/room000.tmx
 /importer:TiledImporter
 /processor:TiledProcessor
@@ -84,6 +91,11 @@
 /processor:TiledProcessor
 /build:../Assets/rooms/room013.tmx;rooms/room013.tmx
 
+#begin ../Assets/rooms/room014.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/rooms/room014.tmx;rooms/room014.tmx
+
 #begin ../Assets/rooms/start000.tmx
 /importer:TiledImporter
 /processor:TiledProcessor
@@ -110,6 +122,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:../Assets/sprites/astro.png;sprites/astro.png
+
+#begin ../Assets/sprites/spritesheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Assets/sprites/spritesheet.png;sprites/spritesheet.png
 
 #begin ../Assets/tilesets/images/tileset001_image_purple.png
 /importer:TextureImporter
