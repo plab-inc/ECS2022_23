@@ -11,6 +11,7 @@ public class Animation
     public Vector2 StartFrame { get; }
     public float FrameSpeed { get; }
     public readonly bool IsLooped;
+    public float Rotation { get; }
 
     public Texture2D Texture
     {
@@ -40,5 +41,13 @@ public class Animation
     {
         FlipX = flipX;
         FlipY = flipY;
+    }
+    
+    public Animation(Texture2D texture, int width, int height, int frameCount, Vector2 startFrame, bool isLooped, bool flipX, bool flipY, float rotation) 
+        : this(texture, width, height, frameCount, startFrame, isLooped)
+    {
+        FlipX = flipX;
+        FlipY = flipY;
+        Rotation = MathHelper.ToRadians(rotation);
     }
 }
