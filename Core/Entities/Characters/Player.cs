@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.World;
+using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using MonoGameLevelGenerator.Core;
 
 namespace ECS2022_23.Core.Entities.Characters;
@@ -130,13 +130,48 @@ public class Player : Character
     {
         if (_weapon != null)
         {
-            _weapon.Position = new Vector2(Position.X + SpriteWidth, Position.Y);
-            _weapon.SetAnimation("Attack");
+            SetWeaponPosition();
         }
 
-        SetAnimation("AttackRight");
+        switch (AimDirection)
+        {
+            case (int) Direction.Right:
+                SetAnimation("AttackRight");
+                break;
+            case (int)Direction.Left:
+                SetAnimation("AttackLeft");
+                break;
+            case (int)Direction.Up:
+                SetAnimation("AttackUp");
+                break;
+            case (int)Direction.Down:
+                SetAnimation("AttackDown");
+                break;
+        }
     }
 
+    private void SetWeaponPosition()
+    {
+        switch (AimDirection)
+        {
+            case (int) Direction.Right:
+                _weapon.Position = new Vector2(Position.X + SpriteWidth, Position.Y);
+                _weapon.SetAnimation("AttackRight");
+                break;
+            case (int)Direction.Left:
+                _weapon.Position = new Vector2(Position.X - SpriteWidth, Position.Y);
+                _weapon.SetAnimation("AttackLeft");
+                break;
+            case (int)Direction.Up:
+                _weapon.Position = new Vector2(Position.X, Position.Y - SpriteWidth);
+                _weapon.SetAnimation("AttackUp");
+                break;
+            case (int)Direction.Down:
+                _weapon.Position = new Vector2(Position.X, Position.Y + SpriteWidth);
+                _weapon.SetAnimation("AttackDown");
+                break;
+        }
+    }
     public void SetWeapon(Weapon weapon)
     {
         _weapon = weapon;
