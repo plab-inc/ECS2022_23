@@ -149,8 +149,8 @@ internal static class LevelGenerator
     {
         const string layer = "walls";
         var room = door.Room;
-        var roomHeight = room.Height;
-        var roomWidth = room.Width;
+        var roomHeight = room.Map.Height;
+        var roomWidth = room.Map.Width;
         
         var x = door.NormalizedPosition.X;
         var y = door.NormalizedPosition.Y;
