@@ -39,4 +39,9 @@ public class RandomMotor : Motor
         }
         return position;
     }
+
+    public override bool Collides()
+    {
+        throw new NotImplementedException();
+    }
 }

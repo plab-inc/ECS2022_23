@@ -11,11 +11,11 @@ public class Enemy : Character
     public float MoneyReward;
     private Motor _motor;
     public Rectangle ActivationRectangle;
-    private bool _isActive=false;
+    private bool _isActive=true;
 
     public Enemy(Vector2 spawn, Texture2D texture, Motor motor) : base(spawn, texture)
     {
-        Velocity = 2f;
+        Velocity = 1f;
         HP = 10;
         SpriteWidth = 16;
         _motor = motor;
@@ -23,7 +23,7 @@ public class Enemy : Character
 
     public Enemy(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations, Motor motor) : base(spawn, texture, animations)
     {
-        Velocity = 3f;
+        Velocity = 1f;
         HP = 10;
         SpriteWidth = 16;
         _motor = motor;

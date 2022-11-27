@@ -7,4 +7,5 @@ public abstract class Motor
 {
     private Pathfinding path;
     public abstract Vector2 Move(Vector2 position, int velocity);
+    public abstract bool Collides();
 }

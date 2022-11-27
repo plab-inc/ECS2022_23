@@ -47,4 +47,9 @@ public class ChaseMotor : Motor
 
         return position;
     }
+
+    public override bool Collides()
+    {
+        throw new System.NotImplementedException();
+    }
 }
