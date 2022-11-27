@@ -2,34 +2,35 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ECS2022_23.Core.Entities;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TiledCS;
 
-namespace MonoGameLevelGenerator.Core;
-
+namespace ECS2022_23.Core.World;
 public class Room
 {
-    public TiledMap _map;
-    public string roomMapName;
-    
     private Dictionary<int, TiledTileset> _tilesets = new();
-
-
-    public Point Position
-    {
-        get { return _renderPos; }
-    }
-
+    private TiledMap _map;
     private Point _renderPos;
-
-    public Rectangle Rectangle
+    
+    public string RoomMapName; 
+    
+    public Room(string mapName, Point renderPos)
     {
-        get { return new Rectangle(_renderPos.X, _renderPos.Y, _map.Width, _map.Height);  }
+        _map = Helper.Helper.CreateDeepCopy(ContentLoader.Tilemaps[mapName]);
+        _renderPos = renderPos;
+        RoomMapName = mapName;
+
+        GetTiledTilesets();
     }
     
-    public List<Rectangle> CollisionLayer
+    public int Height => _map.Height;
+    public int Width => _map.Width;
+    public Point Position => _renderPos;
+    public Rectangle Rectangle => new Rectangle(_renderPos.X, _renderPos.Y, _map.Width, _map.Height);
+    public List<Rectangle> GroundLayer
     {
         get
         { 
@@ -48,7 +49,6 @@ public class Room
         }
         
     }
-    
     public List<Door> Doors
     {
         get
@@ -60,43 +60,82 @@ public class Room
             {
                 var doorX = (int) (Math.Floor(door.x / _map.TileWidth)) + _renderPos.X;
                 var doorY = (int) (Math.Floor(door.y / _map.TileHeight)) + _renderPos.Y;
+                var marker = new Point((int) doorX * _map.TileWidth, (int) doorY * _map.TileHeight);
+                
                 var doorDirection = Enum.Parse<Direction>(door.name);
                 
-                doors.Add(new Door(this,doorDirection,doorX,doorY));
-
+                doors.Add(new Door(this,marker,doorDirection,doorX,doorY));
             }
             
             return doors;
         }
     }
 
-    public int doorCount => Doors.Count;
-
-    public Room(string mapName, Point renderPos)
+    public List<Vector2> Spawns
     {
-        _map = ContentLoader.Tilemaps[mapName];
-        this._renderPos = renderPos;
-        roomMapName = mapName;
-        
-        getTiledTilesets();
+        get
+        {
+            var spawnObjects = _map.Layers.First(x => x.name == "Spawn").objects;
+            var spawns = new List<Vector2>();
+
+            foreach (var spawnObject in spawnObjects)
+            {
+                var spawnX = spawnObject.x + _renderPos.X;
+                var spawnY = spawnObject.y + _renderPos.Y;
+                spawns.Add(new Vector2(spawnX,spawnY));
+            }
+
+            return spawns;
+
+        }
+    }
+    public Vector2 GetRandomSpawnPos(Entity entity)
+    {
+        var random = new Random((int)DateTime.Now.Ticks);
+        var index = random.Next(Spawns.Count);
+
+        var spawnPos = new Vector2(Spawns[index].X - entity.Rectangle.Center.X,Spawns[index].Y - entity.Rectangle.Center.X);
+        var spawnRect = new Rectangle((int) spawnPos.X, (int) spawnPos.Y, entity.Rectangle.Width, entity.Rectangle.Height);
+
+        foreach (var rectangle in GroundLayer)
+        {
+            if (rectangle.Contains(spawnRect))
+            {
+                return spawnPos;
+            }
+        }
+        throw new InvalidOperationException("Spawn of entity failed");
     }
     
-    private void getTiledTilesets()
+    
+    private void GetTiledTilesets()
     {
         foreach (var mapTileset in _map.Tilesets)
         {
-            if (mapTileset.source != null)
-            {
-                var filename = Path.GetFileNameWithoutExtension(mapTileset.source);
-                _tilesets.Add(mapTileset.firstgid, ContentLoader.Tilesets[filename]);
-            }
+            if (mapTileset.source == null) continue;
+            var filename = Path.GetFileNameWithoutExtension(mapTileset.source);
+            _tilesets.Add(mapTileset.firstgid, ContentLoader.Tilesets[filename]);
         }
     }
-    
+
+    public void ChangeTile(int x, int y, int newGid, string layerName)
+    {
+        var layer = _map.Layers.First(layer => layer.name == layerName);
+        var index = (y * layer.width) + x;
+        layer.data[index] = newGid+1;
+    }
+
+    public int GetTileGid(int x, int y, string layerName)
+    {
+        var layer = _map.Layers.First(layer => layer.name == layerName);
+        var index = (y * layer.width) + x;
+
+        return layer.data[index];
+    }
     public void Draw(SpriteBatch spriteBatch)
     {
         var tileLayers = _map.Layers.Where(x => x.type == TiledLayerType.TileLayer);
-
+        
         foreach (var layer in tileLayers)
         {
             for (var y = 0; y < layer.height; y++)
@@ -120,7 +159,6 @@ public class Room
                     var mapTileset = _map.GetTiledMapTileset(gid);
                     var tileset = _tilesets[mapTileset.firstgid];
                     var tilesetFilename = Path.GetFileNameWithoutExtension(mapTileset.source);
-                    
                     
                     var tilesetImageName = tilesetFilename.Replace("_tileset", "_image");
                     var tilesetTexture = ContentLoader.TilesetTextures[tilesetImageName];
@@ -170,6 +208,7 @@ public class Room
         }
     }
 }
+
 [Flags] internal enum Trans
 {
     None = 0,
