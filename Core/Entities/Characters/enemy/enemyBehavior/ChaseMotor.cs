@@ -48,8 +48,8 @@ public class ChaseMotor : Motor
         return position;
     }
 
-    public override bool Collides()
+    public override bool Collides(float velocity)
     {
-        throw new System.NotImplementedException();
+        return false;
     }
 }

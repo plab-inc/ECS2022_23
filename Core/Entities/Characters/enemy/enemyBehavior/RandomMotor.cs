@@ -40,8 +40,8 @@ public class RandomMotor : Motor
         return position;
     }
 
-    public override bool Collides()
+    public override bool Collides(float velocity)
     {
-        throw new NotImplementedException();
+        return false;
     }
 }
