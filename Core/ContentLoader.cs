@@ -14,7 +14,7 @@ public static class ContentLoader
     public static Dictionary<string, TiledMap> Tilemaps =  new();
     public static Dictionary<string, TiledTileset> Tilesets =  new();
     public static Dictionary<string, Texture2D> TilesetTextures = new ();
-    
+    public static Texture2D EnemyTexture;
     public static void Load(ContentManager content)
     {
         if (!Directory.Exists("Content")) throw new DirectoryNotFoundException();
@@ -23,6 +23,7 @@ public static class ContentLoader
 
         LoadTilemaps();
         LoadTilesets();
+        LoadSprites();
     }
 
     private static void LoadTilemaps()
@@ -70,4 +71,10 @@ public static class ContentLoader
         }
         
     }
+
+    private static void LoadSprites()
+    {
+        EnemyTexture = _content.Load<Texture2D>("sprites/astro");
+    }
+
 }

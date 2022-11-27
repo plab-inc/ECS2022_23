@@ -25,7 +25,6 @@ public class Game1 : Game
     public static int ScreenWidth = 1280;
     public static int ScreenHeight = 720;
     
-    
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -55,7 +54,7 @@ public class Game1 : Game
         _player = new Player(Content.Load<Texture2D>("sprites/astro"), AnimationLoader.LoadPlayerAnimations(Content));
         _player.SetWeapon(new Weapon(Content.Load<Texture2D>("sprites/spritesheet"),Vector2.Zero,AnimationLoader.LoadBasicWeaponAnimation(Content)));
 
-        _escape = new Escape(_player, 3, false);
+        _escape = new Escape(_player, 1, false);
         _escape.AttachCamera(_camera);
         
         _uiManager = new UiManager();

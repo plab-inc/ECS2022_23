@@ -77,9 +77,19 @@ public class Room
     {
         get
         {
-            var spawnObjects = Map.Layers.First(x => x.name == "Spawn").objects;
+            // TODO Debug this mess!
+            TiledObject[] spawnObjects;
+            try
+            {
+                spawnObjects = Map.Layers.First(x => x.name == "Spawn").objects;
+            }
+            catch (InvalidOperationException e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+            
             var spawns = new List<Vector2>();
-
             foreach (var spawnObject in spawnObjects)
             {
                 var spawnX = spawnObject.x + _renderPos.X;
