@@ -4,7 +4,6 @@ using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using MonoGameLevelGenerator.Core;
 
 namespace ECS2022_23.Core.Entities.Characters;
@@ -12,7 +11,6 @@ namespace ECS2022_23.Core.Entities.Characters;
 public class Player : Character
 {
     public float Armor;
-    public bool IsAlive;
     public float Level;
     public float XpToNextLevel;
     public float Money;
@@ -31,6 +29,7 @@ public class Player : Character
         _input = new Input(this);
         HP = 10;
         SpriteWidth = 16;
+        Strength = 5;
     }
     public Player(Texture2D texture, Dictionary<string, Animation> animations) : base(Vector2.Zero,texture, animations)
     {
@@ -38,6 +37,7 @@ public class Player : Character
         _input = new Input(this);
         HP = 10;
         SpriteWidth = 16;
+        Strength = 5;
     }
     
     public void setLevel(Level level)
