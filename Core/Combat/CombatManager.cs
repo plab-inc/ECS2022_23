@@ -1,60 +1,71 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Characters.enemy;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Combat;
 
 public static class CombatManager
 {
-    private static Rectangle currentRec;
-    public static void Update(Player player, Enemy enemy)
+    private static List<Enemy> _activeEnemies = new List<Enemy>();
+    public static void Update(Player player)
     {
         if (player.IsAttacking)
         {
-            Attack(player, enemy);
-        } else if (enemy.IsAttacking)
+            foreach (var enemy in _activeEnemies)
+            {
+                PlayerAttack(player, enemy);
+            }
+
+            player.IsAttacking = false;
+        }
+
+        foreach (var enemy in _activeEnemies.Where(enemy => enemy.IsAttacking))
         {
-            Attack(enemy, player);
+            //muss noch mit mehreren enemies getestet werden (gleichzeitige Angriffe z.B.)
+            EnemyAttack(enemy, player);
         }
     }
-
-    private static void Attack(Character attacker, Character defender)
+    private static void PlayerAttack(Player attacker, Enemy defender)
     {
+        if (!defender.IsAlive) return;
+        if (!CheckCollision(attacker, defender)) return;
+        defender.HP -= attacker.Strength;
+        defender.SetAnimation("Hurt");
+
+        if (!(defender.HP <= 0)) return;
+        defender.SetAnimation("Death");
+        attacker.Money += defender.MoneyReward;
+        attacker.XpToNextLevel += defender.XpReward;
+        defender.IsAlive = false;
+        //TODO remove dead entity from game / entity-list / make invisible 
+    }
+    
+    private static void EnemyAttack(Enemy attacker, Player defender)
+    {
+        if (!defender.IsAlive) return;
         if (CheckCollision(attacker, defender))
         {
-            if (defender.GetType() == typeof(Player))
+            var armor = defender.Armor;
+            armor -= attacker.Strength;
+            if (armor < 0)
             {
-                //player gets hit
-                Debug.WriteLine("player gets hit");
-                var player = (Player)defender;
-                var armor = player.Armor;
-                armor -= attacker.Strength;
-                if (armor < 0)
-                {
-                    player.Armor = 0;
-                    player.HP += armor;
-                }
-                else
-                {
-                    player.Armor = armor;
-                }
+                defender.Armor = 0;
+                defender.HP += armor;
+                defender.SetAnimation("Hurt");
             }
             else
             {
-                //enemy gets hit
-                defender.HP -= attacker.Strength;
-                Debug.WriteLine("enemy gets hit" + defender.HP);
+                defender.Armor = armor;
             }
-        
+           
             if (defender.HP <= 0)
             {
-                Debug.WriteLine("defender dies");
-                //dead remove from game play death animation
-                //TODO remove dead entity from game / list / make unvisible
+                defender.SetAnimation("Death");
+                defender.IsAlive = false;
+                //TODO remove dead entity from game / entity-list / make invisible 
             }
         }
         attacker.IsAttacking = false;
@@ -72,29 +83,22 @@ public static class CombatManager
         {
             case (int) Direction.Right:
                 attackRect = new Rectangle(figureRect.X + figureRect.Width, figureRect.Y, figureRect.Width, figureRect.Height);
-                currentRec = attackRect;
                 return attackRect.Intersects(defenderRect);
             case (int) Direction.Left:
                 attackRect = new Rectangle(figureRect.X - figureRect.Width, figureRect.Y, figureRect.Width, figureRect.Height);
-                currentRec = attackRect;
                 return attackRect.Intersects(defenderRect);
             case (int) Direction.Up:
                 attackRect = new Rectangle(figureRect.X, figureRect.Y - figureRect.Height, figureRect.Width, figureRect.Height);
-                currentRec = attackRect;
                 return attackRect.Intersects(defenderRect);
             case (int) Direction.Down:
                 attackRect = new Rectangle(figureRect.X, figureRect.Y + figureRect.Height, figureRect.Width, figureRect.Height);
-                currentRec = attackRect;
                 return attackRect.Intersects(defenderRect);
             default: return false;
         }
     }
-
-    public static void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
+    
+    public static void AddEnemy(Enemy enemy)
     {
-        var recTexture = new Texture2D(graphicsDevice, 1, 1);
-        recTexture.SetData(new Color[] { Color.Green });
-        
-        spriteBatch.Draw(recTexture, currentRec, Color.White);
+        _activeEnemies.Add(enemy);
     }
 }
