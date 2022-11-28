@@ -13,35 +13,87 @@ internal static class LevelGenerator
     private static readonly int PossibleStarts = Directory.GetFiles("Content/rooms","start*.xnb").Length;
     private static readonly Random Random = new((int)DateTime.Now.Ticks);
     
-    public static Level GenerateLevel(int minRooms, int maximumRooms)
+    public static Level GenerateLevel(int minimumRooms, int maximumRooms)
     {
         List<Room> rooms = new();
         List<Rectangle> collisionLayer = new();
         List<Door> deadEndDoors = new();
+        Room bossRoom;
 
         var triesToGenerateLevel = 0;
-
+        var bossRoomGenerations = 1;
+        var roomGenerations = 1;
+        
         Console.WriteLine("Level generation started.");
         do
         {
             triesToGenerateLevel++;
+            
+            rooms.Clear();
+            deadEndDoors.Clear();
+            collisionLayer.Clear();
+            
             ConnectRooms(maximumRooms, rooms, collisionLayer, deadEndDoors);
-
-        } while (rooms.Count < maximumRooms);
+            bossRoom = CreateBossRoom(deadEndDoors,rooms);
+            
+            if (bossRoom != null)
+            {
+                rooms.Add(bossRoom);
+                collisionLayer.AddRange(bossRoom.GroundLayer);
+            }
+            
+            //For debugging
+            if (bossRoom == null)
+            {
+                bossRoomGenerations++;
+            }
+            if (rooms.Count < minimumRooms)
+            {
+                roomGenerations++;
+            }
+            
+        } while (rooms.Count < minimumRooms || bossRoom == null);
         
-        Console.WriteLine("Level generation successful after " + triesToGenerateLevel + " tries. \nClosing doors now.");
+        Console.WriteLine("Level generation successful after {0} tries.\n" +
+                          "{1} Tries to generate rooms\n" +
+                          "{2} Tries to generate boosroom\n" +
+                          "Closing doors now.",triesToGenerateLevel,roomGenerations,bossRoomGenerations);
         
         foreach (var deadEndDoor in deadEndDoors)
         {
             var rect = collisionLayer.Find(x => x.Contains(deadEndDoor.Marker));
             collisionLayer.Remove(rect);
             CloseDoor(deadEndDoor);
-            //TODO ContentLoader rework
         }
         
-        Console.WriteLine("Open doors closed \nDone!");
+        Console.WriteLine("Open doors closed. \nDone!");
         
         return new Level(rooms, collisionLayer);
+    }
+    private static Room CreateBossRoom(List<Door> openDoors,List<Room> rooms)
+    {
+        
+        foreach (var (key, map) in ContentLoader.Tilemaps)
+        {
+            
+            if (!key.Contains("boss")) continue;
+            
+            foreach (var door in openDoors)
+            {
+                Console.Write("Finding matching Bossdoor:");
+                if (!CanRoomsConnect(door, map)) continue;
+                
+                    Console.Write(" Sucess! \nTest if there is enough space:");
+                    var renderPos = CalculateNewRenderPos(door, map);
+
+                    if (DoRoomsIntersect(rooms, renderPos, map)) continue;
+                        openDoors.Remove(door);
+                        Console.WriteLine(" Sucess! \nBossroom generation successful");
+                        return new Room(key, renderPos);
+            }
+        }
+        Console.WriteLine("Bossroom generation failed");
+        return null;
     }
     private static void ConnectRooms(int maximumRooms, List<Room> rooms, List<Rectangle> groundLayer, List<Door> deadEndDoors)
     {
@@ -52,10 +104,10 @@ internal static class LevelGenerator
         rooms.Add(start);
         
         var openDoors = new Queue<Door>(start.Doors);
-        
-        var roomNames = GetAllRoomNames();
         var generatedRooms = 0;
         var trys = 0;
+
+        var maps = ContentLoader.Tilemaps;
         
         while (generatedRooms < maximumRooms)
         {
@@ -68,26 +120,18 @@ internal static class LevelGenerator
                 break;
             }
 
-            if (roomNames.Count == 0)
-            {
-                roomNames = GetAllRoomNames();
-            }
+            var map = maps.Where(pair => pair.Key.Contains("room"))
+                .ElementAt(Random.Next(0, maps.Count(pair => pair.Key.Contains("room"))));
             
-            var tryRoomNumber = Random.Next(0, roomNames.Count);
-            var tryRoomName = roomNames[tryRoomNumber];
-            roomNames.RemoveAt(tryRoomNumber);
-            
-            var tryMap = ContentLoader.Tilemaps[tryRoomName];
+            Console.Write(trys++ + ": Generating..." + map.Key);
 
-            Console.Write(trys++ + ": Generating..." + tryRoomName);
-
-                if (!CanRoomsConnect(currentDoor, tryMap)) continue;
-                
-            var newRenderPos = CalculateNewRenderPos(currentDoor, tryMap);
-            var newRoom = new Room(tryRoomName, newRenderPos);
+            if (!CanRoomsConnect(currentDoor, map.Value)) continue;
             
-            if (!DoRoomsIntersect(rooms,newRoom))
+            var renderPos = CalculateNewRenderPos(currentDoor, map.Value);
+            
+            if (!DoRoomsIntersect(rooms,renderPos,map.Value))
             {
+                var newRoom = new Room(map.Key, renderPos);
                 rooms.Add(newRoom);
                 groundLayer.AddRange(newRoom.GroundLayer);
                     
@@ -128,22 +172,16 @@ internal static class LevelGenerator
         return false;
 
     }
-    private static bool DoRoomsIntersect(List<Room> rooms, Room newRoom)
+    private static bool DoRoomsIntersect(List<Room> rooms, Point renderPos, TiledMap map)
     {
-        if (!rooms.Any(room => room.Rectangle.Intersects(newRoom.Rectangle))) return false;
+        Rectangle rect = new(renderPos.X, renderPos.Y, map.Width, map.Height);
         
-        Console.Write(" Failed: Rooms intersect \n");
+        if (!rooms.Any(room => room.Rectangle.Intersects(rect))) return false;
+        
+        Console.Write(" Failed: Rooms would intersect \n");
+        
         return true;
 
-    }
-    private static List<string> GetAllRoomNames()
-    {
-        //TODO Maybe move this into Contentmanager
-        
-        var roomNames = Directory.GetFiles("Content/rooms", "room*.xnb").
-            Select(Path.GetFileNameWithoutExtension).ToList();
-        
-        return roomNames;
     }
     private static void CloseDoor(Door door)
     {
@@ -256,7 +294,6 @@ internal static class LevelGenerator
                 {
                     room.ChangeTile(0 , roomHeight-1, 39, layer);
                 }
-                
                 
                 break;
         }
