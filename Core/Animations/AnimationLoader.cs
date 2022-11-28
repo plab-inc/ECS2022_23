@@ -11,24 +11,15 @@ public static class AnimationLoader
 {
     private static ContentManager _content;
     private static Texture2D _texture;
-    public static Dictionary<string, Animation> PlayerAnimations { get; private set; }
-    public static Dictionary<string, Animation> SwordAnimations { get; private set; }
-    public static  Dictionary<string, Animation> KnifeAnimations { get; private set; }
-    public static  Dictionary<string, Animation> StickAnimations { get; private set; }
-    public static  Dictionary<string, Animation> PhaserAnimations { get; private set; }
-    public static  Dictionary<string, Animation> CrowbarAnimations { get; private set; }
     public static void Load(ContentManager content)
     {
         if (!Directory.Exists("Content")) throw new DirectoryNotFoundException();
         _content = content;
         _texture = _content.Load<Texture2D>("sprites/spritesheet");
-        LoadPlayerAnimations();
-        LoadWeaponAnimations();
     }
-    
-    private static void LoadPlayerAnimations()
+    public static Dictionary<string, Animation> CreatePlayerAnimations()
     {
-        PlayerAnimations = new Dictionary<string, Animation>()
+        return new Dictionary<string, Animation>()
         {
             {
                 "WalkUp",
@@ -69,44 +60,9 @@ public static class AnimationLoader
             }
         };
     }
-
-    private static void LoadWeaponAnimations()
+    public static Dictionary<string, Animation> CreateSwordAnimations()
     {
-        CrowbarAnimations = new Dictionary<string, Animation>()
-        {
-            {
-                "AttackRight",
-                new Animation(_texture, 16, 16, 3, new Vector2(16, 6), false)
-            }
-        };
-        KnifeAnimations = new Dictionary<string, Animation>()
-        {
-            {
-                "AttackRight",
-                new Animation(_texture, 16, 16, 3, new Vector2(13, 5), false)
-            }
-        };
-        PhaserAnimations = new Dictionary<string, Animation>()
-        {
-            {
-                "AttackRight",
-                new Animation(_texture, 16, 16, 3, new Vector2(16, 5), false)
-            }
-        };
-        StickAnimations = new Dictionary<string, Animation>()
-        {
-            {
-                "AttackRight",
-                new Animation(_texture, 16, 16, 3, new Vector2(19, 6), false)
-            }
-        };
-        
-        LoadSwordAnimations();
-    }
-
-    private static void LoadSwordAnimations()
-    {
-        SwordAnimations = new Dictionary<string, Animation>()
+        return new Dictionary<string, Animation>()
         {
             {
                 "AttackRight",
@@ -123,6 +79,94 @@ public static class AnimationLoader
             {
                 "AttackDown",
                 new Animation(_texture, 16, 16, 3, new Vector2(13, 6), false, false, false, 90)
+            }
+        };
+    }
+    public static Dictionary<string, Animation> CreatePhaserAnimations()
+    {
+        return new Dictionary<string, Animation>()
+        {
+            {
+                "AttackRight",
+                new Animation(_texture, 16, 16, 3, new Vector2(16, 5), false)
+            },
+            {
+                "AttackLeft",
+                new Animation(_texture, 16, 16, 3, new Vector2(16, 5), false, true, false)
+            },
+            {
+                "AttackUp",
+                new Animation(_texture, 16, 16, 3, new Vector2(16, 5), false, false, false, -90)
+            },
+            {
+                "AttackDown",
+                new Animation(_texture, 16, 16, 3, new Vector2(16, 5), false, false, false, 90)
+            }
+        };
+    }
+    public static Dictionary<string, Animation> CreateKnifeAnimations()
+    {
+        return new Dictionary<string, Animation>()
+        {
+            {
+                "AttackRight",
+                new Animation(_texture, 16, 16, 3, new Vector2(13, 5), false)
+            },
+            {
+                "AttackLeft",
+                new Animation(_texture, 16, 16, 3, new Vector2(13, 5), false, true, false)
+            },
+            {
+                "AttackUp",
+                new Animation(_texture, 16, 16, 3, new Vector2(13, 5), false, false, false, -90)
+            },
+            {
+                "AttackDown",
+                new Animation(_texture, 16, 16, 3, new Vector2(13, 5), false, false, false, 90)
+            }
+        };
+    }
+    public static Dictionary<string, Animation> CreateStickAnimations()
+    {
+       return new Dictionary<string, Animation>()
+        {
+            {
+                "AttackRight",
+                new Animation(_texture, 16, 16, 3, new Vector2(19, 6), false)
+            },
+            {
+                "AttackLeft",
+                new Animation(_texture, 16, 16, 3, new Vector2(19, 6), false, true, false)
+            },
+            {
+                "AttackUp",
+                new Animation(_texture, 16, 16, 3, new Vector2(19, 6), false, false, false, -90)
+            },
+            {
+                "AttackDown",
+                new Animation(_texture, 16, 16, 3, new Vector2(19, 6), false, false, false, 90)
+            }
+        };
+    }
+    public static Dictionary<string, Animation> CreateCrowbarAnimations()
+    {
+        return new Dictionary<string, Animation>()
+        {
+            {
+                "AttackRight",
+                new Animation(_texture, 16, 16, 3, new Vector2(16, 6), false)
+            },
+            {
+                "AttackLeft",
+                new Animation(_texture, 16, 16, 3, new Vector2(16, 6), false, true, false)
+            },
+            {
+                "AttackUp",
+                new Animation(_texture, 16, 16, 3, new Vector2(16, 6), false, false, false, -90)
+            },
+            {
+                "AttackDown",
+                new Animation(_texture, 16, 16, 3, new Vector2(16, 6), false, false, false, 90)
             }
         };
     }
