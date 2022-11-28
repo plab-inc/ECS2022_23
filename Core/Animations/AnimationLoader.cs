@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -74,11 +73,11 @@ public static class AnimationLoader
             },
             {
                 "AttackUp",
-                new Animation(_texture, 16, 16, 3, new Vector2(13, 6), false, false, false, -90)
+                new Animation(_texture, 16, 16, 3, new Vector2(13, 6), false)
             },
             {
                 "AttackDown",
-                new Animation(_texture, 16, 16, 3, new Vector2(13, 6), false, false, false, 90)
+                new Animation(_texture, 16, 16, 3, new Vector2(13, 6), false)
             }
         };
     }
@@ -96,11 +95,11 @@ public static class AnimationLoader
             },
             {
                 "AttackUp",
-                new Animation(_texture, 16, 16, 3, new Vector2(16, 5), false, false, false, -90)
+                new Animation(_texture, 16, 16, 3, new Vector2(16, 5), false)
             },
             {
                 "AttackDown",
-                new Animation(_texture, 16, 16, 3, new Vector2(16, 5), false, false, false, 90)
+                new Animation(_texture, 16, 16, 3, new Vector2(16, 5), false)
             }
         };
     }
@@ -118,11 +117,11 @@ public static class AnimationLoader
             },
             {
                 "AttackUp",
-                new Animation(_texture, 16, 16, 3, new Vector2(13, 5), false, false, false, -90)
+                new Animation(_texture, 16, 16, 3, new Vector2(13, 5), false)
             },
             {
                 "AttackDown",
-                new Animation(_texture, 16, 16, 3, new Vector2(13, 5), false, false, false, 90)
+                new Animation(_texture, 16, 16, 3, new Vector2(13, 5), false)
             }
         };
     }
@@ -140,11 +139,11 @@ public static class AnimationLoader
             },
             {
                 "AttackUp",
-                new Animation(_texture, 16, 16, 3, new Vector2(19, 6), false, false, false, -90)
+                new Animation(_texture, 16, 16, 3, new Vector2(19, 6), false)
             },
             {
                 "AttackDown",
-                new Animation(_texture, 16, 16, 3, new Vector2(19, 6), false, false, false, 90)
+                new Animation(_texture, 16, 16, 3, new Vector2(19, 6), false)
             }
         };
     }
@@ -162,11 +161,11 @@ public static class AnimationLoader
             },
             {
                 "AttackUp",
-                new Animation(_texture, 16, 16, 3, new Vector2(16, 6), false, false, false, -90)
+                new Animation(_texture, 16, 16, 3, new Vector2(16, 6), false)
             },
             {
                 "AttackDown",
-                new Animation(_texture, 16, 16, 3, new Vector2(16, 6), false, false, false, 90)
+                new Animation(_texture, 16, 16, 3, new Vector2(16, 6), false)
             }
         };
     }

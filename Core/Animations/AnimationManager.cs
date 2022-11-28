@@ -62,24 +62,17 @@ public class AnimationManager
         if (CurrentAnimation == null) return;
         var sourceRec = new Rectangle((int)(_currentFrame + CurrentAnimation.StartFrame.X) * CurrentAnimation.Width, (int)CurrentAnimation.StartFrame.Y * CurrentAnimation.Height, CurrentAnimation.Width, CurrentAnimation.Height);
         var scale = new Vector2(1, 1);
-        //var rotation = CurrentAnimation.Rotation;
-        var rotation = 0f;
-        var center = Vector2.Zero;
-        if (CurrentAnimation.Rotation != 0)
-        {
-            //center = new Vector2(position.X + sourceRec.Width / 2f, position.Y + sourceRec.Height / 2f);
-        }
-       
+
         if (CurrentAnimation.FlipX == true)
         {
-            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, Color.White, rotation, center, scale, SpriteEffects.FlipHorizontally, 0f);
+            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, Color.White, 0, Vector2.Zero, scale, SpriteEffects.FlipHorizontally, 0f);
         } else if (CurrentAnimation.FlipY == true)
         {
-            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, Color.White, rotation, center, scale, SpriteEffects.FlipVertically, 0f);
+            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, Color.White, 0, Vector2.Zero, scale, SpriteEffects.FlipVertically, 0f);
         }
         else
         {
-            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, Color.White, rotation, center, scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
         }
     }
 }
