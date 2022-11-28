@@ -37,6 +37,14 @@ public static class AnimationLoader
                 new Animation(content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 3, new Vector2(6, 6), false, true, false)
             },
             {
+                "Hurt",
+                new Animation(content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 2, new Vector2(2, 6), false)
+            },
+            {
+                "Death",
+                new Animation(content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 1, new Vector2(4, 6), true)
+            },
+            {
                 "Default",
                 new Animation(content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 7, new Vector2(1, 2), true)
             }
