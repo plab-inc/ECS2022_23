@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using Comora;
 using ECS2022_23.Core;
 using ECS2022_23.Core.Animations;
@@ -7,7 +5,6 @@ using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Game;
 using ECS2022_23.Core.Ui;
-using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -27,6 +24,7 @@ public class Game1 : Game
     
     public static int ScreenWidth = 1280;
     public static int ScreenHeight = 720;
+    
     
     public Game1()
     {
@@ -77,7 +75,7 @@ public class Game1 : Game
     }
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(new Color(24, 33, 93));
+        GraphicsDevice.Clear(Color.CornflowerBlue);
         
         _spriteBatch.Begin(_camera, samplerState: SamplerState.PointClamp);
         
@@ -86,9 +84,7 @@ public class Game1 : Game
         _spriteBatch.End();
         
         _spriteBatch.Begin();
-        
-            _uiManager.Draw(_spriteBatch);
-        
+        _uiManager.Draw(_spriteBatch);
         _spriteBatch.End();
 
         base.Draw(gameTime);
