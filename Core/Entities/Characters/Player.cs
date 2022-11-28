@@ -164,11 +164,11 @@ public class Player : Character
                 break;
             case (int)Direction.Up:
                 _weapon.Position = new Vector2(Position.X, Position.Y - SpriteWidth);
-                _weapon.SetAnimation("AttackUp");
+                //_weapon.SetAnimation("AttackUp");
                 break;
             case (int)Direction.Down:
                 _weapon.Position = new Vector2(Position.X, Position.Y + SpriteWidth);
-                _weapon.SetAnimation("AttackDown");
+                //_weapon.SetAnimation("AttackDown");
                 break;
         }
     }
