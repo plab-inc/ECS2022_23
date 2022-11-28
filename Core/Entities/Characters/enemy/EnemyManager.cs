@@ -30,7 +30,7 @@ public class EnemyManager
         {
             if (room.Spawns != null && room.Spawns.Count > 0)
             {
-                var en = new Enemy(room.Spawns[rand.Next(0, room.Spawns.Count)], ContentLoader.EnemyTexture, new RandomMotor());
+                var en = new Enemy(room.Spawns[rand.Next(0, room.Spawns.Count)], ContentLoader.EnemyTexture, new RandomMotor(_escape._level), _escape._level);
                 AddEnemy(en);
             }
         }
@@ -43,5 +43,4 @@ public class EnemyManager
             enemy.Update(gameTime);
         }
     }
-
 }

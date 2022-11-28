@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ECS2022_23.Core.World;
+using Microsoft.Xna.Framework;
 
 namespace ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
 
@@ -6,7 +7,7 @@ public class ChaseMotor : Motor
 {
     private Entity _target;
     
-    public ChaseMotor(Entity target)
+    public ChaseMotor(Entity target, Level level, Enemy enemy) : base(level)
     {
         _target = target;
     }
@@ -46,10 +47,5 @@ public class ChaseMotor : Motor
         }
 
         return position;
-    }
-
-    public override bool Collides(float velocity)
-    {
-        return false;
     }
 }

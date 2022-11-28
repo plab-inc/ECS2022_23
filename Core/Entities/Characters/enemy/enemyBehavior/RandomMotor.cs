@@ -1,4 +1,5 @@
 ﻿using System;
+using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
 
 namespace ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
@@ -8,6 +9,12 @@ public class RandomMotor : Motor
     int delay=0;
     Random rand = new Random();
     private int LastDirection;
+    
+    
+    public RandomMotor(Level level) : base(level)
+    {
+        
+    }
     
     public override Vector2 Move(Vector2 position, int velocity)
     {
@@ -24,24 +31,29 @@ public class RandomMotor : Motor
         }
 
         LastDirection = newDirection;
+
+        Vector2 temp = Vector2.Zero;
         
         // Directions in Order: UP, DOWN, LEFT, Right
         switch (newDirection)
         {
             case 0 :
-                return new Vector2(position.X, position.Y+velocity);
+                temp = new Vector2(position.X, position.Y+velocity);
+                break;
             case 1:
-                return new Vector2(position.X, position.Y-velocity);
+                temp = new Vector2(position.X, position.Y-velocity);
+                break;
             case 2:
-                return new Vector2(position.X - velocity, position.Y);
+                temp = new Vector2(position.X - velocity, position.Y);
+                break;
             case 3:
-                return new Vector2(position.X + velocity, position.Y);
+                temp = new Vector2(position.X + velocity, position.Y);
+                break;
         }
-        return position;
-    }
 
-    public override bool Collides(float velocity)
-    {
-        return false;
+        if (!_enemy.CollidesWithWall(temp))
+            return position;
+        
+        return Vector2.Zero;
     }
 }
