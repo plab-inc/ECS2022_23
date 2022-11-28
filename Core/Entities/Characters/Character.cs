@@ -12,6 +12,7 @@ public abstract class Character : Entity
     public float Velocity;
     protected int SpriteWidth;
     public int AimDirection;
+    public bool IsAlive = true;
     public bool IsAttacking { get; set; }
     
     protected Character(Vector2 spawn, Texture2D texture) : base(spawn, texture)
