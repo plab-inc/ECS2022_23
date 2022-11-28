@@ -33,4 +33,16 @@ public abstract class Character : Entity
     {
         
     }
+    
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        if (Animations == null)
+        {
+            base.Draw(spriteBatch);
+        }
+        else
+        {
+            AnimationManager.Draw(spriteBatch, Position);
+        }
+    }
 }

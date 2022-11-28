@@ -10,7 +10,7 @@ public  class Enemy : Character
     public float XpReward;
     public float MoneyReward;
     private Motor _motor;
-    public bool IsActive=true;
+    public bool IsActive = true;
 
     public Enemy(Vector2 spawn, Texture2D texture, Motor motor) : base(spawn, texture)
     {
@@ -23,7 +23,7 @@ public  class Enemy : Character
     public Enemy(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations, Motor motor) : base(spawn, texture, animations)
     {
         Velocity = 3f;
-        HP = 10;
+        HP = 20;
         SpriteWidth = 16;
         _motor = motor;
     }
@@ -34,5 +34,15 @@ public  class Enemy : Character
         {
            Position = _motor.Move(Position, (int) Velocity);
         }
+
+        if(!IsAlive)
+        {
+            SetAnimation("Death");
+        }
+        else
+        {
+            SetAnimation("Default");
+        }
+        AnimationManager.Update(gameTime);
     }
 }
