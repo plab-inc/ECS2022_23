@@ -135,6 +135,7 @@ public class Player : Character
         }
 
         SetAnimation("AttackRight");
+        IsAttacking = true;
     }
 
     public void SetWeapon(Weapon weapon)
