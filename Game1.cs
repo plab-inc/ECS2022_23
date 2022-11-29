@@ -22,10 +22,11 @@ public class Game1 : Game
 
     private Escape _escape;
     private Player _player;
-
+    
     public static int ScreenWidth = 1280;
     public static int ScreenHeight = 720;
-
+    
+    
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -51,16 +52,15 @@ public class Game1 : Game
     {
         ContentLoader.Load(Content);
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        
-        _player = new Player(Content.Load<Texture2D>("sprites/astro"), AnimationLoader.LoadPlayerAnimations(Content));
-        _player.Weapon = new Weapon(Content.Load<Texture2D>("sprites/spritesheet"),Vector2.Zero,AnimationLoader.LoadBasicWeaponAnimation(Content));
+        AnimationLoader.Load(Content);
+        _player = new Player(Content.Load<Texture2D>("sprites/astro"), AnimationLoader.CreatePlayerAnimations());
+        _player.Weapon(new Weapon(Content.Load<Texture2D>("sprites/spritesheet"),Vector2.Zero,AnimationLoader.CreateSwordAnimations()));
 
         _escape = new Escape(_player, 3, false);
         _escape.AttachCamera(_camera);
-     
+        
         _uiManager = new UiManager();
         UiLoader.Load(_uiManager, Content);
-        
     }
 
     protected override void Update(GameTime gameTime)
@@ -82,7 +82,7 @@ public class Game1 : Game
         _spriteBatch.Begin(_camera, samplerState: SamplerState.PointClamp);
         
             _escape.Draw(_spriteBatch);
-
+        
         _spriteBatch.End();
         
         _spriteBatch.Begin();

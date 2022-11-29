@@ -2,8 +2,10 @@ using System.Collections.Generic;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.World;
+using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using MonoGameLevelGenerator.Core;
 
 namespace ECS2022_23.Core.Entities.Characters;
@@ -108,8 +110,11 @@ public class Player : Character
 
     public override void Update(GameTime gameTime)
     {
-        _input.Move();
-        _input.Aim();
+        if (AnimationManager.AnimationFinished)
+        {
+            _input.Move();
+            _input.Aim();
+        }
         AnimationManager.Update(gameTime);
         Weapon?.Update(gameTime);
     }
@@ -130,14 +135,53 @@ public class Player : Character
     {
         if (Weapon != null)
         {
-            Weapon.Position = new Vector2(Position.X + SpriteWidth, Position.Y);
-            Weapon.SetAnimation("Attack");
+            SetWeaponPosition();
         }
 
-        SetAnimation("AttackRight");
-        IsAttacking = true;
+        switch (AimDirection)
+        {
+            case (int) Direction.Right:
+                SetAnimation("AttackRight");
+                break;
+            case (int)Direction.Left:
+                SetAnimation("AttackLeft");
+                break;
+            case (int)Direction.Up:
+                SetAnimation("AttackUp");
+                break;
+            case (int)Direction.Down:
+                SetAnimation("AttackDown");
+                break;
+        }
     }
-    
+
+    private void SetWeaponPosition()
+    {
+        switch (AimDirection)
+        {
+            case (int) Direction.Right:
+                Weapon.Position = new Vector2(Position.X + SpriteWidth, Position.Y);
+                Weapon.SetAnimation("AttackRight");
+                break;
+            case (int)Direction.Left:
+                Weapon.Position = new Vector2(Position.X - SpriteWidth, Position.Y);
+                Weapon.SetAnimation("AttackLeft");
+                break;
+            case (int)Direction.Up:
+                Weapon.Position = new Vector2(Position.X, Position.Y - SpriteWidth);
+                //_weapon.SetAnimation("AttackUp");
+                break;
+            case (int)Direction.Down:
+                Weapon.Position = new Vector2(Position.X, Position.Y + SpriteWidth);
+                //_weapon.SetAnimation("AttackDown");
+                break;
+        }
+    }
+    public void SetWeapon(Weapon weapon)
+    {
+        Weapon = weapon;
+    }
+
     public void AddItem(Item item)
     {
         Items ??= new List<Item>();

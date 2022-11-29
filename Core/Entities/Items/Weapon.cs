@@ -1,4 +1,5 @@
-﻿using ECS2022_23.Core.Animations;
+﻿using System.Collections.Generic;
+using ECS2022_23.Core.Animations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -8,17 +9,14 @@ public class Weapon : Item
 {
     public float DamagePoints;
     public float Range { get; }
-    private Animation Animation { get; }
 
-    public Weapon(Vector2 spawn, Texture2D texture, Vector2 startPos, Animation animation) : base(spawn, texture)
+    public Weapon(Vector2 spawn, Texture2D texture, Vector2 startPos, Dictionary<string, Animation> animations) : base(spawn, texture)
     {
-        Animation = animation;
-        AddAnimation("Attack", animation);
+        Animations = animations;
     }
-    public Weapon(Texture2D texture, Vector2 startPos, Animation animation) : base(Vector2.Zero, texture)
+    public Weapon(Texture2D texture, Vector2 startPos, Dictionary<string, Animation> animations) : base(Vector2.Zero, texture)
     {
-        Animation = animation;
-        AddAnimation("Attack", animation);
+        Animations = animations;
         Range = 16;
         DamagePoints = 2;
     }

@@ -101,12 +101,12 @@ public class Room
 
         foreach (var rectangle in GroundLayer)
         {
-            if (rectangle.Contains(spawnRect))
+            if (rectangle.Intersects(spawnRect))
             {
                 return spawnPos;
             }
         }
-        throw new InvalidOperationException("Spawn of entity failed");
+        throw new InvalidOperationException("Spawn of entity failed in Map: " + MapName + "at position: " + spawnPos);
     }
     
     
