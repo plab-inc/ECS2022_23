@@ -3,8 +3,6 @@ using ECS2022_23.Core;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Combat;
 using ECS2022_23.Core.Entities.Characters;
-using ECS2022_23.Core.Entities.Characters.enemy;
-using ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Game;
 using ECS2022_23.Core.Ui;
@@ -55,14 +53,14 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         
         _player = new Player(Content.Load<Texture2D>("sprites/astro"), AnimationLoader.LoadPlayerAnimations(Content));
-        _player.SetWeapon(new Weapon(Content.Load<Texture2D>("sprites/spritesheet"),Vector2.Zero,AnimationLoader.LoadBasicWeaponAnimation(Content)));
+        _player.Weapon = new Weapon(Content.Load<Texture2D>("sprites/spritesheet"),Vector2.Zero,AnimationLoader.LoadBasicWeaponAnimation(Content));
 
         _escape = new Escape(_player, 3, false);
         _escape.AttachCamera(_camera);
-        
+     
         _uiManager = new UiManager();
         UiLoader.Load(_uiManager, Content);
-
+        
     }
 
     protected override void Update(GameTime gameTime)
@@ -73,7 +71,7 @@ public class Game1 : Game
         
         _escape.Update(gameTime);
         _uiManager.Update(_player);
-
+        
         CombatManager.Update(_player);
         base.Update(gameTime);
     }

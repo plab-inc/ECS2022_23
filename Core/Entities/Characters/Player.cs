@@ -17,7 +17,7 @@ public class Player : Character
 
     private float speed = 3;
     public List<Item> Items;
-    private Weapon _weapon;
+    public Weapon Weapon { get; set; }
     private Input _input;
     
 
@@ -111,7 +111,7 @@ public class Player : Character
         _input.Move();
         _input.Aim();
         AnimationManager.Update(gameTime);
-        _weapon?.Update(gameTime);
+        Weapon?.Update(gameTime);
     }
     public override void Draw(SpriteBatch spriteBatch)
     {
@@ -122,27 +122,22 @@ public class Player : Character
         else
         {
             AnimationManager.Draw(spriteBatch, Position);
-            _weapon?.Draw(spriteBatch);
+            Weapon?.Draw(spriteBatch);
         }
     }
 
     public override void Attack()
     {
-        if (_weapon != null)
+        if (Weapon != null)
         {
-            _weapon.Position = new Vector2(Position.X + SpriteWidth, Position.Y);
-            _weapon.SetAnimation("Attack");
+            Weapon.Position = new Vector2(Position.X + SpriteWidth, Position.Y);
+            Weapon.SetAnimation("Attack");
         }
 
         SetAnimation("AttackRight");
         IsAttacking = true;
     }
-
-    public void SetWeapon(Weapon weapon)
-    {
-        _weapon = weapon;
-    }
-
+    
     public void AddItem(Item item)
     {
         Items ??= new List<Item>();
