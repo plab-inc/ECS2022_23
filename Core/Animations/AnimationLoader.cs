@@ -55,11 +55,11 @@ public static class AnimationLoader
             },
             {
                 "Hurt",
-                new Animation(content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 2, new Vector2(2, 6), false)
+                new Animation(_texture, 16, 16, 2, new Vector2(2, 6), false)
             },
             {
                 "Death",
-                new Animation(content.Load<Texture2D>("sprites/spritesheet"), 16, 16, 1, new Vector2(4, 6), true)
+                new Animation(_texture, 16, 16, 1, new Vector2(4, 6), true)
             },
             {
                 "Default",
