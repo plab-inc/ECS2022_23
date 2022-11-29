@@ -108,8 +108,11 @@ public class Player : Character
 
     public override void Update(GameTime gameTime)
     {
-        _input.Move();
-        _input.Aim();
+        if (AnimationManager.AnimationFinished)
+        {
+            _input.Move();
+            _input.Aim();
+        }
         AnimationManager.Update(gameTime);
         _weapon?.Update(gameTime);
     }

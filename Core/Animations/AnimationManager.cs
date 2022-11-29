@@ -8,10 +8,11 @@ public class AnimationManager
     private float _timer;
     private Animation CurrentAnimation { get; set; }
     private int _currentFrame;
-    private bool _animationFinished = true;
+    public bool AnimationFinished { get; private set; } = true;
+
     public void Play(Animation animation)
     {
-        if (_animationFinished == false)
+        if (AnimationFinished == false)
         {
             return;
         }
@@ -23,12 +24,12 @@ public class AnimationManager
         _timer = 0;
         CurrentAnimation = animation;
         _currentFrame = 0;
-        if (!CurrentAnimation.IsLooped) _animationFinished = false;
+        if (!CurrentAnimation.IsLooped) AnimationFinished = false;
     }
 
     private void Stop()
     {
-        _animationFinished = true;
+        AnimationFinished = true;
         CurrentAnimation = null;
         _currentFrame = 0;
         _timer = 0;
