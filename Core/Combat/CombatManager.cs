@@ -45,7 +45,7 @@ public static class CombatManager
             shot.Update(gameTime);
         }
         _activeShots.RemoveAll(shot => !shot.IsWithinRange() || shot.HitTarget);
-        
+        _activeEnemies.RemoveAll(enemy => !enemy.IsAlive);
     }
     private static void PlayerAttack(Player attacker, Enemy defender)
     {
@@ -56,7 +56,6 @@ public static class CombatManager
 
         if (defender.HP > 0) return;
         EnemyDies(defender, attacker);
-        //TODO remove dead entity from game / entity-list / make invisible 
     }
     
     private static void EnemyAttack(Character attacker, Player defender)
@@ -81,7 +80,6 @@ public static class CombatManager
             {
                 defender.SetAnimation("Death");
                 defender.IsAlive = false;
-                //TODO remove dead entity from game / entity-list / make invisible 
             }
         }
         attacker.IsAttacking = false;
