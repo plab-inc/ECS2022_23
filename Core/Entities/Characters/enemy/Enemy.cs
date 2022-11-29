@@ -10,7 +10,7 @@ public  class Enemy : Character
     public float XpReward;
     public float MoneyReward;
     private Motor _motor;
-    public bool IsActive=true;
+    public bool IsActive = true;
 
     public Enemy(Vector2 spawn, Texture2D texture, Motor motor) : base(spawn, texture)
     {
@@ -32,7 +32,17 @@ public  class Enemy : Character
     {
         if (IsActive)
         {
-           Position = _motor.Move(Position, (int) Velocity);
+           //Position = _motor.Move(Position, (int) Velocity);
         }
+
+        if(!IsAlive)
+        {
+            SetAnimation("Death");
+        }
+        else
+        {
+            SetAnimation("Default");
+        }
+        AnimationManager.Update(gameTime);
     }
 }

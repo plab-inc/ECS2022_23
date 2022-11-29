@@ -8,7 +8,7 @@ namespace MonoGameLevelGenerator.Core;
 public class Input
 {
     private Player _player;
-
+    private KeyboardState prevState;
     public Input(Player character)
     {
         _player = character;
@@ -21,7 +21,7 @@ public class Input
         var animation = "Default";
 
         // Attack & Actions
-        if (Keyboard.GetState().IsKeyDown(Keys.Space))
+        if (Keyboard.GetState().IsKeyDown(Keys.Space) && prevState != Keyboard.GetState())
         {
             _player.Attack();
         } 
@@ -78,6 +78,7 @@ public class Input
         
         _player.Position += velocity;
         _player.SetAnimation(animation);
+        prevState = Keyboard.GetState();
     }
     public void Aim()
     {
