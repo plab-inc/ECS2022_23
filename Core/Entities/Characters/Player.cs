@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using ECS2022_23.Core.Animations;
+using ECS2022_23.Core.Combat;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.World;
 using ECS2022_23.Enums;
@@ -136,6 +137,10 @@ public class Player : Character
         if (Weapon != null)
         {
             SetWeaponPosition();
+            if (Weapon.WeaponType == WeaponType.RANGE)
+            {
+                CombatManager.Shoot(this);
+            }
         }
 
         switch (AimDirection)
@@ -153,6 +158,8 @@ public class Player : Character
                 SetAnimation("AttackDown");
                 break;
         }
+
+        IsAttacking = true;
     }
 
     private void SetWeaponPosition()

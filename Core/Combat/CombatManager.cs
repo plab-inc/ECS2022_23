@@ -1,17 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Entities;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Characters.enemy;
+using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Combat;
 
 public static class CombatManager
 {
     private static List<Enemy> _activeEnemies = new List<Enemy>();
-    public static void Update(Player player)
+    private static List<ProjectileShot> _activeShots = new List<ProjectileShot>();
+    public static void Update(GameTime gameTime, Player player)
     {
         if (player.IsAttacking)
         {
@@ -23,31 +27,42 @@ public static class CombatManager
             player.IsAttacking = false;
         }
 
-        foreach (var enemy in _activeEnemies.Where(enemy => enemy.IsAttacking))
+        foreach (var enemy in _activeEnemies)
         {
             //muss noch mit mehreren enemies getestet werden (gleichzeitige Angriffe z.B.)
-            EnemyAttack(enemy, player);
+            if (enemy.IsAlive)
+            {
+                CheckShotEnemyCollision(enemy, player);
+            }
+            if (enemy.IsAttacking && enemy.IsAlive)
+            {
+                EnemyAttack(enemy, player);
+            }
         }
+        
+        foreach (var shot in _activeShots)
+        {
+            shot.Update(gameTime);
+        }
+        _activeShots.RemoveAll(shot => !shot.IsWithinRange() || shot.HitTarget);
+        
     }
     private static void PlayerAttack(Player attacker, Enemy defender)
     {
         if (!defender.IsAlive) return;
-        if (!CheckCollision(attacker, defender) && !CheckWeaponRange(attacker, defender)) return;
+        if (!EntitiesCollide(attacker, defender) && !WeaponCollides(attacker, defender)) return;
         defender.HP -= (attacker.Strength + attacker.Weapon.DamagePoints);
         defender.SetAnimation("Hurt");
 
-        if (!(defender.HP <= 0)) return;
-        defender.SetAnimation("Death");
-        attacker.Money += defender.MoneyReward;
-        attacker.XpToNextLevel += defender.XpReward;
-        defender.IsAlive = false;
+        if (defender.HP > 0) return;
+        EnemyDies(defender, attacker);
         //TODO remove dead entity from game / entity-list / make invisible 
     }
     
     private static void EnemyAttack(Character attacker, Player defender)
     {
         if (!defender.IsAlive) return;
-        if (CheckCollision(attacker, defender))
+        if (EntitiesCollide(attacker, defender))
         {
             var armor = defender.Armor;
             armor -= attacker.Strength;
@@ -72,7 +87,7 @@ public static class CombatManager
         attacker.IsAttacking = false;
     }
 
-    private static bool CheckCollision(Entity attacker, Entity defender) 
+    private static bool EntitiesCollide(Entity attacker, Entity defender) 
     {
         var figureRect = attacker.Rectangle;
         var defenderRect = defender.Rectangle;
@@ -80,7 +95,7 @@ public static class CombatManager
         return figureRect.Intersects(defenderRect);
     }
 
-    private static bool CheckWeaponRange(Player attacker, Entity defender)
+    private static bool WeaponCollides(Player attacker, Entity defender)
     {
         var figureRect = attacker.Rectangle;
         var defenderRect = defender.Rectangle;
@@ -109,5 +124,38 @@ public static class CombatManager
     public static void AddEnemy(Enemy enemy)
     {
         _activeEnemies.Add(enemy);
+    }
+
+    public static void Shoot(Player player)
+    {
+        var shot = AnimationLoader.CreateLaserShot(player.Weapon, player.AimDirection);
+        _activeShots.Add(shot);
+    }
+    private static void CheckShotEnemyCollision(Enemy enemy, Player player)
+    {
+        foreach (var shot in _activeShots.Where(shot => shot.Rectangle.Intersects(enemy.Rectangle)))
+        {
+            enemy.HP -= shot.DamagePoints + player.Strength;
+            enemy.SetAnimation("Hurt");
+            shot.HitTarget = true;
+            if (enemy.HP > 0) continue;
+            EnemyDies(enemy, player);
+            return;
+        }
+    }
+    private static void EnemyDies(Enemy enemy, Player player)
+    {
+        enemy.SetAnimation("Death");
+        player.Money += enemy.MoneyReward;
+        player.XpToNextLevel += enemy.XpReward;
+        enemy.IsAlive = false;
+    }
+    
+    public static void Draw(SpriteBatch spriteBatch)
+    {
+        foreach (var shot in _activeShots)
+        {
+            shot.Draw(spriteBatch);
+        }
     }
 }

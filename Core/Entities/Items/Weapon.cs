@@ -9,16 +9,18 @@ public class Weapon : Item
 {
     public float DamagePoints;
     public float Range { get; }
+    public WeaponType WeaponType;
 
     public Weapon(Vector2 spawn, Texture2D texture, Vector2 startPos, Dictionary<string, Animation> animations) : base(spawn, texture)
     {
         Animations = animations;
     }
-    public Weapon(Texture2D texture, Vector2 startPos, Dictionary<string, Animation> animations) : base(Vector2.Zero, texture)
+    public Weapon(Texture2D texture, Vector2 startPos, Dictionary<string, Animation> animations, WeaponType type) : base(Vector2.Zero, texture)
     {
         Animations = animations;
-        Range = 16;
+        Range = 64;
         DamagePoints = 2;
+        WeaponType = type;
     }
     
     public override void Update(GameTime gameTime)
@@ -31,4 +33,10 @@ public class Weapon : Item
         AnimationManager.Draw(spriteBatch, Position);
     }
     
+}
+
+public enum WeaponType
+{
+    CLOSE,
+    RANGE
 }
