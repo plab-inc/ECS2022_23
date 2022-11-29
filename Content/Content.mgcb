@@ -21,6 +21,11 @@
 /processorParam:TextureFormat=Compressed
 /build:../Assets/fonts/rainyhearts.spritefont;fonts/rainyhearts.spritefont
 
+#begin ../Assets/rooms/boss000.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/rooms/boss000.tmx;rooms/boss000.tmx
+
 #begin ../Assets/rooms/room000.tmx
 /importer:TiledImporter
 /processor:TiledProcessor

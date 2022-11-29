@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Comora;
 using ECS2022_23.Core.Entities.Characters;
@@ -28,7 +29,17 @@ public class Escape
         _player = player;
         _level = LevelGenerator.GenerateLevel((int) (difficulty * 2), (int) (difficulty * 4));
         _player.setLevel(_level);
-        player.Position = _level.StartRoom.GetRandomSpawnPos(player);
+        var pos = _level.StartRoom.GetRandomSpawnPos(player);
+        
+        try
+        {
+            player.Position = pos;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e + "\n" + _level.StartRoom.MapName + " " + pos);
+            throw;
+        }
         _enemyManager = new(this);
         _enemyManager.SpawnEnemies();
         _debugOn = debugOn;

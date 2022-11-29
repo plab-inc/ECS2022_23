@@ -55,18 +55,21 @@ public static class ContentLoader
     {
         var rooms = Directory.GetFiles("Content/rooms","room*.xnb");
         var starts = Directory.GetFiles("Content/rooms","start*.xnb");
+        var bosses = Directory.GetFiles("Content/rooms","boss*.xnb");
 
         foreach (var room in rooms)
         {
-            
             var fileName = Path.GetFileNameWithoutExtension(room);
             Tilemaps.Add(fileName, _content.Load<TiledMap>("rooms/" + Path.GetFileNameWithoutExtension(fileName)));
-            
         }
-
         foreach (var start in starts)
         {
             var fileName = Path.GetFileNameWithoutExtension(start);
+            Tilemaps.Add(fileName, _content.Load<TiledMap>("rooms/" + Path.GetFileNameWithoutExtension(fileName)));
+        }
+        foreach (var boss in bosses)
+        {
+            var fileName = Path.GetFileNameWithoutExtension(boss);
             Tilemaps.Add(fileName, _content.Load<TiledMap>("rooms/" + Path.GetFileNameWithoutExtension(fileName)));
         }
         
