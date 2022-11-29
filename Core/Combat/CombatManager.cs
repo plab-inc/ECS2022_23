@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ECS2022_23.Core.Entities;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Characters.enemy;
 using ECS2022_23.Enums;
@@ -31,8 +32,8 @@ public static class CombatManager
     private static void PlayerAttack(Player attacker, Enemy defender)
     {
         if (!defender.IsAlive) return;
-        if (!CheckCollision(attacker, defender)) return;
-        defender.HP -= attacker.Strength;
+        if (!CheckCollision(attacker, defender) && !CheckWeaponRange(attacker, defender)) return;
+        defender.HP -= (attacker.Strength + attacker.Weapon.DamagePoints);
         defender.SetAnimation("Hurt");
 
         if (!(defender.HP <= 0)) return;
@@ -43,7 +44,7 @@ public static class CombatManager
         //TODO remove dead entity from game / entity-list / make invisible 
     }
     
-    private static void EnemyAttack(Enemy attacker, Player defender)
+    private static void EnemyAttack(Character attacker, Player defender)
     {
         if (!defender.IsAlive) return;
         if (CheckCollision(attacker, defender))
@@ -71,27 +72,35 @@ public static class CombatManager
         attacker.IsAttacking = false;
     }
 
-    private static bool CheckCollision(Character attacker, Character defender) 
+    private static bool CheckCollision(Entity attacker, Entity defender) 
     {
         var figureRect = attacker.Rectangle;
         var defenderRect = defender.Rectangle;
-        Rectangle attackRect; 
 
-        if (figureRect.Intersects(defenderRect)) return true;
-       
+        return figureRect.Intersects(defenderRect);
+    }
+
+    private static bool CheckWeaponRange(Player attacker, Entity defender)
+    {
+        var figureRect = attacker.Rectangle;
+        var defenderRect = defender.Rectangle;
+        var weaponRect = attacker.Weapon.Rectangle;
+        var weapon = attacker.Weapon;
+        Rectangle attackRect; 
+        
         switch (attacker.AimDirection)
         {
             case (int) Direction.Right:
-                attackRect = new Rectangle(figureRect.X + figureRect.Width, figureRect.Y, figureRect.Width, figureRect.Height);
+                attackRect = new Rectangle(figureRect.X + figureRect.Width, figureRect.Y, (int) weapon.Range, weaponRect.Height);
                 return attackRect.Intersects(defenderRect);
             case (int) Direction.Left:
-                attackRect = new Rectangle(figureRect.X - figureRect.Width, figureRect.Y, figureRect.Width, figureRect.Height);
+                attackRect = new Rectangle(figureRect.X - (int) weapon.Range, figureRect.Y, (int) weapon.Range, weaponRect.Height);
                 return attackRect.Intersects(defenderRect);
             case (int) Direction.Up:
-                attackRect = new Rectangle(figureRect.X, figureRect.Y - figureRect.Height, figureRect.Width, figureRect.Height);
+                attackRect = new Rectangle(figureRect.X, figureRect.Y - (int) weapon.Range, weaponRect.Height, (int) weapon.Range);
                 return attackRect.Intersects(defenderRect);
             case (int) Direction.Down:
-                attackRect = new Rectangle(figureRect.X, figureRect.Y + figureRect.Height, figureRect.Width, figureRect.Height);
+                attackRect = new Rectangle(figureRect.X, figureRect.Y + figureRect.Height, weaponRect.Height, (int) weapon.Range);
                 return attackRect.Intersects(defenderRect);
             default: return false;
         }

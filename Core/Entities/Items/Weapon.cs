@@ -7,7 +7,7 @@ namespace ECS2022_23.Core.Entities.Items;
 public class Weapon : Item
 {
     public float DamagePoints;
-    public float Range;
+    public float Range { get; }
     private Animation Animation { get; }
 
     public Weapon(Vector2 spawn, Texture2D texture, Vector2 startPos, Animation animation) : base(spawn, texture)
@@ -19,6 +19,8 @@ public class Weapon : Item
     {
         Animation = animation;
         AddAnimation("Attack", animation);
+        Range = 16;
+        DamagePoints = 2;
     }
     
     public override void Update(GameTime gameTime)
