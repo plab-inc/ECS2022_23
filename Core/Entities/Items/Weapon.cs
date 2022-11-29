@@ -15,10 +15,10 @@ public class Weapon : Item
     {
         Animations = animations;
     }
-    public Weapon(Texture2D texture, Vector2 startPos, Dictionary<string, Animation> animations, WeaponType type) : base(Vector2.Zero, texture)
+    public Weapon(Texture2D texture, Vector2 startPos, Dictionary<string, Animation> animations, WeaponType type, float range) : base(Vector2.Zero, texture)
     {
         Animations = animations;
-        Range = 64;
+        Range = range;
         DamagePoints = 2;
         WeaponType = type;
     }
