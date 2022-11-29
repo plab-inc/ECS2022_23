@@ -23,7 +23,7 @@ public  class Enemy : Character
     public Enemy(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations, Motor motor) : base(spawn, texture, animations)
     {
         Velocity = 3f;
-        HP = 20;
+        HP = 10;
         SpriteWidth = 16;
         _motor = motor;
     }
