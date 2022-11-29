@@ -32,7 +32,7 @@ public  class Enemy : Character
     {
         if (IsActive)
         {
-           Position = _motor.Move(Position, (int) Velocity);
+           //Position = _motor.Move(Position, (int) Velocity);
         }
 
         if(!IsAlive)
