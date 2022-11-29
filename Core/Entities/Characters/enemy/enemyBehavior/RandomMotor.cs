@@ -52,7 +52,7 @@ public class RandomMotor : Motor
         }
 
         if (!_enemy.CollidesWithWall(temp))
-            return position;
+            return temp;
         
         return Vector2.Zero;
     }

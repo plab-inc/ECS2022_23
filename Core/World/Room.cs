@@ -77,7 +77,7 @@ public class Room
     {
         get
         {
-            // TODO Debug this mess!
+            // TODO Debug this!
             TiledObject[] spawnObjects;
             try
             {
@@ -85,7 +85,7 @@ public class Room
             }
             catch (InvalidOperationException e)
             {
-                Console.WriteLine(e);
+                Console.WriteLine("Spawn of entity failed");
                 return null;
             }
             
@@ -118,7 +118,6 @@ public class Room
         }
         throw new InvalidOperationException("Spawn of entity failed");
     }
-    
     
     private void GetTiledTilesets()
     {

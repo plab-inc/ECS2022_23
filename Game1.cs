@@ -54,7 +54,7 @@ public class Game1 : Game
         _player = new Player(Content.Load<Texture2D>("sprites/astro"), AnimationLoader.LoadPlayerAnimations(Content));
         _player.SetWeapon(new Weapon(Content.Load<Texture2D>("sprites/spritesheet"),Vector2.Zero,AnimationLoader.LoadBasicWeaponAnimation(Content)));
 
-        _escape = new Escape(_player, 1, false);
+        _escape = new Escape(_player, 5, false);
         _escape.AttachCamera(_camera);
         
         _uiManager = new UiManager();
@@ -78,7 +78,7 @@ public class Game1 : Game
         
         _spriteBatch.Begin(_camera, samplerState: SamplerState.PointClamp);
         
-            _escape.Draw(_spriteBatch);
+        _escape.Draw(_spriteBatch);
         
         _spriteBatch.End();
         

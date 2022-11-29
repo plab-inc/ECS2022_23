@@ -12,7 +12,7 @@ public class Enemy : Character
     public float MoneyReward;
     private Motor _motor;
     public Rectangle ActivationRectangle;
-    private bool _isActive=true;
+    private bool _isActive=false;
     public Level Level;
 
     public Enemy(Vector2 spawn, Texture2D texture, Motor motor, Level level) : base(spawn, texture)
