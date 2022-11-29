@@ -50,7 +50,7 @@ public static class CombatManager
     private static void PlayerAttack(Player attacker, Enemy defender)
     {
         if (!defender.IsAlive) return;
-        if (!EntitiesCollide(attacker, defender) && !WeaponCollides(attacker, defender)) return;
+        if (!EntitiesCollide(attacker, defender) && !WeaponCollide(attacker, defender)) return;
         defender.HP -= (attacker.Strength + attacker.Weapon.DamagePoints);
         defender.SetAnimation("Hurt");
 
@@ -93,27 +93,26 @@ public static class CombatManager
         return figureRect.Intersects(defenderRect);
     }
 
-    private static bool WeaponCollides(Player attacker, Entity defender)
+    private static bool WeaponCollide(Player attacker, Entity defender)
     {
         var figureRect = attacker.Rectangle;
         var defenderRect = defender.Rectangle;
         var weaponRect = attacker.Weapon.Rectangle;
-        var weapon = attacker.Weapon;
         Rectangle attackRect; 
         
         switch (attacker.AimDirection)
         {
             case (int) Direction.Right:
-                attackRect = new Rectangle(figureRect.X + figureRect.Width, figureRect.Y, (int) weapon.Range, weaponRect.Height);
+                attackRect = new Rectangle(figureRect.X + figureRect.Width, figureRect.Y, weaponRect.Width, weaponRect.Height);
                 return attackRect.Intersects(defenderRect);
             case (int) Direction.Left:
-                attackRect = new Rectangle(figureRect.X - (int) weapon.Range, figureRect.Y, (int) weapon.Range, weaponRect.Height);
+                attackRect = new Rectangle(figureRect.X - weaponRect.Width, figureRect.Y, weaponRect.Width, weaponRect.Height);
                 return attackRect.Intersects(defenderRect);
             case (int) Direction.Up:
-                attackRect = new Rectangle(figureRect.X, figureRect.Y - (int) weapon.Range, weaponRect.Height, (int) weapon.Range);
+                attackRect = new Rectangle(figureRect.X, figureRect.Y - weaponRect.Width, weaponRect.Width, weaponRect.Height);
                 return attackRect.Intersects(defenderRect);
             case (int) Direction.Down:
-                attackRect = new Rectangle(figureRect.X, figureRect.Y + figureRect.Height, weaponRect.Height, (int) weapon.Range);
+                attackRect = new Rectangle(figureRect.X, figureRect.Y + figureRect.Height, weaponRect.Width, weaponRect.Height);
                 return attackRect.Intersects(defenderRect);
             default: return false;
         }
