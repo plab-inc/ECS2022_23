@@ -92,8 +92,8 @@ public class Room
             var spawns = new List<Vector2>();
             foreach (var spawnObject in spawnObjects)
             {
-                var spawnX = spawnObject.x + _renderPos.X;
-                var spawnY = spawnObject.y + _renderPos.Y;
+                var spawnX = spawnObject.x + _renderPos.X * Map.TileWidth;
+                var spawnY = spawnObject.y + _renderPos.Y * Map.TileWidth;
                 spawns.Add(new Vector2(spawnX,spawnY));
             }
 

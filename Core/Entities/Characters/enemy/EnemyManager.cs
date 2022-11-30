@@ -33,11 +33,9 @@ public class EnemyManager
             if (room.Spawns != null && room.Spawns.Count > 0)
             {
                 Debug.WriteLine(room.MapName);
-                Vector2 spawnPoint = room.Spawns[rand.Next(0, room.Spawns.Count)];
-                var offset = room.Position;
-                var spawnLocation = (spawnPoint + offset.ToVector2());
-                
-                var en = new Enemy(spawnLocation, ContentLoader.EnemyTexture, new RandomMotor(_escape._level), _escape._level);
+                //Vector2 spawnPoint = room.Spawns[rand.Next(0, room.Spawns.Count)];
+                var en = new Enemy(Vector2.Zero, ContentLoader.EnemyTexture, new RandomMotor(_escape._level), _escape._level);
+                en.Position = room.GetRandomSpawnPos(en);
                 AddEnemy(en);
             }
         }
