@@ -7,7 +7,7 @@ namespace ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
 public class RandomMotor : Motor
 {
     int delay=0;
-    Random rand = new Random();
+    Random rand = new Random((int)DateTime.Now.Ticks);
     private int LastDirection;
     
     
@@ -24,7 +24,7 @@ public class RandomMotor : Motor
         int newDirection = LastDirection;
         
         // This binds the speed of directional change to the FPS. Could result in some unexpected behavior should the FPS change.
-        if (delay >= 30)
+        if (delay >= 15)
         {
             delay = 0;
             newDirection = rand.Next(0, 4);

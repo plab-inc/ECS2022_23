@@ -23,6 +23,8 @@ public class Enemy : Character
         Level = level;
         _motor = motor;
         _motor.setEnemy(this);
+        ActivationRectangle = Rectangle;
+        ActivationRectangle.Inflate(25, 25);
     }
 
     public Enemy(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations, Motor motor, Level level) : base(spawn, texture, animations)
@@ -33,6 +35,8 @@ public class Enemy : Character
         Level = level;
         _motor = motor;
         _motor.setEnemy(this);
+        ActivationRectangle = Rectangle;
+        ActivationRectangle.Inflate(25, 25);
     }
 
     // Updates Enemy when it is active. Checks for Activation if it isn't active.
@@ -91,8 +95,6 @@ public class Enemy : Character
             new Rectangle(newPoint.X + 4, newPoint.Y + Texture.Height / 2 + 2, 1, Texture.Height / 2 - 2);
         var armHitBoxRight = new Rectangle(newPoint.X + Texture.Width - 5, newPoint.Y + Texture.Height / 2 + 2, 1,
             Texture.Height / 2 - 2);
-
-        var feet = new Point(rect.Center.X, rect.Bottom);
 
         if (velocity == Vector2.Zero)
         {

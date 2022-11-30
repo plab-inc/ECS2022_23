@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
 using ECS2022_23.Core.Game;
+using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -12,11 +13,11 @@ public class EnemyManager
 {
     public List<Enemy> Enemies = new();
     private Player Player;
-    private Escape _escape;
+    private Level _level;
 
-    public EnemyManager(Escape escape)
+    public EnemyManager(Level level)
     {
-        _escape = escape;
+        _level = level;
     }
 
     public void AddEnemy(Enemy e)
@@ -28,11 +29,11 @@ public class EnemyManager
     {
         Random rand = new Random();
         int count = 0;
-        foreach (var room in _escape._level.Rooms)
+        foreach (var room in _level.Rooms)
         {
             if (room.Spawns != null && room.Spawns.Count > 0)
             {
-                var en = new Enemy(Vector2.Zero, ContentLoader.EnemyTexture, new RandomMotor(_escape._level), _escape._level);
+                var en = new Enemy(Vector2.Zero, ContentLoader.EnemyTexture, new RandomMotor(_level), _level);
                 en.Position = room.GetRandomSpawnPos(en);
                 AddEnemy(en);
             }
@@ -44,7 +45,6 @@ public class EnemyManager
         foreach (var enemy in Enemies)
         {
             enemy.Update(gameTime);
-            Debug.WriteLine(Enemies[0].Position);
         }
     }
 }

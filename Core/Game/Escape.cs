@@ -40,7 +40,7 @@ public class Escape
             Console.WriteLine(e + "\n" + _level.StartRoom.MapName + " " + pos);
             throw;
         }
-        _enemyManager = new(this);
+        _enemyManager = new(_level);
         _enemyManager.SpawnEnemies();
         _debugOn = debugOn;
     }
