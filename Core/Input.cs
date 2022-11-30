@@ -1,4 +1,5 @@
-﻿using ECS2022_23.Core.Entities.Characters;
+﻿using ECS2022_23.Core.Combat;
+using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -24,6 +25,9 @@ public class Input
         if (Keyboard.GetState().IsKeyDown(Keys.Space) && prevState != Keyboard.GetState())
         {
             _player.Attack();
+        } else if (Keyboard.GetState().IsKeyDown(Keys.X) && prevState != Keyboard.GetState())
+        {
+            ItemManager.PickItemUp(_player);
         } 
         
         // Diagonal Movement
