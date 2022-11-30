@@ -7,8 +7,8 @@ namespace ECS2022_23.Core.Entities.Characters.enemy;
 
 public  class Enemy : Character
 {
-    public float XpReward;
-    public float MoneyReward;
+    public float XpReward = 5;
+    public float MoneyReward = 10;
     private Motor _motor;
     public bool IsActive = true;
 
