@@ -12,7 +12,7 @@ public class Enemy : Character
     public float MoneyReward;
     private Motor _motor;
     public Rectangle ActivationRectangle;
-    private bool _isActive=false;
+    private bool _isActive=true;
     public Level Level;
 
     public Enemy(Vector2 spawn, Texture2D texture, Motor motor, Level level) : base(spawn, texture)
@@ -52,7 +52,7 @@ public class Enemy : Character
     private void Act()
     {
         // Movement
-        Position = _motor.Move(Position, (int) Velocity);
+        Position += _motor.Move(Position, (int) Velocity);
         
         // Check for Attack
     }
@@ -65,6 +65,22 @@ public class Enemy : Character
     }
 
     public bool CollidesWithWall(Vector2 velocity)
+    {
+        var newPoint = (Position + velocity).ToPoint();
+
+        foreach (var rec in Level.GroundLayer)
+        {
+            if (Rectangle.Intersects(rec))
+            {
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+    
+    public bool CollidesWithWall2(Vector2 velocity)
     {
         var newPoint = (Position + velocity).ToPoint();
         var rect = new Rectangle(newPoint, new Point(Texture.Width, Texture.Height));
@@ -82,19 +98,7 @@ public class Enemy : Character
         {
             return true;
         }
-
-        var feetOnGround = false;
-
-        foreach (var rectangle in Level.GroundLayer)
-        {
-            if (rectangle.Contains(feet))
-            {
-                feetOnGround = true;
-            }
-        }
-
-        if (!feetOnGround) return false;
-
+        
         foreach (var rectangle in Level.GroundLayer)
         {
             if (velocity.Y == 0 && velocity.X > 0)

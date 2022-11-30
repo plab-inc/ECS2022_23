@@ -24,7 +24,7 @@ public class RandomMotor : Motor
         int newDirection = LastDirection;
         
         // This binds the speed of directional change to the FPS. Could result in some unexpected behavior should the FPS change.
-        if (delay >= 20)
+        if (delay >= 30)
         {
             delay = 0;
             newDirection = rand.Next(0, 4);
@@ -35,25 +35,34 @@ public class RandomMotor : Motor
         Vector2 temp = Vector2.Zero;
         
         // Directions in Order: UP, DOWN, LEFT, Right
-        switch (newDirection)
+        int retry = 0;
+        do
         {
-            case 0 :
-                temp = new Vector2(position.X, position.Y+velocity);
-                break;
-            case 1:
-                temp = new Vector2(position.X, position.Y-velocity);
-                break;
-            case 2:
-                temp = new Vector2(position.X - velocity, position.Y);
-                break;
-            case 3:
-                temp = new Vector2(position.X + velocity, position.Y);
-                break;
-        }
+            switch (newDirection)
+            {
+                case 0 :
+                    temp = new Vector2(0, velocity);
+                    break;
+                case 1:
+                    temp = new Vector2(0, -velocity);
+                    break;
+                case 2:
+                    temp = new Vector2(-velocity, 0);
+                    break;
+                case 3:
+                    temp = new Vector2(velocity, 0);
+                    break;
+            }
 
-        if (!_enemy.CollidesWithWall(temp))
-            return temp;
+            retry++;
+        } while (!_enemy.CollidesWithWall2(temp) && retry<4);
+
+        if (retry>=4)
+        {
+            return Vector2.Zero;
+        }
         
-        return Vector2.Zero;
+        return temp;
+        
     }
 }
