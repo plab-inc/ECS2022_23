@@ -157,6 +157,12 @@ public class Player : Character
             case (int)Direction.Down:
                 SetAnimation("AttackDown");
                 break;
+            case (int)Direction.None:
+                SetAnimation("AttackRight");
+                break;
+            default:
+                SetAnimation("AttackRight");
+                break;
         }
 
         IsAttacking = true;
@@ -181,6 +187,14 @@ public class Player : Character
             case (int)Direction.Down:
                 Weapon.Position = new Vector2(Position.X, Position.Y + SpriteWidth);
                 //_weapon.SetAnimation("AttackDown");
+                break;
+            case (int) Direction.None:
+                Weapon.Position = new Vector2(Position.X + SpriteWidth, Position.Y);
+                Weapon.SetAnimation("AttackRight");
+                break;
+            default:
+                Weapon.Position = new Vector2(Position.X + SpriteWidth, Position.Y);
+                Weapon.SetAnimation("AttackRight");
                 break;
         }
     }

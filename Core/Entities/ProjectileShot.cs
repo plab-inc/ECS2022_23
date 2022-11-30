@@ -1,10 +1,11 @@
-﻿using ECS2022_23.Enums;
+﻿using ECS2022_23.Core.Entities.Items;
+using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.Entities.Items;
+namespace ECS2022_23.Core.Entities;
 
-public class ProjectileShot : Item
+public class ProjectileShot : Entity
 {
     private Weapon Weapon { get; set; }
     private int AimDirection { get; set; }
@@ -13,12 +14,11 @@ public class ProjectileShot : Item
     public float DamagePoints { get; private set; }
     public bool HitTarget { get; set; }
 
-    public ProjectileShot(Texture2D texture2D, Rectangle sourceRect, Weapon weapon, int aimDirection) : base(Vector2.Zero, texture2D)
+    public ProjectileShot(Texture2D texture2D, Rectangle sourceRect, Weapon weapon, int aimDirection) : base(weapon.Position, texture2D)
     {
         SourceRectangle = sourceRect;
         Weapon = weapon;
         AimDirection = aimDirection;
-        Position = weapon.Position;
         DamagePoints = weapon.DamagePoints;
         _endOfRange = UpdateVectors(_endOfRange, Weapon.Range);
     }
@@ -51,6 +51,12 @@ public class ProjectileShot : Item
             case (int)Direction.Down:
                 if (Position.Y > _endOfRange.Y) return false;
                 break;
+            case (int)Direction.None:
+                if (Position.X > _endOfRange.X) return false;
+                break;
+            default:
+                if (Position.X > _endOfRange.X) return false;
+                break;
         }
 
         return true;
@@ -76,6 +82,12 @@ public class ProjectileShot : Item
                 break;
             case (int)Direction.Down:
                 result = new Vector2(Position.X, Position.Y + toAdd);
+                break;
+            case (int)Direction.None:
+                result = new Vector2(Position.X + toAdd, Position.Y);
+                break;
+            default:
+                result = new Vector2(Position.X + toAdd, Position.Y);
                 break;
         }
 
