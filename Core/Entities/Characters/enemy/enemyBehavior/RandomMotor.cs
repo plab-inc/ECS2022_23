@@ -10,7 +10,6 @@ public class RandomMotor : Motor
     Random rand = new Random((int)DateTime.Now.Ticks);
     private int LastDirection;
     
-    
     public RandomMotor(Level level) : base(level)
     {
         

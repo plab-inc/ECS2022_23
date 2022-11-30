@@ -10,12 +10,12 @@ public abstract class Motor
     private Level Level;
     public Enemy _enemy;
 
-    public Motor(Level level)
+    public Motor(Level? level)
     {
         Level = level;
     }
 
-    public void setEnemy(Enemy enemy)
+    public void SetEnemy(Enemy enemy)
     {
         _enemy = enemy;
     }

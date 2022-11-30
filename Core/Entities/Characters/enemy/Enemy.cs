@@ -22,7 +22,7 @@ public class Enemy : Character
         SpriteWidth = 16;
         Level = level;
         _motor = motor;
-        _motor.setEnemy(this);
+        _motor.SetEnemy(this);
         ActivationRectangle = Rectangle;
         ActivationRectangle.Inflate(25, 25);
     }
@@ -34,7 +34,7 @@ public class Enemy : Character
         SpriteWidth = 16;
         Level = level;
         _motor = motor;
-        _motor.setEnemy(this);
+        _motor.SetEnemy(this);
         ActivationRectangle = Rectangle;
         ActivationRectangle.Inflate(25, 25);
     }

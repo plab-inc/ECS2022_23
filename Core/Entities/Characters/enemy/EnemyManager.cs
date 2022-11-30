@@ -33,7 +33,7 @@ public class EnemyManager
         {
             if (room.Spawns != null && room.Spawns.Count > 0)
             {
-                var en = new Enemy(Vector2.Zero, ContentLoader.EnemyTexture, new RandomMotor(_level), _level);
+                var en = new Enemy(Vector2.Zero, ContentLoader.EnemyTexture, new RandomMotor(null), _level);
                 en.Position = room.GetRandomSpawnPos(en);
                 AddEnemy(en);
             }
