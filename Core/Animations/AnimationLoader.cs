@@ -184,4 +184,32 @@ public static class AnimationLoader
     {
         return new ProjectileShot(_texture, new Rectangle(19 * 16, 5 * 16, 16, 16), weapon, aimDirection);
     }
+
+    public static Weapon CreateSwordWeapon(Vector2 position)
+    {
+        return new Weapon(position, _texture, CreateSwordAnimations(), new Rectangle(13 * 16, 6 * 16, 16, 16));
+    }
+    public static Weapon CreatePhaserWeapon(Vector2 position)
+    {
+        return new Weapon(position, _texture, CreatePhaserAnimations(), new Rectangle(16 * 16, 5 * 16, 16, 16), WeaponType.RANGE, 32);
+    }
+    public static Consumable CreateHealthPotion(Vector2 position)
+    {
+        return new Consumable(position, _texture, new Rectangle(19*16, 4*16, 16,16));
+    }
+    
+    public static Consumable CreateArmorPotion(Vector2 position)
+    {
+        return new Consumable(position, _texture, new Rectangle(20*16, 4*16, 16,16));
+    }
+    
+    public static Currency CreateCoin(Vector2 position)
+    {
+        return new Currency(position, _texture, new Rectangle(17*16, 4*16, 16,16));
+    }
+    
+    public static Currency CreateKey(Vector2 position)
+    {
+        return new Currency(position, _texture, new Rectangle(18*16, 4*16, 16,16));
+    }
 }

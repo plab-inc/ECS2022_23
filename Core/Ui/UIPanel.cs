@@ -10,9 +10,16 @@ public class UiPanel : Component
 {
     private List<Component> _components;
     private Texture2D _texture2D;
+    private int _scale = 2;
     public UiPanel(Rectangle sourceRec, Rectangle destRec, UiLabels uiLabel) : base(sourceRec)
     {
         DestinationRec = destRec;
+        DestinationRec.Height *= _scale;
+        DestinationRec.Width *= _scale;
+        if (DestinationRec.Y != 0)
+        {
+            DestinationRec.Y -= (_scale-1) * 16;
+        }
         _components = new List<Component>();
         UiLabel = uiLabel;
     }
@@ -72,15 +79,15 @@ public class UiPanel : Component
         {
             component.DestinationRec.X = DestinationRec.X + preWidth;
             component.DestinationRec.Y = DestinationRec.Y;
-            preWidth += component.SourceRec.Width;
+            preWidth += component.SourceRec.Width*_scale;
             SetLength(component);
         }
     }
 
     private void SetLength(Component component)
     {
-        component.DestinationRec.Width = component.SourceRec.Width;
-        component.DestinationRec.Height = component.SourceRec.Height;
+        component.DestinationRec.Width = component.SourceRec.Width*_scale;
+        component.DestinationRec.Height = component.SourceRec.Height*_scale;
     }
 
     public void InsertAtIndex(Component component, int index)
