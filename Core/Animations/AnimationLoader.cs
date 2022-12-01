@@ -69,7 +69,8 @@ public static class AnimationLoader
             }
         };
     }
-    public static Dictionary<string, Animation> CreateSwordAnimations()
+
+    private static Dictionary<string, Animation> CreateSwordAnimations()
     {
         return new Dictionary<string, Animation>()
         {
@@ -91,7 +92,8 @@ public static class AnimationLoader
             }
         };
     }
-    public static Dictionary<string, Animation> CreatePhaserAnimations()
+
+    private static Dictionary<string, Animation> CreatePhaserAnimations()
     {
         return new Dictionary<string, Animation>()
         {
@@ -113,7 +115,8 @@ public static class AnimationLoader
             }
         };
     }
-    public static Dictionary<string, Animation> CreateKnifeAnimations()
+
+    private static Dictionary<string, Animation> CreateKnifeAnimations()
     {
         return new Dictionary<string, Animation>()
         {
@@ -135,7 +138,8 @@ public static class AnimationLoader
             }
         };
     }
-    public static Dictionary<string, Animation> CreateStickAnimations()
+
+    private static Dictionary<string, Animation> CreateStickAnimations()
     {
        return new Dictionary<string, Animation>()
         {
@@ -157,7 +161,8 @@ public static class AnimationLoader
             }
         };
     }
-    public static Dictionary<string, Animation> CreateCrowbarAnimations()
+
+    private static Dictionary<string, Animation> CreateCrowbarAnimations()
     {
         return new Dictionary<string, Animation>()
         {
@@ -192,6 +197,21 @@ public static class AnimationLoader
     public static Weapon CreatePhaserWeapon(Vector2 position)
     {
         return new Weapon(position, _texture, CreatePhaserAnimations(), new Rectangle(16 * 16, 5 * 16, 16, 16), WeaponType.RANGE, 32);
+    }
+    
+    public static Weapon CreateKnifeWeapon(Vector2 position)
+    {
+        return new Weapon(position, _texture, CreateKnifeAnimations(), new Rectangle(13 * 16, 5 * 16, 16, 16));
+    }
+    
+    public static Weapon CreateCrowbarWeapon(Vector2 position)
+    {
+        return new Weapon(position, _texture, CreateCrowbarAnimations(), new Rectangle(16 * 16, 6 * 16, 16, 16));
+    }
+    
+    public static Weapon CreateStickWeapon(Vector2 position)
+    {
+        return new Weapon(position, _texture, CreateStickAnimations(), new Rectangle(19 * 16, 6 * 16, 16, 16));
     }
     public static Consumable CreateHealthPotion(Vector2 position)
     {

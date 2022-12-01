@@ -54,12 +54,15 @@ public static class ItemManager
     private static Weapon GetRandomWeapon(Vector2 position)
     {
         var random = new Random();
-        var randomInt = random.Next(2);
+        var randomInt = random.Next(5);
         Debug.WriteLine("random weapon loot: " + randomInt);
         switch (randomInt)
         {
             case 0: return AnimationLoader.CreateSwordWeapon(position);
             case 1: return AnimationLoader.CreatePhaserWeapon(position);
+            case 2: return AnimationLoader.CreateCrowbarWeapon(position);
+            case 3: return AnimationLoader.CreateKnifeWeapon(position);
+            case 4: return AnimationLoader.CreateStickWeapon(position);
             default: return AnimationLoader.CreateSwordWeapon(position);
         }
     }
