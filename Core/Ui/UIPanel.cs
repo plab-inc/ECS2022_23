@@ -40,12 +40,7 @@ public class UiPanel : Component
     public void Add(Component component)
     {
         _components.Add(component);
-        component.DestinationRec = DestinationRec;
-        if (component.GetType() == typeof(UiText))
-        {
-            var uitext = (UiText)component;
-            uitext.Scale = new Vector2(_scale, _scale);
-        }
+        SetScaling(component);
         SetPositions();
     }
 
@@ -89,6 +84,14 @@ public class UiPanel : Component
         }
     }
 
+    private void SetScaling(Component component)
+    {
+        component.DestinationRec = DestinationRec;
+        if (component.GetType() != typeof(UiText)) return;
+        var uiText = (UiText)component;
+        uiText.Scale = new Vector2(_scale, _scale);
+    }
+
     private void SetLength(Component component)
     {
         component.DestinationRec.Width = component.SourceRec.Width*_scale;
@@ -99,12 +102,13 @@ public class UiPanel : Component
     {
         if (index < 0) return;
         _components.Insert(index, component);
+        SetScaling(component);
         SetPositions();
     }
 
-    public void RemoveAtIndex(int index, UiLabels componentUiLabel)
+    public bool RemoveAtIndex(int index, UiLabels componentUiLabel)
     {
-        if (index < 0 || index > _components.Count) return;
+        if (index < 0 || index > _components.Count) return false;
         
         try
         {
@@ -114,6 +118,7 @@ public class UiPanel : Component
             {
                 _components.RemoveAt(index);
                 SetPositions();
+                return true;
             }
             
         }
@@ -121,7 +126,8 @@ public class UiPanel : Component
         {
             Debug.WriteLine(e.Message);
         }
-      
+
+        return false;
     }
 
     public int GetIndexFromLabel(UiLabels uiLabel)
@@ -167,5 +173,13 @@ public class UiPanel : Component
 
         return null;
     }
+    public Component Find(Predicate<Component> cPredicate)
+    {
+        return _components.Find(cPredicate);
+    }
     
+    public int GetIndexFromComponent(Component component)
+    {
+        return _components.IndexOf(component);
+    }
 }

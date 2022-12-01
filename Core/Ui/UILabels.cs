@@ -11,5 +11,10 @@ public enum UiLabels
     XpText,
     ItemContainer,
     WeaponIcon,
-    ItemIcon
+    HealthItemIcon,
+    HealthText,
+    ArmorItemIcon,
+    ArmorText,
+    ItemIcon,
+    ItemText,
 }
