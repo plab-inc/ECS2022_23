@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Items;
@@ -34,13 +33,13 @@ public static class ItemManager
     {
         var random = new Random();
         var randomInt = random.Next(10);
-        var dropChance = 0;
-        Debug.WriteLine("randomDrop: " + randomInt);
+        var dropChance = 6;
+        
         if (randomInt < dropChance) return;
         
         randomInt = random.Next(10);
         var weaponChance = 4;
-        Debug.WriteLine("random loot: " + randomInt);
+
         if (randomInt > weaponChance)
         {
             AddItem(GetRandomWeapon(position));
@@ -55,7 +54,6 @@ public static class ItemManager
     {
         var random = new Random();
         var randomInt = random.Next(5);
-        Debug.WriteLine("random weapon loot: " + randomInt);
         switch (randomInt)
         {
             case 0: return AnimationLoader.CreateSwordWeapon(position);
@@ -71,7 +69,6 @@ public static class ItemManager
     {
         var random = new Random();
         var randomInt = random.Next(2);
-        Debug.WriteLine("random cons loot: " + randomInt);
         switch (randomInt)
         {
             case 0: return AnimationLoader.CreateHealthPotion(position);
