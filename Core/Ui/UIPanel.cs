@@ -41,6 +41,11 @@ public class UiPanel : Component
     {
         _components.Add(component);
         component.DestinationRec = DestinationRec;
+        if (component.GetType() == typeof(UiText))
+        {
+            var uitext = (UiText)component;
+            uitext.Scale = new Vector2(_scale, _scale);
+        }
         SetPositions();
     }
 
