@@ -11,11 +11,7 @@ namespace ECS2022_23.Core.Combat;
 public static class ItemManager
 {
     private static List<Item> _activeItems = new List<Item>();
-    public static void Update(GameTime gameTime)
-    {
-        
-    }
-
+    
     public static void Draw(SpriteBatch spriteBatch)
     {
         foreach (var item in _activeItems)
@@ -81,22 +77,20 @@ public static class ItemManager
     {
         foreach (var item in _activeItems)
         {
-            if (item.Rectangle.Intersects(player.Rectangle))
+            if (!item.Rectangle.Intersects(player.Rectangle)) continue;
+            if (item.GetType() == typeof(Weapon))
             {
-                if (item.GetType() == typeof(Weapon))
-                {
-                    var weapon = player.Weapon;
-                    weapon.Position = player.Position;
-                    _activeItems.Add(weapon);
-                    player.Weapon = (Weapon) item;
-                }
-                else
-                {
-                    player.AddItem(item);
-                }
-                _activeItems.Remove(item);
-                return;
+                var weapon = player.Weapon;
+                weapon.Position = player.Position;
+                _activeItems.Add(weapon);
+                player.Weapon = (Weapon) item;
             }
+            else
+            {
+                player.AddItem(item);
+            }
+            _activeItems.Remove(item);
+            return;
         }
     }
 }

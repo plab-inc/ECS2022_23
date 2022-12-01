@@ -81,7 +81,6 @@ public class Game1 : Game
         UiManager.Update(_player);
         _enemy.Update(gameTime);
         CombatManager.Update(gameTime, _player);
-        ItemManager.Update(gameTime);
         base.Update(gameTime);
     }
     protected override void Draw(GameTime gameTime)
