@@ -14,7 +14,7 @@ internal static class UiLoader
     private static ContentManager _content;
     private static Texture2D _texture2D;
     private static SpriteFont _font;
-    public static void Load(UiManager uiManager, ContentManager content)
+    public static void Load(ContentManager content)
     
     {
         if (!Directory.Exists("Content")) throw new DirectoryNotFoundException();
@@ -25,13 +25,19 @@ internal static class UiLoader
             _texture2D = _content.Load<Texture2D>("sprites/spritesheet");
             _font = _content.Load<SpriteFont>("fonts/rainyhearts");
         
-            UiPanel topContainer = CreateTopContainer();
-            topContainer.Add(CreateHpIcon());
-            topContainer.Add(CreateCoinIcon());
-            topContainer.Add(CreateTextElement(UiLabels.CoinText));
-            topContainer.Add(CreateXpIcon());
-            topContainer.Add(CreateTextElement(UiLabels.XpText));
-            uiManager.AddPanel(topContainer);
+            UiPanel statsContainer = CreateUiPanel(new Rectangle(0,0, PixelSize, PixelSize), new Rectangle(0,0, Game1.ScreenWidth, 100), UiLabels.StatsContainer);
+            statsContainer.Add(CreateHpIcon());
+            statsContainer.Add(CreateCoinIcon());
+            statsContainer.Add(CreateTextElement(UiLabels.CoinText));
+            statsContainer.Add(CreateXpIcon());
+            statsContainer.Add(CreateTextElement(UiLabels.XpText));
+            UiPanel itemContainer = CreateUiPanel(new Rectangle(0,0, PixelSize, PixelSize), new Rectangle(0,Game1.ScreenHeight-16,Game1.ScreenWidth, 100), UiLabels.ItemContainer);
+            itemContainer.Add(CreateIcon(new Rectangle(19*16, 4*16, PixelSize, PixelSize), UiLabels.HealthItemIcon));
+            itemContainer.Add(CreateTextElement(UiLabels.HealthText));
+            itemContainer.Add(CreateIcon(new Rectangle(20*16, 4*16, PixelSize, PixelSize), UiLabels.ArmorItemIcon));
+            itemContainer.Add(CreateTextElement(UiLabels.ArmorText));
+            UiManager.StatsPanel = statsContainer;
+            UiManager.ItemPanel = itemContainer;
         }
         catch (Exception e)
         {
@@ -59,14 +65,19 @@ internal static class UiLoader
         return new UiElement(new Rectangle(16*16, 4*16, PixelSize, PixelSize), _texture2D, UiLabels.Heart);
     }
 
-    private static UiPanel CreateTopContainer()
-    {
-        return new UiPanel(new Rectangle(0,0, PixelSize, PixelSize), new Rectangle(0,0, Game1.ScreenWidth, 100), UiLabels.TopContainer);
-    }
-    
-    private static UiText CreateTextElement(UiLabels uiLabel)
+    public static UiText CreateTextElement(UiLabels uiLabel)
     {
         return new UiText(new Rectangle(0,0, PixelSize, PixelSize), _font, "0", uiLabel);
+    }
+    
+    public static UiElement CreateIcon(Rectangle sourceRect, UiLabels label)
+    {
+        return new UiElement(sourceRect, _texture2D, label);
+    }
+
+    private static UiPanel CreateUiPanel(Rectangle sourceRect, Rectangle destRect, UiLabels label)
+    {
+        return new UiPanel(sourceRect, destRect, label);
     }
     
 }
