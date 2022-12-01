@@ -20,7 +20,6 @@ public class Game1 : Game
     private SpriteBatch _spriteBatch;
     
     private Camera _camera;
-    private UiManager _uiManager;
 
     private Escape _escape;
     private Player _player;
@@ -68,8 +67,8 @@ public class Game1 : Game
         CombatManager.AddEnemy(_enemy);
         CombatManager.AddEnemy(_enemy2);
         CombatManager.AddEnemy(_enemy3);
-        _uiManager = new UiManager();
-        UiLoader.Load(_uiManager, Content);
+       
+        UiLoader.Load(Content);
     }
 
     protected override void Update(GameTime gameTime)
@@ -79,7 +78,7 @@ public class Game1 : Game
             Exit();
         
         _escape.Update(gameTime);
-        _uiManager.Update(_player);
+        UiManager.Update(_player);
         _enemy.Update(gameTime);
         CombatManager.Update(gameTime, _player);
         ItemManager.Update(gameTime);
@@ -101,7 +100,7 @@ public class Game1 : Game
         _spriteBatch.End();
         
         _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            _uiManager.Draw(_spriteBatch);
+            UiManager.Draw(_spriteBatch);
         _spriteBatch.End();
 
         base.Draw(gameTime);
