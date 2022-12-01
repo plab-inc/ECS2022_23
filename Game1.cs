@@ -3,8 +3,6 @@ using ECS2022_23.Core;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Combat;
 using ECS2022_23.Core.Entities.Characters;
-using ECS2022_23.Core.Entities.Characters.enemy;
-using ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Game;
 using ECS2022_23.Core.Ui;
@@ -24,7 +22,7 @@ public class Game1 : Game
 
     private Escape _escape;
     private Player _player;
-    private Enemy _enemy;
+    
     public static int ScreenWidth = 1280;
     public static int ScreenHeight = 720;
     
@@ -59,8 +57,8 @@ public class Game1 : Game
         
         _escape = new Escape(_player, 3, false);
         _escape.AttachCamera(_camera);
-        _enemy = new Enemy(_player.Position, Content.Load<Texture2D>("sprites/spritesheet"), AnimationLoader.CreatePlayerAnimations(), new ChaseMotor(_player));
-        CombatManager.AddEnemy(_enemy);
+        
+        
         _uiManager = new UiManager();
         UiLoader.Load(_uiManager, Content);
     }
@@ -73,7 +71,7 @@ public class Game1 : Game
         
         _escape.Update(gameTime);
         _uiManager.Update(_player);
-        _enemy.Update(gameTime);
+        
         CombatManager.Update(gameTime, _player);
         base.Update(gameTime);
     }
@@ -84,7 +82,6 @@ public class Game1 : Game
         _spriteBatch.Begin(_camera, samplerState: SamplerState.PointClamp);
         
         _escape.Draw(_spriteBatch);
-        _enemy.Draw(_spriteBatch);
         CombatManager.Draw(_spriteBatch);
         _spriteBatch.End();
         

@@ -6,37 +6,34 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Entities.Characters.enemy;
 
-public class Enemy : Character
+public abstract class Enemy : Character
 {
+    // Statistics
     public float XpReward;
     public float MoneyReward;
-    private Motor _motor;
-    public Rectangle ActivationRectangle;
-    private bool _isActive=true;
+    
+    // Behavior
+    public Motor _motor;
+    public bool _isActive=true;
+    
+    // Level
     public Level Level;
+    public Rectangle ActivationRectangle;
 
     public Enemy(Vector2 spawn, Texture2D texture, Motor motor, Level level) : base(spawn, texture)
     {
-        Velocity = 1f;
-        HP = 10;
+        _motor = motor;
         SpriteWidth = 16;
         Level = level;
-        _motor = motor;
-        _motor.SetEnemy(this);
         ActivationRectangle = Rectangle;
-        ActivationRectangle.Inflate(25, 25);
     }
 
     public Enemy(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations, Motor motor, Level level) : base(spawn, texture, animations)
     {
-        Velocity = 1f;
-        HP = 10;
+        _motor = motor;
         SpriteWidth = 16;
         Level = level;
-        _motor = motor;
-        _motor.SetEnemy(this);
         ActivationRectangle = Rectangle;
-        ActivationRectangle.Inflate(25, 25);
     }
 
     // Updates Enemy when it is active. Checks for Activation if it isn't active.
@@ -76,26 +73,11 @@ public class Enemy : Character
     public bool Activate()
     {
         // When the Player enters the Activation Radius the Enemy becomes active
+        
         return false;
-    }
-
-    public bool CollidesWithWall(Vector2 velocity)
-    {
-        var newPoint = (Position + velocity).ToPoint();
-
-        foreach (var rec in Level.GroundLayer)
-        {
-            if (Rectangle.Intersects(rec))
-            {
-                return true;
-            }
-        }
-
-        return false;
-
     }
     
-    public bool CollidesWithWall2(Vector2 velocity)
+    public bool CollidesWithWall(Vector2 velocity)
     {
         var newPoint = (Position + velocity).ToPoint();
         var rect = new Rectangle(newPoint, new Point(Texture.Width, Texture.Height));
@@ -137,11 +119,8 @@ public class Enemy : Character
                 return true;
             }
             
-           //Position = _motor.Move(Position, (int) Velocity);
+           
         }
-
-       
-        
         return false;
     }
 
