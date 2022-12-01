@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using ECS2022_23.Core.Entities;
+using ECS2022_23.Core.Entities.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -52,6 +54,14 @@ public static class AnimationLoader
             {
                 "AttackDown",
                 new Animation(_texture, 16, 16, 2, new Vector2(11, 6), false)
+            },
+            {
+                "Hurt",
+                new Animation(_texture, 16, 16, 2, new Vector2(2, 6), false)
+            },
+            {
+                "Death",
+                new Animation(_texture, 16, 16, 1, new Vector2(4, 6), true)
             },
             {
                 "Default",
@@ -168,5 +178,10 @@ public static class AnimationLoader
                 new Animation(_texture, 16, 16, 3, new Vector2(16, 6), false)
             }
         };
+    }
+    
+    public static ProjectileShot CreateLaserShot(Weapon weapon, int aimDirection)
+    {
+        return new ProjectileShot(_texture, new Rectangle(19 * 16, 5 * 16, 16, 16), weapon, aimDirection);
     }
 }

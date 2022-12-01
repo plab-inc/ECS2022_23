@@ -50,6 +50,17 @@ public class Enemy : Character
         {
             _isActive = Activate();
         }
+        
+        if(!IsAlive)
+        {
+            SetAnimation("Death");
+        }
+        else
+        {
+            SetAnimation("Default");
+        }
+        AnimationManager.Update(gameTime);
+        
     }
 
     // Resolves Enemy Behavior like Movement and Attack.
@@ -126,7 +137,10 @@ public class Enemy : Character
                 return true;
             }
             
+           //Position = _motor.Move(Position, (int) Velocity);
         }
+
+       
         
         return false;
     }

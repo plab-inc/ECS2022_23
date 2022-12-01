@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using ECS2022_23.Core.Animations;
+using ECS2022_23.Core.Combat;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.World;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using MonoGameLevelGenerator.Core;
 
 namespace ECS2022_23.Core.Entities.Characters;
@@ -12,14 +14,13 @@ namespace ECS2022_23.Core.Entities.Characters;
 public class Player : Character
 {
     public float Armor;
-    public bool IsAlive;
     public float Level;
     public float XpToNextLevel;
     public float Money;
 
     private float speed = 3;
     public List<Item> Items;
-    private Weapon _weapon;
+    public Weapon Weapon { get; set; }
     private Input _input;
     
 
@@ -31,6 +32,7 @@ public class Player : Character
         _input = new Input(this);
         HP = 10;
         SpriteWidth = 16;
+        Strength = 5;
     }
     public Player(Texture2D texture, Dictionary<string, Animation> animations) : base(Vector2.Zero,texture, animations)
     {
@@ -38,6 +40,7 @@ public class Player : Character
         _input = new Input(this);
         HP = 10;
         SpriteWidth = 16;
+        Strength = 5;
     }
     
     public void setLevel(Level level)
@@ -114,7 +117,7 @@ public class Player : Character
             _input.Aim();
         }
         AnimationManager.Update(gameTime);
-        _weapon?.Update(gameTime);
+        Weapon?.Update(gameTime);
     }
     public override void Draw(SpriteBatch spriteBatch)
     {
@@ -125,15 +128,19 @@ public class Player : Character
         else
         {
             AnimationManager.Draw(spriteBatch, Position);
-            _weapon?.Draw(spriteBatch);
+            Weapon?.Draw(spriteBatch);
         }
     }
 
     public override void Attack()
     {
-        if (_weapon != null)
+        if (Weapon != null)
         {
             SetWeaponPosition();
+            if (Weapon.WeaponType == WeaponType.RANGE)
+            {
+                CombatManager.Shoot(this);
+            }
         }
 
         switch (AimDirection)
@@ -150,7 +157,15 @@ public class Player : Character
             case (int)Direction.Down:
                 SetAnimation("AttackDown");
                 break;
+            case (int)Direction.None:
+                SetAnimation("AttackRight");
+                break;
+            default:
+                SetAnimation("AttackRight");
+                break;
         }
+
+        IsAttacking = true;
     }
 
     private void SetWeaponPosition()
@@ -158,26 +173,34 @@ public class Player : Character
         switch (AimDirection)
         {
             case (int) Direction.Right:
-                _weapon.Position = new Vector2(Position.X + SpriteWidth, Position.Y);
-                _weapon.SetAnimation("AttackRight");
+                Weapon.Position = new Vector2(Position.X + SpriteWidth, Position.Y);
+                Weapon.SetAnimation("AttackRight");
                 break;
             case (int)Direction.Left:
-                _weapon.Position = new Vector2(Position.X - SpriteWidth, Position.Y);
-                _weapon.SetAnimation("AttackLeft");
+                Weapon.Position = new Vector2(Position.X - SpriteWidth, Position.Y);
+                Weapon.SetAnimation("AttackLeft");
                 break;
             case (int)Direction.Up:
-                _weapon.Position = new Vector2(Position.X, Position.Y - SpriteWidth);
+                Weapon.Position = new Vector2(Position.X, Position.Y - SpriteWidth);
                 //_weapon.SetAnimation("AttackUp");
                 break;
             case (int)Direction.Down:
-                _weapon.Position = new Vector2(Position.X, Position.Y + SpriteWidth);
+                Weapon.Position = new Vector2(Position.X, Position.Y + SpriteWidth);
                 //_weapon.SetAnimation("AttackDown");
+                break;
+            case (int) Direction.None:
+                Weapon.Position = new Vector2(Position.X + SpriteWidth, Position.Y);
+                Weapon.SetAnimation("AttackRight");
+                break;
+            default:
+                Weapon.Position = new Vector2(Position.X + SpriteWidth, Position.Y);
+                Weapon.SetAnimation("AttackRight");
                 break;
         }
     }
     public void SetWeapon(Weapon weapon)
     {
-        _weapon = weapon;
+        Weapon = weapon;
     }
 
     public void AddItem(Item item)
