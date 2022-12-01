@@ -216,6 +216,8 @@ public class Player : Character
 
     public void UseItem(Item item)
     {
-        item.Use();
+        if (Items.Count <= 0) return;
+        if (!Items.Remove(item)) return;
+        item.Use(this);
     }
 }

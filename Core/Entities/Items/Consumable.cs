@@ -1,12 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ECS2022_23.Core.Entities.Characters;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Entities.Items;
 
 public class Consumable : Item
 {
-    public float HealPoints { get; set; } = 10;
-    public float XpPoints { get; set; } = 5;
+    public float HealPoints { get; set; } = 2;
+    public float XpPoints { get; set; } = 1;
     public float DamageMultiplier { get; set; } = 1f;
     public float Duration { get; set; } = 10f;
     public Consumable(Vector2 spawn, Texture2D texture, Rectangle sourceRect) : base(spawn, texture, sourceRect)
@@ -17,4 +18,11 @@ public class Consumable : Item
     {
         throw new System.NotImplementedException();
     }
+
+    public override void Use(Player player)
+    {
+        player.HP += HealPoints;
+        player.XpToNextLevel += XpPoints;
+    }
+
 }

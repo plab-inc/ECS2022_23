@@ -1,5 +1,6 @@
 ﻿using ECS2022_23.Core.Combat;
 using ECS2022_23.Core.Entities.Characters;
+using ECS2022_23.Core.Ui;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -28,6 +29,20 @@ public class Input
         } else if (Keyboard.GetState().IsKeyDown(Keys.X) && prevState != Keyboard.GetState())
         {
             ItemManager.PickItemUp(_player);
+        } else if (Keyboard.GetState().IsKeyDown(Keys.D1) && prevState != Keyboard.GetState())
+        {
+            if (_player.Items?.Count > 0)
+            {
+                var item = UiManager.UseItemAtIndex(1, _player);
+                if(item != null) _player.UseItem(item);
+            }
+        } else if (Keyboard.GetState().IsKeyDown(Keys.D2) && prevState != Keyboard.GetState())
+        {
+            if (_player.Items?.Count > 0)
+            {
+                var item = UiManager.UseItemAtIndex(3, _player);
+                if(item != null) _player.UseItem(item);
+            }
         } 
         
         // Diagonal Movement

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ECS2022_23.Core.Entities.Characters;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Entities.Items;
@@ -15,7 +16,10 @@ public abstract class Item : Entity
     {
         
     }
-
+    public virtual void Use(Player player)
+    {
+        
+    }
     public override void Draw(SpriteBatch spriteBatch)
     {
         spriteBatch.Draw(Texture, Position, SourceRect, Color.White);

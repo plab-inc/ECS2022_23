@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ECS2022_23.Core.Entities.Characters;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Entities.Items;
@@ -15,5 +16,12 @@ public class Trinket : Item
     public override void Update(GameTime gameTime)
     {
         throw new System.NotImplementedException();
+    }
+    
+    public override void Use(Player player)
+    {
+        player.Strength *= DamageMultiplier;
+        player.XpToNextLevel *= XpMultiplier;
+        player.Armor *= ArmorMultiplier;
     }
 }
