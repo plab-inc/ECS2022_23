@@ -29,7 +29,7 @@ public static class ItemManager
     {
         var random = new Random();
         var randomInt = random.Next(10);
-        var dropChance = 6;
+        var dropChance = 0;
         
         if (randomInt < dropChance) return;
         
