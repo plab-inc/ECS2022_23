@@ -7,19 +7,25 @@ namespace ECS2022_23.Core.Entities.Characters.enemy;
 public abstract class Motor
 {
     private Pathfinding path;
-    private Level Level;
-    public Enemy _enemy;
+    private Level _level;
+    public Enemy Enemy;
+    public Entity Target;
 
     public Motor(Level? level)
     {
-        Level = level;
+        _level = level;
     }
 
     public void SetEnemy(Enemy enemy)
     {
-        _enemy = enemy;
+        Enemy = enemy;
+    }
+
+    public void SetTarget(Entity entity)
+    {
+        Target = entity;
     }
     
-   public abstract Vector2 Move(Vector2 position, int velocity);
+    public abstract Vector2 Move(Vector2 position, int velocity);
 
 }

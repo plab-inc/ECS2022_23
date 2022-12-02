@@ -17,7 +17,7 @@ public class RandomMotor : Motor
     
     public override Vector2 Move(Vector2 position, int velocity)
     {
-        // Enemy chooses a Direction and stays on it for X seconds
+        // RandomEnemy chooses a Direction and stays on it for X seconds
         
         delay++;
         int newDirection = LastDirection;
@@ -54,7 +54,7 @@ public class RandomMotor : Motor
             }
 
             retry++;
-        } while (!_enemy.CollidesWithWall(temp) && retry<4);
+        } while (!Enemy.CollidesWithWall(temp) && retry<4);
 
         if (retry>=4)
         {
@@ -62,6 +62,7 @@ public class RandomMotor : Motor
         }
         
         return temp;
-        
     }
+    
+    
 }

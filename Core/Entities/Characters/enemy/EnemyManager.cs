@@ -15,17 +15,17 @@ public class EnemyManager
     public List<Enemy> Enemies = new();
     private Player _player;
     private Level _level;
-    private List<Enemy> EnemyTypes = new();
+    private List<Enemy> _enemyTypes = new();
 
     public EnemyManager(Level level, Player player)
     {
         _level = level;
         _player = player;
-        EnemyTypes.Add(new Walker(level));
-        EnemyTypes.Add(new Chaser(level,_player));
+        _enemyTypes.Add(new Walker(level));
+        _enemyTypes.Add(new Chaser(level,_player));
     }
 
-    public void AddEnemy(Enemy e)
+    private void AddEnemy(Enemy e)
     {
         Enemies.Add(e);
     }
@@ -48,7 +48,7 @@ public class EnemyManager
     {
         Random rand = new Random();
         // rand.Next(0, EnemyTypes.Count
-        switch (1)
+        switch (0)
         {
             case 0: return new Walker(_level);
             case 1: return new Chaser(_level, _player); // TODO Chaser does not get the correct Coordinates
@@ -62,6 +62,5 @@ public class EnemyManager
         {
             enemy.Update(gameTime);
         }
-        Debug.WriteLine(_player.Position + " " + Enemies.First().Position);
     }
 }

@@ -14,7 +14,7 @@ public class Walker : Enemy
         Velocity = 1f;
         HP = 10;
         ActivationRectangle.Inflate(35, 35);
-        _motor.SetEnemy(this);
+        Motor.SetEnemy(this);
     }
 
     public Walker(Texture2D texture, Dictionary<string, Animation> animations, Motor motor, Level level) : base(Vector2.Zero, texture, animations, motor, level)
@@ -22,6 +22,6 @@ public class Walker : Enemy
         Velocity = 1f;
         HP = 10;
         ActivationRectangle.Inflate(35, 35);
-        _motor.SetEnemy(this);
+        Motor.SetEnemy(this);
     }
 }

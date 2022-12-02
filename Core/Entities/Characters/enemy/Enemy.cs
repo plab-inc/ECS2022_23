@@ -13,26 +13,26 @@ public abstract class Enemy : Character
     public float MoneyReward;
     
     // Behavior
-    public Motor _motor;
-    public bool _isActive=true;
+    public Motor Motor;
+    private bool _isActive=true;
     
     // Level
-    public Level Level;
-    public Rectangle ActivationRectangle;
+    private Level _level;
+    protected Rectangle ActivationRectangle;
 
     public Enemy(Vector2 spawn, Texture2D texture, Motor motor, Level level) : base(spawn, texture)
     {
-        _motor = motor;
+        Motor = motor;
         SpriteWidth = 16;
-        Level = level;
+        _level = level;
         ActivationRectangle = Rectangle;
     }
 
     public Enemy(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations, Motor motor, Level level) : base(spawn, texture, animations)
     {
-        _motor = motor;
+        Motor = motor;
         SpriteWidth = 16;
-        Level = level;
+        _level = level;
         ActivationRectangle = Rectangle;
     }
 
@@ -64,7 +64,7 @@ public abstract class Enemy : Character
     private void Act()
     {
         // Movement
-        Position += _motor.Move(Position, (int) Velocity);
+        Position += Motor.Move(Position, (int) Velocity);
         
         // Check for Attack
     }
@@ -82,7 +82,7 @@ public abstract class Enemy : Character
         var newPoint = (Position + velocity).ToPoint();
         var rect = new Rectangle(newPoint, new Point(Texture.Width, Texture.Height));
 
-        //TODO clean this mess up
+        //TODO clean up
         
         var armHitBoxLeft =
             new Rectangle(newPoint.X + 4, newPoint.Y + Texture.Height / 2 + 2, 1, Texture.Height / 2 - 2);
@@ -94,7 +94,7 @@ public abstract class Enemy : Character
             return true;
         }
         
-        foreach (var rectangle in Level.GroundLayer)
+        foreach (var rectangle in _level.GroundLayer)
         {
             if (velocity.Y == 0 && velocity.X > 0)
             {
@@ -118,8 +118,6 @@ public abstract class Enemy : Character
             {
                 return true;
             }
-            
-           
         }
         return false;
     }
