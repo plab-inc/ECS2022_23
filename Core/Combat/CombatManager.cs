@@ -140,9 +140,11 @@ public static class CombatManager
             return;
         }
     }
+  
     private static void EnemyDies(Enemy enemy, Player player)
     {
         enemy.SetAnimation("Death");
+        ItemManager.DropRandomLoot(enemy.Position);
         player.Money += enemy.MoneyReward;
         player.XpToNextLevel += enemy.XpReward;
         enemy.IsAlive = false;

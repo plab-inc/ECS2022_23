@@ -10,9 +10,16 @@ public class UiPanel : Component
 {
     private List<Component> _components;
     private Texture2D _texture2D;
+    private int _scale = 2;
     public UiPanel(Rectangle sourceRec, Rectangle destRec, UiLabels uiLabel) : base(sourceRec)
     {
         DestinationRec = destRec;
+        DestinationRec.Height *= _scale;
+        DestinationRec.Width *= _scale;
+        if (DestinationRec.Y != 0)
+        {
+            DestinationRec.Y -= (_scale-1) * 16;
+        }
         _components = new List<Component>();
         UiLabel = uiLabel;
     }
@@ -33,7 +40,7 @@ public class UiPanel : Component
     public void Add(Component component)
     {
         _components.Add(component);
-        component.DestinationRec = DestinationRec;
+        SetScaling(component);
         SetPositions();
     }
 
@@ -72,27 +79,36 @@ public class UiPanel : Component
         {
             component.DestinationRec.X = DestinationRec.X + preWidth;
             component.DestinationRec.Y = DestinationRec.Y;
-            preWidth += component.SourceRec.Width;
+            preWidth += component.SourceRec.Width*_scale;
             SetLength(component);
         }
     }
 
+    private void SetScaling(Component component)
+    {
+        component.DestinationRec = DestinationRec;
+        if (component.GetType() != typeof(UiText)) return;
+        var uiText = (UiText)component;
+        uiText.Scale = new Vector2(_scale, _scale);
+    }
+
     private void SetLength(Component component)
     {
-        component.DestinationRec.Width = component.SourceRec.Width;
-        component.DestinationRec.Height = component.SourceRec.Height;
+        component.DestinationRec.Width = component.SourceRec.Width*_scale;
+        component.DestinationRec.Height = component.SourceRec.Height*_scale;
     }
 
     public void InsertAtIndex(Component component, int index)
     {
         if (index < 0) return;
         _components.Insert(index, component);
+        SetScaling(component);
         SetPositions();
     }
 
-    public void RemoveAtIndex(int index, UiLabels componentUiLabel)
+    public bool RemoveAtIndex(int index, UiLabels componentUiLabel)
     {
-        if (index < 0 || index > _components.Count) return;
+        if (index < 0 || index > _components.Count) return false;
         
         try
         {
@@ -102,6 +118,7 @@ public class UiPanel : Component
             {
                 _components.RemoveAt(index);
                 SetPositions();
+                return true;
             }
             
         }
@@ -109,7 +126,8 @@ public class UiPanel : Component
         {
             Debug.WriteLine(e.Message);
         }
-      
+
+        return false;
     }
 
     public int GetIndexFromLabel(UiLabels uiLabel)
@@ -155,5 +173,13 @@ public class UiPanel : Component
 
         return null;
     }
+    public Component Find(Predicate<Component> cPredicate)
+    {
+        return _components.Find(cPredicate);
+    }
     
+    public int GetIndexFromComponent(Component component)
+    {
+        return _components.IndexOf(component);
+    }
 }

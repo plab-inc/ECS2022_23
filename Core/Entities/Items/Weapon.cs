@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 using ECS2022_23.Core.Animations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -7,19 +8,18 @@ namespace ECS2022_23.Core.Entities.Items;
 
 public class Weapon : Item
 {
-    public float DamagePoints;
+    public float DamagePoints = 5;
     public float Range { get; }
-    public WeaponType WeaponType;
+    public WeaponType WeaponType = WeaponType.CLOSE;
 
-    public Weapon(Vector2 spawn, Texture2D texture, Vector2 startPos, Dictionary<string, Animation> animations) : base(spawn, texture)
+    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations, Rectangle sourceRect) : base(spawn, texture, sourceRect)
     {
         Animations = animations;
     }
-    public Weapon(Texture2D texture, Vector2 startPos, Dictionary<string, Animation> animations, WeaponType type, float range) : base(Vector2.Zero, texture)
+    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations, Rectangle sourceRect, WeaponType type, float range) : base(spawn, texture, sourceRect)
     {
         Animations = animations;
         Range = range;
-        DamagePoints = 2;
         WeaponType = type;
     }
     
