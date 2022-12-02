@@ -20,11 +20,10 @@ public class Game1 : Game
     private SpriteBatch _spriteBatch;
     
     private Camera _camera;
-
+    
     private Escape _escape;
     private Player _player;
     private Enemy _enemy;
-
     public static int ScreenWidth = 1280;
     public static int ScreenHeight = 720;
     
@@ -60,10 +59,8 @@ public class Game1 : Game
         
         _escape = new Escape(_player, 3, false);
         _escape.AttachCamera(_camera);
-        _enemy = new Enemy(_player.Position, Content.Load<Texture2D>("sprites/spritesheet"), AnimationLoader.CreatePlayerAnimations(), new ChaseMotor(_player));
-   
+        _enemy = new Walker(_escape._level);
         CombatManager.AddEnemy(_enemy);
-
         UiLoader.Load(Content);
     }
 
@@ -85,16 +82,13 @@ public class Game1 : Game
         
         _spriteBatch.Begin(_camera, samplerState: SamplerState.PointClamp);
         
-            _escape.Draw(_spriteBatch);
-            _enemy.Draw(_spriteBatch);
-
-            CombatManager.Draw(_spriteBatch);
-            ItemManager.Draw(_spriteBatch);
-            
+        _escape.Draw(_spriteBatch);
+        _enemy.Draw(_spriteBatch);
+        CombatManager.Draw(_spriteBatch);
         _spriteBatch.End();
         
-        _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            UiManager.Draw(_spriteBatch);
+        _spriteBatch.Begin();
+        UiManager.Draw(_spriteBatch);
         _spriteBatch.End();
 
         base.Draw(gameTime);

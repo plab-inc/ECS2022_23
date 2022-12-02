@@ -93,7 +93,7 @@ public static class AnimationLoader
         };
     }
 
-    private static Dictionary<string, Animation> CreatePhaserAnimations()
+    public static Dictionary<string, Animation> CreatePhaserAnimations()
     {
         return new Dictionary<string, Animation>()
         {
