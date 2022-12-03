@@ -7,7 +7,7 @@ namespace ECS2022_23.Core.Entities;
 
 public abstract class Entity
 {
-    protected Texture2D Texture; 
+    public Texture2D Texture; 
     public Vector2 Position { get; set; }
     
     protected Dictionary<string, Animation> Animations;

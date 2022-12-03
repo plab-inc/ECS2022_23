@@ -1,40 +1,52 @@
 ﻿using System.Collections.Generic;
 using ECS2022_23.Core.Animations;
+using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Entities.Characters.enemy;
 
-public  class Enemy : Character
+public abstract class Enemy : Character
 {
-    public float XpReward = 5;
-    public float MoneyReward = 10;
-    private Motor _motor;
-    public bool IsActive = true;
+    // Statistics
+    public float XpReward;
+    public float MoneyReward;
+    
+    // Behavior
+    public Motor Motor;
+    private bool _isActive=true;
+    
+    // Level
+    protected Rectangle ActivationRectangle;
 
-    public Enemy(Vector2 spawn, Texture2D texture, Motor motor) : base(spawn, texture)
+    public Enemy(Vector2 spawn, Texture2D texture, Motor motor, Level level) : base(spawn, texture)
     {
-        Velocity = 2f;
-        HP = 10;
+        Motor = motor;
         SpriteWidth = 16;
-        _motor = motor;
+        Level = level;
+        ActivationRectangle = Rectangle;
     }
 
-    public Enemy(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations, Motor motor) : base(spawn, texture, animations)
+    public Enemy(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations, Motor motor, Level level) : base(spawn, texture, animations)
     {
-        Velocity = 3f;
-        HP = 10;
+        Motor = motor;
         SpriteWidth = 16;
-        _motor = motor;
+        Level = level;
+        ActivationRectangle = Rectangle;
     }
 
+    // Updates Enemy when it is active. Checks for Activation if it isn't active.
     public override void Update(GameTime gameTime)
     {
-        if (IsActive)
+        if (_isActive)
         {
-           //Position = _motor.Move(Position, (int) Velocity);
+           Act();
         }
-
+        else
+        {
+            _isActive = Activate();
+        }
+        
         if(!IsAlive)
         {
             SetAnimation("Death");
@@ -44,5 +56,29 @@ public  class Enemy : Character
             SetAnimation("Default");
         }
         AnimationManager.Update(gameTime);
+        
+    }
+
+    // Resolves Enemy Behavior like Movement and Attack.
+    private void Act()
+    {
+        // Movement
+        Position += Motor.Move(Position, (int) Velocity);
+        
+        // Check for Attack
+    }
+
+
+    public bool Activate()
+    {
+        // When the Player enters the Activation Radius the Enemy becomes active
+        
+        return false;
+    }
+    
+    public bool CollideWithPlayer()
+    {
+        // Checks if the Enemy collides with the player.
+        return false;
     }
 }
