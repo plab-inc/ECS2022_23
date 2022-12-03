@@ -97,7 +97,6 @@ internal static class LevelGenerator
     }
     private static void ConnectRooms(int maximumRooms, List<Room> rooms, List<Rectangle> groundLayer, List<Door> deadEndDoors)
     {
-        //Generate start room
         var startMapName = "start" + Random.Next(PossibleStarts).ToString("000");
         var start = new Room(startMapName, new Point(0, 0));
         groundLayer.AddRange(start.GroundLayer);
@@ -191,8 +190,8 @@ internal static class LevelGenerator
         var roomWidth = room.Map.Width;
         
         //Calculate positions on the plain map based on the room/door cordinates
-        var x = (door.Position.X - room.Position.X) / 16;
-        var y = (door.Position.Y - room.Position.Y) / 16;
+        var x = (door.Position.X - room.Position.X) / room.Map.TileWidth;
+        var y = (door.Position.Y - room.Position.Y) / room.Map.TileHeight;
         
         switch (door.Direction)
         {
@@ -314,8 +313,8 @@ internal static class LevelGenerator
                 
                 connectingDoorX = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Down").x / connectingMap.TileWidth) * connectingMap.TileWidth;
                 
-                renderPosX =  exitDoor.Position.X - connectingDoorX;
-                renderPosY = exitDoor.Room.Position.Y - connectingMap.Height * 16;
+                renderPosX = exitDoor.Position.X - connectingDoorX;
+                renderPosY = exitDoor.Room.Position.Y - connectingMap.Height * connectingMap.TileHeight;
                 
                 break;
                             
@@ -342,17 +341,13 @@ internal static class LevelGenerator
                 connectingDoorY = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Right").y / connectingMap.TileHeight) * connectingMap.TileWidth;
                 
                 renderPosY = exitDoor.Position.Y - connectingDoorY;
-                renderPosX = exitDoor.Room.Position.X - connectingMap.Width * 16;
+                renderPosX = exitDoor.Room.Position.X - connectingMap.Width * connectingMap.TileWidth;
                 
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
-
-        //renderPosY *= connectingMap.TileHeight;
-        //renderPosX *= connectingMap.TileWidth;
         
-
         return new Point(renderPosX, renderPosY);
 
     }
