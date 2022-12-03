@@ -31,6 +31,22 @@ public class Level
         foreach (var room in Rooms.Where(room => room.Rectangle.Contains(Player.Position)))
         {
             Player.Room = room;
+
+            if (room.GetInteractablePositions("Locker").Any())
+            {
+                if (Player.Rectangle.Contains(room.GetInteractablePositions("Locker").First()))
+                {
+                    Console.WriteLine("Wow a locker");
+                }
+            }
+            if (room.GetInteractablePositions("Chest").Any())
+            {
+                if (Player.Rectangle.Contains(room.GetInteractablePositions("Chest").First()))
+                {
+                    Console.WriteLine("Wow a chest");
+                }
+            }
+
         }
     }
     public void Draw(SpriteBatch spriteBatch)

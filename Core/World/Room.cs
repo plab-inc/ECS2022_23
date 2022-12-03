@@ -81,7 +81,7 @@ public class Room
         {
             get
             {
-                var spawnObjects = Map.Layers.First(x => x.name == "Spawn").objects;
+                var spawnObjects = Map.Layers.First(x => x.name == "Spawns").objects;
                 var spawns = new List<Vector2>();
 
                 foreach (var spawnObject in spawnObjects)
@@ -139,6 +139,26 @@ public class Room
         var index = (y * layer.width) + x;
 
         return layer.data[index];
+    }
+
+    public List<Vector2> GetInteractablePositions(String interactableName)
+    {
+        var interactableObjects = Map.Layers.First(l => l.name == "Interactables").objects;
+        var interactablePositions = new List<Vector2>();
+
+        foreach (var tiledObject in interactableObjects)
+        {
+            if (tiledObject.name.Contains(interactableName))
+            {
+                var posX = tiledObject.x + _renderPos.X;
+                var posY = tiledObject.y + _renderPos.Y;
+
+                interactablePositions.Add(new Vector2(posX, posY));
+            }
+        }
+
+        return interactablePositions;
+        
     }
 
     public void Draw(SpriteBatch spriteBatch)
