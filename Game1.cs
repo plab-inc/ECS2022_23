@@ -78,10 +78,12 @@ public class Game1 : Game
         _spriteBatch.Begin(_camera, samplerState: SamplerState.PointClamp);
         
         _escape.Draw(_spriteBatch);
-        CombatManager.Draw(_spriteBatch);
-        _spriteBatch.End();
         
-        _spriteBatch.Begin();
+        CombatManager.Draw(_spriteBatch);
+        ItemManager.Draw(_spriteBatch);
+            
+        _spriteBatch.End();
+        _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
         UiManager.Draw(_spriteBatch);
         _spriteBatch.End();
 
