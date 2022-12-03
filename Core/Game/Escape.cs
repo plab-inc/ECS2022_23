@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Comora;
 using ECS2022_23.Core.Entities.Characters;
+using ECS2022_23.Core.Entities.Characters.enemy;
 using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,17 +17,19 @@ public class Escape
     
     private bool _debugOn;
     private Rectangle? debugRect;
+    private EnemyManager _enemyManager;
     
     public Escape(Player player, int difficulty, bool debugOn)
     {
+        
         _player = player;
         _currentLevel = LevelGenerator.GenerateLevel(difficulty * 2, difficulty * 4);
         _currentLevel.Player = player;
-        
         player.Level = _currentLevel;
         player.Room = _currentLevel.StartRoom;
         player.Position =  _currentLevel.StartRoom.GetRandomSpawnPos(player);
-        
+        _enemyManager = new EnemyManager(_currentLevel,player);
+        _enemyManager.SpawnEnemies();
         _debugOn = debugOn;
 
     }
@@ -39,7 +42,9 @@ public class Escape
     {
         _currentLevel.Draw(spriteBatch);
         _player.Draw(spriteBatch);
-
+        _enemyManager.Draw(spriteBatch);
+        
+        
         if (debugRect != null)
         {
             //TODO Draw debug rect
@@ -52,6 +57,7 @@ public class Escape
         _camera.Update(gameTime);
         _player.Update(gameTime);
         _currentLevel.Update(gameTime);
+        _enemyManager.Update(gameTime);
         
         if (_debugOn)
         {

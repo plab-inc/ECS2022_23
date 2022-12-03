@@ -23,7 +23,7 @@ public abstract class Enemy : Character
     {
         Motor = motor;
         SpriteWidth = 16;
-        SetLevel(level);
+        Level = level;
         ActivationRectangle = Rectangle;
     }
 
@@ -31,7 +31,7 @@ public abstract class Enemy : Character
     {
         Motor = motor;
         SpriteWidth = 16;
-        _level = level;
+        Level = level;
         ActivationRectangle = Rectangle;
     }
 

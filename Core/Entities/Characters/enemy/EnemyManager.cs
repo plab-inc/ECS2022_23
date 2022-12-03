@@ -49,11 +49,11 @@ public class EnemyManager
     private Enemy GetRandomEnemy()
     {
         Random rand = new Random();
-        // rand.Next(0, EnemyTypes.Count
+        // rand.Next(0, EnemyTypes.Count)
         switch (0)
         {
             case 0: return new Walker(_level);
-            case 1: return new Chaser(_level, _player); // TODO Chaser does not get the correct Coordinates
+            case 1: return new Chaser(_level, _player);
         }
         return new Walker(_level);
     }
@@ -65,4 +65,13 @@ public class EnemyManager
             enemy.Update(gameTime);
         }
     }
+
+    public void Draw(SpriteBatch spriteBatch)
+    {
+        foreach (var en in Enemies)
+        {
+            en.Draw(spriteBatch);
+        }
+    }
+
 }

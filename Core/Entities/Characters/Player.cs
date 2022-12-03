@@ -20,7 +20,7 @@ public class Player : Character
     private float speed = 3;
     public List<Item> Items;
     public Weapon Weapon { get; set; }
-    public Level Level { get; set; }
+    
     public Room Room { get; set; }
     
     private Input _input;

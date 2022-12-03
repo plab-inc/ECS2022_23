@@ -14,7 +14,7 @@ public abstract class Character : Entity
     protected int SpriteWidth;
     public int AimDirection;
     public bool IsAlive = true;
-    public Level _level;
+    public Level Level { get; set; }
     public bool IsAttacking { get; set; }
     
     protected Character(Vector2 spawn, Texture2D texture) : base(spawn, texture)
@@ -57,7 +57,7 @@ public abstract class Character : Entity
 
         var feetOnGround = false;
 
-        foreach (var rectangle in _level.GroundLayer)
+        foreach (var rectangle in Level.GroundLayer)
         {
             if (rectangle.Contains(feet))
             {
@@ -67,7 +67,7 @@ public abstract class Character : Entity
 
         if (!feetOnGround) return false;
 
-        foreach (var rectangle in _level.GroundLayer)
+        foreach (var rectangle in Level.GroundLayer)
         {
             if (velocity.Y == 0 && velocity.X > 0)
             {
@@ -96,12 +96,6 @@ public abstract class Character : Entity
         
         return false;
     }
-    
-    public void SetLevel(Level level)
-    {
-        this._level = level;
-    }
-    
     
     public override void Draw(SpriteBatch spriteBatch)
     {
