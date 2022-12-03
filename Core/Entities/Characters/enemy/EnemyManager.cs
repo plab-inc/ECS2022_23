@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using ECS2022_23.Core.Combat;
 using ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
 using ECS2022_23.Core.Game;
 using ECS2022_23.Core.World;
@@ -40,6 +41,7 @@ public class EnemyManager
                 Enemy en = GetRandomEnemy();
                 en.Position = room.GetRandomSpawnPos(en);
                 AddEnemy(en);
+                CombatManager.AddEnemy(en);
             }
         }
     }

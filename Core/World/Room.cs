@@ -81,7 +81,7 @@ public class Room
             TiledObject[] spawnObjects;
             try
             {
-                spawnObjects = Map.Layers.First(x => x.name == "Spawn").objects;
+                spawnObjects = Map.Layers.First(x => x.name == "Spawns").objects;
             }
             catch (InvalidOperationException e)
             {

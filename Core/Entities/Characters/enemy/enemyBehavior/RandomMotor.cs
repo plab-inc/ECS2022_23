@@ -54,7 +54,7 @@ public class RandomMotor : Motor
             }
 
             retry++;
-        } while (!Enemy.CollidesWithWall(temp) && retry<4);
+        } while (!Enemy.Collides(temp) && retry<4);
 
         if (retry>=4)
         {

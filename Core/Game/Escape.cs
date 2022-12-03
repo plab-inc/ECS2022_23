@@ -28,7 +28,7 @@ public class Escape
     {
         _player = player;
         _level = LevelGenerator.GenerateLevel((int) (difficulty * 2), (int) (difficulty * 4));
-        _player.setLevel(_level);
+        _player.SetLevel(_level);
         var pos = _level.StartRoom.GetRandomSpawnPos(player);
         
         try

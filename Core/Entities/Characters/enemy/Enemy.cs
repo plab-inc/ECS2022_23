@@ -17,14 +17,13 @@ public abstract class Enemy : Character
     private bool _isActive=true;
     
     // Level
-    private Level _level;
     protected Rectangle ActivationRectangle;
 
     public Enemy(Vector2 spawn, Texture2D texture, Motor motor, Level level) : base(spawn, texture)
     {
         Motor = motor;
         SpriteWidth = 16;
-        _level = level;
+        SetLevel(level);
         ActivationRectangle = Rectangle;
     }
 
@@ -77,51 +76,6 @@ public abstract class Enemy : Character
         return false;
     }
     
-    public bool CollidesWithWall(Vector2 velocity)
-    {
-        var newPoint = (Position + velocity).ToPoint();
-        var rect = new Rectangle(newPoint, new Point(Texture.Width, Texture.Height));
-
-        //TODO clean up
-        
-        var armHitBoxLeft =
-            new Rectangle(newPoint.X + 4, newPoint.Y + Texture.Height / 2 + 2, 1, Texture.Height / 2 - 2);
-        var armHitBoxRight = new Rectangle(newPoint.X + Texture.Width - 5, newPoint.Y + Texture.Height / 2 + 2, 1,
-            Texture.Height / 2 - 2);
-
-        if (velocity == Vector2.Zero)
-        {
-            return true;
-        }
-        
-        foreach (var rectangle in _level.GroundLayer)
-        {
-            if (velocity.Y == 0 && velocity.X > 0)
-            {
-                if (rectangle.Intersects(armHitBoxRight))
-                {
-                    return true;
-                }
-            }
-
-            if (velocity.Y == 0 && velocity.X < 0)
-            {
-                if (rectangle.Intersects(armHitBoxLeft))
-                {
-                    return true;
-                }
-            }
-
-            if ((velocity.X != 0 || !(velocity.Y > 0)) && (velocity.X != 0 || !(velocity.Y < 0))) continue;
-            
-            if (rectangle.Intersects(armHitBoxLeft) && rectangle.Intersects(armHitBoxRight))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public bool CollideWithPlayer()
     {
         // Checks if the Enemy collides with the player.

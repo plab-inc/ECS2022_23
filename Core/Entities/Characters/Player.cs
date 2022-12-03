@@ -24,7 +24,7 @@ public class Player : Character
     private Input _input;
     
 
-    private Level level;
+    
     
     public Player(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations) : base(spawn, texture, animations)
     {
@@ -43,72 +43,6 @@ public class Player : Character
         Strength = 5;
     }
     
-    public void setLevel(Level level)
-    {
-        this.level = level;
-    }
-
-    public bool Collides(Vector2 velocity)
-    {
-        var newPoint = (Position + velocity).ToPoint();
-        var rect = new Rectangle(newPoint, new Point(Texture.Width, Texture.Height));
-
-        //TODO clean this mess up
-        
-        var armHitBoxLeft =
-            new Rectangle(newPoint.X + 4, newPoint.Y + Texture.Height / 2 + 2, 1, Texture.Height / 2 - 2);
-        var armHitBoxRight = new Rectangle(newPoint.X + Texture.Width - 5, newPoint.Y + Texture.Height / 2 + 2, 1,
-            Texture.Height / 2 - 2);
-
-        var feet = new Point(rect.Center.X, rect.Bottom);
-
-        if (velocity == Vector2.Zero)
-        {
-            return true;
-        }
-
-        var feetOnGround = false;
-
-        foreach (var rectangle in level.GroundLayer)
-        {
-            if (rectangle.Contains(feet))
-            {
-                feetOnGround = true;
-            }
-        }
-
-        if (!feetOnGround) return false;
-
-        foreach (var rectangle in level.GroundLayer)
-        {
-            if (velocity.Y == 0 && velocity.X > 0)
-            {
-                if (rectangle.Intersects(armHitBoxRight))
-                {
-                    return true;
-                }
-            }
-
-            if (velocity.Y == 0 && velocity.X < 0)
-            {
-                if (rectangle.Intersects(armHitBoxLeft))
-                {
-                    return true;
-                }
-            }
-
-            if ((velocity.X != 0 || !(velocity.Y > 0)) && (velocity.X != 0 || !(velocity.Y < 0))) continue;
-            
-            if (rectangle.Intersects(armHitBoxLeft) && rectangle.Intersects(armHitBoxRight))
-            {
-                return true;
-            }
-            
-        }
-        
-        return false;
-    }
-
     public override void Update(GameTime gameTime)
     {
         if (AnimationManager.AnimationFinished)
