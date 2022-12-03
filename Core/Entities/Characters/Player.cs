@@ -14,13 +14,15 @@ namespace ECS2022_23.Core.Entities.Characters;
 public class Player : Character
 {
     public float Armor;
-    public float Level;
     public float XpToNextLevel;
     public float Money;
 
     private float speed = 3;
     public List<Item> Items;
     public Weapon Weapon { get; set; }
+    public Level Level { get; set; }
+    public Room Room { get; set; }
+    
     private Input _input;
     
 
