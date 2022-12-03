@@ -63,7 +63,7 @@ internal static class LevelGenerator
         {
             var rect = collisionLayer.Find(x => x.Contains(deadEndDoor.Position));
             collisionLayer.Remove(rect);
-            //CloseDoor(deadEndDoor);
+            CloseDoor(deadEndDoor);
         }
         
         Console.WriteLine("Open doors closed. \nDone!");
@@ -190,8 +190,9 @@ internal static class LevelGenerator
         var roomHeight = room.Map.Height;
         var roomWidth = room.Map.Width;
         
-        var x = door.Position.X;
-        var y = door.Position.Y;
+        //Calculate positions on the plain map based on the room/door cordinates
+        var x = (door.Position.X - room.Position.X) / 16;
+        var y = (door.Position.Y - room.Position.Y) / 16;
         
         switch (door.Direction)
         {

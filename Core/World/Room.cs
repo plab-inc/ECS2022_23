@@ -134,11 +134,6 @@ public class Room
     }
     public void Draw(SpriteBatch spriteBatch)
     {
-        Texture2D _texture;
-
-        _texture = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
-        _texture.SetData(new Color[] { Color.Red * 0.5f });
-        
         var tileLayers = Map.Layers.Where(x => x.type == TiledLayerType.TileLayer);
         
         foreach (var layer in tileLayers)
@@ -210,7 +205,6 @@ public class Room
                 }
             }
         }
-        spriteBatch.Draw(_texture,Rectangle,Color.White);
     }
 }
 
