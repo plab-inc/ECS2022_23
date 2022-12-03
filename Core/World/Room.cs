@@ -17,10 +17,10 @@ public class Room
     
     private Point _renderPos;
     
-    public int Height => Map.Height;
-    public int Width => Map.Width;
+    public int Height => Map.Height * Map.TileHeight;
+    public int Width => Map.Width * Map.TileWidth;
     public Point Position => _renderPos;
-    public Rectangle Rectangle => new (_renderPos.X, _renderPos.Y, Map.Width, Map.Height);
+    public Rectangle Rectangle => new (_renderPos.X, _renderPos.Y, Width, Height);
     
     public Room(string mapName, Point renderPos)
     {
@@ -41,8 +41,8 @@ public class Room
 
             foreach (var obj in groundLayer.objects)
             {
-                var x = (int) obj.x + _renderPos.X * Map.TileWidth;
-                var y = (int) obj.y + _renderPos.Y * Map.TileHeight;
+                var x = (int) obj.x + _renderPos.X;
+                var y = (int) obj.y + _renderPos.Y;
                 
                 collisionLayer.Add(new Rectangle(x,y,(int) obj.width,(int) obj.height));
             }
@@ -60,13 +60,12 @@ public class Room
             
             foreach (var door in doorsObjects)
             {
-                var doorX = (int) (Math.Floor(door.x / Map.TileWidth)) + _renderPos.X;
-                var doorY = (int) (Math.Floor(door.y / Map.TileHeight)) + _renderPos.Y;
-                var marker = new Point((int) doorX * Map.TileWidth, (int) doorY * Map.TileHeight);
+                var doorX = (int) (Math.Floor(door.x / Map.TileWidth)) * Map.TileWidth + _renderPos.X;
+                var doorY = (int) (Math.Floor(door.y / Map.TileHeight)) * Map.TileHeight + _renderPos.Y;
                 
                 var doorDirection = Enum.Parse<Direction>(door.name);
                 
-                doors.Add(new Door(this,marker,doorDirection,doorX,doorY));
+                doors.Add(new Door(this,doorDirection,doorX,doorY));
             }
             
             return doors;
@@ -109,7 +108,6 @@ public class Room
         throw new InvalidOperationException("Spawn of entity failed in Map: " + MapName + "at position: " + spawnPos);
     }
     
-    
     private void GetTiledTilesets()
     {
         foreach (var mapTileset in Map.Tilesets)
@@ -136,6 +134,11 @@ public class Room
     }
     public void Draw(SpriteBatch spriteBatch)
     {
+        Texture2D _texture;
+
+        _texture = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
+        _texture.SetData(new Color[] { Color.Red * 0.5f });
+        
         var tileLayers = Map.Layers.Where(x => x.type == TiledLayerType.TileLayer);
         
         foreach (var layer in tileLayers)
@@ -147,8 +150,8 @@ public class Room
                     var index = (y * layer.width) + x; // Assuming the default render order is used which is from right to bottom
                     var gid = layer.data[index]; // The tileset tile index
                     
-                    var tileX = (x + _renderPos.X) * Map.TileWidth;
-                    var tileY = (y + _renderPos.Y) * Map.TileHeight;
+                    var tileX = (x * 16 + _renderPos.X);
+                    var tileY = (y * 16 + _renderPos.Y);
                     
                     var effects = SpriteEffects.None;
                     float rotation = 0f;
@@ -204,10 +207,10 @@ public class Room
                     }
                     
                     spriteBatch.Draw(tilesetTexture, destination, source, Color.White, rotation, Vector2.Zero, effects, 0);
-                    
                 }
             }
         }
+        spriteBatch.Draw(_texture,Rectangle,Color.White);
     }
 }
 

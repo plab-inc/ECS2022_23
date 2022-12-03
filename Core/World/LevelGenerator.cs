@@ -61,9 +61,9 @@ internal static class LevelGenerator
         
         foreach (var deadEndDoor in deadEndDoors)
         {
-            var rect = collisionLayer.Find(x => x.Contains(deadEndDoor.Marker));
+            var rect = collisionLayer.Find(x => x.Contains(deadEndDoor.Position));
             collisionLayer.Remove(rect);
-            CloseDoor(deadEndDoor);
+            //CloseDoor(deadEndDoor);
         }
         
         Console.WriteLine("Open doors closed. \nDone!");
@@ -174,7 +174,7 @@ internal static class LevelGenerator
     }
     private static bool DoRoomsIntersect(List<Room> rooms, Point renderPos, TiledMap map)
     {
-        Rectangle rect = new(renderPos.X, renderPos.Y, map.Width, map.Height);
+        Rectangle rect = new(renderPos.X, renderPos.Y, map.Width * map.TileHeight, map.Height * map.TileHeight);
         
         if (!rooms.Any(room => room.Rectangle.Intersects(rect))) return false;
         
@@ -190,8 +190,8 @@ internal static class LevelGenerator
         var roomHeight = room.Map.Height;
         var roomWidth = room.Map.Width;
         
-        var x = door.NormalizedPosition.X;
-        var y = door.NormalizedPosition.Y;
+        var x = door.Position.X;
+        var y = door.Position.Y;
         
         switch (door.Direction)
         {
@@ -311,16 +311,16 @@ internal static class LevelGenerator
         {
             case Direction.Up:
                 
-                connectingDoorX = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Down").x / 16);
+                connectingDoorX = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Down").x / connectingMap.TileWidth) * connectingMap.TileWidth;
                 
                 renderPosX =  exitDoor.Position.X - connectingDoorX;
-                renderPosY = exitDoor.Room.Position.Y - connectingMap.Height;
+                renderPosY = exitDoor.Room.Position.Y - connectingMap.Height * 16;
                 
                 break;
                             
             case Direction.Down:
 
-                connectingDoorX = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Up").x / 16);
+                connectingDoorX = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Up").x / connectingMap.TileWidth) * connectingMap.TileWidth;
                 
                 renderPosX = exitDoor.Position.X - connectingDoorX;
                 renderPosY = exitDoor.Room.Position.Y + exitDoor.Room.Height;
@@ -329,7 +329,7 @@ internal static class LevelGenerator
             
             case Direction.Right:
 
-                connectingDoorY = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Left").y / 16);
+                connectingDoorY = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Left").y / connectingMap.TileHeight) * connectingMap.TileWidth;
 
                 renderPosY = exitDoor.Position.Y - connectingDoorY; 
                 renderPosX = exitDoor.Room.Position.X + exitDoor.Room.Width;
@@ -338,15 +338,19 @@ internal static class LevelGenerator
                             
             case Direction.Left:
                 
-                connectingDoorY = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Right").y / 16);
+                connectingDoorY = (int) Math.Floor(connectingMapDoors.First(door => door.name == "Right").y / connectingMap.TileHeight) * connectingMap.TileWidth;
                 
                 renderPosY = exitDoor.Position.Y - connectingDoorY;
-                renderPosX = exitDoor.Room.Position.X - connectingMap.Width;
+                renderPosX = exitDoor.Room.Position.X - connectingMap.Width * 16;
                 
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
+
+        //renderPosY *= connectingMap.TileHeight;
+        //renderPosX *= connectingMap.TileWidth;
+        
 
         return new Point(renderPosX, renderPosY);
 
