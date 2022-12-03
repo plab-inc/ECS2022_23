@@ -14,17 +14,16 @@ namespace ECS2022_23.Core.Entities.Characters;
 public class Player : Character
 {
     public float Armor;
-    public float Level;
     public float XpToNextLevel;
     public float Money;
 
     private float speed = 3;
     public List<Item> Items;
     public Weapon Weapon { get; set; }
-    private Input _input;
+    public Level Level { get; set; }
+    public Room Room { get; set; }
     
-
-    private Level level;
+    private Input _input;
     
     public Player(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations) : base(spawn, texture, animations)
     {
@@ -42,12 +41,6 @@ public class Player : Character
         SpriteWidth = 16;
         Strength = 5;
     }
-    
-    public void setLevel(Level level)
-    {
-        this.level = level;
-    }
-
     public bool Collides(Vector2 velocity)
     {
         var newPoint = (Position + velocity).ToPoint();
@@ -69,7 +62,7 @@ public class Player : Character
 
         var feetOnGround = false;
 
-        foreach (var rectangle in level.GroundLayer)
+        foreach (var rectangle in Level.GroundLayer)
         {
             if (rectangle.Contains(feet))
             {
@@ -79,7 +72,7 @@ public class Player : Character
 
         if (!feetOnGround) return false;
 
-        foreach (var rectangle in level.GroundLayer)
+        foreach (var rectangle in Level.GroundLayer)
         {
             if (velocity.Y == 0 && velocity.X > 0)
             {
