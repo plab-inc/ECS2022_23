@@ -69,6 +69,76 @@ public static class AnimationLoader
             }
         };
     }
+    
+    public static Dictionary<string, Animation> CreateBlobEnemyAnimations()
+    {
+        return new Dictionary<string, Animation>()
+        {
+            {
+                "Walk",
+                new Animation(_texture, 16, 16, 2, new Vector2(10, 1), true)
+            },
+            {
+                "WalkRight",
+                new Animation(_texture, 16, 16, 2, new Vector2(10, 1), true, true, false)
+            },
+            {
+                "WalkLeft",
+                new Animation(_texture, 16, 16, 2, new Vector2(10, 1), true)
+            },
+            {
+                "Attack",
+                new Animation(_texture, 16, 16, 5, new Vector2(10, 1), false)
+            },
+            {
+                "Hurt",
+                new Animation(_texture, 16, 16, 1, new Vector2(15, 1), false)
+            },
+            {
+                "Death",
+                new Animation(_texture, 16, 16, 1, new Vector2(14, 1), true)
+            },
+            {
+                "Default",
+                new Animation(_texture, 16, 16, 3, new Vector2(10, 1), true)
+            }
+        };
+    }
+    
+    public static Dictionary<string, Animation> CreateEyeEnemyAnimations()
+    {
+        return new Dictionary<string, Animation>()
+        {
+            {
+                "Walk",
+                new Animation(_texture, 16, 16, 4, new Vector2(10, 2), true)
+            },
+            {
+                "WalkRight",
+                new Animation(_texture, 16, 16, 4, new Vector2(10, 2), true, true, false)
+            },
+            {
+                "WalkLeft",
+                new Animation(_texture, 16, 16, 4, new Vector2(10, 2), true)
+            },
+            {
+                "Attack",
+                new Animation(_texture, 16, 16, 2, new Vector2(12, 2), false)
+            },
+            {
+                "Hurt",
+                new Animation(_texture, 16, 16, 1, new Vector2(14, 2), false)
+            },
+            {
+                "Death",
+                new Animation(_texture, 16, 16, 1, new Vector2(15, 2), true)
+            },
+            {
+                "Default",
+                new Animation(_texture, 16, 16, 4, new Vector2(10, 2), true)
+            }
+        };
+    }
 
     private static Dictionary<string, Animation> CreateSwordAnimations()
     {
@@ -93,7 +163,7 @@ public static class AnimationLoader
         };
     }
 
-    public static Dictionary<string, Animation> CreatePhaserAnimations()
+    private static Dictionary<string, Animation> CreatePhaserAnimations()
     {
         return new Dictionary<string, Animation>()
         {
