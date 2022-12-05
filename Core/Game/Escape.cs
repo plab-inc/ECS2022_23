@@ -17,7 +17,6 @@ public class Escape
     
     private bool _debugOn;
     private Rectangle? debugRect;
-    private EnemyManager _enemyManager;
     
     public Escape(Player player, int difficulty, bool debugOn)
     {
@@ -28,8 +27,9 @@ public class Escape
         player.Level = _currentLevel;
         player.Room = _currentLevel.StartRoom;
         player.Position =  _currentLevel.StartRoom.GetRandomSpawnPos(player);
-        _enemyManager = new EnemyManager(_currentLevel,player);
-        _enemyManager.SpawnEnemies();
+        EnemyManager.Level = _currentLevel;
+        EnemyManager.Player = _player;
+        EnemyManager.SpawnEnemies();
         _debugOn = debugOn;
 
     }
@@ -42,7 +42,7 @@ public class Escape
     {
         _currentLevel.Draw(spriteBatch);
         _player.Draw(spriteBatch);
-        _enemyManager.Draw(spriteBatch);
+        EnemyManager.Draw(spriteBatch);
         
         
         if (debugRect != null)
@@ -57,7 +57,7 @@ public class Escape
         _camera.Update(gameTime);
         _player.Update(gameTime);
         _currentLevel.Update(gameTime);
-        _enemyManager.Update(gameTime);
+        EnemyManager.Update(gameTime);
         
         if (_debugOn)
         {

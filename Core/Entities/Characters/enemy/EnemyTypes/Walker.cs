@@ -13,6 +13,8 @@ public class Walker : Enemy
     {
         Velocity = 1f;
         HP = 10;
+        XpReward = 1;
+        MoneyReward = 1;
         ActivationRectangle.Inflate(35, 35);
         Motor.SetEnemy(this);
     }
@@ -21,6 +23,8 @@ public class Walker : Enemy
     {
         Velocity = 1f;
         HP = 10;
+        XpReward = 1;
+        MoneyReward = 1;
         ActivationRectangle.Inflate(35, 35);
         Motor.SetEnemy(this);
     }
