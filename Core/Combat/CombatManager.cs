@@ -30,11 +30,11 @@ public static class CombatManager
         foreach (var enemy in _activeEnemies)
         {
             //muss noch mit mehreren enemies getestet werden (gleichzeitige Angriffe z.B.)
-            if (enemy.IsAlive)
+            if (enemy.IsAlive())
             {
                 CheckShotEnemyCollision(enemy, player);
             }
-            if (enemy.IsAttacking && enemy.IsAlive)
+            if (enemy.IsAttacking && enemy.IsAlive())
             {
                 EnemyAttack(enemy, player);
             }
@@ -45,11 +45,11 @@ public static class CombatManager
             shot.Update(gameTime);
         }
         _activeShots.RemoveAll(shot => !shot.IsWithinRange() || shot.HitTarget);
-        _activeEnemies.RemoveAll(enemy => !enemy.IsAlive);
+        _activeEnemies.RemoveAll(enemy => !enemy.IsAlive());
     }
     private static void PlayerAttack(Player attacker, Enemy defender)
     {
-        if (!defender.IsAlive) return;
+        if (!defender.IsAlive()) return;
         if (!EntitiesCollide(attacker, defender) && !WeaponCollide(attacker, defender)) return;
         defender.HP -= (attacker.Strength + attacker.Weapon.DamagePoints);
         defender.SetAnimation("Hurt");
@@ -60,7 +60,7 @@ public static class CombatManager
     
     private static void EnemyAttack(Character attacker, Player defender)
     {
-        if (!defender.IsAlive) return;
+        if (!defender.IsAlive()) return;
         if (EntitiesCollide(attacker, defender))
         {
             var armor = defender.Armor;
@@ -76,10 +76,9 @@ public static class CombatManager
                 defender.Armor = armor;
             }
            
-            if (defender.HP <= 0)
+            if (!defender.IsAlive())
             {
                 defender.SetAnimation("Death");
-                defender.IsAlive = false;
             }
         }
         attacker.IsAttacking = false;
@@ -147,7 +146,6 @@ public static class CombatManager
         ItemManager.DropRandomLoot(enemy.Position);
         player.Money += enemy.MoneyReward;
         player.XpToNextLevel += enemy.XpReward;
-        enemy.IsAlive = false;
     }
     
     public static void Draw(SpriteBatch spriteBatch)
