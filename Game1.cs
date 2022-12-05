@@ -1,4 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using System.Linq;
+using Comora;
+using ECS2022_23.Core;
+using ECS2022_23.Core.animations;
+using ECS2022_23.Core.entities.characters;
+using ECS2022_23.Core.entities.items;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGameLevelGenerator.Core;
@@ -12,15 +19,13 @@ public class Game1 : Game
     
     private Player _player;
     private Camera _camera;
-
-    private LevelGenerator generator;
     
     private Rectangle? debugRect;
-    const int scaleFactor = 1;
-    private Matrix transformMatrix;
+    private List<Level> levels = new();
     
-    public static int ScreenHeight;
-    public static int ScreenWidth;
+    public static int ScreenWidth = 1280;
+    public static int ScreenHeight = 720;
+    
     
     public Game1()
     {
@@ -31,10 +36,13 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        ScreenHeight = _graphics.PreferredBackBufferHeight;
-        ScreenWidth = _graphics.PreferredBackBufferWidth;
+        _graphics.PreferredBackBufferWidth = ScreenWidth;
+        _graphics.PreferredBackBufferHeight = ScreenHeight;
+        _graphics.ApplyChanges();
         
-        transformMatrix = Matrix.CreateScale(scaleFactor, scaleFactor, 1f);
+        _camera = new Camera(_graphics.GraphicsDevice);
+        _camera.LoadContent();
+        _camera.Zoom = 2f;
         
         base.Initialize();
     }
@@ -42,14 +50,14 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
+        _player = new Player(Content.Load<Texture2D>("sprites/astro"), AnimationLoader.LoadPlayerAnimations(Content));
         
-        _camera = new Camera();
-        _player = new Player(Content.Load<Texture2D>("sprites/astro"));
-        
-        ContentLoader.Load(Content);
-        generator = new LevelGenerator(50, 3);
-        generator.generateLevel();
+        _player.SetWeapon(new Weapon(Content.Load<Texture2D>("sprites/spritesheet"),Vector2.Zero, AnimationLoader.LoadBasicWeaponAnimation(Content)));
 
+        ContentLoader.Load(Content);
+        var level = LevelGenerator.GenerateLevel(3, 30);
+        _player.setLevel(level);
+        levels.Add(level);
     }
 
     protected override void Update(GameTime gameTime)
@@ -58,47 +66,48 @@ public class Game1 : Game
             Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
         
-        var mousePos = Mouse.GetState().Position.ToVector2();
-
-        // Check if mouse is in the bounds of a Tiled object
         debugRect = null;
+
+        _player.Update(gameTime);
         
-        foreach (var obj in generator.CollisionLayer)
+        _camera.Position = _player.Position;
+        _camera.Update(gameTime);
+        
+        foreach (var obj in levels.First().GroundLayer)
         {
-            if (obj.Contains(mousePos))
+            if (obj.Intersects(_player.Rectangle))
             {
                 debugRect = obj;
             }
         }
-        
-        _player.Update(gameTime);
-        _camera.Follow(_player);
         
         base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
+        GraphicsDevice.Clear(new Color(24, 33, 93));
         
-        _spriteBatch.Begin(transformMatrix: _camera.Transform);
-
-        foreach (var room in generator.Rooms)
-        {
-            room.Draw(_spriteBatch);
-        }
-        _player.Draw(_spriteBatch);
+        _spriteBatch.Begin(_camera, samplerState: SamplerState.PointClamp);
         
-        
+        levels.First().Draw(_spriteBatch);
         
         if (debugRect != null)
         {
-            Texture2D _texture = new Texture2D(GraphicsDevice, 1, 1);
-            _texture.SetData(new Color[] { Color.Green });
-
-            _spriteBatch.Draw(_texture, (Rectangle)debugRect, Color.White);
+            Texture2D _textureGreen = new Texture2D(GraphicsDevice, 1, 1);
+            
+            _textureGreen.SetData(new Color[] { Color.Green * 0.5f });
+            
+            _spriteBatch.Draw(_textureGreen, (Rectangle)debugRect, Color.White);
+            
+            Texture2D _textureRed = new Texture2D(GraphicsDevice, 1, 1);
+            _textureRed.SetData(new Color[] { Color.Red * 0.5f });
+            
+            _spriteBatch.Draw(_textureRed,_player.Rectangle, Color.White);
+            
         }
         
+        _player.Draw(_spriteBatch);
         
         _spriteBatch.End();
         
