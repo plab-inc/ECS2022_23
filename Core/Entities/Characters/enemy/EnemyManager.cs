@@ -30,7 +30,7 @@ public static class EnemyManager
         Enemies.Add(e);
     }
 
-    private static void RemoveEnemy(Enemy enemy)
+    public static void RemoveEnemy(Enemy enemy)
     {
         if (Enemies.Contains(enemy))
         {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Entities;
@@ -144,6 +145,7 @@ public static class CombatManager
     {
         enemy.SetAnimation("Death");
         ItemManager.DropRandomLoot(enemy.Position);
+        EnemyManager.RemoveEnemy(enemy);
         player.Money += enemy.MoneyReward;
         player.XpToNextLevel += enemy.XpReward;
     }
