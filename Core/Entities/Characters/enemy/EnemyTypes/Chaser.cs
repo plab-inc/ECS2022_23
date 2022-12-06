@@ -29,4 +29,9 @@ public class Chaser : Enemy
         Motor.SetEnemy(this);
         Motor.SetTarget(target);
     }
+
+    public override void Attack()
+    {
+        throw new System.NotImplementedException();
+    }
 }

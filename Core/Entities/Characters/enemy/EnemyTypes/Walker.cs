@@ -37,4 +37,9 @@ public class Walker : Enemy
         Motor.SetEnemy(this);
         Animations = animations;
     }
+
+    public override void Attack()
+    {
+        throw new System.NotImplementedException();
+    }
 }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
@@ -25,75 +27,40 @@ public abstract class Character : Entity
     {
         
     }
-    
-    public virtual void Attack()
-    {
-        
-    }
 
-    public virtual void Move()
-    {
-        
-    }
+    public abstract void Attack();
     
-    public bool Collides(Vector2 velocity)
+    public virtual bool Collides(Vector2 velocity)
     {
         var newPoint = (Position + velocity).ToPoint();
-        var rect = new Rectangle(newPoint, new Point(Texture.Width, Texture.Height));
-
-        //TODO clean up
-        
-        var armHitBoxLeft =
-            new Rectangle(newPoint.X + 4, newPoint.Y + Texture.Height / 2 + 2, 1, Texture.Height / 2 - 2);
-        var armHitBoxRight = new Rectangle(newPoint.X + Texture.Width - 5, newPoint.Y + Texture.Height / 2 + 2, 1,
-            Texture.Height / 2 - 2);
-
-        var feet = new Point(rect.Center.X, rect.Bottom);
+        var body = new Rectangle(newPoint, new Point(Texture.Width, Texture.Height));
+        var feet = new Point(body.Center.X, body.Bottom);
 
         if (velocity == Vector2.Zero)
         {
             return true;
         }
-
-        var feetOnGround = false;
-
+        
         foreach (var rectangle in Level.GroundLayer)
         {
-            if (rectangle.Contains(feet))
-            {
-                feetOnGround = true;
-            }
-        }
-
-        if (!feetOnGround) return false;
-
-        foreach (var rectangle in Level.GroundLayer)
-        {
-            if (velocity.Y == 0 && velocity.X > 0)
-            {
-                if (rectangle.Intersects(armHitBoxRight))
-                {
-                    return true;
-                }
-            }
-
-            if (velocity.Y == 0 && velocity.X < 0)
-            {
-                if (rectangle.Intersects(armHitBoxLeft))
-                {
-                    return true;
-                }
-            }
-
-            if ((velocity.X != 0 || !(velocity.Y > 0)) && (velocity.X != 0 || !(velocity.Y < 0))) continue;
-            
-            if (rectangle.Intersects(armHitBoxLeft) && rectangle.Intersects(armHitBoxRight))
+            if (rectangle.Contains(feet) && !IsInWater(body))
             {
                 return true;
             }
-            
         }
-        
+
+        return false;
+    }
+
+    public virtual bool IsInWater(Rectangle body)
+    {
+        foreach (var rectangle in Level.WaterLayer)
+        {
+            if (rectangle.Intersects(body))
+            {
+                return true;
+            }
+        }
         return false;
     }
     
@@ -112,6 +79,11 @@ public abstract class Character : Entity
     public bool IsAlive()
     {
         return HP>0;
+    }
+
+    public void Kill()
+    {
+        HP = 0;
     }
 
 }

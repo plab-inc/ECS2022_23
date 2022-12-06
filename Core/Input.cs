@@ -1,4 +1,5 @@
-﻿using ECS2022_23.Core.Combat;
+﻿using System;
+using ECS2022_23.Core.Combat;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Ui;
 using ECS2022_23.Enums;
@@ -92,8 +93,15 @@ public class Input
             } 
         }
 
+        if (_player.IsInWater(_player.Rectangle))
+        {
+            _player.Kill();
+            Console.WriteLine("I'm ded");
+        }
+
         if (!_player.Collides(velocity)) 
             return;
+        
         
         _player.Position += velocity;
         _player.SetAnimation(animation);
