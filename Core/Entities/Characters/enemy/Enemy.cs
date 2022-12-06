@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ECS2022_23.Core.Animations;
+using ECS2022_23.Core.Combat;
 using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,7 +15,7 @@ public abstract class Enemy : Character
     
     // Behavior
     public Motor Motor;
-    private bool _isActive=true;
+    private bool _isActive=false;
     
     // Level
     protected Rectangle ActivationRectangle;
@@ -47,7 +48,7 @@ public abstract class Enemy : Character
             _isActive = Activate();
         }
         
-        if(!IsAlive)
+        if(!IsAlive())
         {
             SetAnimation("Death");
         }
@@ -72,8 +73,8 @@ public abstract class Enemy : Character
     public bool Activate()
     {
         // When the Player enters the Activation Radius the Enemy becomes active
-        
-        return false;
+        CombatManager.AddEnemy(this);
+        return true;
     }
     
     public bool CollideWithPlayer()

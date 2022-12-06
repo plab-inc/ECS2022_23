@@ -12,30 +12,37 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Entities.Characters.enemy;
 
-public class EnemyManager
+public static class EnemyManager
 {
-    public List<Enemy> Enemies = new();
-    private Player _player;
-    private Level _level;
-    private List<Enemy> _enemyTypes = new();
+    private static List<Enemy> Enemies = new();
+    private static List<Enemy> _enemyTypes = new();
+    public static Player Player { set; get;}
+    public static Level Level { set; get; }
+    
 
-    public EnemyManager(Level level, Player player)
+    static EnemyManager()
     {
-        _level = level;
-        _player = player;
-        _enemyTypes.Add(new Walker(level));
-        _enemyTypes.Add(new Chaser(level,_player));
+        _enemyTypes.Add(new Walker(null));
+        _enemyTypes.Add(new Chaser(null,(Player)null));
     }
 
-    private void AddEnemy(Enemy e)
+    private static void AddEnemy(Enemy e)
     {
         Enemies.Add(e);
     }
 
-    public void SpawnEnemies()
+    public static void RemoveEnemy(Enemy enemy)
+    {
+        if (Enemies.Contains(enemy))
+        {
+            Enemies.RemoveAt(Enemies.IndexOf(enemy));
+        }
+    }
+
+    public static void SpawnEnemies()
     {
         Random rand = new Random();
-        foreach (var room in _level.Rooms)
+        foreach (var room in Level.Rooms)
         {
             if (room.Spawns != null && room.Spawns.Count > 0)
             {
@@ -47,19 +54,30 @@ public class EnemyManager
         }
     }
 
-    private Enemy GetRandomEnemy()
+    private static Enemy GetRandomEnemy()
     {
         Random rand = new Random();
         // rand.Next(0, EnemyTypes.Count)
         switch (0)
         {
-            case 0: return new Walker(_level, AnimationLoader.CreateBlobEnemyAnimations());
-            case 1: return new Chaser(_level, _player);
+            case 0: return new Walker(Level, AnimationLoader.CreateBlobEnemyAnimations());
+            case 1: return new Chaser(Level, Player);
         }
-        return new Walker(_level);
+        return new Walker(Level);
     }
 
-    public void Update(GameTime gameTime)
+    public static void CheckEnemyStatus()
+    {
+        foreach (var enemy in Enemies)
+        {
+            if (!enemy.IsAlive())
+            {
+                RemoveEnemy(enemy);
+            }
+        }
+    }
+
+    public static void Update(GameTime gameTime)
     {
         foreach (var enemy in Enemies)
         {
@@ -67,7 +85,7 @@ public class EnemyManager
         }
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public static void Draw(SpriteBatch spriteBatch)
     {
         foreach (var en in Enemies)
         {

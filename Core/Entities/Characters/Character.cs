@@ -13,7 +13,7 @@ public abstract class Character : Entity
     public float Velocity;
     protected int SpriteWidth;
     public int AimDirection;
-    public bool IsAlive = true;
+    
     public Level Level { get; set; }
     public bool IsAttacking { get; set; }
     
@@ -108,4 +108,10 @@ public abstract class Character : Entity
             AnimationManager.Draw(spriteBatch, Position);
         }
     }
+
+    public bool IsAlive()
+    {
+        return HP>0;
+    }
+
 }

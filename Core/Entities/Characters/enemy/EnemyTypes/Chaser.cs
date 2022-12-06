@@ -12,6 +12,8 @@ public class Chaser : Enemy
     {
         Velocity = 1f;
         HP = 10;
+        XpReward = 1;
+        MoneyReward = 1;
         ActivationRectangle.Inflate(35, 35);
         Motor.SetEnemy(this);
         Motor.SetTarget(target);
@@ -21,6 +23,8 @@ public class Chaser : Enemy
     {
         Velocity = 1f;
         HP = 10;
+        XpReward = 1;
+        MoneyReward = 1;
         ActivationRectangle.Inflate(35, 35);
         Motor.SetEnemy(this);
         Motor.SetTarget(target);
