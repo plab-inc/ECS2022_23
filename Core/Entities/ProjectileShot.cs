@@ -1,4 +1,5 @@
 ﻿using ECS2022_23.Core.Entities.Items;
+using ECS2022_23.Core.World;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -13,6 +14,7 @@ public class ProjectileShot : Entity
     private Vector2 _endOfRange;
     public float DamagePoints { get; private set; }
     public bool HitTarget { get; set; }
+    public Level Level { get; set; }
 
     public ProjectileShot(Texture2D texture2D, Rectangle sourceRect, Weapon weapon, int aimDirection) : base(weapon.Position, texture2D)
     {
@@ -20,19 +22,18 @@ public class ProjectileShot : Entity
         Weapon = weapon;
         AimDirection = aimDirection;
         DamagePoints = weapon.DamagePoints;
-        _endOfRange = UpdateVectors(_endOfRange, Weapon.Range);
+        _endOfRange = AddToPosition(Weapon.Range);
     }
 
     public override void Update(GameTime gameTime)
     { 
-        UpdateShotPosition();
-        //AnimationManager.Update(gameTime);
+        var speed = 2f;
+        Position = AddToPosition(speed);
     }
     
     public override void Draw(SpriteBatch spriteBatch)
     {
         spriteBatch.Draw(Texture, Position, SourceRectangle, Color.White);
-        //AnimationManager.Draw(spriteBatch, Position);
     }
     
     public bool IsWithinRange()
@@ -61,14 +62,10 @@ public class ProjectileShot : Entity
 
         return true;
     }
-    private void UpdateShotPosition()
+    
+    private Vector2 AddToPosition(float toAdd)
     {
-        var speed = 2f;
-        Position = UpdateVectors(Position, speed);
-    }
-
-    private Vector2 UpdateVectors(Vector2 result, float toAdd)
-    {
+        Vector2 result; 
         switch (AimDirection)
         {
             case (int) Direction.Right:
@@ -92,5 +89,22 @@ public class ProjectileShot : Entity
         }
 
         return result;
+    }
+
+    public bool Collides()
+    {
+        var onGround = false;
+        var bottom = new Point(Rectangle.Center.X, Rectangle.Bottom);
+
+        foreach (var rectangle in Level.GroundLayer)
+        {
+            if (rectangle.Contains(bottom))
+            {
+                onGround = true;
+                break;
+            }
+        }
+
+        return onGround;
     }
 }

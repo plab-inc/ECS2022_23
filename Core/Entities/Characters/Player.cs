@@ -6,8 +6,6 @@ using ECS2022_23.Core.World;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using MonoGameLevelGenerator.Core;
 
 namespace ECS2022_23.Core.Entities.Characters;
 

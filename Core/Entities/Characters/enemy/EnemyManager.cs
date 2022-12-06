@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Combat;
 using ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
 using ECS2022_23.Core.Game;
@@ -59,7 +60,7 @@ public static class EnemyManager
         // rand.Next(0, EnemyTypes.Count)
         switch (0)
         {
-            case 0: return new Walker(Level);
+            case 0: return new Walker(Level, AnimationLoader.CreateBlobEnemyAnimations());
             case 1: return new Chaser(Level, Player);
         }
         return new Walker(Level);

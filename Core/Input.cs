@@ -5,12 +5,12 @@ using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace MonoGameLevelGenerator.Core;
+namespace ECS2022_23.Core;
 
 public class Input
 {
     private Player _player;
-    private KeyboardState prevState;
+    private KeyboardState _prevState;
     public Input(Player character)
     {
         _player = character;
@@ -23,20 +23,20 @@ public class Input
         var animation = "Default";
 
         // Attack & Actions
-        if (Keyboard.GetState().IsKeyDown(Keys.Space) && prevState != Keyboard.GetState())
+        if (Keyboard.GetState().IsKeyDown(Keys.Space) && _prevState != Keyboard.GetState())
         {
             _player.Attack();
-        } else if (Keyboard.GetState().IsKeyDown(Keys.X) && prevState != Keyboard.GetState())
+        } else if (Keyboard.GetState().IsKeyDown(Keys.X) && _prevState != Keyboard.GetState())
         {
             ItemManager.PickItemUp(_player);
-        } else if (Keyboard.GetState().IsKeyDown(Keys.D1) && prevState != Keyboard.GetState())
+        } else if (Keyboard.GetState().IsKeyDown(Keys.D1) && _prevState != Keyboard.GetState())
         {
             if (_player.Items?.Count > 0)
             {
                 var item = UiManager.UseItemAtIndex(1, _player);
                 if(item != null) _player.UseItem(item);
             }
-        } else if (Keyboard.GetState().IsKeyDown(Keys.D2) && prevState != Keyboard.GetState())
+        } else if (Keyboard.GetState().IsKeyDown(Keys.D2) && _prevState != Keyboard.GetState())
         {
             if (_player.Items?.Count > 0)
             {
@@ -97,7 +97,7 @@ public class Input
         
         _player.Position += velocity;
         _player.SetAnimation(animation);
-        prevState = Keyboard.GetState();
+        _prevState = Keyboard.GetState();
     }
     public void Aim()
     {

@@ -54,7 +54,7 @@ public abstract class Enemy : Character
         }
         else
         {
-            SetAnimation("Default");
+            //SetAnimation("Default");
         }
         AnimationManager.Update(gameTime);
         
@@ -65,7 +65,7 @@ public abstract class Enemy : Character
     {
         // Movement
         Position += Motor.Move(Position, (int) Velocity);
-        
+        SetAnimation("Walk");
         // Check for Attack
     }
 
