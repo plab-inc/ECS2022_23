@@ -4,7 +4,6 @@ using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Entities;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Characters.enemy;
-using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -44,7 +43,7 @@ public static class CombatManager
         {
             shot.Update(gameTime);
         }
-        _activeShots.RemoveAll(shot => !shot.IsWithinRange() || shot.HitTarget);
+        _activeShots.RemoveAll(shot => !shot.IsWithinRange() || shot.HitTarget || !shot.Collides());
         _activeEnemies.RemoveAll(enemy => !enemy.IsAlive);
     }
     private static void PlayerAttack(Player attacker, Enemy defender)
@@ -126,6 +125,7 @@ public static class CombatManager
     public static void Shoot(Player player)
     {
         var shot = AnimationLoader.CreateLaserShot(player.Weapon, player.AimDirection);
+        shot.Level = player.Level;
         _activeShots.Add(shot);
     }
     private static void CheckShotEnemyCollision(Enemy enemy, Player player)
