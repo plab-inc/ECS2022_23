@@ -104,6 +104,7 @@ internal static class LevelGenerator
         var startMapName = "start" + Random.Next(PossibleStarts).ToString("000");
         var start = new Room(startMapName, new Point(0, 0));
         groundLayer.AddRange(start.GroundLayer);
+        groundLayer.AddRange(start.WaterLayer);
         waterLayer.AddRange(start.WaterLayer);
         
         rooms.Add(start);
