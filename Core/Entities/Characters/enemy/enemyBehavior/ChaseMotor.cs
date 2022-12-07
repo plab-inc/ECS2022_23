@@ -5,11 +5,11 @@ namespace ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
 
 public class ChaseMotor : Motor
 {
-    private Entity _target;
+    private Vector2 _targetPosition;
     
-    public ChaseMotor(Level level, Entity target) : base(level)
+    public ChaseMotor(Level level, Vector2 targetPosition) : base(level)
     {
-        _target = target;
+        _targetPosition = targetPosition;
     }
 
     public override Vector2 Move(Vector2 position, int velocity)
@@ -17,34 +17,34 @@ public class ChaseMotor : Motor
         Vector2 vec = Vector2.Zero;
 
         // This is just a test implementation. Will be reworked later.
-        if (vec.X <= _target.Position.X)
+        if (position.X <= _targetPosition.X)
         {
             vec.X += velocity;
             // Prevents overshooting of the target. 
-            if (vec.X > _target.Position.X)
-                vec.X = _target.Position.X;
+            if (position.X > _targetPosition.X)
+                vec.X = _targetPosition.X;
         }
-        else if (vec.X > _target.Position.X)
+        else if (position.X > _targetPosition.X)
         {
             vec.X -= velocity;
-            if (vec.X < _target.Position.X)
-                vec.X = _target.Position.X;
+            if (position.X < _targetPosition.X)
+                vec.X = _targetPosition.X;
         }
 
-        if (vec.Y <= _target.Position.Y)
+        if (position.Y <= _targetPosition.Y)
         {
             vec.Y += velocity;
-            if (vec.Y > _target.Position.Y)
+            if (position.Y > _targetPosition.Y)
             {
-                vec.Y = _target.Position.Y;
+                vec.Y = _targetPosition.Y;
             }
         }
-        else if (vec.Y > _target.Position.Y)
+        else if (position.Y > _targetPosition.Y)
         {
             vec.Y -= velocity;
-            if (vec.Y < _target.Position.Y)
+            if (position.Y < _targetPosition.Y)
             {
-                vec.Y = _target.Position.Y;
+                vec.Y = _targetPosition.Y;
             }
         }
         return vec;

@@ -9,7 +9,7 @@ public abstract class Motor
     private Pathfinding path;
     private Level _level;
     public Enemy Enemy;
-    public Entity Target;
+    public Vector2 TargetPosition;
 
     public Motor(Level? level)
     {
@@ -21,9 +21,9 @@ public abstract class Motor
         Enemy = enemy;
     }
 
-    public void SetTarget(Entity entity)
+    public void SetTargetPosition(Vector2 targetPosition)
     {
-        Target = entity;
+        TargetPosition = targetPosition;
     }
     
     public abstract Vector2 Move(Vector2 position, int velocity);

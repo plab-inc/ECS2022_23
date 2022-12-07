@@ -63,6 +63,9 @@ public abstract class Enemy : Character
     // Resolves Enemy Behavior like Movement and Attack.
     private void Act()
     {
+        // Get new Target position
+        Motor.TargetPosition = EnemyManager.Player.Position;
+        
         // Movement
         Position += Motor.Move(Position, (int) Velocity);
         SetAnimation("Walk");

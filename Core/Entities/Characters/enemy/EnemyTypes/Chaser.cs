@@ -8,7 +8,7 @@ namespace ECS2022_23.Core.Entities.Characters.enemy;
 
 public class Chaser : Enemy
 {
-    public Chaser(Level level, Entity target) : base(Vector2.Zero, ContentLoader.EnemyTexture, new ChaseMotor(level, target), level)
+    public Chaser(Level level) : base(Vector2.Zero, ContentLoader.EnemyTexture, new ChaseMotor(level, EnemyManager.Player.Position), level)
     {
         Velocity = 1f;
         HP = 10;
@@ -16,7 +16,7 @@ public class Chaser : Enemy
         MoneyReward = 1;
         ActivationRectangle.Inflate(35, 35);
         Motor.SetEnemy(this);
-        Motor.SetTarget(target);
+        
     }
 
     public Chaser(Entity target, Dictionary<string, Animation> animations, Motor motor, Level level) : base(Vector2.Zero, ContentLoader.EnemyTexture, animations, motor, level)
@@ -27,6 +27,6 @@ public class Chaser : Enemy
         MoneyReward = 1;
         ActivationRectangle.Inflate(35, 35);
         Motor.SetEnemy(this);
-        Motor.SetTarget(target);
+        Motor.SetTargetPosition(EnemyManager.Player.Position);
     }
 }

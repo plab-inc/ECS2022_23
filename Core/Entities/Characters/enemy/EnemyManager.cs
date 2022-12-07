@@ -23,7 +23,7 @@ public static class EnemyManager
     static EnemyManager()
     {
         _enemyTypes.Add(new Walker(null));
-        _enemyTypes.Add(new Chaser(null,(Player)null));
+        _enemyTypes.Add(new Chaser(null));
     }
 
     private static void AddEnemy(Enemy e)
@@ -41,7 +41,6 @@ public static class EnemyManager
 
     public static void SpawnEnemies()
     {
-        Random rand = new Random();
         foreach (var room in Level.Rooms)
         {
             if (room.Spawns != null && room.Spawns.Count > 0)
@@ -56,12 +55,12 @@ public static class EnemyManager
 
     private static Enemy GetRandomEnemy()
     {
-        Random rand = new Random();
+        //Random rand = new Random();
         // rand.Next(0, EnemyTypes.Count)
-        switch (0)
+        switch (1)
         {
             case 0: return new Walker(Level, AnimationLoader.CreateBlobEnemyAnimations());
-            case 1: return new Chaser(Level, Player);
+            case 1: return new Chaser(Level);
         }
         return new Walker(Level);
     }
