@@ -1,14 +1,14 @@
-using System.Collections.Generic;
-using System.Linq;
-using Comora;
+﻿using Comora;
 using ECS2022_23.Core;
-using ECS2022_23.Core.animations;
-using ECS2022_23.Core.entities.characters;
-using ECS2022_23.Core.entities.items;
+using ECS2022_23.Core.Animations;
+using ECS2022_23.Core.Combat;
+using ECS2022_23.Core.Entities.Characters;
+using ECS2022_23.Core.Entities.Items;
+using ECS2022_23.Core.Game;
+using ECS2022_23.Core.Ui;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoGameLevelGenerator.Core;
 
 namespace ECS2022_23;
 
@@ -17,11 +17,10 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     
-    private Player _player;
     private Camera _camera;
     
-    private Rectangle? debugRect;
-    private List<Level> levels = new();
+    private Escape _escape;
+    private Player _player;
     
     public static int ScreenWidth = 1280;
     public static int ScreenHeight = 720;
@@ -33,31 +32,32 @@ public class Game1 : Game
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
     }
-
+    
     protected override void Initialize()
     {
+        _camera = new Camera(_graphics.GraphicsDevice)
+        {
+            Zoom = 3f
+        };
+
         _graphics.PreferredBackBufferWidth = ScreenWidth;
         _graphics.PreferredBackBufferHeight = ScreenHeight;
         _graphics.ApplyChanges();
-        
-        _camera = new Camera(_graphics.GraphicsDevice);
-        _camera.LoadContent();
-        _camera.Zoom = 2f;
         
         base.Initialize();
     }
 
     protected override void LoadContent()
     {
-        _spriteBatch = new SpriteBatch(GraphicsDevice);
-        _player = new Player(Content.Load<Texture2D>("sprites/astro"), AnimationLoader.LoadPlayerAnimations(Content));
-        
-        _player.SetWeapon(new Weapon(Content.Load<Texture2D>("sprites/spritesheet"),Vector2.Zero, AnimationLoader.LoadBasicWeaponAnimation(Content)));
-
         ContentLoader.Load(Content);
-        var level = LevelGenerator.GenerateLevel(3, 30);
-        _player.setLevel(level);
-        levels.Add(level);
+        _spriteBatch = new SpriteBatch(GraphicsDevice);
+        AnimationLoader.Load(Content);
+        _player = new Player(Content.Load<Texture2D>("sprites/astro"), AnimationLoader.CreatePlayerAnimations());
+        _player.Weapon = AnimationLoader.CreatePhaserWeapon(Vector2.Zero);
+        
+        _escape = new Escape(_player, 3, false);
+        _escape.AttachCamera(_camera);
+        UiLoader.Load(Content);
     }
 
     protected override void Update(GameTime gameTime)
@@ -66,51 +66,27 @@ public class Game1 : Game
             Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
         
-        debugRect = null;
-
-        _player.Update(gameTime);
-        
-        _camera.Position = _player.Position;
-        _camera.Update(gameTime);
-        
-        foreach (var obj in levels.First().GroundLayer)
-        {
-            if (obj.Intersects(_player.Rectangle))
-            {
-                debugRect = obj;
-            }
-        }
-        
+        _escape.Update(gameTime);
+        UiManager.Update(_player);
+        CombatManager.Update(gameTime, _player);
         base.Update(gameTime);
     }
-
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(new Color(24, 33, 93));
+        GraphicsDevice.Clear(Color.CornflowerBlue);
         
         _spriteBatch.Begin(_camera, samplerState: SamplerState.PointClamp);
         
-        levels.First().Draw(_spriteBatch);
+        _escape.Draw(_spriteBatch);
         
-        if (debugRect != null)
-        {
-            Texture2D _textureGreen = new Texture2D(GraphicsDevice, 1, 1);
+        CombatManager.Draw(_spriteBatch);
+        ItemManager.Draw(_spriteBatch);
             
-            _textureGreen.SetData(new Color[] { Color.Green * 0.5f });
-            
-            _spriteBatch.Draw(_textureGreen, (Rectangle)debugRect, Color.White);
-            
-            Texture2D _textureRed = new Texture2D(GraphicsDevice, 1, 1);
-            _textureRed.SetData(new Color[] { Color.Red * 0.5f });
-            
-            _spriteBatch.Draw(_textureRed,_player.Rectangle, Color.White);
-            
-        }
-        
-        _player.Draw(_spriteBatch);
-        
         _spriteBatch.End();
-        
+        _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        UiManager.Draw(_spriteBatch);
+        _spriteBatch.End();
+
         base.Draw(gameTime);
     }
 }

@@ -1,30 +1,29 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using TiledCS;
 
-namespace MonoGameLevelGenerator.Core;
+namespace ECS2022_23.Core;
 
 public static class ContentLoader
 {
-
     private static ContentManager _content;
     
     public static Dictionary<string, TiledMap> Tilemaps =  new();
-    
     public static Dictionary<string, TiledTileset> Tilesets =  new();
     public static Dictionary<string, Texture2D> TilesetTextures = new ();
+    public static Texture2D EnemyTexture;
     public static void Load(ContentManager content)
-    
     {
         if (!Directory.Exists("Content")) throw new DirectoryNotFoundException();
-
-        _content = content;
         
+        _content = content;
+
         LoadTilemaps();
         LoadTilesets();
+        LoadSprites();
     }
 
     private static void LoadTilemaps()
@@ -56,20 +55,29 @@ public static class ContentLoader
     {
         var rooms = Directory.GetFiles("Content/rooms","room*.xnb");
         var starts = Directory.GetFiles("Content/rooms","start*.xnb");
+        var bosses = Directory.GetFiles("Content/rooms","boss*.xnb");
 
         foreach (var room in rooms)
         {
-            
             var fileName = Path.GetFileNameWithoutExtension(room);
             Tilemaps.Add(fileName, _content.Load<TiledMap>("rooms/" + Path.GetFileNameWithoutExtension(fileName)));
-            
         }
-
         foreach (var start in starts)
         {
             var fileName = Path.GetFileNameWithoutExtension(start);
             Tilemaps.Add(fileName, _content.Load<TiledMap>("rooms/" + Path.GetFileNameWithoutExtension(fileName)));
         }
+        foreach (var boss in bosses)
+        {
+            var fileName = Path.GetFileNameWithoutExtension(boss);
+            Tilemaps.Add(fileName, _content.Load<TiledMap>("rooms/" + Path.GetFileNameWithoutExtension(fileName)));
+        }
         
     }
+
+    private static void LoadSprites()
+    {
+        EnemyTexture = _content.Load<Texture2D>("sprites/astro");
+    }
+
 }
