@@ -16,7 +16,6 @@ public class Chaser : Enemy
         MoneyReward = 1;
         ActivationRectangle.Inflate(35, 35);
         Motor.SetEnemy(this);
-        
     }
 
     public Chaser(Entity target, Dictionary<string, Animation> animations, Motor motor, Level level) : base(Vector2.Zero, ContentLoader.EnemyTexture, animations, motor, level)
@@ -27,6 +26,5 @@ public class Chaser : Enemy
         MoneyReward = 1;
         ActivationRectangle.Inflate(35, 35);
         Motor.SetEnemy(this);
-        Motor.SetTargetPosition(EnemyManager.Player.Position);
     }
 }

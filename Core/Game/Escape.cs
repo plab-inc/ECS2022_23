@@ -27,8 +27,8 @@ public class Escape
         player.Level = _currentLevel;
         player.Room = _currentLevel.StartRoom;
         player.Position =  _currentLevel.StartRoom.GetRandomSpawnPos(player);
-        EnemyManager.Level = _currentLevel;
         EnemyManager.Player = _player;
+        EnemyManager.Level = _currentLevel;
         EnemyManager.SpawnEnemies();
         _debugOn = debugOn;
 

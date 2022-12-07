@@ -22,8 +22,8 @@ public static class EnemyManager
 
     static EnemyManager()
     {
-        _enemyTypes.Add(new Walker(null));
-        _enemyTypes.Add(new Chaser(null));
+        //_enemyTypes.Add(new Walker(null));
+        //_enemyTypes.Add(new Chaser(null));
     }
 
     private static void AddEnemy(Enemy e)
@@ -82,6 +82,7 @@ public static class EnemyManager
         {
             enemy.Update(gameTime);
         }
+        Debug.WriteLine(Enemies[0].Position + " " + Enemies[0].Motor.TargetPosition + " " + Player.Position);
     }
 
     public static void Draw(SpriteBatch spriteBatch)
