@@ -64,10 +64,10 @@ public class AnimationManager
         var sourceRec = new Rectangle((int)(_currentFrame + CurrentAnimation.StartFrame.X) * CurrentAnimation.Width, (int)CurrentAnimation.StartFrame.Y * CurrentAnimation.Height, CurrentAnimation.Width, CurrentAnimation.Height);
         var scale = new Vector2(1, 1);
 
-        if (CurrentAnimation.FlipX == true)
+        if (CurrentAnimation.FlipX)
         {
             spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, Color.White, 0, Vector2.Zero, scale, SpriteEffects.FlipHorizontally, 0f);
-        } else if (CurrentAnimation.FlipY == true)
+        } else if (CurrentAnimation.FlipY)
         {
             spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, Color.White, 0, Vector2.Zero, scale, SpriteEffects.FlipVertically, 0f);
         }
@@ -83,10 +83,10 @@ public class AnimationManager
         var sourceRec = new Rectangle((int)(_currentFrame + CurrentAnimation.StartFrame.X) * CurrentAnimation.Width, (int)CurrentAnimation.StartFrame.Y * CurrentAnimation.Height, CurrentAnimation.Width, CurrentAnimation.Height);
         var scale = new Vector2(1, 1);
 
-        if (CurrentAnimation.FlipX == true)
+        if (CurrentAnimation.FlipX)
         {
             spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale, SpriteEffects.FlipHorizontally, 0f);
-        } else if (CurrentAnimation.FlipY == true)
+        } else if (CurrentAnimation.FlipY)
         {
             spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale, SpriteEffects.FlipVertically, 0f);
         }
