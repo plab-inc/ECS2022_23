@@ -42,4 +42,9 @@ public class Walker : Enemy
     {
         throw new System.NotImplementedException();
     }
+
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        AnimationManager.Draw(spriteBatch, Position, Color.Gold);
+    }
 }

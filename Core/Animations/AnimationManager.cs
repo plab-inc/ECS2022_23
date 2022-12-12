@@ -76,4 +76,23 @@ public class AnimationManager
             spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
         }
     }
+    
+    public void Draw(SpriteBatch spriteBatch, Vector2 position, Color color)
+    {
+        if (CurrentAnimation == null) return;
+        var sourceRec = new Rectangle((int)(_currentFrame + CurrentAnimation.StartFrame.X) * CurrentAnimation.Width, (int)CurrentAnimation.StartFrame.Y * CurrentAnimation.Height, CurrentAnimation.Width, CurrentAnimation.Height);
+        var scale = new Vector2(1, 1);
+
+        if (CurrentAnimation.FlipX == true)
+        {
+            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale, SpriteEffects.FlipHorizontally, 0f);
+        } else if (CurrentAnimation.FlipY == true)
+        {
+            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale, SpriteEffects.FlipVertically, 0f);
+        }
+        else
+        {
+            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
+        }
+    }
 }

@@ -65,7 +65,7 @@ public abstract class Enemy : Character
     {
         // Movement
         Position += Motor.Move(Position, (int) Velocity);
-        SetAnimation("Walk");
+        SetAnimation("WalkDown");
         // Check for Attack
     }
 
