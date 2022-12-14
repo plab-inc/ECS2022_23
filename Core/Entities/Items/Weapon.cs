@@ -2,6 +2,7 @@
 using System.Collections.Specialized;
 using ECS2022_23.Core.Animations;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Entities.Items;
@@ -10,6 +11,7 @@ public class Weapon : Item
 {
     public float DamagePoints = 5;
     public WeaponType WeaponType = WeaponType.CLOSE;
+    public SoundEffect AttackSound;
 
     public Weapon(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations, Rectangle sourceRect) : base(spawn, texture, sourceRect)
     {
@@ -19,6 +21,7 @@ public class Weapon : Item
     {
         Animations = animations;
         WeaponType = type;
+        AttackSound = ContentLoader.LaserSound;
     }
     
     public override void Update(GameTime gameTime)

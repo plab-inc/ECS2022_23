@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using TiledCS;
 
 namespace ECS2022_23.Core;
@@ -15,6 +17,10 @@ public static class ContentLoader
     public static Dictionary<string, TiledTileset> Tilesets =  new();
     public static Dictionary<string, Texture2D> TilesetTextures = new ();
     public static Texture2D EnemyTexture;
+    
+    public static SoundEffect LaserSound;
+    public static Song BackgroundMusic;
+    public static SoundEffect BlobDeathSound;
     public static void Load(ContentManager content)
     {
         if (!Directory.Exists("Content")) throw new DirectoryNotFoundException();
@@ -24,6 +30,7 @@ public static class ContentLoader
         LoadTilemaps();
         LoadTilesets();
         LoadSprites();
+        LoadSound();
     }
 
     private static void LoadTilemaps()
@@ -78,6 +85,13 @@ public static class ContentLoader
     private static void LoadSprites()
     {
         EnemyTexture = _content.Load<Texture2D>("sprites/astro");
+    }
+
+    private static void LoadSound()
+    {
+        LaserSound = _content.Load<SoundEffect>("sound/laserSound");
+        BackgroundMusic = _content.Load<Song>("sound/backgroundMusic");
+        BlobDeathSound = _content.Load<SoundEffect>("sound/slimeDeath");
     }
 
 }

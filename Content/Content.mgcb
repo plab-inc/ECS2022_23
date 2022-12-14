@@ -169,3 +169,21 @@
 /processor:TiledProcessor
 /build:../Assets/tilesets/tilesets/tileset001_tileset_purple.tsx;tilesets/tilesets/tileset001_tileset_purple.tsx
 
+#begin sound/backgroundMusic.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:sound/backgroundMusic.mp3
+
+#begin sound/LaserSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/LaserSound.wav;sound/laserSound.wav
+
+#begin sound/pop.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/pop.wav;sound/slimeDeath.wav
+
