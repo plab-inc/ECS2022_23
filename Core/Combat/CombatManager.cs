@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Entities;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Characters.enemy;
-using ECS2022_23.Core.Entities.Items;
+using ECS2022_23.Core.Sound;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -145,6 +144,7 @@ public static class CombatManager
     private static void EnemyDies(Enemy enemy, Player player)
     {
         enemy.SetAnimation("Death");
+        SoundManager.Play(enemy.DeathSound);
         ItemManager.DropRandomLoot(enemy.Position);
         EnemyManager.RemoveEnemy(enemy);
         player.Money += enemy.MoneyReward;

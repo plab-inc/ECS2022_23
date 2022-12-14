@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Entities.Characters;
@@ -15,7 +15,8 @@ public abstract class Character : Entity
     public float Velocity;
     protected int SpriteWidth;
     public int AimDirection;
-    
+    public SoundEffect DamageSound;
+    public SoundEffect DeathSound;
     public Level Level { get; set; }
     public bool IsAttacking { get; set; }
     

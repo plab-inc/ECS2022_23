@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Combat;
 using ECS2022_23.Core.Entities.Items;
+using ECS2022_23.Core.Sound;
 using ECS2022_23.Core.World;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
@@ -74,6 +75,7 @@ public class Player : Character
             if (Weapon.WeaponType == WeaponType.RANGE)
             {
                 CombatManager.Shoot(this);
+                SoundManager.Play(Weapon.AttackSound);
             }
         }
 
