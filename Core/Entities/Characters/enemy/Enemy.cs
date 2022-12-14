@@ -82,4 +82,9 @@ public abstract class Enemy : Character
         // Checks if the Enemy collides with the player.
         return false;
     }
+    
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        AnimationManager.Draw(spriteBatch, Position, Color);
+    }
 }
