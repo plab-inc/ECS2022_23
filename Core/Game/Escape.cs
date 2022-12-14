@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using Comora;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Characters.enemy;

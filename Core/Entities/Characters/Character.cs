@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;

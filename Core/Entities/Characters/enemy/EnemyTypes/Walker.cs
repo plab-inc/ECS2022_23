@@ -3,7 +3,6 @@ using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
 using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Entities.Characters.enemy;
 

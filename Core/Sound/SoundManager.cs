@@ -24,6 +24,6 @@ public static class SoundManager
     {
         MediaPlayer.Volume = 0.005f;
         SoundEffect.MasterVolume = 0.025f;
-        PlayMusic(ContentLoader.BackgroundMusic);
+        //PlayMusic(ContentLoader.BackgroundMusic);
     }
 }
