@@ -82,7 +82,6 @@ public static class EnemyManager
         {
             enemy.Update(gameTime);
         }
-        Debug.WriteLine(Enemies[0].Position + " " + Enemies[0].Motor.TargetPosition + " " + Player.Position);
     }
 
     public static void Draw(SpriteBatch spriteBatch)

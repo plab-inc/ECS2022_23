@@ -46,7 +46,12 @@ public class ChaseMotor : Motor
                 vec.Y = TargetPosition.Y;
             }
         }
-        return vec;
+
+        if (!Enemy.Collides(vec))
+        {
+            return vec;
+        }
+        return Vector2.Zero;
     }
     
 }
