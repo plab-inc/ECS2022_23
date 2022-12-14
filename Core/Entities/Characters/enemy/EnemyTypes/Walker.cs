@@ -36,6 +36,7 @@ public class Walker : Enemy
         ActivationRectangle.Inflate(35, 35);
         Motor.SetEnemy(this);
         Animations = animations;
+        Color = Color.Cyan;
     }
 
     public override void Attack()
@@ -45,6 +46,6 @@ public class Walker : Enemy
 
     public override void Draw(SpriteBatch spriteBatch)
     {
-        AnimationManager.Draw(spriteBatch, Position, Color.Gold);
+        AnimationManager.Draw(spriteBatch, Position, Color);
     }
 }
