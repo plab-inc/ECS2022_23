@@ -3,6 +3,7 @@ using System.Linq;
 using Comora;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Characters.enemy;
+using ECS2022_23.Core.Sound;
 using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -30,6 +31,7 @@ public class Escape
         EnemyManager.Level = _currentLevel;
         EnemyManager.Player = _player;
         EnemyManager.SpawnEnemies();
+        SoundManager.Initialize();
         _debugOn = debugOn;
 
     }
