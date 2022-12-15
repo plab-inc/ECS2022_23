@@ -6,6 +6,7 @@ using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Game;
 using ECS2022_23.Core.Ui;
+using ECS2022_23.Core.Ui.InventoryManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -57,7 +58,7 @@ public class Game1 : Game
         
         _escape = new Escape(_player, 3, false);
         _escape.AttachCamera(_camera);
-        UiLoader.Load(Content);
+        UiLoader.Load(Content, GraphicsDevice);
     }
 
     protected override void Update(GameTime gameTime)
@@ -81,10 +82,11 @@ public class Game1 : Game
         
         CombatManager.Draw(_spriteBatch);
         ItemManager.Draw(_spriteBatch);
-            
+        
         _spriteBatch.End();
         _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
         UiManager.Draw(_spriteBatch);
+        InventoryManager.Draw(_spriteBatch);
         _spriteBatch.End();
 
         base.Draw(gameTime);

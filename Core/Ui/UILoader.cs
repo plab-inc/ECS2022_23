@@ -14,12 +14,14 @@ internal static class UiLoader
     private static ContentManager _content;
     private static Texture2D _texture2D;
     private static SpriteFont _font;
-    public static void Load(ContentManager content)
+    public static GraphicsDevice GraphicsDevice;
+    public static void Load(ContentManager content, GraphicsDevice graphicsDevice)
     
     {
         if (!Directory.Exists("Content")) throw new DirectoryNotFoundException();
 
         _content = content;
+        GraphicsDevice = graphicsDevice;
         try
         {
             _texture2D = _content.Load<Texture2D>("sprites/spritesheet");
@@ -70,6 +72,11 @@ internal static class UiLoader
         return new UiText(new Rectangle(0,0, PixelSize, PixelSize), _font, "0", uiLabel);
     }
     
+    public static UiText CreateTextElement(String text)
+    {
+        return new UiText(new Rectangle(0,0, PixelSize, PixelSize), _font, text);
+    }
+    
     public static UiElement CreateIcon(Rectangle sourceRect, UiLabels label)
     {
         return new UiElement(sourceRect, _texture2D, label);
@@ -78,6 +85,13 @@ internal static class UiLoader
     private static UiPanel CreateUiPanel(Rectangle sourceRect, Rectangle destRect, UiLabels label)
     {
         return new UiPanel(sourceRect, destRect, label);
+    }
+
+    public static Texture2D CreateColorTexture(Color color)
+    {
+        var recTexture = new Texture2D(GraphicsDevice, 1, 1);
+        recTexture.SetData(new Color[] { color });
+        return recTexture;
     }
     
 }

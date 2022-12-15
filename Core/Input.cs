@@ -2,6 +2,7 @@
 using ECS2022_23.Core.Combat;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Ui;
+using ECS2022_23.Core.Ui.InventoryManagement;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -44,7 +45,12 @@ public class Input
                 var item = UiManager.UseItemAtIndex(3, _player);
                 if(item != null) _player.UseItem(item);
             }
-        } 
+        }
+
+        if (Keyboard.GetState().IsKeyDown(Keys.I))
+        {
+            InventoryManager.show = true;
+        }
         
         // Diagonal Movement
         if (Keyboard.GetState().IsKeyDown(Keys.W) && Keyboard.GetState().IsKeyDown(Keys.D))

@@ -3,6 +3,7 @@ using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Combat;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Sound;
+using ECS2022_23.Core.Ui.InventoryManagement;
 using ECS2022_23.Core.World;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
@@ -212,11 +213,13 @@ public class Player : Character
     {
         Items ??= new List<Item>();
         Items.Add(item);
+        InventoryManager.AddItem(item);
     }
 
     public void RemoveItem(Item item)
     {
         Items?.Remove(item);
+        InventoryManager.RemoveItem(item);
     }
 
     public void UseItem(Item item)
