@@ -44,7 +44,7 @@ public static class CombatManager
         {
             shot.Update(gameTime);
         }
-        _activeShots.RemoveAll(shot => !shot.IsWithinRange() || shot.HitTarget || !shot.Collides());
+        _activeShots.RemoveAll(shot => shot.HitTarget || !shot.Collides());
         _activeEnemies.RemoveAll(enemy => !enemy.IsAlive());
     }
     private static void PlayerAttack(Player attacker, Enemy defender)

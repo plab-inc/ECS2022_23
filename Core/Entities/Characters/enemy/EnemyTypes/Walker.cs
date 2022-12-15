@@ -26,6 +26,7 @@ public class Walker : Enemy
         ActivationRectangle.Inflate(35, 35);
         Motor.SetEnemy(this);
         Animations = animations;
+        Color = Color.Cyan;
         DeathSound = ContentLoader.BlobDeathSound;
     }
 
