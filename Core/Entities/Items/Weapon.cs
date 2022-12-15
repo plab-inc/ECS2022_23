@@ -10,7 +10,6 @@ namespace ECS2022_23.Core.Entities.Items;
 public class Weapon : Item
 {
     public float DamagePoints = 5;
-    public float Range { get; }
     public WeaponType WeaponType = WeaponType.CLOSE;
     public SoundEffect AttackSound;
 
@@ -18,10 +17,9 @@ public class Weapon : Item
     {
         Animations = animations;
     }
-    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations, Rectangle sourceRect, WeaponType type, float range) : base(spawn, texture, sourceRect)
+    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations, Rectangle sourceRect, WeaponType type) : base(spawn, texture, sourceRect)
     {
         Animations = animations;
-        Range = range;
         WeaponType = type;
         AttackSound = ContentLoader.LaserSound;
     }

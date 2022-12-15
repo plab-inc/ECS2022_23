@@ -19,7 +19,7 @@ public abstract class Enemy : Character
     
     // Level
     protected Rectangle ActivationRectangle;
-
+    protected Color Color = Color.White;
     public Enemy(Vector2 spawn, Texture2D texture, Motor motor, Level level) : base(spawn, texture)
     {
         Motor = motor;
@@ -65,7 +65,7 @@ public abstract class Enemy : Character
     {
         // Movement
         Position += Motor.Move(Position, (int) Velocity);
-        SetAnimation("Walk");
+        SetAnimation("WalkDown");
         // Check for Attack
     }
 
@@ -81,5 +81,10 @@ public abstract class Enemy : Character
     {
         // Checks if the Enemy collides with the player.
         return false;
+    }
+    
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        AnimationManager.Draw(spriteBatch, Position, Color);
     }
 }
