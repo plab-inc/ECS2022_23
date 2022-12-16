@@ -24,6 +24,16 @@ public class Input
         var speed = 3f;
         var animation = "Default";
 
+        if (Keyboard.GetState().IsKeyDown(Keys.I) && _prevState != Keyboard.GetState())
+        {
+            InventoryManager.show = !InventoryManager.show;
+        }
+
+        if (InventoryManager.show)
+        {
+            InventoryInput();
+        }
+        
         // Attack & Actions
         if (Keyboard.GetState().IsKeyDown(Keys.Space) && _prevState != Keyboard.GetState())
         {
@@ -47,11 +57,6 @@ public class Input
             }
         }
 
-        if (Keyboard.GetState().IsKeyDown(Keys.I))
-        {
-            InventoryManager.show = true;
-        }
-        
         // Diagonal Movement
         if (Keyboard.GetState().IsKeyDown(Keys.W) && Keyboard.GetState().IsKeyDown(Keys.D))
         {
@@ -129,5 +134,18 @@ public class Input
         {
             _player.AimDirection = (int) Direction.Right;
         } 
+    }
+
+    private void InventoryInput()
+    {
+        var state = Keyboard.GetState();
+
+        if (state.IsKeyDown(Keys.Right) && state != _prevState)
+        {
+            InventoryManager.IncreaseIndex();
+        } else if (state.IsKeyDown(Keys.Left) && state != _prevState)
+        {
+            InventoryManager.DecreaseIndex();
+        }
     }
 }

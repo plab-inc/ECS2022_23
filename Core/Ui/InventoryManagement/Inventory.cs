@@ -10,42 +10,49 @@ namespace ECS2022_23.Core.Ui.InventoryManagement;
 
 public class Inventory
 {
-    private int pixelSize = 16;
+    private const int PixelSize = 16;
     private int _scale;
-    private int width;
-    private int height;
+    private int _width;
+    private int _height;
     private int _rowCount;
     private int _colCount;
-    private Rectangle DestinationRec;
-    private List<InventoryRow> inventoryRows = new List<InventoryRow>();
-    private Texture2D background;
-
+    private Rectangle _destinationRec;
+    private List<InventoryRow> _inventoryRows = new List<InventoryRow>();
+    private Texture2D _backgroundTexture;
+    private int _prevIndex = 0;
+    private InventoryRow _prevRow;
     public Inventory(int rowCount, int colCount)
     {
         _rowCount = rowCount;
         _colCount = colCount;
         _scale = 5;
-        width = pixelSize * _rowCount * _scale;
-        height = pixelSize * _colCount * _scale;
-        DestinationRec = new Rectangle(0, 0, width, height);
-        background = UiLoader.CreateColorTexture(Color.DarkGray);
+        _width = PixelSize * _rowCount * _scale;
+        _height = PixelSize * _colCount * _scale;
+        _destinationRec = new Rectangle(Game1.ScreenWidth/2-_width/2, Game1.ScreenHeight/2-_height/2, _width, _height);
+        _backgroundTexture = UiLoader.CreateColorTexture(Color.DarkGray);
         CreateRows();
     }
 
-    public void CreateRows()
+    private void CreateRows()
     {
         for (var i = 0; i < _rowCount; i++)
         {
-               inventoryRows.Add(new InventoryRow(new Rectangle(DestinationRec.X,DestinationRec.Y+i*height/_colCount, width, 
-                   height/_rowCount), 
-                   _colCount, UiLoader.CreateColorTexture(Color.Coral), pixelSize*_scale, _scale));
+               _inventoryRows.Add(new InventoryRow(new Rectangle(_destinationRec.X,_destinationRec.Y+i*_height/_colCount, _width, 
+                   _height/_rowCount), 
+                   _colCount, UiLoader.CreateColorTexture(Color.Lavender), PixelSize*_scale, _scale));
+        }
+
+        if (_inventoryRows.Count > 0)
+        {
+            _prevRow = _inventoryRows[0];
+            if(_prevRow.Slots.Count > 0) _prevRow.Slots[_prevIndex].Selected = true;
         }
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(background, DestinationRec, Color.White);
-        foreach (var row in inventoryRows)
+        spriteBatch.Draw(_backgroundTexture, _destinationRec, Color.White);
+        foreach (var row in _inventoryRows)
         {
             row.Draw(spriteBatch);
         }
@@ -55,13 +62,13 @@ public class Inventory
     {
         if (item == null) return;
         
-        foreach (var row in inventoryRows)
+        foreach (var row in _inventoryRows)
         {
             var slot = row.FindItem(item);
            
             if (slot != null)
             {
-                slot.count++;
+                slot.Count++;
                 return;
             }
 
@@ -70,6 +77,35 @@ public class Inventory
             slot.AddItem(item, 1);
             return;
         }
+    }
+
+    public void SelectIndex(int index)
+    {
+        if (index < 0)
+        {
+            index = 0;
+        }
+
+        if (index == _prevIndex) return;
+        foreach (var row in _inventoryRows)
+        {
+            if (row.Slots.Count <= index) continue;
+            if (row.Slots[index] == null) continue;
+            row.Slots[index].Selected = true;
+            var prevSlot = _prevRow.Slots[_prevIndex];
+            prevSlot.Selected = false;
+            _prevIndex = index;
+            _prevRow = row;
+            return;
+        }
+    }
+    public void IncreaseIndex()
+    {
+        SelectIndex(_prevIndex+1);
+    }
+    public void DecreaseIndex()
+    {
+        SelectIndex(_prevIndex-1);
     }
 
 }

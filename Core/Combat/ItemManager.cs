@@ -34,7 +34,7 @@ public static class ItemManager
         if (randomInt < dropChance) return;
         
         randomInt = random.Next(10);
-        var weaponChance = 4;
+        var weaponChance = 10;
 
         if (randomInt > weaponChance)
         {

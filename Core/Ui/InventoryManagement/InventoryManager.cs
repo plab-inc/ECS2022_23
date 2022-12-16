@@ -1,5 +1,4 @@
-﻿using ECS2022_23.Core.Entities.Characters;
-using ECS2022_23.Core.Entities.Items;
+﻿using ECS2022_23.Core.Entities.Items;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Ui.InventoryManagement;
@@ -14,6 +13,10 @@ public static class InventoryManager
         if (show)
         {
             _inventory.Draw(spriteBatch);
+        }
+        else
+        {
+            _inventory.SelectIndex(0);
         }
     }
 
@@ -32,4 +35,12 @@ public static class InventoryManager
        
     }
 
+    public static void IncreaseIndex()
+    {
+        _inventory.IncreaseIndex();
+    }
+    public static void DecreaseIndex()
+    {
+        _inventory.DecreaseIndex();
+    }
 }

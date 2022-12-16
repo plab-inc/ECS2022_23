@@ -93,5 +93,10 @@ internal static class UiLoader
         recTexture.SetData(new Color[] { color });
         return recTexture;
     }
-    
+
+    public static Texture2D GetSpritesheet()
+    {
+        return _texture2D ?? null;
+    }
+
 }
