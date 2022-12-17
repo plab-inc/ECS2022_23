@@ -28,6 +28,7 @@ public class Walker : Enemy
         Animations = animations;
         Color = Color.Cyan;
         DeathSound = ContentLoader.BlobDeathSound;
+        MoneyReward = 1;
     }
 
     public override void Attack()
