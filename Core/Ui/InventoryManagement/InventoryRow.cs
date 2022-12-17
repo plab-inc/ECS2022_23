@@ -10,19 +10,21 @@ namespace ECS2022_23.Core.Ui.InventoryManagement;
 
 public class InventoryRow
 {
+    private Inventory _inventory;
     public List<InventorySlot> Slots = new List<InventorySlot>();
     private Rectangle _destinationRec;
     private int _slotCount;
     private Texture2D _texture;
     private int _slotSize;
     private int _scale;
-    public InventoryRow(Rectangle destRec, int slotCount, Texture2D texture, int slotSize, int scale)
+    public InventoryRow(Rectangle destRec, int slotCount, int slotSize, Inventory inventory)
     {
         _destinationRec = destRec;
         this._slotCount = slotCount;
-        _texture = texture;
+        _texture = UiLoader.CreateColorTexture(Color.Pink);
         _slotSize = slotSize;
-        _scale = scale;
+        _scale = inventory.Scale;
+        _inventory = inventory;
         CreateSlots();
     }
 
@@ -30,8 +32,7 @@ public class InventoryRow
     {
         for (var i = 0; i < _slotCount; i++)
         {
-            Slots.Add(new InventorySlot(new Rectangle(_destinationRec.X+i*_slotSize, _destinationRec.Y, _slotSize, _slotSize), 
-                UiLoader.CreateColorTexture(Color.Cyan), _scale));
+            Slots.Add(new InventorySlot(new Rectangle(_destinationRec.X+i*_slotSize, _destinationRec.Y, _slotSize, _slotSize), _scale, _inventory.SlotCount++));
         }
     }
 

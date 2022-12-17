@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using ECS2022_23.Core.Entities.Items;
-using ECS2022_23.Core.Ui.Inventory;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -11,7 +8,7 @@ namespace ECS2022_23.Core.Ui.InventoryManagement;
 public class Inventory
 {
     private const int PixelSize = 16;
-    private int _scale;
+    public int Scale;
     private int _width;
     private int _height;
     private int _rowCount;
@@ -21,13 +18,14 @@ public class Inventory
     private Texture2D _backgroundTexture;
     private int _prevIndex = 0;
     private InventoryRow _prevRow;
+    public int SlotCount = 0;
     public Inventory(int rowCount, int colCount)
     {
         _rowCount = rowCount;
         _colCount = colCount;
-        _scale = 5;
-        _width = PixelSize * _rowCount * _scale;
-        _height = PixelSize * _colCount * _scale;
+        Scale = 5;
+        _width = PixelSize * _rowCount * Scale;
+        _height = PixelSize * _colCount * Scale;
         _destinationRec = new Rectangle(Game1.ScreenWidth/2-_width/2, Game1.ScreenHeight/2-_height/2, _width, _height);
         _backgroundTexture = UiLoader.CreateColorTexture(Color.DarkGray);
         CreateRows();
@@ -38,8 +36,7 @@ public class Inventory
         for (var i = 0; i < _rowCount; i++)
         {
                _inventoryRows.Add(new InventoryRow(new Rectangle(_destinationRec.X,_destinationRec.Y+i*_height/_colCount, _width, 
-                   _height/_rowCount), 
-                   _colCount, UiLoader.CreateColorTexture(Color.Lavender), PixelSize*_scale, _scale));
+                   _height/_rowCount), _colCount, PixelSize*Scale, this));
         }
 
         if (_inventoryRows.Count > 0)
@@ -68,7 +65,7 @@ public class Inventory
            
             if (slot != null)
             {
-                slot.Count++;
+                slot.ItemCount++;
                 return;
             }
 
@@ -89,10 +86,10 @@ public class Inventory
         if (index == _prevIndex) return;
         foreach (var row in _inventoryRows)
         {
-            if (row.Slots.Count <= index) continue;
-            if (row.Slots[index] == null) continue;
-            row.Slots[index].Selected = true;
-            var prevSlot = _prevRow.Slots[_prevIndex];
+            var slot = row.Slots.Find(slot => slot.Index == index);
+            if (slot == null) continue;
+            slot.Selected = true;
+            var prevSlot = _prevRow.Slots[_prevIndex%_colCount];
             prevSlot.Selected = false;
             _prevIndex = index;
             _prevRow = row;
@@ -106,6 +103,35 @@ public class Inventory
     public void DecreaseIndex()
     {
         SelectIndex(_prevIndex-1);
+    }
+
+    public Item GetSelectedItem()
+    {
+        foreach (var row in _inventoryRows)
+        {
+            var slot = row.Slots.Find(slot => slot.Selected == true);
+            if (slot == null) continue;
+            return slot.Item;
+        }
+
+        return null;
+    }
+
+    public void RemoveItem(Item item)
+    {
+        foreach (var row in _inventoryRows)
+        {
+            foreach (var slot in row.Slots)
+            {
+                if (slot.Item == null) continue;
+                if (!slot.Item.Equals(item)) continue;
+                slot.ItemCount--;
+                if (slot.ItemCount <= 0)
+                {
+                    slot.RemoveItem();
+                }
+            }
+        }
     }
 
 }

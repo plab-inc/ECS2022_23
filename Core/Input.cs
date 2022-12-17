@@ -146,6 +146,9 @@ public class Input
         } else if (state.IsKeyDown(Keys.Left) && state != _prevState)
         {
             InventoryManager.DecreaseIndex();
+        } else if (state.IsKeyDown(Keys.Enter) && state != _prevState)
+        {
+            InventoryManager.UseSelectedItem(_player);
         }
     }
 }

@@ -219,7 +219,6 @@ public class Player : Character
     public void RemoveItem(Item item)
     {
         Items?.Remove(item);
-        InventoryManager.RemoveItem(item);
     }
 
     public void UseItem(Item item)

@@ -1,4 +1,5 @@
-﻿using ECS2022_23.Core.Entities.Items;
+﻿using ECS2022_23.Core.Entities.Characters;
+using ECS2022_23.Core.Entities.Items;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Ui.InventoryManagement;
@@ -20,9 +21,12 @@ public static class InventoryManager
         }
     }
 
-    public static void UseItem(Item item)
+    public static void UseSelectedItem(Player player)
     {
-        
+        var item = _inventory.GetSelectedItem();
+        if (item == null) return;
+        player.UseItem(item);
+        RemoveItem(item);
     }
 
     public static void AddItem(Item item)
@@ -32,7 +36,7 @@ public static class InventoryManager
     
     public static void RemoveItem(Item item)
     {
-       
+       _inventory.RemoveItem(item);
     }
 
     public static void IncreaseIndex()
