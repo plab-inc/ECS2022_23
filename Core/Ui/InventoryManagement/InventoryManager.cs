@@ -9,11 +9,11 @@ public static class InventoryManager
 {
     private static Pocket _pocket = new(3,3);
     private static ToolBar _toolBar = new(1,9);
-    public static bool show = false;
+    public static bool Show = false;
     
     public static void Draw(SpriteBatch spriteBatch)
     {
-        if (show)
+        if (Show)
         {
             _pocket.Draw(spriteBatch);
         }
@@ -35,11 +35,13 @@ public static class InventoryManager
     public static void AddItem(Item item)
     {
         _pocket.AddItem(item);
+        _toolBar.AddItem(item);
     }
     
     public static void RemoveItem(Item item)
     {
        _pocket.RemoveItem(item);
+       _toolBar.RemoveItem(item);
     }
 
     public static void IncreaseIndex()
@@ -49,5 +51,14 @@ public static class InventoryManager
     public static void DecreaseIndex()
     {
         _pocket.DecreaseIndex();
+    }
+    
+    public static void UseItemAtIndex(Player player, int index)
+    {
+
+        var item = _toolBar.GetItemAtIndex(index);
+        if (item == null) return;
+        player.UseItem(item);
+        RemoveItem(item);
     }
 }

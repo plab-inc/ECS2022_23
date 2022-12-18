@@ -7,7 +7,7 @@ namespace ECS2022_23.Core.Ui.Inventory;
 
 public class InventorySlot
 {
-    private Rectangle _destinationRec;
+    public Rectangle DestinationRec;
     public bool IsUsed = false;
     public Item Item;
     public int ItemCount = 0;
@@ -20,11 +20,11 @@ public class InventorySlot
     public int Index;
     public InventorySlot(Rectangle dest, int scale, int index)
     {
-        _destinationRec = dest;
+        DestinationRec = dest;
         _backgroundTexture = UiLoader.CreateColorTexture(Color.Cyan);
         _text = UiLoader.CreateTextElement("");
-        _text.DestinationRec = new Rectangle(_destinationRec.X, _destinationRec.Y, _destinationRec.Width / 2,
-            _destinationRec.Height / 2);
+        _text.DestinationRec = new Rectangle(DestinationRec.X, DestinationRec.Y, DestinationRec.Width / 2,
+            DestinationRec.Height / 2);
         _scale = scale;
         _text.Scale = new Vector2(_scale/2, _scale/2);
         Index = index;
@@ -34,7 +34,7 @@ public class InventorySlot
     {
         if (IsUsed)
         {
-            spriteBatch.Draw(Item.Texture, _destinationRec, Item.SourceRect, Color.White);
+            spriteBatch.Draw(Item.Texture, DestinationRec, Item.SourceRect, Color.White);
           
             _text.Text = "" + ItemCount;
             _text.Draw(spriteBatch);
@@ -45,7 +45,7 @@ public class InventorySlot
         }
         if (Selected)
         {
-            spriteBatch.Draw(_selectedTexture, _destinationRec, _selectedSourceRec, Color.White);
+            spriteBatch.Draw(_selectedTexture, DestinationRec, _selectedSourceRec, Color.White);
         }
     }
 
