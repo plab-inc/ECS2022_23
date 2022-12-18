@@ -1,4 +1,5 @@
-﻿using ECS2022_23.Core.Entities.Characters;
+﻿using System.Diagnostics;
+using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,7 +10,22 @@ public static class InventoryManager
 {
     private static Pocket _pocket = new(3,3);
     private static ToolBar _toolBar = new(1,9);
+    private static WeaponSlot _weaponSlot = new WeaponSlot();
+    private static Weapon _prevWeapon;
     public static bool Show = false;
+
+    public static void Update(Player player)
+    {
+        if (_prevWeapon != null)
+        {
+            if (_prevWeapon.Equals(player.Weapon))
+            {
+                return;
+            }
+        }
+        _weaponSlot.AddItem(player.Weapon);
+        _prevWeapon = player.Weapon;
+    }
     
     public static void Draw(SpriteBatch spriteBatch)
     {
@@ -22,6 +38,7 @@ public static class InventoryManager
             _pocket.SelectIndex(0);
         }
         _toolBar.Draw(spriteBatch);
+        _weaponSlot.Draw(spriteBatch);
     }
 
     public static void UseSelectedItem(Player player)
@@ -34,8 +51,15 @@ public static class InventoryManager
 
     public static void AddItem(Item item)
     {
-        _pocket.AddItem(item);
-        _toolBar.AddItem(item);
+        if (item.GetType() == typeof(Weapon))
+        {
+            _weaponSlot.AddItem(item);
+        }
+        else
+        {
+            _pocket.AddItem(item);
+            _toolBar.AddItem(item);
+        }
     }
     
     public static void RemoveItem(Item item)

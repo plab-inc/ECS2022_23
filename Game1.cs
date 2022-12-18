@@ -3,7 +3,6 @@ using ECS2022_23.Core;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Combat;
 using ECS2022_23.Core.Entities.Characters;
-using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Game;
 using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.Ui.InventoryManagement;
@@ -70,6 +69,7 @@ public class Game1 : Game
         _escape.Update(gameTime);
         UiManager.Update(_player);
         CombatManager.Update(gameTime, _player);
+        InventoryManager.Update(_player);
         base.Update(gameTime);
     }
     protected override void Draw(GameTime gameTime)

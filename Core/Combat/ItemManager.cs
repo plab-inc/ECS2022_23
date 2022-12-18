@@ -34,7 +34,7 @@ public static class ItemManager
         if (randomInt < dropChance) return;
         
         randomInt = random.Next(10);
-        var weaponChance = 10;
+        var weaponChance = 4;
 
         if (randomInt > weaponChance)
         {
@@ -64,11 +64,12 @@ public static class ItemManager
     private static Consumable GetRandomConsumable(Vector2 position)
     {
         var random = new Random();
-        var randomInt = random.Next(2);
+        var randomInt = random.Next(3);
         switch (randomInt)
         {
             case 0: return AnimationLoader.CreateHealthPotion(position);
             case 1: return AnimationLoader.CreateArmorPotion(position);
+            case 2: return AnimationLoader.CreateCake(position);
             default: return AnimationLoader.CreateHealthPotion(position);
         }
     }

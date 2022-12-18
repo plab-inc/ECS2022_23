@@ -51,7 +51,7 @@ public abstract class Inventory
         }
     }
     
-    public void AddItem(Item item)
+    public virtual void AddItem(Item item)
     {
         if (item == null) return;
         
