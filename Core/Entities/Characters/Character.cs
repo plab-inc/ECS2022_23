@@ -10,6 +10,7 @@ namespace ECS2022_23.Core.Entities.Characters;
 
 public abstract class Character : Entity
 {
+    public int MaxHP = 10;
     public float HP;
     public float Strength;
     public float Velocity;

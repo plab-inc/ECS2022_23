@@ -341,7 +341,10 @@ public static class AnimationLoader
     {
         return new Consumable(position, _texturePink, new Rectangle(19*16, 4*16, 16,16));
     }
-    
+    public static Consumable CreateCake(Vector2 position)
+    {
+        return new Consumable(position, _texturePink, new Rectangle(21*16, 4*16, 16,16));
+    }
     public static Consumable CreateArmorPotion(Vector2 position)
     {
         return new Consumable(position, _texturePink, new Rectangle(20*16, 4*16, 16,16));
