@@ -26,8 +26,8 @@ public static class UiManager
             StatsPanel.Update();
         }
 
-        UpdateInventory(player);
-        if (!_itemsHaveChanged) return;
+        //UpdateInventory(player);
+        //if (!_itemsHaveChanged) return;
         //ItemPanel.Update();
     }
 
@@ -91,8 +91,8 @@ public static class UiManager
 
     private static void UpdateInventory(Player player)
     {
-      UpdateItems(player);
-      UpdateWeapon(player);
+      //UpdateItems(player);
+      //UpdateWeapon(player);
     }
 
     private static void UpdateStats(Player player)
