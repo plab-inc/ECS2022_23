@@ -23,7 +23,7 @@ public class Pocket : Inventory
     {
         var text = UiLoader.CreateTextElement("Inventory");
         text.DestinationRec =
-            new Rectangle(DestinationRec.X, DestinationRec.Y - Height/ColCount/2, Width, Height);
+            new Rectangle(DestinationRec.X, DestinationRec.Y - Height/RowCount/2, Width, Height);
         text.Scale = new Vector2(Scale/2, Scale/2);
         text.Draw(spriteBatch);
         var text2 = UiLoader.CreateTextElement("Press I to close");
@@ -33,12 +33,12 @@ public class Pocket : Inventory
         text2.Draw(spriteBatch);
         var text3= UiLoader.CreateTextElement("Press Enter to use");
         text3.DestinationRec =
-            new Rectangle(DestinationRec.X + Width, DestinationRec.Y+Height/ColCount/2, Width, Height);
+            new Rectangle(DestinationRec.X + Width, DestinationRec.Y+Height/RowCount/2, Width, Height);
         text3.Scale = new Vector2(Scale/2, Scale/2);
         text3.Draw(spriteBatch);
         var text4= UiLoader.CreateTextElement("Choose with arrow keys");
         text4.DestinationRec =
-            new Rectangle(DestinationRec.X + Width, DestinationRec.Y+Height/ColCount*2/2, Width, Height);
+            new Rectangle(DestinationRec.X + Width, DestinationRec.Y+Height/RowCount*2/2, Width, Height);
         text4.Scale = new Vector2(Scale/2, Scale/2);
         text4.Draw(spriteBatch);
     }

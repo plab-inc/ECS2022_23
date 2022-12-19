@@ -31,7 +31,7 @@ public abstract class Inventory
     {
         for (var i = 0; i < RowCount; i++)
         {
-               InventoryRows.Add(new InventoryRow(new Rectangle(DestinationRec.X,DestinationRec.Y+i*Height/ColCount, Width, 
+               InventoryRows.Add(new InventoryRow(new Rectangle(DestinationRec.X,DestinationRec.Y+i*Height/RowCount, Width, 
                    Height/RowCount), ColCount, PixelSize*Scale, this));
         }
 
