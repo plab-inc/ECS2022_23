@@ -117,19 +117,28 @@ public abstract class Inventory
     {
         foreach (var row in InventoryRows)
         {
-            foreach (var slot in row.Slots)
-            {
-                if (slot.Item == null) continue;
-                if (!slot.Item.Equals(item)) continue;
-                slot.ItemCount--;
-                if (slot.ItemCount <= 0)
-                {
-                    slot.RemoveItem();
-                }
+            var slot = row.FindItem(item);
+            
+            if (slot == null) continue;
+            slot.ItemCount--;
+            if (slot.ItemCount <= 0)
+            { 
+                slot.RemoveItem();
             }
+
+            return;
         }
     }
 
-
+    public void SwitchActiveState(Item item)
+    {
+        foreach (var row in InventoryRows)
+        {
+            var slot = row.FindItem(item);
+            if (slot == null) continue;
+            slot.Active = !slot.Active;
+            return;
+        }
+    }
 
 }

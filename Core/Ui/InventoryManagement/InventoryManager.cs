@@ -84,8 +84,21 @@ public static class InventoryManager
     {
         if (item.GetType() == typeof(Trinket))
         {
-            _trinketSlot.AddItem(item);
-            _prevTrinket = (Trinket) item;
+            var trinket = (Trinket)item;
+            _pocket.SwitchActiveState(trinket);
+            _toolBar.SwitchActiveState(trinket);
+            if (trinket.Equals(player.Trinket))
+            {
+                trinket.Unequip(player);
+                _prevTrinket = trinket;
+            }
+            else
+            {
+                _trinketSlot.AddItem(trinket);
+                _prevTrinket = trinket;
+                player.UseItem(trinket);
+            }
+            return;
         }
         player.UseItem(item);
         RemoveItem(item);

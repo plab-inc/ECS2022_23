@@ -222,7 +222,14 @@ public class Player : Character
     public void UseItem(Item item)
     {
         if (Items.Count <= 0) return;
-        if (!Items.Remove(item)) return;
-        item.Use(this);
+        if (item.GetType() == typeof(Trinket))
+        {
+            item.Use(this);
+        }
+        else
+        {
+            if (!Items.Remove(item)) return;
+            item.Use(this);
+        }
     }
 }

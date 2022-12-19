@@ -26,4 +26,10 @@ public class Trinket : Item
         player.Trinket = this;
         player.ImmuneToWater = true;
     }
+
+    public void Unequip(Player player)
+    {
+        player.Trinket = null;
+        player.ImmuneToWater = false;
+    }
 }
