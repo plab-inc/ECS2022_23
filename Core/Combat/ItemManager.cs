@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Items;
+using ECS2022_23.Core.Ui.InventoryManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -34,9 +34,13 @@ public static class ItemManager
         if (randomInt < dropChance) return;
         
         randomInt = random.Next(10);
-        var weaponChance = 4;
+        var weaponChance = 5;
+        var trinketChance = 1;
 
-        if (randomInt > weaponChance)
+        if (randomInt < trinketChance)
+        {
+            AddItem(GetRandomTrinket(position));
+        } else if (randomInt < weaponChance)
         {
             AddItem(GetRandomWeapon(position));
         }
@@ -52,12 +56,12 @@ public static class ItemManager
         var randomInt = random.Next(5);
         switch (randomInt)
         {
-            case 0: return AnimationLoader.CreateSwordWeapon(position);
-            case 1: return AnimationLoader.CreatePhaserWeapon(position);
-            case 2: return AnimationLoader.CreateCrowbarWeapon(position);
-            case 3: return AnimationLoader.CreateKnifeWeapon(position);
-            case 4: return AnimationLoader.CreateStickWeapon(position);
-            default: return AnimationLoader.CreateSwordWeapon(position);
+            case 0: return ItemLoader.CreateSwordWeapon(position);
+            case 1: return ItemLoader.CreatePhaserWeapon(position);
+            case 2: return ItemLoader.CreateCrowbarWeapon(position);
+            case 3: return ItemLoader.CreateKnifeWeapon(position);
+            case 4: return ItemLoader.CreateStickWeapon(position);
+            default: return ItemLoader.CreateSwordWeapon(position);
         }
     }
     
@@ -67,10 +71,21 @@ public static class ItemManager
         var randomInt = random.Next(3);
         switch (randomInt)
         {
-            case 0: return AnimationLoader.CreateHealthPotion(position);
-            case 1: return AnimationLoader.CreateArmorPotion(position);
-            case 2: return AnimationLoader.CreateCake(position);
-            default: return AnimationLoader.CreateHealthPotion(position);
+            case 0: return ItemLoader.CreateHealthPotion(position);
+            case 1: return ItemLoader.CreateArmorPotion(position);
+            case 2: return ItemLoader.CreateCake(position);
+            default: return ItemLoader.CreateHealthPotion(position);
+        }
+    }
+    
+    private static Trinket GetRandomTrinket(Vector2 position)
+    {
+        var random = new Random();
+        var randomInt = random.Next(1);
+        switch (randomInt)
+        {
+            case 0: return ItemLoader.CreateSwimmingGoggles(position);
+            default: return ItemLoader.CreateSwimmingGoggles(position);
         }
     }
 
@@ -89,6 +104,7 @@ public static class ItemManager
             else
             {
                 player.AddItem(item);
+                InventoryManager.AddItem(item);
             }
             _activeItems.Remove(item);
             return;

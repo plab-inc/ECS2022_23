@@ -110,8 +110,11 @@ public class Input
 
         if (_player.IsInWater(_player.Rectangle))
         {
-            _player.Kill();
-            Console.WriteLine("I'm ded");
+            if (!_player.ImmuneToWater)
+            {
+                _player.Kill();
+                Console.WriteLine("I'm ded");
+            }
         }
 
         if (!_player.Collides(velocity)) 

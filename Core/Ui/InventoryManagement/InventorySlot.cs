@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using ECS2022_23.Core.Entities.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -32,20 +33,24 @@ public class InventorySlot
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        if (IsUsed)
+        try
         {
-            spriteBatch.Draw(Item.Texture, DestinationRec, Item.SourceRect, Color.White);
-          
-            _text.Text = "" + ItemCount;
-            _text.Draw(spriteBatch);
+            if (IsUsed)
+            {
+                spriteBatch.Draw(Item.Texture, DestinationRec, Item.SourceRect, Color.White);
+
+                _text.Text = "" + ItemCount;
+                _text.Draw(spriteBatch);
+            }
+
+            if (Selected)
+            {
+                spriteBatch.Draw(_selectedTexture, DestinationRec, _selectedSourceRec, Color.White);
+            }
         }
-        else
+        catch (ArgumentNullException e)
         {
-           // spriteBatch.Draw(_backgroundTexture, _destinationRec, Color.White);
-        }
-        if (Selected)
-        {
-            spriteBatch.Draw(_selectedTexture, DestinationRec, _selectedSourceRec, Color.White);
+            return;
         }
     }
 

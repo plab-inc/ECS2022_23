@@ -194,7 +194,7 @@ public static class AnimationLoader
         };
     }
 
-    private static Dictionary<string, Animation> CreateSwordAnimations()
+    public static Dictionary<string, Animation> CreateSwordAnimations()
     {
         return new Dictionary<string, Animation>()
         {
@@ -217,7 +217,7 @@ public static class AnimationLoader
         };
     }
 
-    private static Dictionary<string, Animation> CreatePhaserAnimations()
+    public static Dictionary<string, Animation> CreatePhaserAnimations()
     {
         return new Dictionary<string, Animation>()
         {
@@ -240,7 +240,7 @@ public static class AnimationLoader
         };
     }
 
-    private static Dictionary<string, Animation> CreateKnifeAnimations()
+    public static Dictionary<string, Animation> CreateKnifeAnimations()
     {
         return new Dictionary<string, Animation>()
         {
@@ -263,7 +263,7 @@ public static class AnimationLoader
         };
     }
 
-    private static Dictionary<string, Animation> CreateStickAnimations()
+    public static Dictionary<string, Animation> CreateStickAnimations()
     {
        return new Dictionary<string, Animation>()
         {
@@ -286,7 +286,7 @@ public static class AnimationLoader
         };
     }
 
-    private static Dictionary<string, Animation> CreateCrowbarAnimations()
+    public static Dictionary<string, Animation> CreateCrowbarAnimations()
     {
         return new Dictionary<string, Animation>()
         {
@@ -309,54 +309,4 @@ public static class AnimationLoader
         };
     }
     
-    public static ProjectileShot CreateLaserShot(Weapon weapon, int aimDirection)
-    {
-        return new ProjectileShot(_texturePink, new Rectangle(19 * 16, 5 * 16, 16, 16), weapon, aimDirection);
-    }
-
-    public static Weapon CreateSwordWeapon(Vector2 position)
-    {
-        return new Weapon(position, _texturePink, CreateSwordAnimations(), new Rectangle(13 * 16, 6 * 16, 16, 16));
-    }
-    public static Weapon CreatePhaserWeapon(Vector2 position)
-    {
-        return new Weapon(position, _texturePink, CreatePhaserAnimations(), new Rectangle(16 * 16, 5 * 16, 16, 16), WeaponType.RANGE);
-    }
-    
-    public static Weapon CreateKnifeWeapon(Vector2 position)
-    {
-        return new Weapon(position, _texturePink, CreateKnifeAnimations(), new Rectangle(13 * 16, 5 * 16, 16, 16));
-    }
-    
-    public static Weapon CreateCrowbarWeapon(Vector2 position)
-    {
-        return new Weapon(position, _texturePink, CreateCrowbarAnimations(), new Rectangle(16 * 16, 6 * 16, 16, 16));
-    }
-    
-    public static Weapon CreateStickWeapon(Vector2 position)
-    {
-        return new Weapon(position, _texturePink, CreateStickAnimations(), new Rectangle(19 * 16, 6 * 16, 16, 16));
-    }
-    public static Consumable CreateHealthPotion(Vector2 position)
-    {
-        return new Consumable(position, _texturePink, new Rectangle(19*16, 4*16, 16,16));
-    }
-    public static Consumable CreateCake(Vector2 position)
-    {
-        return new Consumable(position, _texturePink, new Rectangle(21*16, 4*16, 16,16));
-    }
-    public static Consumable CreateArmorPotion(Vector2 position)
-    {
-        return new Consumable(position, _texturePink, new Rectangle(20*16, 4*16, 16,16));
-    }
-    
-    public static Currency CreateCoin(Vector2 position)
-    {
-        return new Currency(position, _texturePink, new Rectangle(17*16, 4*16, 16,16));
-    }
-    
-    public static Currency CreateKey(Vector2 position)
-    {
-        return new Currency(position, _texturePink, new Rectangle(18*16, 4*16, 16,16));
-    }
 }
