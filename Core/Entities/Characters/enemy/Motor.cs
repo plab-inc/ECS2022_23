@@ -20,8 +20,6 @@ public abstract class Motor
     {
         Enemy = enemy;
     }
-
-    
     
     public abstract Vector2 Move(Vector2 position, int velocity);
 
