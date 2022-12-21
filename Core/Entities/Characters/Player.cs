@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Combat;
 using ECS2022_23.Core.Entities.Items;
+using ECS2022_23.Core.Sound;
+using ECS2022_23.Core.Ui.InventoryManagement;
 using ECS2022_23.Core.World;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
@@ -74,6 +76,7 @@ public class Player : Character
             if (Weapon.WeaponType == WeaponType.RANGE)
             {
                 CombatManager.Shoot(this);
+                SoundManager.Play(Weapon.AttackSound);
             }
         }
 
@@ -101,7 +104,76 @@ public class Player : Character
 
         IsAttacking = true;
     }
+    public override bool IsInWater(Rectangle body)
+    {
+        foreach (var rectangle in Level.WaterLayer)
+        {
+            if (rectangle.Contains(body))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public override bool Collides(Vector2 velocity)
+    {
+        var newPoint = (Position + velocity).ToPoint();
+        var rect = new Rectangle(newPoint, new Point(Texture.Width, Texture.Height));
 
+        //TODO clean up
+        
+        var armHitBoxLeft =
+            new Rectangle(newPoint.X + 4, newPoint.Y + Texture.Height / 2 + 2, 1, Texture.Height / 2 - 2);
+        var armHitBoxRight = new Rectangle(newPoint.X + Texture.Width - 5, newPoint.Y + Texture.Height / 2 + 2, 1,
+            Texture.Height / 2 - 2);
+
+        var feet = new Point(rect.Center.X, rect.Bottom);
+
+        if (velocity == Vector2.Zero)
+        {
+            return true;
+        }
+
+        var feetOnGround = false;
+
+        foreach (var rectangle in Level.GroundLayer)
+        {
+            if (rectangle.Contains(feet))
+            {
+                feetOnGround = true;
+            }
+        }
+
+        if (!feetOnGround) return false;
+
+        foreach (var rectangle in Level.GroundLayer)
+        {
+            if (velocity.Y == 0 && velocity.X > 0)
+            {
+                if (rectangle.Intersects(armHitBoxRight))
+                {
+                    return true;
+                }
+            }
+
+            if (velocity.Y == 0 && velocity.X < 0)
+            {
+                if (rectangle.Intersects(armHitBoxLeft))
+                {
+                    return true;
+                }
+            }
+
+            if ((velocity.X != 0 || !(velocity.Y > 0)) && (velocity.X != 0 || !(velocity.Y < 0))) continue;
+            
+            if (rectangle.Intersects(armHitBoxLeft) && rectangle.Intersects(armHitBoxRight))
+            {
+                return true;
+            }
+        }
+        
+        return false;
+    }
     private void SetWeaponPosition()
     {
         switch (AimDirection)
@@ -141,6 +213,7 @@ public class Player : Character
     {
         Items ??= new List<Item>();
         Items.Add(item);
+        InventoryManager.AddItem(item);
     }
 
     public void RemoveItem(Item item)

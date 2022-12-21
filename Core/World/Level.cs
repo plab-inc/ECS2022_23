@@ -12,6 +12,7 @@ public class Level
 {
     public List<Room> Rooms;
     public List<Rectangle> GroundLayer;
+    public List<Rectangle> WaterLayer;
     public Player Player { get; set; }
 
     public Room StartRoom
@@ -21,10 +22,11 @@ public class Level
             return Rooms.First(room => room.MapName.Contains("start"));
         }
     }
-    public Level(List<Room> rooms, List<Rectangle> groundLayer)
+    public Level(List<Room> rooms, List<Rectangle> groundLayer, List<Rectangle> waterLayer)
     {
         Rooms = rooms;
         GroundLayer = groundLayer;
+        WaterLayer = waterLayer;
     }
     public void Update(GameTime gameTime)
     {

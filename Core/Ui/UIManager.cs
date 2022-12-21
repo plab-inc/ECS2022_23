@@ -28,13 +28,13 @@ public static class UiManager
 
         UpdateInventory(player);
         if (!_itemsHaveChanged) return;
-        ItemPanel.Update();
+        //ItemPanel.Update();
     }
 
     public static void Draw(SpriteBatch spriteBatch)
     {
         StatsPanel.Draw(spriteBatch);
-        ItemPanel.Draw(spriteBatch);
+        //ItemPanel.Draw(spriteBatch);
     }
     private static void UpdateHearts(Player player)
     {

@@ -22,6 +22,10 @@ public class Consumable : Item
     public override void Use(Player player)
     {
         player.HP += HealPoints;
+        if (player.HP > player.MaxHP)
+        {
+            player.HP = player.MaxHP;
+        }
         player.XpToNextLevel += XpPoints;
     }
 

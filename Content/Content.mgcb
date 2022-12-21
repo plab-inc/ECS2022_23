@@ -128,6 +128,18 @@
 /processorParam:TextureFormat=Color
 /build:../Assets/sprites/astro.png;sprites/astro.png
 
+#begin ../Assets/sprites/spritesheet_red.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Assets/sprites/spritesheet_red.png;sprites/spritesheet_red.png
+
 #begin ../Assets/sprites/spritesheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -156,4 +168,22 @@
 /importer:TiledImporter
 /processor:TiledProcessor
 /build:../Assets/tilesets/tilesets/tileset001_tileset_purple.tsx;tilesets/tilesets/tileset001_tileset_purple.tsx
+
+#begin sound/backgroundMusic.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:sound/backgroundMusic.mp3
+
+#begin sound/LaserSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/LaserSound.wav;sound/laserSound.wav
+
+#begin sound/pop.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/pop.wav;sound/slimeDeath.wav
 
