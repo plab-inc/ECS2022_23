@@ -15,7 +15,7 @@ public abstract class Enemy : Character
     
     // Behavior
     public Motor Motor;
-    private bool _isActive=false;
+    private bool _isActive=true;
     
     // Level
     protected Rectangle ActivationRectangle;
@@ -26,6 +26,7 @@ public abstract class Enemy : Character
         SpriteWidth = 16;
         Level = level;
         ActivationRectangle = Rectangle;
+        CombatManager.AddEnemy(this);
     }
 
     public Enemy(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations, Motor motor, Level level) : base(spawn, texture, animations)
@@ -34,6 +35,7 @@ public abstract class Enemy : Character
         SpriteWidth = 16;
         Level = level;
         ActivationRectangle = Rectangle;
+        CombatManager.AddEnemy(this);
     }
 
     // Updates Enemy when it is active. Checks for Activation if it isn't active.
@@ -67,7 +69,7 @@ public abstract class Enemy : Character
         Motor.TargetPosition = EnemyManager.Player.Position;
         
         // Movement
-        Position += Motor.Move(Position, (int) Velocity);
+        Position += Motor.Move(Position, Velocity);
         SetAnimation("Walk");
         // Check for Attack
     }
@@ -76,8 +78,8 @@ public abstract class Enemy : Character
     public bool Activate()
     {
         // When the Player enters the Activation Radius the Enemy becomes active
-        CombatManager.AddEnemy(this);
-        return true;
+        SetAnimation("Walk");
+        return false;
     }
     
     public bool CollideWithPlayer()

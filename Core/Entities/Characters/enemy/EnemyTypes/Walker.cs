@@ -11,7 +11,7 @@ public class Walker : Enemy
 {
     public Walker(Level level) : base(Vector2.Zero, ContentLoader.EnemyTexture, new RandomMotor(level), level)
     {
-        Velocity = 1f;
+        Velocity = 1;
         HP = 10;
         XpReward = 1;
         MoneyReward = 1;
@@ -21,7 +21,7 @@ public class Walker : Enemy
 
     public Walker(Texture2D texture, Dictionary<string, Animation> animations, Motor motor, Level level) : base(Vector2.Zero, texture, animations, motor, level)
     {
-        Velocity = 1f;
+        Velocity = 1;
         HP = 10;
         XpReward = 1;
         MoneyReward = 1;
@@ -31,7 +31,7 @@ public class Walker : Enemy
     
     public Walker(Level level, Dictionary<string, Animation> animations) : base(Vector2.Zero, ContentLoader.EnemyTexture, new RandomMotor(level), level)
     {
-        Velocity = 1f;
+        Velocity = 1;
         HP = 10;
         ActivationRectangle.Inflate(35, 35);
         Motor.SetEnemy(this);

@@ -10,7 +10,7 @@ public abstract class Character : Entity
 {
     public float HP;
     public float Strength;
-    public float Velocity;
+    public int Velocity;
     protected int SpriteWidth;
     public int AimDirection;
     

@@ -23,12 +23,9 @@ public class Player : Character
     
     private Input _input;
     
-
-    
-    
     public Player(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations) : base(spawn, texture, animations)
     {
-        Velocity = 0.5f;
+        Velocity = 1;
         _input = new Input(this);
         HP = 10;
         SpriteWidth = 16;
@@ -36,7 +33,7 @@ public class Player : Character
     }
     public Player(Texture2D texture, Dictionary<string, Animation> animations) : base(Vector2.Zero,texture, animations)
     {
-        Velocity = 0.5f;
+        Velocity = 1;
         _input = new Input(this);
         HP = 10;
         SpriteWidth = 16;
