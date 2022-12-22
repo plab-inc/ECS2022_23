@@ -24,7 +24,7 @@ public class InventorySlot
     public InventorySlot(Rectangle dest, int scale, int index)
     {
         DestinationRec = dest;
-        _backgroundTexture = UiLoader.CreateColorTexture(Color.DarkSalmon);
+        _backgroundTexture = UiLoader.CreateColorTexture(new Color(192, 91, 255, 255));
         _text = UiLoader.CreateTextElement("");
         _text.DestinationRec = new Rectangle(DestinationRec.X+DestinationRec.Width/8, DestinationRec.Y, DestinationRec.Width / 2,
             DestinationRec.Height / 2);
@@ -37,13 +37,13 @@ public class InventorySlot
     {
         try
         {
+            if (Active)
+            {
+                spriteBatch.Draw(_backgroundTexture, DestinationRec, Color.White);
+            }
             spriteBatch.Draw(_spriteSheet, DestinationRec, _frameSourceRec, Color.White);
             if (IsUsed)
-            {  
-                if (Active)
-                {
-                    spriteBatch.Draw(_backgroundTexture, DestinationRec, Color.White);
-                }
+            {
                 spriteBatch.Draw(Item.Texture, DestinationRec, Item.SourceRect, Color.White);
 
                 _text.Text = "" + ItemCount;
