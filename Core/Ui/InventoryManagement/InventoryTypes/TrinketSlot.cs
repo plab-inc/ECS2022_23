@@ -7,7 +7,8 @@ namespace ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
 public class TrinketSlot : Inventory
 {
     public TrinketSlot() : base(1,1)
-    { 
+    {
+        Scale = 4;
         Width = PixelSize * ColCount * Scale;
         Height = PixelSize * RowCount * Scale;
         DestinationRec = new Rectangle(0+PixelSize+Width+16, Game1.ScreenHeight-Height, Width, Height);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using ECS2022_23.Core.Entities.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -17,15 +16,17 @@ public class InventorySlot
     private int _scale;
     public bool Selected;
     public bool Active = false;
-    private Texture2D _selectedTexture = UiLoader.GetSpritesheet();
+    private Texture2D _spriteSheet = UiLoader.GetSpritesheet();
     private Rectangle _selectedSourceRec = new Rectangle(9*16, 4*16, 16, 16);
+    private Rectangle _frameSourceRec = new Rectangle(8 * 16, 4 * 16, 16, 16);
+    
     public int Index;
     public InventorySlot(Rectangle dest, int scale, int index)
     {
         DestinationRec = dest;
         _backgroundTexture = UiLoader.CreateColorTexture(Color.DarkSalmon);
         _text = UiLoader.CreateTextElement("");
-        _text.DestinationRec = new Rectangle(DestinationRec.X, DestinationRec.Y, DestinationRec.Width / 2,
+        _text.DestinationRec = new Rectangle(DestinationRec.X+DestinationRec.Width/8, DestinationRec.Y, DestinationRec.Width / 2,
             DestinationRec.Height / 2);
         _scale = scale;
         _text.Scale = new Vector2(_scale/2, _scale/2);
@@ -36,6 +37,7 @@ public class InventorySlot
     {
         try
         {
+            spriteBatch.Draw(_spriteSheet, DestinationRec, _frameSourceRec, Color.White);
             if (IsUsed)
             {  
                 if (Active)
@@ -49,7 +51,7 @@ public class InventorySlot
             }
             if (Selected)
             {
-                spriteBatch.Draw(_selectedTexture, DestinationRec, _selectedSourceRec, Color.White);
+                spriteBatch.Draw(_spriteSheet, DestinationRec, _selectedSourceRec, Color.White);
             }
         }
         catch (ArgumentNullException e)

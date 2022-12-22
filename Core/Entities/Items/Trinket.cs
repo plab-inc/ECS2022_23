@@ -20,9 +20,9 @@ public class Trinket : Item
     
     public override void Use(Player player)
     {
-        player.Strength *= DamageMultiplier;
-        player.XpToNextLevel *= XpMultiplier;
-        player.Armor *= ArmorMultiplier;
+        player.Strength += 1*DamageMultiplier;
+        player.XpToNextLevel += 1*XpMultiplier;
+        player.Armor += 1*ArmorMultiplier;
         player.Trinket = this;
         player.ImmuneToWater = true;
     }

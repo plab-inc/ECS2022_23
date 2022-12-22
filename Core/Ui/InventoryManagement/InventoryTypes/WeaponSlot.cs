@@ -8,6 +8,7 @@ public class WeaponSlot : Inventory
 {
     public WeaponSlot() : base(1, 1)
     { 
+        Scale = 4;
         Width = PixelSize * ColCount * Scale;
         Height = PixelSize * RowCount * Scale;
         DestinationRec = new Rectangle(0+PixelSize, Game1.ScreenHeight-Height, Width, Height);

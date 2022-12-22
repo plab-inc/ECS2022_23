@@ -24,7 +24,7 @@ public abstract class Inventory
     {
         RowCount = rowCount;
         ColCount = colCount;
-        BackgroundTexture = UiLoader.CreateColorTexture(Color.DarkGray);
+        BackgroundTexture = UiLoader.CreateColorTexture(new Color(28, 111, 255, 255));
     }
 
     protected void CreateRows()

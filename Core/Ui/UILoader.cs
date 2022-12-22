@@ -14,14 +14,14 @@ internal static class UiLoader
     private static ContentManager _content;
     private static Texture2D _texture2D;
     private static SpriteFont _font;
-    public static GraphicsDevice GraphicsDevice;
+    private static GraphicsDevice _graphicsDevice;
     public static void Load(ContentManager content, GraphicsDevice graphicsDevice)
     
     {
         if (!Directory.Exists("Content")) throw new DirectoryNotFoundException();
 
         _content = content;
-        GraphicsDevice = graphicsDevice;
+        _graphicsDevice = graphicsDevice;
         try
         {
             _texture2D = _content.Load<Texture2D>("sprites/spritesheet");
@@ -33,13 +33,9 @@ internal static class UiLoader
             statsContainer.Add(CreateTextElement(UiLabels.CoinText));
             statsContainer.Add(CreateXpIcon());
             statsContainer.Add(CreateTextElement(UiLabels.XpText));
-            UiPanel itemContainer = CreateUiPanel(new Rectangle(0,0, PixelSize, PixelSize), new Rectangle(0,Game1.ScreenHeight-16,Game1.ScreenWidth, 100), UiLabels.ItemContainer);
-            itemContainer.Add(CreateIcon(new Rectangle(19*16, 4*16, PixelSize, PixelSize), UiLabels.HealthItemIcon));
-            itemContainer.Add(CreateTextElement(UiLabels.HealthText));
-            itemContainer.Add(CreateIcon(new Rectangle(20*16, 4*16, PixelSize, PixelSize), UiLabels.ArmorItemIcon));
-            itemContainer.Add(CreateTextElement(UiLabels.ArmorText));
+            statsContainer.Add(CreateIcon(new Rectangle(14*16, 4*16, PixelSize, PixelSize), UiLabels.ArmorIcon));
+            statsContainer.Add(CreateTextElement(UiLabels.ArmorText));
             UiManager.StatsPanel = statsContainer;
-            UiManager.ItemPanel = itemContainer;
         }
         catch (Exception e)
         {
@@ -76,8 +72,8 @@ internal static class UiLoader
     {
         return new UiText(new Rectangle(0,0, PixelSize, PixelSize), _font, text);
     }
-    
-    public static UiElement CreateIcon(Rectangle sourceRect, UiLabels label)
+
+    private static UiElement CreateIcon(Rectangle sourceRect, UiLabels label)
     {
         return new UiElement(sourceRect, _texture2D, label);
     }
@@ -89,7 +85,7 @@ internal static class UiLoader
 
     public static Texture2D CreateColorTexture(Color color)
     {
-        var recTexture = new Texture2D(GraphicsDevice, 1, 1);
+        var recTexture = new Texture2D(_graphicsDevice, 1, 1);
         recTexture.SetData(new Color[] { color });
         return recTexture;
     }

@@ -35,7 +35,7 @@ public static class ItemManager
         
         randomInt = random.Next(10);
         var weaponChance = 5;
-        var trinketChance = 1;
+        var trinketChance = 2;
 
         if (randomInt < trinketChance)
         {
