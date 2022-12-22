@@ -133,12 +133,14 @@ namespace GameStateManagement
 
                 if (_escape.WasSuccessful)
                 {
-                    ScreenManager.Game.Exit();
+                    LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),
+                        new MainMenuScreen());
                     Console.WriteLine("You escaped");
                 }
                 if (_escape.Failed)
                 {
-                    ScreenManager.Game.Exit();
+                    LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),
+                        new MainMenuScreen());
                     Console.WriteLine("You died");
                 }
                 
