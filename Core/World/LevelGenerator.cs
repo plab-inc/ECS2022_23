@@ -10,7 +10,7 @@ namespace ECS2022_23.Core.World;
 
 internal static class LevelGenerator
 {
-    private static readonly int PossibleStarts = Directory.GetFiles("Content/rooms","start*.xnb").Length;
+    private static readonly int PossibleStarts = Directory.GetFiles("Content/world/rooms","start*.xnb").Length;
     private static readonly Random Random = new((int)DateTime.Now.Ticks);
     
     public static Level GenerateLevel(int minimumRooms, int maximumRooms)
