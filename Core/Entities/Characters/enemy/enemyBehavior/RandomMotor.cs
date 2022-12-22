@@ -6,7 +6,7 @@ namespace ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
 
 public class RandomMotor : Motor
 {
-    int delay=0;
+    int delay;
     Random rand = new Random((int)DateTime.Now.Ticks);
     private int LastDirection;
     
@@ -15,7 +15,7 @@ public class RandomMotor : Motor
         
     }
     
-    public override Vector2 Move(Vector2 position, int velocity)
+    public override Vector2 Move(Vector2 position, float velocity)
     {
         // RandomEnemy chooses a Direction and stays on it for X seconds
         
