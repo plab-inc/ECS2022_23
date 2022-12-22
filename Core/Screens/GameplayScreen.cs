@@ -136,6 +136,11 @@ namespace GameStateManagement
                     ScreenManager.Game.Exit();
                     Console.WriteLine("You escaped");
                 }
+                if (_escape.Failed)
+                {
+                    ScreenManager.Game.Exit();
+                    Console.WriteLine("You died");
+                }
                 
                 UiManager.Update(_player);
                 CombatManager.Update(gameTime, _player);

@@ -20,6 +20,7 @@ public class Escape
     private int _levelsCompleted;
     private int _levelsToComplete;
     public bool WasSuccessful { get; private set; }
+    public bool Failed { get; private set; }
     
     public Escape(Player player, int startDifficulty, int levelsToComplete)
     {
@@ -65,9 +66,9 @@ public class Escape
         _currentLevel.Update(gameTime);
         EnemyManager.Update(gameTime);
 
-        if (true)
+        if (!_player.IsAlive())
         {
-            
+            Failed = true;
         }
 
         if (!_currentLevel.isCompleted) return;

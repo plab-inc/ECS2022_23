@@ -99,7 +99,6 @@ public class Input
             if (!_player.ImmuneToWater)
             {
                 _player.Kill();
-                Console.WriteLine("I'm ded");
             }
         }
 
