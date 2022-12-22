@@ -23,6 +23,7 @@ using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Combat;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Game;
+using ECS2022_23.Core.Sound;
 using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.Ui.InventoryManagement;
 
@@ -77,12 +78,16 @@ namespace GameStateManagement
             ContentLoader.Load(content);
             AnimationLoader.Load(content);
             ItemLoader.Load(content);
-            _player = new Player(content.Load<Texture2D>("sprites/astro"), AnimationLoader.CreatePlayerAnimations());
-            _player.Weapon = ItemLoader.CreatePhaserWeapon(Vector2.Zero);
-                    
-            _escape = new Escape(_player, 3, false);
-            _escape.AttachCamera(_camera);
+            SoundManager.Initialize();
             UiLoader.Load(content, ScreenManager.GraphicsDevice);
+            
+            _player = new Player(content.Load<Texture2D>("sprites/astro"), AnimationLoader.CreatePlayerAnimations())
+                {
+                    Weapon = ItemLoader.CreatePhaserWeapon(Vector2.Zero)
+                };
+
+            _escape = new Escape(_player, 3,3);
+            _escape.AttachCamera(_camera);
             
             // once the load has finished, we use ResetElapsedTime to tell the game's
             // timing mechanism that we have just finished a very long frame, and that
@@ -125,6 +130,13 @@ namespace GameStateManagement
             if (IsActive)
             {
                 _escape.Update(gameTime);
+
+                if (_escape.WasSuccessful)
+                {
+                    ScreenManager.Game.Exit();
+                    Console.WriteLine("You escaped");
+                }
+                
                 UiManager.Update(_player);
                 CombatManager.Update(gameTime, _player);
                 InventoryManager.Update(_player);
@@ -200,11 +212,6 @@ namespace GameStateManagement
         /// </summary>
         public override void Draw(GameTime gameTime)
         {
-            // This game has a blue background. Why? Because!
-            ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
-                                               Color.CornflowerBlue, 0, 0);
-
-            // Our player and enemy are both actually just text strings.
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
             spriteBatch.Begin(_camera, samplerState: SamplerState.PointClamp);

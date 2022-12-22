@@ -36,6 +36,11 @@ public static class EnemyManager
         }
     }
 
+    public static void KillEnemies()
+    {
+        Enemies.Clear();
+    }
+
     public static void SpawnEnemies()
     {
         Random rand = new Random();

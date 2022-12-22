@@ -3,6 +3,7 @@ using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Characters.enemy;
 using ECS2022_23.Core.Sound;
 using ECS2022_23.Core.World;
+using GameStateManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -14,24 +15,36 @@ public class Escape
     private Player _player;
     private Camera _camera;
     
-    private bool _debugOn;
-    private Rectangle? debugRect;
+
+    private int _difficulty;
+    private int _levelsCompleted;
+    private int _levelsToComplete;
+    public bool WasSuccessful { get; private set; }
     
-    public Escape(Player player, int difficulty, bool debugOn)
+    public Escape(Player player, int startDifficulty, int levelsToComplete)
     {
         
         _player = player;
-        _currentLevel = LevelGenerator.GenerateLevel(difficulty * 2, difficulty * 4);
-        _currentLevel.Player = player;
-        player.Level = _currentLevel;
-        player.Room = _currentLevel.StartRoom;
-        player.Position =  _currentLevel.StartRoom.GetRandomSpawnPos(player);
+        _difficulty = startDifficulty;
+        _levelsToComplete = levelsToComplete;
+        
+        InitializeLevel();
+        
+    }
+    private void InitializeLevel()
+    { 
+        _currentLevel = LevelGenerator.GenerateLevel(_difficulty * 2, _difficulty * 4);
+        _currentLevel.Player = _player;
+        _player.Level = _currentLevel;
+        _player.Room = _currentLevel.StartRoom;
+        _player.Position = Vector2.Zero;
+        _player.Position = _currentLevel.StartRoom.GetRandomSpawnPos(_player);
+        
         EnemyManager.Level = _currentLevel;
         EnemyManager.Player = _player;
+        
+        EnemyManager.KillEnemies();
         EnemyManager.SpawnEnemies();
-        SoundManager.Initialize();
-        _debugOn = debugOn;
-
     }
     public void AttachCamera(Camera camera)
     {
@@ -43,34 +56,33 @@ public class Escape
         _currentLevel.Draw(spriteBatch);
         _player.Draw(spriteBatch);
         EnemyManager.Draw(spriteBatch);
-        
-        
-        if (debugRect != null)
-        {
-            //TODO Draw debug rect
-        }
     }
-
     public void Update(GameTime gameTime)
-    { 
+    {
         _camera.Position = _player.Position;
         _camera.Update(gameTime);
         _player.Update(gameTime);
         _currentLevel.Update(gameTime);
         EnemyManager.Update(gameTime);
-        
-        if (_debugOn)
+
+        if (true)
         {
-            foreach (var obj in _currentLevel.GroundLayer)
-            {
-                if (obj.Intersects(_player.Rectangle))
-                {
-                    debugRect = obj;
-                }
-            }
             
         }
+
+        if (!_currentLevel.isCompleted) return;
         
+        _levelsCompleted++;
+            
+        if (_levelsCompleted < _levelsToComplete)
+        {
+            _difficulty++;
+            InitializeLevel();
+        }
+        else
+        {
+            WasSuccessful = true;
+        }
     }
     
 }

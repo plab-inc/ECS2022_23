@@ -14,6 +14,7 @@ public class Level
     public List<Rectangle> GroundLayer;
     public List<Rectangle> WaterLayer;
     public Player Player { get; set; }
+    public bool isCompleted { get; private set; }
 
     public Room StartRoom
     {
@@ -46,6 +47,13 @@ public class Level
                 if (Player.Rectangle.Contains(room.GetInteractablePositions("Chest").First()))
                 {
                     Console.WriteLine("Wow a chest");
+                }
+            }
+            if (room.GetInteractablePositions("Exit").Any())
+            {
+                if (Player.Rectangle.Contains(room.GetInteractablePositions("Exit").First()))
+                {
+                    isCompleted = true;
                 }
             }
 
