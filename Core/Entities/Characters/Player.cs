@@ -20,14 +20,13 @@ public class Player : Character
     private float speed = 3;
     public List<Item> Items;
     public Weapon Weapon { get; set; }
-    
+    public Trinket Trinket { get; set; }
     public Room Room { get; set; }
     
     private Input _input;
+    public bool ImmuneToWater = false;
     
-
-    
-    
+        
     public Player(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations) : base(spawn, texture, animations)
     {
         Velocity = 0.5f;
@@ -213,7 +212,6 @@ public class Player : Character
     {
         Items ??= new List<Item>();
         Items.Add(item);
-        InventoryManager.AddItem(item);
     }
 
     public void RemoveItem(Item item)
@@ -224,7 +222,14 @@ public class Player : Character
     public void UseItem(Item item)
     {
         if (Items.Count <= 0) return;
-        if (!Items.Remove(item)) return;
-        item.Use(this);
+        if (item.GetType() == typeof(Trinket))
+        {
+            item.Use(this);
+        }
+        else
+        {
+            if (!Items.Remove(item)) return;
+            item.Use(this);
+        }
     }
 }

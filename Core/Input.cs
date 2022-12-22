@@ -45,20 +45,6 @@ public class Input
         } else if (Keyboard.GetState().IsKeyDown(Keys.X) && _prevState != Keyboard.GetState())
         {
             ItemManager.PickItemUp(_player);
-        } else if (Keyboard.GetState().IsKeyDown(Keys.D1) && _prevState != Keyboard.GetState())
-        {
-            if (_player.Items?.Count > 0)
-            {
-                var item = UiManager.UseItemAtIndex(1, _player);
-                if(item != null) _player.UseItem(item);
-            }
-        } else if (Keyboard.GetState().IsKeyDown(Keys.D2) && _prevState != Keyboard.GetState())
-        {
-            if (_player.Items?.Count > 0)
-            {
-                var item = UiManager.UseItemAtIndex(3, _player);
-                if(item != null) _player.UseItem(item);
-            }
         }
 
         // Diagonal Movement
@@ -110,8 +96,11 @@ public class Input
 
         if (_player.IsInWater(_player.Rectangle))
         {
-            _player.Kill();
-            Console.WriteLine("I'm ded");
+            if (!_player.ImmuneToWater)
+            {
+                _player.Kill();
+                Console.WriteLine("I'm ded");
+            }
         }
 
         if (!_player.Collides(velocity)) 

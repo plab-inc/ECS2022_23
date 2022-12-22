@@ -4,17 +4,17 @@ using Microsoft.Xna.Framework;
 
 namespace ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
 
-public class WeaponSlot : Inventory
+public class TrinketSlot : Inventory
 {
-    public WeaponSlot() : base(1, 1)
-    { 
+    public TrinketSlot() : base(1,1)
+    {
         Scale = 4;
         Width = PixelSize * ColCount * Scale;
         Height = PixelSize * RowCount * Scale;
-        DestinationRec = new Rectangle(0+PixelSize, Game1.ScreenHeight-Height, Width, Height);
+        DestinationRec = new Rectangle(0+PixelSize+Width+16, Game1.ScreenHeight-Height, Width, Height);
         CreateRows();
     }
-
+    
     public override void AddItem(Item item)
     {
         try

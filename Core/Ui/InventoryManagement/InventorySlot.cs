@@ -1,4 +1,4 @@
-﻿using System.Threading;
+﻿using System;
 using ECS2022_23.Core.Entities.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,15 +15,18 @@ public class InventorySlot
     private UiText _text;
     private int _scale;
     public bool Selected;
-    private Texture2D _selectedTexture = UiLoader.GetSpritesheet();
+    public bool Active = false;
+    private Texture2D _spriteSheet = UiLoader.GetSpritesheet();
     private Rectangle _selectedSourceRec = new Rectangle(9*16, 4*16, 16, 16);
+    private Rectangle _frameSourceRec = new Rectangle(8 * 16, 4 * 16, 16, 16);
+    
     public int Index;
     public InventorySlot(Rectangle dest, int scale, int index)
     {
         DestinationRec = dest;
-        _backgroundTexture = UiLoader.CreateColorTexture(Color.Cyan);
+        _backgroundTexture = UiLoader.CreateColorTexture(new Color(192, 91, 255, 255));
         _text = UiLoader.CreateTextElement("");
-        _text.DestinationRec = new Rectangle(DestinationRec.X, DestinationRec.Y, DestinationRec.Width / 2,
+        _text.DestinationRec = new Rectangle(DestinationRec.X+DestinationRec.Width/8, DestinationRec.Y, DestinationRec.Width / 2,
             DestinationRec.Height / 2);
         _scale = scale;
         _text.Scale = new Vector2(_scale/2, _scale/2);
@@ -32,20 +35,28 @@ public class InventorySlot
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        if (IsUsed)
+        try
         {
-            spriteBatch.Draw(Item.Texture, DestinationRec, Item.SourceRect, Color.White);
-          
-            _text.Text = "" + ItemCount;
-            _text.Draw(spriteBatch);
+            if (Active)
+            {
+                spriteBatch.Draw(_backgroundTexture, DestinationRec, Color.White);
+            }
+            spriteBatch.Draw(_spriteSheet, DestinationRec, _frameSourceRec, Color.White);
+            if (IsUsed)
+            {
+                spriteBatch.Draw(Item.Texture, DestinationRec, Item.SourceRect, Color.White);
+
+                _text.Text = "" + ItemCount;
+                _text.Draw(spriteBatch);
+            }
+            if (Selected)
+            {
+                spriteBatch.Draw(_spriteSheet, DestinationRec, _selectedSourceRec, Color.White);
+            }
         }
-        else
+        catch (ArgumentNullException e)
         {
-           // spriteBatch.Draw(_backgroundTexture, _destinationRec, Color.White);
-        }
-        if (Selected)
-        {
-            spriteBatch.Draw(_selectedTexture, DestinationRec, _selectedSourceRec, Color.White);
+            return;
         }
     }
 

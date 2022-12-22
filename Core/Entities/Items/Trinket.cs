@@ -6,9 +6,9 @@ namespace ECS2022_23.Core.Entities.Items;
 
 public class Trinket : Item
 {
-    public float DamageMultiplier { get; set; } = 2f;
-    public float XpMultiplier { get; set; } = 2f;
-    public float ArmorMultiplier { get; set; } = 2f;
+    public float DamageMultiplier { get; set; }
+    public float XpMultiplier { get; set; }
+    public float ArmorMultiplier { get; set; }
     public Trinket(Vector2 spawn, Texture2D texture, Rectangle sourceRect) : base(spawn, texture, sourceRect)
     {
     }
@@ -20,8 +20,16 @@ public class Trinket : Item
     
     public override void Use(Player player)
     {
-        player.Strength *= DamageMultiplier;
-        player.XpToNextLevel *= XpMultiplier;
-        player.Armor *= ArmorMultiplier;
+        player.Strength += 1*DamageMultiplier;
+        player.XpToNextLevel += 1*XpMultiplier;
+        player.Armor += 1*ArmorMultiplier;
+        player.Trinket = this;
+        player.ImmuneToWater = true;
+    }
+
+    public void Unequip(Player player)
+    {
+        player.Trinket = null;
+        player.ImmuneToWater = false;
     }
 }

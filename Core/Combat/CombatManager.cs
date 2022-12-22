@@ -124,7 +124,7 @@ public static class CombatManager
 
     public static void Shoot(Player player)
     {
-        var shot = AnimationLoader.CreateLaserShot(player.Weapon, player.AimDirection);
+        var shot = ItemLoader.CreateLaserShot(player.Weapon, player.AimDirection);
         shot.Level = player.Level;
         _activeShots.Add(shot);
     }

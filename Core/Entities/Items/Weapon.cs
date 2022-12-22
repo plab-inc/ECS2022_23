@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Collections.Specialized;
+﻿using System;
+using System.Collections.Generic;
 using ECS2022_23.Core.Animations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -34,6 +34,24 @@ public class Weapon : Item
         AnimationManager.Draw(spriteBatch, Position);
     }
     
+    public override bool Equals(object obj)
+    {
+        if (obj == null) return false;
+        if (obj.GetType() != typeof(Weapon))
+        {
+            return false;
+        }
+
+        var toCompare = (Weapon)obj;
+        return toCompare.Texture == this.Texture && this.Position == toCompare.Position 
+               && DamagePoints.Equals(toCompare.DamagePoints) 
+               && WeaponType == toCompare.WeaponType && Equals(AttackSound, toCompare.AttackSound);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(base.GetHashCode(), DamagePoints, (int)WeaponType, AttackSound);
+    }
 }
 
 public enum WeaponType

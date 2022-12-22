@@ -24,14 +24,14 @@ public abstract class Inventory
     {
         RowCount = rowCount;
         ColCount = colCount;
-        BackgroundTexture = UiLoader.CreateColorTexture(Color.DarkGray);
+        BackgroundTexture = UiLoader.CreateColorTexture(new Color(28, 111, 255, 255));
     }
 
     protected void CreateRows()
     {
         for (var i = 0; i < RowCount; i++)
         {
-               InventoryRows.Add(new InventoryRow(new Rectangle(DestinationRec.X,DestinationRec.Y+i*Height/ColCount, Width, 
+               InventoryRows.Add(new InventoryRow(new Rectangle(DestinationRec.X,DestinationRec.Y+i*Height/RowCount, Width, 
                    Height/RowCount), ColCount, PixelSize*Scale, this));
         }
 
@@ -117,19 +117,28 @@ public abstract class Inventory
     {
         foreach (var row in InventoryRows)
         {
-            foreach (var slot in row.Slots)
-            {
-                if (slot.Item == null) continue;
-                if (!slot.Item.Equals(item)) continue;
-                slot.ItemCount--;
-                if (slot.ItemCount <= 0)
-                {
-                    slot.RemoveItem();
-                }
+            var slot = row.FindItem(item);
+            
+            if (slot == null) continue;
+            slot.ItemCount--;
+            if (slot.ItemCount <= 0)
+            { 
+                slot.RemoveItem();
             }
+
+            return;
         }
     }
 
-
+    public void SwitchActiveState(Item item)
+    {
+        foreach (var row in InventoryRows)
+        {
+            var slot = row.FindItem(item);
+            if (slot == null) continue;
+            slot.Active = !slot.Active;
+            return;
+        }
+    }
 
 }

@@ -52,8 +52,9 @@ public class Game1 : Game
         ContentLoader.Load(Content);
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         AnimationLoader.Load(Content);
+        ItemLoader.Load(Content);
         _player = new Player(Content.Load<Texture2D>("sprites/astro"), AnimationLoader.CreatePlayerAnimations());
-        _player.Weapon = AnimationLoader.CreatePhaserWeapon(Vector2.Zero);
+        _player.Weapon = ItemLoader.CreatePhaserWeapon(Vector2.Zero);
         
         _escape = new Escape(_player, 3, false);
         _escape.AttachCamera(_camera);
