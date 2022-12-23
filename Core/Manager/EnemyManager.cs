@@ -61,8 +61,8 @@ public static class EnemyManager
         // rand.Next(0, EnemyTypes.Count)
         switch (0)
         {
-            case 0: return new Walker(Level, AnimationLoader.CreateZombieEnemyAnimations());
-            //case 1: return new Chaser(Level, Player);
+            case 0: return new Walker(Level);
+            case 1: return new Chaser(Player, Level);
         }
     }
 

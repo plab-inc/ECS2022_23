@@ -14,20 +14,13 @@ public abstract class Enemy : Character
     public float MoneyReward;
     
     // Behavior
-    public Motor Motor;
-    private bool _isActive=true;
+    protected Motor Motor;
+    protected bool _isActive=true;
     
     // Level
     protected Rectangle ActivationRectangle;
     protected Color Color = Color.White;
-    public Enemy(Vector2 spawn, Texture2D texture, Motor motor, Level level) : base(spawn, texture)
-    {
-        Motor = motor;
-        SpriteWidth = 16;
-        Level = level;
-        ActivationRectangle = Rectangle;
-    }
-
+    
     public Enemy(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations, Motor motor, Level level) : base(spawn, texture, animations)
     {
         Motor = motor;

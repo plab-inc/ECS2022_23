@@ -10,7 +10,7 @@ namespace ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
 public class Chaser : Enemy
 {
     
-    public Chaser(Entity target, Dictionary<string, Animation> animations, Motor motor, Level level) : base(Vector2.Zero, UiLoader.GetSpritesheet(), animations, motor, level)
+    public Chaser(Entity target, Level level) : base(Vector2.Zero, UiLoader.GetSpritesheet(), AnimationLoader.CreateZombieEnemyAnimations(), new ChaseMotor(level, target), level)
     {
         Velocity = 1f;
         HP = 10;
