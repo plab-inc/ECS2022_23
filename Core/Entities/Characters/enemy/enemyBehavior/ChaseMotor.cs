@@ -7,12 +7,12 @@ public class ChaseMotor : Motor
 {
     private Entity _target;
     
-    public ChaseMotor(Level level, Entity target) : base(level)
+    public ChaseMotor(Entity target) : base()
     {
         _target = target;
     }
 
-    public override Vector2 Move(Vector2 position, int velocity)
+    public override Vector2 Move(Vector2 position, float velocity)
     {
         Vector2 vec = Vector2.Zero;
 

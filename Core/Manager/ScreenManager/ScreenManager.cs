@@ -153,7 +153,9 @@ namespace GameStateManagement
             foreach (GameScreen screen in screens)
                 screensToUpdate.Add(screen);
 
-            bool otherScreenHasFocus = !Game.IsActive;
+            //TODO Revert change
+            //bool otherScreenHasFocus = !Game.IsActive;
+            bool otherScreenHasFocus = false;
             bool coveredByOtherScreen = false;
 
             // Loop as long as there are screens waiting to be updated.

@@ -9,8 +9,9 @@ namespace ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
 
 public class Chaser : Enemy
 {
+    private Character _target;
     
-    public Chaser(Entity target, Dictionary<string, Animation> animations, Motor motor, Level level) : base(Vector2.Zero, UiLoader.GetSpritesheet(), animations, motor, level)
+    public Chaser(Character target, Level level) : base(Vector2.Zero, UiLoader.GetSpritesheet(), AnimationLoader.CreateZombieEnemyAnimations(), new ChaseMotor(target), level)
     {
         Velocity = 1f;
         HP = 10;
@@ -18,7 +19,7 @@ public class Chaser : Enemy
         MoneyReward = 1;
         ActivationRectangle.Inflate(35, 35);
         Motor.SetEnemy(this);
-        Motor.SetTarget(target);
+        _target = target;
     }
 
     public override void Attack()
