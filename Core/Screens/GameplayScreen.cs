@@ -23,6 +23,7 @@ using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Combat;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Game;
+using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Sound;
 using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.Ui.InventoryManagement;
@@ -67,6 +68,8 @@ namespace GameStateManagement
         /// </summary>
         public override void LoadContent()
         {
+            Console.WriteLine("Loading");
+            
             if (content == null)
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
 
@@ -76,6 +79,7 @@ namespace GameStateManagement
             };
             
             ContentLoader.Load(content);
+            SoundLoader.LoadSounds(content);
             AnimationLoader.Load(content);
             ItemLoader.Load(content);
             SoundManager.Initialize();
@@ -100,6 +104,8 @@ namespace GameStateManagement
         /// </summary>
         public override void UnloadContent()
         {
+            Console.WriteLine("Unloading");
+            ContentLoader.Unload(content);
             content.Unload();
         }
 

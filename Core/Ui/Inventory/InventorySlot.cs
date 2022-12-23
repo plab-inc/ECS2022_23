@@ -16,7 +16,7 @@ public class InventorySlot
     private int _scale;
     public bool Selected;
     public bool Active = false;
-    private Texture2D _spriteSheet = UiLoader.GetSpritesheet();
+    private Texture2D _spriteSheet = UiLoader._texture2D;
     private Rectangle _selectedSourceRec = new Rectangle(9*16, 4*16, 16, 16);
     private Rectangle _frameSourceRec = new Rectangle(8 * 16, 4 * 16, 16, 16);
     

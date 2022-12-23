@@ -16,11 +16,7 @@ public static class ContentLoader
     public static Dictionary<string, TiledMap> Tilemaps =  new();
     public static Dictionary<string, TiledTileset> Tilesets =  new();
     public static Dictionary<string, Texture2D> TilesetTextures = new ();
-    public static Texture2D EnemyTexture;
     
-    public static SoundEffect LaserSound;
-    public static Song BackgroundMusic;
-    public static SoundEffect BlobDeathSound;
     public static void Load(ContentManager content)
     {
         if (!Directory.Exists("Content")) throw new DirectoryNotFoundException();
@@ -29,8 +25,13 @@ public static class ContentLoader
 
         LoadTilemaps();
         LoadTilesets();
-        LoadSprites();
-        LoadSound();
+    }
+
+    public static void Unload(ContentManager content)
+    {
+        Tilemaps.Clear();
+        Tilesets.Clear();
+        TilesetTextures.Clear();
     }
 
     private static void LoadTilemaps()
@@ -80,17 +81,5 @@ public static class ContentLoader
         }
         
     }
-
-    private static void LoadSprites()
-    {
-        EnemyTexture = _content.Load<Texture2D>("sprites/astro");
-    }
-
-    private static void LoadSound()
-    {
-        LaserSound = _content.Load<SoundEffect>("sound/laserSound");
-        BackgroundMusic = _content.Load<Song>("sound/backgroundMusic");
-        BlobDeathSound = _content.Load<SoundEffect>("sound/slimeDeath");
-    }
-
+    
 }

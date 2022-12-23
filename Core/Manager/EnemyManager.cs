@@ -19,8 +19,7 @@ public static class EnemyManager
 
     static EnemyManager()
     {
-        _enemyTypes.Add(new Walker(null));
-        _enemyTypes.Add(new Chaser(null,(Player)null));
+
     }
 
     private static void AddEnemy(Enemy e)
@@ -63,9 +62,8 @@ public static class EnemyManager
         switch (0)
         {
             case 0: return new Walker(Level, AnimationLoader.CreateZombieEnemyAnimations());
-            case 1: return new Chaser(Level, Player);
+            //case 1: return new Chaser(Level, Player);
         }
-        return new Walker(Level);
     }
 
     public static void CheckEnemyStatus()
