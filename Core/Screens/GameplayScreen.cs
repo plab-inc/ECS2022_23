@@ -24,6 +24,7 @@ using ECS2022_23.Core.Combat;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Game;
 using ECS2022_23.Core.Loader;
+using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.Sound;
 using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.Ui.InventoryManagement;
@@ -84,6 +85,7 @@ namespace GameStateManagement
             ItemLoader.Load(content);
             SoundManager.Initialize();
             UiLoader.Load(content, ScreenManager.GraphicsDevice);
+            InventoryManager.Init();
             
             _player = new Player(content.Load<Texture2D>("sprites/astro"), AnimationLoader.CreatePlayerAnimations())
                 {

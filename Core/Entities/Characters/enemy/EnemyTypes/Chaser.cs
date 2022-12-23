@@ -11,7 +11,7 @@ public class Chaser : Enemy
 {
     private Character _target;
     
-    public Chaser(Character target, Level level) : base(Vector2.Zero, UiLoader.GetSpritesheet(), AnimationLoader.CreateZombieEnemyAnimations(), new ChaseMotor(target), level)
+    public Chaser(Character target, Level level) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateZombieEnemyAnimations(), new ChaseMotor(target), level)
     {
         Velocity = 1f;
         HP = 10;

@@ -38,7 +38,7 @@ public abstract class Inventory
         if (InventoryRows.Count > 0)
         {
             PrevRow = InventoryRows[0];
-            if(PrevRow.Slots.Count > 0) PrevRow.Slots[PrevIndex].Selected = true;
+            if(PrevRow.Slots.Count > 0) PrevRow.Slots[PrevIndex].IsSelected = true;
         }
     }
 
@@ -84,9 +84,9 @@ public abstract class Inventory
         {
             var slot = row.Slots.Find(slot => slot.Index == index);
             if (slot == null) continue;
-            slot.Selected = true;
+            slot.IsSelected = true;
             var prevSlot = PrevRow.Slots[PrevIndex%ColCount];
-            prevSlot.Selected = false;
+            prevSlot.IsSelected = false;
             PrevIndex = index;
             PrevRow = row;
             return;
@@ -105,7 +105,7 @@ public abstract class Inventory
     {
         foreach (var row in InventoryRows)
         {
-            var slot = row.Slots.Find(slot => slot.Selected == true);
+            var slot = row.Slots.Find(slot => slot.IsSelected == true);
             if (slot == null) continue;
             return slot.Item;
         }
@@ -136,7 +136,7 @@ public abstract class Inventory
         {
             var slot = row.FindItem(item);
             if (slot == null) continue;
-            slot.Active = !slot.Active;
+            slot.IsActive = !slot.IsActive;
             return;
         }
     }

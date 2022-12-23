@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Items;
-using ECS2022_23.Core.Ui.InventoryManagement;
+using ECS2022_23.Core.Manager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 

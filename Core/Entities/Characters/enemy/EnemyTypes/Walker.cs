@@ -13,7 +13,7 @@ public class Walker : Enemy
         throw new System.NotImplementedException();
     }
 
-    public Walker(Level level) : base(Vector2.Zero, UiLoader.GetSpritesheet(), AnimationLoader.CreateBlobEnemyAnimations(), new RandomMotor(), level)
+    public Walker(Level level) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateBlobEnemyAnimations(), new RandomMotor(), level)
     {
         Velocity = 1f;
         HP = 10;
