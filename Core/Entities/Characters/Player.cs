@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using ECS2022_23.Core.Animations;
-using ECS2022_23.Core.Combat;
 using ECS2022_23.Core.Entities.Items;
+using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.Sound;
-using ECS2022_23.Core.Ui.InventoryManagement;
 using ECS2022_23.Core.World;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
@@ -27,7 +26,7 @@ public class Player : Character
     public bool ImmuneToWater = false;
     
         
-    public Player(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations) : base(spawn, texture, animations)
+    public Player(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations) : base(spawn, texture, animations)
     {
         Velocity = 0.5f;
         _input = new Input(this);
@@ -35,7 +34,7 @@ public class Player : Character
         SpriteWidth = 16;
         Strength = 5;
     }
-    public Player(Texture2D texture, Dictionary<string, Animation> animations) : base(Vector2.Zero,texture, animations)
+    public Player(Texture2D texture, Dictionary<AnimationType, Animation> animations) : base(Vector2.Zero,texture, animations)
     {
         Velocity = 0.5f;
         _input = new Input(this);
@@ -82,22 +81,22 @@ public class Player : Character
         switch (AimDirection)
         {
             case (int) Direction.Right:
-                SetAnimation("AttackRight");
+                SetAnimation(AnimationType.AttackRight);
                 break;
             case (int)Direction.Left:
-                SetAnimation("AttackLeft");
+                SetAnimation(AnimationType.AttackLeft);
                 break;
             case (int)Direction.Up:
-                SetAnimation("AttackUp");
+                SetAnimation(AnimationType.AttackUp);
                 break;
             case (int)Direction.Down:
-                SetAnimation("AttackDown");
+                SetAnimation(AnimationType.AttackDown);
                 break;
             case (int)Direction.None:
-                SetAnimation("AttackRight");
+                SetAnimation(AnimationType.AttackRight);
                 break;
             default:
-                SetAnimation("AttackRight");
+                SetAnimation(AnimationType.AttackRight);
                 break;
         }
 
@@ -179,11 +178,11 @@ public class Player : Character
         {
             case (int) Direction.Right:
                 Weapon.Position = new Vector2(Position.X + SpriteWidth, Position.Y);
-                Weapon.SetAnimation("AttackRight");
+                Weapon.SetAnimation(AnimationType.AttackRight);
                 break;
             case (int)Direction.Left:
                 Weapon.Position = new Vector2(Position.X - SpriteWidth, Position.Y);
-                Weapon.SetAnimation("AttackLeft");
+                Weapon.SetAnimation(AnimationType.AttackLeft);
                 break;
             case (int)Direction.Up:
                 Weapon.Position = new Vector2(Position.X, Position.Y - SpriteWidth);
@@ -195,11 +194,11 @@ public class Player : Character
                 break;
             case (int) Direction.None:
                 Weapon.Position = new Vector2(Position.X + SpriteWidth, Position.Y);
-                Weapon.SetAnimation("AttackRight");
+                Weapon.SetAnimation(AnimationType.AttackRight);
                 break;
             default:
                 Weapon.Position = new Vector2(Position.X + SpriteWidth, Position.Y);
-                Weapon.SetAnimation("AttackRight");
+                Weapon.SetAnimation(AnimationType.AttackRight);
                 break;
         }
     }
@@ -231,5 +230,10 @@ public class Player : Character
             if (!Items.Remove(item)) return;
             item.Use(this);
         }
+    }
+
+    public bool AnimationFinished()
+    {
+        return AnimationManager.AnimationFinished;
     }
 }

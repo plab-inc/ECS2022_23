@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.World;
+using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -20,7 +21,7 @@ public abstract class Character : Entity
     public Level Level { get; set; }
     public bool IsAttacking { get; set; }
     
-    protected Character(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations) : base(spawn, texture, animations)
+    protected Character(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations) : base(spawn, texture, animations)
     {
         
     }
@@ -80,6 +81,10 @@ public abstract class Character : Entity
 
     public void Kill()
     {
+        if (Animations != null)
+        {
+            SetAnimation(AnimationType.Death);
+        }
         HP = 0;
     }
 

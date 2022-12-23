@@ -2,27 +2,45 @@
 using System.Collections.Generic;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Items;
-using ECS2022_23.Core.Manager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.Combat;
+namespace ECS2022_23.Core.Manager;
 
 public static class ItemManager
 {
-    private static List<Item> _activeItems = new List<Item>();
+    private static List<Item> _activeItems;
+
+    public static void Init()
+    {
+        _activeItems = new List<Item>();
+    }
     
     public static void Draw(SpriteBatch spriteBatch)
     {
-        foreach (var item in _activeItems)
+        try
         {
-            item.DrawIcon(spriteBatch);
+            foreach (var item in _activeItems)
+            {
+                item.DrawIcon(spriteBatch);
+            }
+        }
+        catch (NullReferenceException e)
+        {
+            _activeItems = new List<Item>();
         }
     }
 
     private static void AddItem(Item item)
     {
-        _activeItems.Add(item);
+        try
+        {
+            _activeItems.Add(item);
+        }  catch (NullReferenceException e)
+        {
+            _activeItems = new List<Item>();
+        }
+       
     }
 
     public static void DropRandomLoot(Vector2 position)
@@ -91,23 +109,30 @@ public static class ItemManager
 
     public static void PickItemUp(Player player)
     {
-        foreach (var item in _activeItems)
+        try
         {
-            if (!item.Rectangle.Intersects(player.Rectangle)) continue;
-            if (item.GetType() == typeof(Weapon))
+            foreach (var item in _activeItems)
             {
-                var weapon = player.Weapon;
-                weapon.Position = player.Position;
-                _activeItems.Add(weapon);
-                player.Weapon = (Weapon) item;
-            }
-            else
-            {
-                player.AddItem(item);
-                InventoryManager.AddItem(item);
-            }
-            _activeItems.Remove(item);
-            return;
+                if (!item.Rectangle.Intersects(player.Rectangle)) continue;
+                if (item.GetType() == typeof(Weapon))
+                {
+                    var weapon = player.Weapon;
+                    weapon.Position = player.Position;
+                    _activeItems.Add(weapon);
+                    player.Weapon = (Weapon) item;
+                }
+                else
+                {
+                    player.AddItem(item);
+                    InventoryManager.AddItem(item);
+                }
+                _activeItems.Remove(item);
+                return;
+            } 
+        }
+        catch (NullReferenceException e)
+        {
+            _activeItems = new List<Item>();
         }
     }
 }

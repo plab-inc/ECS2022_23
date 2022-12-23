@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Entities;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Characters.enemy;
@@ -9,7 +8,7 @@ using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.Combat;
+namespace ECS2022_23.Core.Manager;
 
 public static class CombatManager
 {
@@ -52,7 +51,7 @@ public static class CombatManager
         if (!defender.IsAlive()) return;
         if (!EntitiesCollide(attacker, defender) && !WeaponCollide(attacker, defender)) return;
         defender.HP -= (attacker.Strength + attacker.Weapon.DamagePoints);
-        defender.SetAnimation("Hurt");
+        defender.SetAnimation(AnimationType.Hurt);
 
         if (defender.HP > 0) return;
         EnemyDies(defender, attacker);
@@ -69,7 +68,7 @@ public static class CombatManager
             {
                 defender.Armor = 0;
                 defender.HP += armor;
-                defender.SetAnimation("Hurt");
+                defender.SetAnimation(AnimationType.Hurt);
             }
             else
             {
@@ -78,7 +77,7 @@ public static class CombatManager
            
             if (!defender.IsAlive())
             {
-                defender.SetAnimation("Death");
+                defender.SetAnimation(AnimationType.Death);
             }
         }
         attacker.IsAttacking = false;
@@ -133,7 +132,7 @@ public static class CombatManager
         foreach (var shot in _activeShots.Where(shot => shot.Rectangle.Intersects(enemy.Rectangle)))
         {
             enemy.HP -= shot.DamagePoints + player.Strength;
-            enemy.SetAnimation("Hurt");
+            enemy.SetAnimation(AnimationType.Hurt);
             shot.HitTarget = true;
             if (enemy.HP > 0) continue;
             EnemyDies(enemy, player);
@@ -143,7 +142,7 @@ public static class CombatManager
   
     private static void EnemyDies(Enemy enemy, Player player)
     {
-        enemy.SetAnimation("Death");
+        enemy.SetAnimation(AnimationType.Death);
         SoundManager.Play(enemy.DeathSound);
         ItemManager.DropRandomLoot(enemy.Position);
         EnemyManager.RemoveEnemy(enemy);

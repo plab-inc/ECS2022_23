@@ -20,7 +20,6 @@ using System.Threading;
 using Comora;
 using ECS2022_23.Core;
 using ECS2022_23.Core.Animations;
-using ECS2022_23.Core.Combat;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Game;
 using ECS2022_23.Core.Loader;
@@ -86,7 +85,8 @@ namespace GameStateManagement
             SoundManager.Initialize();
             UiLoader.Load(content, ScreenManager.GraphicsDevice);
             InventoryManager.Init();
-            
+            ItemManager.Init();
+
             _player = new Player(content.Load<Texture2D>("sprites/astro"), AnimationLoader.CreatePlayerAnimations())
                 {
                     Weapon = ItemLoader.CreatePhaserWeapon(Vector2.Zero)

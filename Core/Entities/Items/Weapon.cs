@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Loader;
+using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,11 +15,11 @@ public class Weapon : Item
     public WeaponType WeaponType = WeaponType.CLOSE;
     public SoundEffect AttackSound;
 
-    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations, Rectangle sourceRect) : base(spawn, texture, sourceRect)
+    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Rectangle sourceRect) : base(spawn, texture, sourceRect)
     {
         Animations = animations;
     }
-    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations, Rectangle sourceRect, WeaponType type) : base(spawn, texture, sourceRect)
+    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Rectangle sourceRect, WeaponType type) : base(spawn, texture, sourceRect)
     {
         Animations = animations;
         WeaponType = type;

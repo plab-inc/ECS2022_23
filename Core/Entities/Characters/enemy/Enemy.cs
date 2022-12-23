@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ECS2022_23.Core.Animations;
-using ECS2022_23.Core.Combat;
 using ECS2022_23.Core.World;
+using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -18,7 +18,7 @@ public abstract class Enemy : Character
     protected Rectangle ActivationRectangle;
     protected Color Color = Color.White;
     
-    public Enemy(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations, Motor motor, Level level) : base(spawn, texture, animations)
+    public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Motor motor, Level level) : base(spawn, texture, animations)
     {
         Motor = motor;
         Level = level;
@@ -38,7 +38,7 @@ public abstract class Enemy : Character
         
         if(!IsAlive())
         {
-            SetAnimation("Death");
+            SetAnimation(AnimationType.Death);
         }
         else
         {
@@ -50,7 +50,7 @@ public abstract class Enemy : Character
    private void Act()
     {
         Position += Motor.Move(Position, Velocity);
-        SetAnimation("WalkDown");
+        SetAnimation(AnimationType.WalkDown);
         // Check for Attack
     }
 

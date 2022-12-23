@@ -4,6 +4,7 @@ using System.IO;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Entities;
 using ECS2022_23.Core.Entities.Items;
+using ECS2022_23.Core.Loader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
