@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Combat;
 using ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
@@ -79,6 +80,7 @@ public static class EnemyManager
 
     public static void Update(GameTime gameTime)
     {
+        
         foreach (var enemy in Enemies)
         {
             enemy.Update(gameTime);

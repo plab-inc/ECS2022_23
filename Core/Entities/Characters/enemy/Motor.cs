@@ -26,6 +26,6 @@ public abstract class Motor
         Target = entity;
     }
     
-    public abstract Vector2 Move(Vector2 position, int velocity);
+    public abstract Vector2 Move(Vector2 position, float velocity);
 
 }

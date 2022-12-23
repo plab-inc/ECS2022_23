@@ -12,7 +12,7 @@ public class ChaseMotor : Motor
         _target = target;
     }
 
-    public override Vector2 Move(Vector2 position, int velocity)
+    public override Vector2 Move(Vector2 position, float velocity)
     {
         Vector2 vec = Vector2.Zero;
 

@@ -50,14 +50,15 @@ public abstract class Enemy : Character
             //SetAnimation("Default");
         }
         AnimationManager.Update(gameTime);
-        
     }
 
     // Resolves Enemy Behavior like Movement and Attack.
     private void Act()
     {
         // Movement
-        Position += Motor.Move(Position, (int) Velocity);
+        Vector2 oldPosition = Position;
+        Position += Motor.Move(Position, Velocity);
+        Vector2 newPosition = Position;
         SetAnimation("WalkDown");
         // Check for Attack
     }
