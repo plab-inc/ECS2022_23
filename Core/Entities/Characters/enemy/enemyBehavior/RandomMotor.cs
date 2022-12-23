@@ -10,11 +10,7 @@ public class RandomMotor : Motor
     private int _delay=0;
     Random rand = new Random((int)DateTime.Now.Ticks);
     private int oldDirection = 0;
-    public RandomMotor(Level level) : base(level)
-    {
-        
-    }
-    
+   
     public override Vector2 Move(Vector2 position, float velocity)
     {
         // RandomEnemy chooses a Direction and stays on it for X seconds

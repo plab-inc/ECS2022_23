@@ -12,8 +12,8 @@ public abstract class Entity
     
     protected Dictionary<string, Animation> Animations;
     protected readonly AnimationManager AnimationManager = new();
-    protected float SpriteWidth = 16;
-    protected float SpriteHeight = 16;
+    protected int SpriteWidth = 16;
+    protected int SpriteHeight = 16;
     
     public Rectangle Rectangle => new((int) Position.X,(int) Position.Y, (int) SpriteWidth, (int) SpriteHeight);
 

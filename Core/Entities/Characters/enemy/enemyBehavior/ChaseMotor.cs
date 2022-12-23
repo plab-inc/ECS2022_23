@@ -7,7 +7,7 @@ public class ChaseMotor : Motor
 {
     private Entity _target;
     
-    public ChaseMotor(Level level, Entity target) : base(level)
+    public ChaseMotor(Entity target) : base()
     {
         _target = target;
     }

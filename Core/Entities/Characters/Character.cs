@@ -13,17 +13,12 @@ public abstract class Character : Entity
     public int MaxHP = 10;
     public float HP;
     public float Strength;
-    public float Velocity;
-    protected int SpriteWidth;
+    protected float Velocity;
     public int AimDirection;
     public SoundEffect DamageSound;
     public SoundEffect DeathSound;
     public Level Level { get; set; }
     public bool IsAttacking { get; set; }
-    
-    protected Character(Vector2 spawn, Texture2D texture) : base(spawn, texture)
-    {
-    }
     
     protected Character(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations) : base(spawn, texture, animations)
     {
@@ -35,7 +30,7 @@ public abstract class Character : Entity
     public virtual bool Collides(Vector2 velocity)
     {
         var newPoint = (Position + velocity).ToPoint();
-        var body = new Rectangle(newPoint, new Point(16, 16)); // 16x16 für Sprite größe.
+        var body = new Rectangle(newPoint, new Point(SpriteWidth, SpriteHeight)); // 16x16 für Sprite größe.
         var feet = new Point(body.Center.X, body.Bottom);
 
         if (velocity == Vector2.Zero)
