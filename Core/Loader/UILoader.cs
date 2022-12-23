@@ -12,7 +12,7 @@ internal static class UiLoader
     private const int PixelSize = 16;
 
     private static ContentManager _content;
-    private static Texture2D _texture2D;
+    public static Texture2D _texture2D;
     private static SpriteFont _font;
     private static GraphicsDevice _graphicsDevice;
     public static void Load(ContentManager content, GraphicsDevice graphicsDevice)

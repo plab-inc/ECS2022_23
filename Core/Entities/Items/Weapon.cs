@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ECS2022_23.Core.Animations;
+using ECS2022_23.Core.Loader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -21,7 +22,7 @@ public class Weapon : Item
     {
         Animations = animations;
         WeaponType = type;
-        AttackSound = ContentLoader.LaserSound;
+        AttackSound = SoundLoader.LaserSound;
     }
     
     public override void Update(GameTime gameTime)

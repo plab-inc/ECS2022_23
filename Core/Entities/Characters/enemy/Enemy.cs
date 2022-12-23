@@ -15,7 +15,7 @@ public abstract class Enemy : Character
     
     // Behavior
     public Motor Motor;
-    private bool _isActive=false;
+    private bool _isActive=true;
     
     // Level
     protected Rectangle ActivationRectangle;
