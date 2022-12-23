@@ -35,7 +35,7 @@ public abstract class Character : Entity
     public virtual bool Collides(Vector2 velocity)
     {
         var newPoint = (Position + velocity).ToPoint();
-        var body = new Rectangle(newPoint, new Point(Texture.Width, Texture.Height));
+        var body = new Rectangle(newPoint, new Point(16, 16)); // 16x16 für Sprite größe.
         var feet = new Point(body.Center.X, body.Bottom);
 
         if (velocity == Vector2.Zero)
