@@ -11,16 +11,18 @@ namespace ECS2022_23.Core.Entities.Items;
 
 public class Weapon : Item
 {
-    public float DamagePoints = 5;
-    public WeaponType WeaponType = WeaponType.CLOSE;
-    public SoundEffect AttackSound;
+    public readonly float DamagePoints;
+    public readonly WeaponType WeaponType = WeaponType.Close;
+    public readonly SoundEffect AttackSound;
 
-    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Rectangle sourceRect) : base(spawn, texture, sourceRect)
+    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Rectangle sourceRect, float damagePoints) : base(spawn, texture, sourceRect)
     {
+        DamagePoints = damagePoints;
         Animations = animations;
     }
-    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Rectangle sourceRect, WeaponType type) : base(spawn, texture, sourceRect)
+    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Rectangle sourceRect, float damagePoints, WeaponType type) : base(spawn, texture, sourceRect)
     {
+        DamagePoints = damagePoints;
         Animations = animations;
         WeaponType = type;
         AttackSound = SoundLoader.LaserSound;
@@ -58,6 +60,6 @@ public class Weapon : Item
 
 public enum WeaponType
 {
-    CLOSE,
-    RANGE
+    Close,
+    Range
 }

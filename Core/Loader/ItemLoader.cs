@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Entities;
 using ECS2022_23.Core.Entities.Items;
-using ECS2022_23.Core.Loader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core;
+namespace ECS2022_23.Core.Loader;
 
 public static class ItemLoader
 {
@@ -39,41 +37,30 @@ public static class ItemLoader
 
     public static Weapon CreateSwordWeapon(Vector2 position)
     {
-        return new Weapon(position, _texturePink, AnimationLoader.CreateSwordAnimations(), new Rectangle(13 * 16, 6 * 16, 16, 16))
-            {
-                DamagePoints = 1
-            };
+        return new Weapon(position, _texturePink, AnimationLoader.CreateSwordAnimations(),
+            new Rectangle(13 * 16, 6 * 16, 16, 16), 1);
     }
     public static Weapon CreatePhaserWeapon(Vector2 position)
     {
-        return new Weapon(position, _texturePink, AnimationLoader.CreatePhaserAnimations(), new Rectangle(16 * 16, 5 * 16, 16, 16), WeaponType.RANGE)
-            {
-                DamagePoints = 3
-            };
+        return new Weapon(position, _texturePink, AnimationLoader.CreatePhaserAnimations(), 
+            new Rectangle(16 * 16, 5 * 16, 16, 16), 3, WeaponType.Range);
     }
     
     public static Weapon CreateKnifeWeapon(Vector2 position)
     {
-        return new Weapon(position, _texturePink, AnimationLoader.CreateKnifeAnimations(), new Rectangle(13 * 16, 5 * 16, 16, 16))
-        {
-            DamagePoints = 2.5f
-        };
+        return new Weapon(position, _texturePink, AnimationLoader.CreateKnifeAnimations(), 
+            new Rectangle(13 * 16, 5 * 16, 16, 16), 2.5f);
     }
     
     public static Weapon CreateCrowbarWeapon(Vector2 position)
     {
-        return new Weapon(position, _texturePink, AnimationLoader.CreateCrowbarAnimations(), new Rectangle(16 * 16, 6 * 16, 16, 16))
-        {
-            DamagePoints = 3.5f
-        };
+        return new Weapon(position, _texturePink, AnimationLoader.CreateCrowbarAnimations(),
+            new Rectangle(16 * 16, 6 * 16, 16, 16), 3.5f);
     }
     
     public static Weapon CreateStickWeapon(Vector2 position)
     {
-        return new Weapon(position, _texturePink, AnimationLoader.CreateStickAnimations(), new Rectangle(19 * 16, 6 * 16, 16, 16))
-        {
-            DamagePoints = 2
-        };
+        return new Weapon(position, _texturePink, AnimationLoader.CreateStickAnimations(), new Rectangle(19 * 16, 6 * 16, 16, 16), 2);
     }
     public static Consumable CreateHealthPotion(Vector2 position)
     {

@@ -71,7 +71,7 @@ public class Player : Character
         if (Weapon != null)
         {
             SetWeaponPosition();
-            if (Weapon.WeaponType == WeaponType.RANGE)
+            if (Weapon.WeaponType == WeaponType.Range)
             {
                 CombatManager.Shoot(this);
                 SoundManager.Play(Weapon.AttackSound);
