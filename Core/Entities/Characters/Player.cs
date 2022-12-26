@@ -231,9 +231,4 @@ public class Player : Character
             item.Use(this);
         }
     }
-
-    public bool AnimationFinished()
-    {
-        return AnimationManager.AnimationFinished;
-    }
 }
