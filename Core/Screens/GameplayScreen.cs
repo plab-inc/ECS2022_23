@@ -16,11 +16,13 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using Comora;
 using ECS2022_23.Core;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Entities.Characters;
+using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Game;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Manager;
@@ -84,14 +86,13 @@ namespace GameStateManagement
             ItemLoader.Load(content);
             SoundManager.Initialize();
             UiLoader.Load(content, ScreenManager.GraphicsDevice);
-            InventoryManager.Init();
             ItemManager.Init();
 
             _player = new Player(content.Load<Texture2D>("sprites/astro"), AnimationLoader.CreatePlayerAnimations())
                 {
                     Weapon = ItemLoader.CreatePhaserWeapon(Vector2.Zero)
                 };
-
+            InventoryManager.Init(_player);
             _escape = new Escape(_player, 3,3);
             _escape.AttachCamera(_camera);
             

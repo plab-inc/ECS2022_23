@@ -1,4 +1,5 @@
-﻿using ECS2022_23.Core.Entities.Characters;
+﻿using System.Collections.Generic;
+using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,7 +16,7 @@ public static class InventoryManager
     private static Trinket _prevTrinket;
     public static bool Show = false;
 
-    public static void Init()
+    public static void Init(Player player)
     {
         _pocket = new Pocket(3, 3);
         _toolBar = new ToolBar(1, 9);
@@ -24,6 +25,11 @@ public static class InventoryManager
         _prevTrinket = null;
         _prevWeapon = null;
         Show = false;
+        if (player.Items == null) return;
+        foreach (var item in player.Items)
+        {
+            AddItem(item);
+        }
     }
     
     public static void Update(Player player)
