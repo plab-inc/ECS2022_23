@@ -10,7 +10,7 @@ public class Walker : Enemy
 {
     public override void Attack()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public Walker(Level level) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateBlobEnemyAnimations(), new RandomBehavior(), level)

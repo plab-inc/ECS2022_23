@@ -81,7 +81,6 @@ public static class EnemyManager
 
     public static void Update(GameTime gameTime)
     {
-        
         foreach (var enemy in Enemies)
         {
             enemy.Update(gameTime);

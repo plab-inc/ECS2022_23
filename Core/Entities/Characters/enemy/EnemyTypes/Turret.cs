@@ -1,4 +1,6 @@
+using System.Diagnostics;
 using ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
+using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.World;
@@ -20,9 +22,10 @@ public class Turret : Enemy
         Behavior.SetEnemy(this);
         DeathSound = SoundLoader.BlobDeathSound;
     }
-
+    
     public override void Attack()
     {
         
     }
+    
 }

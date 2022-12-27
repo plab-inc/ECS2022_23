@@ -56,6 +56,7 @@ public abstract class Enemy : Character
         
         SetAnimation(AnimationType.WalkDown);
         // Check for Attack
+        Attack();
     }
 
    private bool Activate()

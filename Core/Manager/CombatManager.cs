@@ -128,6 +128,7 @@ public static class CombatManager
         shot.Level = player.Level;
         _activeShots.Add(shot);
     }
+    
     private static void CheckShotEnemyCollision(Enemy enemy, Player player)
     {
         foreach (var shot in _activeShots.Where(shot => shot.Rectangle.Intersects(enemy.Rectangle)))
