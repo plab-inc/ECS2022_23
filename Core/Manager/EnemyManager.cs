@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Characters.enemy;
 using ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
@@ -104,9 +105,14 @@ public static class EnemyManager
     private static void ChooseEnemyForKey()
     {
         var random = new Random();
+        //Zum Testen dropped der erste Enemy den Schlüssel, damit man ihn nicht extra suchen muss, sonst Enemies.Count als Grenze setzen
         //var randomInt = random.Next(Enemies.Count);
         var randomInt = random.Next(1);
-        _keyEnemy = Enemies[randomInt];
+
+        if (randomInt >= 0 && randomInt < Enemies.Count)
+        {
+            _keyEnemy = Enemies[randomInt];
+        }
     }
 
 }
