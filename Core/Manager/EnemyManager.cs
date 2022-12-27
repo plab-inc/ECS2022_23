@@ -1,22 +1,22 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using ECS2022_23.Core.Animations;
+using ECS2022_23.Core.Entities.Characters;
+using ECS2022_23.Core.Entities.Characters.enemy;
 using ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
-using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.Entities.Characters.enemy;
+namespace ECS2022_23.Core.Manager;
 
 public static class EnemyManager
 {
     private static List<Enemy> Enemies = new();
     private static List<Enemy> _enemyTypes = new();
+    private static Enemy _keyEnemy;
     public static Player Player { set; get;}
     public static Level Level { set; get; }
-    
 
     static EnemyManager()
     {
@@ -36,6 +36,12 @@ public static class EnemyManager
         }
     }
 
+    public static bool EnemyDropsKey(Enemy enemy)
+    { 
+        if (_keyEnemy == null) return false;
+        return enemy.Equals(_keyEnemy);
+    }
+    
     public static void KillEnemies()
     {
         Enemies.Clear();
@@ -54,6 +60,7 @@ public static class EnemyManager
                 CombatManager.AddEnemy(en);
             }
         }
+        ChooseEnemyForKey();
     }
 
     private static Enemy GetRandomEnemy()
@@ -92,6 +99,19 @@ public static class EnemyManager
         foreach (var en in Enemies)
         {
             en.Draw(spriteBatch);
+        }
+    }
+
+    private static void ChooseEnemyForKey()
+    {
+        var random = new Random();
+        //Zum Testen dropped der erste Enemy den Schlüssel, damit man ihn nicht extra suchen muss, sonst Enemies.Count als Grenze setzen
+        //var randomInt = random.Next(Enemies.Count);
+        var randomInt = random.Next(1);
+
+        if (randomInt >= 0 && randomInt < Enemies.Count)
+        {
+            _keyEnemy = Enemies[randomInt];
         }
     }
 
