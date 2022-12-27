@@ -9,10 +9,10 @@ namespace ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
 public class Chaser : Enemy
 {
     
-    public Chaser(Character target, Level level) : base(Vector2.Zero, UiLoader.SpriteSheet,
+    public Chaser(Level level, Character target) : base(Vector2.Zero, UiLoader.SpriteSheet,
         AnimationLoader.CreateZombieEnemyAnimations(), new Chase(target), level)
     {
-        Velocity = 1.5f;
+        Velocity = 1f;
         HP = 10;
         XpReward = 1;
         MoneyReward = 1;

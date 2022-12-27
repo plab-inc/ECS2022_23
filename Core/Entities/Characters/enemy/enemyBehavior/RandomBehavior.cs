@@ -9,15 +9,13 @@ public class RandomBehavior : Behavior
 {
     private int _delay=0;
     Random rand = new ((int)DateTime.Now.Ticks);
-    private int oldDirection = 0;
+    private int oldDirection;
    
     public override Vector2 Move(Vector2 position, float velocity)
     {
-        // RandomEnemy chooses a Direction and stays on it for X seconds
         _delay++;
         int newDirection=oldDirection;
         
-        // This binds the speed of directional change to the FPS. Could result in some unexpected behavior should the FPS change.
         if (_delay >= 15)
         {
             _delay = 0;
@@ -26,7 +24,6 @@ public class RandomBehavior : Behavior
         oldDirection = newDirection;
         Vector2 temp = Vector2.Zero;
         
-        // Directions in Order: UP, DOWN, LEFT, Right
         int retry = 0;
         do
         {

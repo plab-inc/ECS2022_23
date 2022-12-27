@@ -8,12 +8,7 @@ namespace ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
 
 public class Walker : Enemy
 {
-    public override void Attack()
-    {
-        
-    }
-
-    public Walker(Level level) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateBlobEnemyAnimations(), new RandomBehavior(), level)
+   public Walker(Level level) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateBlobEnemyAnimations(), new RandomBehavior(), level)
     {
         Velocity = 1f;
         HP = 10;
@@ -26,4 +21,10 @@ public class Walker : Enemy
         Color = Color.Cyan;
         DeathSound = SoundLoader.BlobDeathSound;
     }
+   
+   public override void Attack()
+   {
+        
+   }
+   
 }

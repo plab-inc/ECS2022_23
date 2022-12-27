@@ -15,7 +15,7 @@ public class Turret : Enemy
 {
     private int attackDelay;
     
-    public Turret(Level level, Character target) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateZombieEnemyAnimations(), new StationaryShooter(target), level)
+    public Turret(Level level, Character target) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(), new StationaryShooter(target), level)
     {
         Velocity = 0f;
         HP = 20;
@@ -29,7 +29,7 @@ public class Turret : Enemy
     
     public override void Attack()
     {
-        if (++attackDelay >= 50)
+        if (++attackDelay >= 75)
         {
             attackDelay = 0;
             CombatManager.Shoot(this);
