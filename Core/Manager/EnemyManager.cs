@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using ECS2022_23.Core.Animations;
-using ECS2022_23.Core.Combat;
-using ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
-using ECS2022_23.Core.Game;
+using ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
+using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,8 +20,7 @@ public static class EnemyManager
 
     static EnemyManager()
     {
-        //_enemyTypes.Add(new Walker(null));
-        //_enemyTypes.Add(new Chaser(null));
+
     }
 
     private static void AddEnemy(Enemy e)
@@ -39,8 +36,14 @@ public static class EnemyManager
         }
     }
 
+    public static void KillEnemies()
+    {
+        Enemies.Clear();
+    }
+
     public static void SpawnEnemies()
     {
+        Random rand = new Random();
         foreach (var room in Level.Rooms)
         {
             if (room.Spawns != null && room.Spawns.Count > 0)
@@ -55,14 +58,13 @@ public static class EnemyManager
 
     private static Enemy GetRandomEnemy()
     {
-        //Random rand = new Random();
+        Random rand = new Random();
         // rand.Next(0, EnemyTypes.Count)
-        switch (1)
+        switch (0)
         {
-            case 0: return new Walker(Level, AnimationLoader.CreateBlobEnemyAnimations());
-            case 1: return new Chaser(Level);
+            case 0: return new Walker(Level);
+            case 1: return new Chaser(Player, Level);
         }
-        return new Walker(Level);
     }
 
     public static void CheckEnemyStatus()
@@ -78,6 +80,7 @@ public static class EnemyManager
 
     public static void Update(GameTime gameTime)
     {
+        
         foreach (var enemy in Enemies)
         {
             enemy.Update(gameTime);

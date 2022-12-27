@@ -43,18 +43,36 @@ public class Room
         {
             get
             {
-                var groundLayer = Map.Layers.First(l => l.name == "Ground");
-                var collisionLayer = new List<Rectangle>();
+                var objectLayer = Map.Layers.First(l => l.name == "Ground");
+                var groundLayer = new List<Rectangle>();
 
-                foreach (var obj in groundLayer.objects)
+                foreach (var obj in objectLayer.objects)
                 {
                     var x = (int) obj.x + _renderPos.X;
                     var y = (int) obj.y + _renderPos.Y;
 
-                    collisionLayer.Add(new Rectangle(x, y, (int) obj.width, (int) obj.height));
+                    groundLayer.Add(new Rectangle(x, y, (int) obj.width, (int) obj.height));
                 }
 
-                return collisionLayer;
+                return groundLayer;
+            }
+        }
+        public List<Rectangle> WaterLayer
+        {
+            get
+            {
+                var objectLayer = Map.Layers.First(l => l.name == "Water");
+                var waterLayer = new List<Rectangle>();
+
+                foreach (var obj in objectLayer.objects)
+                {
+                    var x = (int) obj.x + _renderPos.X;
+                    var y = (int) obj.y + _renderPos.Y;
+
+                    waterLayer.Add(new Rectangle(x, y, (int) obj.width, (int) obj.height));
+                }
+
+                return waterLayer;
             }
         }
         public List<Door> Doors

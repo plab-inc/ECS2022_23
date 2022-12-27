@@ -11,7 +11,6 @@ public class ProjectileShot : Entity
     private Weapon Weapon { get; set; }
     private int AimDirection { get; set; }
     private Rectangle SourceRectangle { get; }
-    private Vector2 _endOfRange;
     public float DamagePoints { get; private set; }
     public bool HitTarget { get; set; }
     public Level Level { get; set; }
@@ -22,7 +21,6 @@ public class ProjectileShot : Entity
         Weapon = weapon;
         AimDirection = aimDirection;
         DamagePoints = weapon.DamagePoints;
-        _endOfRange = AddToPosition(Weapon.Range);
     }
 
     public override void Update(GameTime gameTime)
@@ -35,34 +33,7 @@ public class ProjectileShot : Entity
     {
         spriteBatch.Draw(Texture, Position, SourceRectangle, Color.White);
     }
-    
-    public bool IsWithinRange()
-    {
-        switch (AimDirection)
-        {
-            case (int) Direction.Right:
-                if (Position.X > _endOfRange.X) return false;
-                break;
-            case (int)Direction.Left:
-                if (Position.X < _endOfRange.X) return false;
-                break;
-            case (int)Direction.Up:
-                if (Position.Y < _endOfRange.Y) return false;
-                break;
-            case (int)Direction.Down:
-                if (Position.Y > _endOfRange.Y) return false;
-                break;
-            case (int)Direction.None:
-                if (Position.X > _endOfRange.X) return false;
-                break;
-            default:
-                if (Position.X > _endOfRange.X) return false;
-                break;
-        }
 
-        return true;
-    }
-    
     private Vector2 AddToPosition(float toAdd)
     {
         Vector2 result; 

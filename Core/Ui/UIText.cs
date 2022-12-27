@@ -14,6 +14,12 @@ public class UiText : Component
         Text = text;
         UiLabel = uiLabel;
     }
+    
+    public UiText(Rectangle sourceRec, SpriteFont font, string text) : base(sourceRec)
+    {
+        Font = font;
+        Text = text;
+    }
 
     public override void Draw(SpriteBatch spriteBatch)
     {

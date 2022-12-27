@@ -6,10 +6,11 @@ namespace ECS2022_23.Core.Entities.Items;
 
 public class Consumable : Item
 {
-    public float HealPoints { get; set; } = 2;
-    public float XpPoints { get; set; } = 1;
-    public float DamageMultiplier { get; set; } = 1f;
-    public float Duration { get; set; } = 10f;
+    public float HealMultiplier { get; set; }
+    public float XpPoints { get; set; }
+    public float ArmorPoints { get; set; }
+    public float DamageMultiplier { get; set; }
+    public float Duration { get; set; }
     public Consumable(Vector2 spawn, Texture2D texture, Rectangle sourceRect) : base(spawn, texture, sourceRect)
     {
     }
@@ -21,8 +22,14 @@ public class Consumable : Item
 
     public override void Use(Player player)
     {
-        player.HP += HealPoints;
+        var maxHp = player.MaxHP;
+        player.HP += HealMultiplier*maxHp;
+        if (player.HP > maxHp)
+        {
+            player.HP = maxHp;
+        }
         player.XpToNextLevel += XpPoints;
+        player.Armor += ArmorPoints;
     }
 
 }

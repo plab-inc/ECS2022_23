@@ -10,13 +10,14 @@ namespace ECS2022_23.Core.World;
 
 internal static class LevelGenerator
 {
-    private static readonly int PossibleStarts = Directory.GetFiles("Content/rooms","start*.xnb").Length;
+    private static readonly int PossibleStarts = Directory.GetFiles("Content/world/rooms","start*.xnb").Length;
     private static readonly Random Random = new((int)DateTime.Now.Ticks);
     
     public static Level GenerateLevel(int minimumRooms, int maximumRooms)
     {
         List<Room> rooms = new();
-        List<Rectangle> collisionLayer = new();
+        List<Rectangle> groundLayer = new();
+        List<Rectangle> waterLayer = new();
         List<Door> deadEndDoors = new();
         Room bossRoom;
 
@@ -31,15 +32,18 @@ internal static class LevelGenerator
             
             rooms.Clear();
             deadEndDoors.Clear();
-            collisionLayer.Clear();
+            groundLayer.Clear();
+            waterLayer.Clear();
             
-            ConnectRooms(maximumRooms, rooms, collisionLayer, deadEndDoors);
+            ConnectRooms(maximumRooms, rooms, groundLayer, waterLayer, deadEndDoors);
             bossRoom = CreateBossRoom(deadEndDoors,rooms);
             
             if (bossRoom != null)
             {
                 rooms.Add(bossRoom);
-                collisionLayer.AddRange(bossRoom.GroundLayer);
+                groundLayer.AddRange(bossRoom.GroundLayer);
+                groundLayer.AddRange(bossRoom.WaterLayer);
+                waterLayer.AddRange(bossRoom.WaterLayer);
             }
             
             //For debugging
@@ -61,14 +65,14 @@ internal static class LevelGenerator
         
         foreach (var deadEndDoor in deadEndDoors)
         {
-            var rect = collisionLayer.Find(x => x.Contains(deadEndDoor.Position));
-            collisionLayer.Remove(rect);
+            var rect = groundLayer.Find(x => x.Contains(deadEndDoor.Position));
+            groundLayer.Remove(rect);
             CloseDoor(deadEndDoor);
         }
         
         Console.WriteLine("Open doors closed. \nDone!");
         
-        return new Level(rooms, collisionLayer);
+        return new Level(rooms, groundLayer, waterLayer);
     }
     private static Room CreateBossRoom(List<Door> openDoors,List<Room> rooms)
     {
@@ -95,11 +99,14 @@ internal static class LevelGenerator
         Console.WriteLine("Bossroom generation failed");
         return null;
     }
-    private static void ConnectRooms(int maximumRooms, List<Room> rooms, List<Rectangle> groundLayer, List<Door> deadEndDoors)
+    private static void ConnectRooms(int maximumRooms, List<Room> rooms, List<Rectangle> groundLayer, List<Rectangle> waterLayer, List<Door> deadEndDoors)
     {
         var startMapName = "start" + Random.Next(PossibleStarts).ToString("000");
         var start = new Room(startMapName, new Point(0, 0));
         groundLayer.AddRange(start.GroundLayer);
+        groundLayer.AddRange(start.WaterLayer);
+        waterLayer.AddRange(start.WaterLayer);
+        
         rooms.Add(start);
         
         var openDoors = new Queue<Door>(start.Doors);
@@ -133,6 +140,8 @@ internal static class LevelGenerator
                 var newRoom = new Room(map.Key, renderPos);
                 rooms.Add(newRoom);
                 groundLayer.AddRange(newRoom.GroundLayer);
+                groundLayer.AddRange(newRoom.WaterLayer);
+                waterLayer.AddRange(newRoom.WaterLayer);
                     
                 foreach (var newRoomDoor in newRoom.Doors)
                 {

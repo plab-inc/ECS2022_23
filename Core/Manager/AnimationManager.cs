@@ -1,7 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ECS2022_23.Core.Animations;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.Animations;
+namespace ECS2022_23.Core.Manager;
 
 public class AnimationManager
 {
@@ -64,16 +65,35 @@ public class AnimationManager
         var sourceRec = new Rectangle((int)(_currentFrame + CurrentAnimation.StartFrame.X) * CurrentAnimation.Width, (int)CurrentAnimation.StartFrame.Y * CurrentAnimation.Height, CurrentAnimation.Width, CurrentAnimation.Height);
         var scale = new Vector2(1, 1);
 
-        if (CurrentAnimation.FlipX == true)
+        if (CurrentAnimation.FlipX)
         {
             spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, Color.White, 0, Vector2.Zero, scale, SpriteEffects.FlipHorizontally, 0f);
-        } else if (CurrentAnimation.FlipY == true)
+        } else if (CurrentAnimation.FlipY)
         {
             spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, Color.White, 0, Vector2.Zero, scale, SpriteEffects.FlipVertically, 0f);
         }
         else
         {
             spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
+        }
+    }
+    
+    public void Draw(SpriteBatch spriteBatch, Vector2 position, Color color)
+    {
+        if (CurrentAnimation == null) return;
+        var sourceRec = new Rectangle((int)(_currentFrame + CurrentAnimation.StartFrame.X) * CurrentAnimation.Width, (int)CurrentAnimation.StartFrame.Y * CurrentAnimation.Height, CurrentAnimation.Width, CurrentAnimation.Height);
+        var scale = new Vector2(1, 1);
+
+        if (CurrentAnimation.FlipX)
+        {
+            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale, SpriteEffects.FlipHorizontally, 0f);
+        } else if (CurrentAnimation.FlipY)
+        {
+            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale, SpriteEffects.FlipVertically, 0f);
+        }
+        else
+        {
+            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
         }
     }
 }

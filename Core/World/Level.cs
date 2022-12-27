@@ -12,7 +12,9 @@ public class Level
 {
     public List<Room> Rooms;
     public List<Rectangle> GroundLayer;
+    public List<Rectangle> WaterLayer;
     public Player Player { get; set; }
+    public bool isCompleted { get; private set; }
 
     public Room StartRoom
     {
@@ -21,10 +23,11 @@ public class Level
             return Rooms.First(room => room.MapName.Contains("start"));
         }
     }
-    public Level(List<Room> rooms, List<Rectangle> groundLayer)
+    public Level(List<Room> rooms, List<Rectangle> groundLayer, List<Rectangle> waterLayer)
     {
         Rooms = rooms;
         GroundLayer = groundLayer;
+        WaterLayer = waterLayer;
     }
     public void Update(GameTime gameTime)
     {
@@ -44,6 +47,13 @@ public class Level
                 if (Player.Rectangle.Contains(room.GetInteractablePositions("Chest").First()))
                 {
                     Console.WriteLine("Wow a chest");
+                }
+            }
+            if (room.GetInteractablePositions("Exit").Any())
+            {
+                if (Player.Rectangle.Contains(room.GetInteractablePositions("Exit").First()))
+                {
+                    isCompleted = true;
                 }
             }
 

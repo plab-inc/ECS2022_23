@@ -13,6 +13,7 @@
     <ItemGroup>
         <None Remove="Icon.ico" />
         <None Remove="Icon.bmp" />
+        <None Include="Assets\world\tilesets\images\tileset001_image_purple.png" />
     </ItemGroup>
     <ItemGroup>
         <EmbeddedResource Include="Icon.ico">
@@ -32,6 +33,11 @@
         <Reference Include="TiledPipelineReader, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
             <HintPath>lib\TiledPipelineReader.dll</HintPath>
         </Reference>
+    </ItemGroup>
+    <ItemGroup>
+      <Content Include="Assets\GameStateManagement\background.png" />
+      <Content Include="Assets\GameStateManagement\blank.png" />
+      <Content Include="Assets\GameStateManagement\gradient.png" />
     </ItemGroup>
     <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
         <Message Text="Restoring dotnet tools" Importance="High" />
