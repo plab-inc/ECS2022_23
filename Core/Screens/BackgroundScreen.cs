@@ -15,6 +15,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using ECS2022_23.Core.Animations;
+using ECS2022_23.Core.Manager;
 
 #endregion Using Statements
 
@@ -31,6 +33,8 @@ namespace GameStateManagement
 
         private ContentManager content;
         private Texture2D backgroundTexture;
+        private AnimationManager _animationManager;
+        private Animation _idleAnimation;
 
         #endregion Fields
 
@@ -58,6 +62,11 @@ namespace GameStateManagement
                 content = new ContentManager(ScreenManager.Game.Services, "Content/gameStateManagement");
 
             backgroundTexture = content.Load<Texture2D>("background");
+            var _texturePink = content.Load<Texture2D>("../sprites/spritesheet");
+            _idleAnimation = new Animation(_texturePink, 16, 16, 7, new Vector2(1, 2), true);
+            _animationManager = new AnimationManager();
+            _animationManager.SetScale(new Vector2(2,2));
+            _animationManager.Play(_idleAnimation);
         }
 
         /// <summary>
@@ -83,6 +92,7 @@ namespace GameStateManagement
                                                        bool coveredByOtherScreen)
         {
             base.Update(gameTime, otherScreenHasFocus, false);
+            _animationManager.Update(gameTime);
         }
 
         /// <summary>
@@ -98,6 +108,7 @@ namespace GameStateManagement
 
             spriteBatch.Draw(backgroundTexture, fullscreen,
                              new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha));
+            _animationManager.Draw(spriteBatch, new Vector2(16*18, 16*21));
             spriteBatch.End();
         }
 
