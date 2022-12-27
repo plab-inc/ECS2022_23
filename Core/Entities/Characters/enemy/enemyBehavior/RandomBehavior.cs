@@ -5,10 +5,10 @@ using Microsoft.Xna.Framework;
 
 namespace ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
 
-public class RandomMotor : Motor
+public class RandomBehavior : Behavior
 {
     private int _delay=0;
-    Random rand = new Random((int)DateTime.Now.Ticks);
+    Random rand = new ((int)DateTime.Now.Ticks);
     private int oldDirection = 0;
    
     public override Vector2 Move(Vector2 position, float velocity)
@@ -22,7 +22,6 @@ public class RandomMotor : Motor
         {
             _delay = 0;
             newDirection = rand.Next(0, 4);
-            Debug.WriteLine(newDirection);
         }
         oldDirection = newDirection;
         Vector2 temp = Vector2.Zero;
@@ -56,6 +55,4 @@ public class RandomMotor : Motor
         }
         return temp;
     }
-    
-    
 }

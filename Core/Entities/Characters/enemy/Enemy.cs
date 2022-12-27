@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ECS2022_23.Core.Animations;
+using ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
 using ECS2022_23.Core.World;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
@@ -12,15 +13,17 @@ public abstract class Enemy : Character
     public float XpReward;
     public float MoneyReward;
     
-    protected Motor Motor;
+    protected Behavior Behavior;
     protected bool _isActive=true;
     
     protected Rectangle ActivationRectangle;
     protected Color Color = Color.White;
+
+    public Vector2 AimVector;
     
-    public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Motor motor, Level level) : base(spawn, texture, animations)
+    public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Behavior behavior, Level level) : base(spawn, texture, animations)
     {
-        Motor = motor;
+        Behavior = behavior;
         Level = level;
         ActivationRectangle = Rectangle;
     }
@@ -49,7 +52,8 @@ public abstract class Enemy : Character
 
    private void Act()
     {
-        Position += Motor.Move(Position, Velocity);
+        Position += Behavior.Move(Position, Velocity);
+        
         SetAnimation(AnimationType.WalkDown);
         // Check for Attack
     }

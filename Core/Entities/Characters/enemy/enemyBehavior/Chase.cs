@@ -4,10 +4,10 @@ using Microsoft.Xna.Framework;
 
 namespace ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
 
-public class ChaseMotor : Motor
+public class Chase : Behavior
 {
     private Character Target;
-    public ChaseMotor(Character target)
+    public Chase(Character target)
     {
         Target = target;
     }

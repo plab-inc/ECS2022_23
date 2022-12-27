@@ -60,10 +60,11 @@ public static class EnemyManager
     {
         Random rand = new Random();
         // rand.Next(0, EnemyTypes.Count)
-        switch (1)
+        switch (2)
         {
             case 0: return new Walker(Level);
             case 1: return new Chaser(Player, Level);
+            case 2: return new Turret(Level, Player);
         }
     }
 

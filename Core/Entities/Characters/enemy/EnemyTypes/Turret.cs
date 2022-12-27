@@ -1,29 +1,28 @@
-using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
+
+
 namespace ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
 
-public class Walker : Enemy
+public class Turret : Enemy
 {
-    public override void Attack()
+    public Turret(Level level, Character target) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateZombieEnemyAnimations(), new StationaryShooter(target), level)
     {
-        throw new System.NotImplementedException();
-    }
-
-    public Walker(Level level) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateBlobEnemyAnimations(), new RandomBehavior(), level)
-    {
-        Velocity = 1f;
-        HP = 10;
-        MoneyReward = 1;
+        Velocity = 0f;
+        HP = 20;
         XpReward = 1;
+        MoneyReward = 1;
         
         ActivationRectangle.Inflate(35, 35);
         Behavior.SetEnemy(this);
-        
-        Color = Color.Cyan;
         DeathSound = SoundLoader.BlobDeathSound;
+    }
+
+    public override void Attack()
+    {
+        
     }
 }
