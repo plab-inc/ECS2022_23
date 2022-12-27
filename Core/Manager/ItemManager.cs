@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Characters.enemy;
 using ECS2022_23.Core.Entities.Items;
@@ -55,7 +54,6 @@ public static class ItemManager
             
             if (enemyDropsKey)
             {
-                Debug.WriteLine("drop key");
                 DropKey(enemy.Position);
                 _keyHasDropped = true;
             }
@@ -66,7 +64,6 @@ public static class ItemManager
         }
         else
         {
-            Debug.WriteLine("key already dropped");
             DropRandomLoot(enemy.Position);
         }
     }

@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using ECS2022_23.Core.Entities.Characters;
+using ECS2022_23.Core.Entities.Characters.enemy;
 using ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
-using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.Entities.Characters.enemy;
+namespace ECS2022_23.Core.Manager;
 
 public static class EnemyManager
 {
@@ -107,7 +107,6 @@ public static class EnemyManager
         //var randomInt = random.Next(Enemies.Count);
         var randomInt = random.Next(1);
         _keyEnemy = Enemies[randomInt];
-        Debug.WriteLine("Index: " + randomInt);
     }
 
 }
