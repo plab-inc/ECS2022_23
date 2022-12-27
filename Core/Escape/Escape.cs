@@ -1,6 +1,7 @@
 using Comora;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Characters.enemy;
+using ECS2022_23.Core.Screens;
 using ECS2022_23.Core.Sound;
 using ECS2022_23.Core.World;
 using GameStateManagement;
@@ -78,7 +79,6 @@ public class Escape
         if (_levelsCompleted < _levelsToComplete)
         {
             _difficulty++;
-            InitializeLevel();
         }
         else
         {

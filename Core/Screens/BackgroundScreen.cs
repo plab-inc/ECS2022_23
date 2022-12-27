@@ -9,18 +9,15 @@
 
 #endregion File Description
 
-#region Using Statements
-
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Manager;
+using GameStateManagement;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
-#endregion Using Statements
-
-namespace GameStateManagement
+namespace ECS2022_23.Core.Screens
 {
     /// <summary>
     /// The background screen sits behind all the other menu screens.
