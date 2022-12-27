@@ -17,9 +17,12 @@ public class Walker : Enemy
     {
         Velocity = 1f;
         HP = 10;
+        MoneyReward = 1;
+        XpReward = 1;
+        
         ActivationRectangle.Inflate(35, 35);
         Motor.SetEnemy(this);
-        MoneyReward = 1;
+        
         Color = Color.Cyan;
         DeathSound = SoundLoader.BlobDeathSound;
     }

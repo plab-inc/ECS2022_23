@@ -60,7 +60,7 @@ public static class EnemyManager
     {
         Random rand = new Random();
         // rand.Next(0, EnemyTypes.Count)
-        switch (0)
+        switch (1)
         {
             case 0: return new Walker(Level);
             case 1: return new Chaser(Player, Level);
@@ -89,6 +89,7 @@ public static class EnemyManager
 
     public static void Draw(SpriteBatch spriteBatch)
     {
+        
         foreach (var en in Enemies)
         {
             en.Draw(spriteBatch);
