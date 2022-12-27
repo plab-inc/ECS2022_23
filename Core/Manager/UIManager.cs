@@ -11,6 +11,13 @@ public static class UiManager
     private static int _preHeartCount;
     private static bool _statsHaveChanged;
 
+    public static void Init()
+    {
+        _preHeartCount = 0;
+        _statsHaveChanged = true;
+        StatsPanel = null;
+    }
+    
     public static void Update(Player player)
     {
         _statsHaveChanged = false;
