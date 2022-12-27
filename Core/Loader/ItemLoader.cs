@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using ECS2022_23.Core.Entities;
+using ECS2022_23.Core.Entities.Characters.enemy;
 using ECS2022_23.Core.Entities.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -35,7 +36,13 @@ public static class ItemLoader
          return new ProjectileShot(_texturePink, new Rectangle(19 * 16, 5 * 16, 16, 16), weapon, aimDirection);
      }
 
-    public static Weapon CreateSwordWeapon(Vector2 position)
+     public static ProjectileShot CreateLaserShot(Enemy enemy)
+     {
+         return new ProjectileShot(enemy, _texturePink, new Rectangle(19 * 16, 5 * 16, 16, 16),
+             enemy.AimVector);
+     }
+
+     public static Weapon CreateSwordWeapon(Vector2 position)
     {
         return new Weapon(position, _texturePink, AnimationLoader.CreateSwordAnimations(),
             new Rectangle(13 * 16, 6 * 16, 16, 16), 1);

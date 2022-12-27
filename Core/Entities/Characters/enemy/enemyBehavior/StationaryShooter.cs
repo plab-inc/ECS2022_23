@@ -19,6 +19,6 @@ public class StationaryShooter : Behavior
 
     public void Aim(Character Target)
     {
-        Owner.AimVector = Target.Position - Owner.Position;
+        Owner.AimVector = Vector2.Normalize((Target.Position - Owner.Position));
     }
 }

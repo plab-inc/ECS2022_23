@@ -1,7 +1,9 @@
 using System.Diagnostics;
+using System.Threading;
 using ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Loader;
+using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
@@ -11,6 +13,8 @@ namespace ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
 
 public class Turret : Enemy
 {
+    private int attackDelay;
+    
     public Turret(Level level, Character target) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateZombieEnemyAnimations(), new StationaryShooter(target), level)
     {
         Velocity = 0f;
@@ -25,7 +29,11 @@ public class Turret : Enemy
     
     public override void Attack()
     {
-        
+        if (++attackDelay >= 50)
+        {
+            attackDelay = 0;
+            CombatManager.Shoot(this);
+        }
     }
     
 }

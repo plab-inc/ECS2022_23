@@ -128,10 +128,17 @@ public static class CombatManager
         shot.Level = player.Level;
         _activeShots.Add(shot);
     }
-    
+
+    public static void Shoot(Enemy enemy)
+    {
+        var shot = ItemLoader.CreateLaserShot(enemy);
+        shot.Level = enemy.Level;
+        _activeShots.Add(shot);
+    }
+
     private static void CheckShotEnemyCollision(Enemy enemy, Player player)
     {
-        foreach (var shot in _activeShots.Where(shot => shot.Rectangle.Intersects(enemy.Rectangle)))
+        foreach (var shot in _activeShots.Where(shot => shot.Rectangle.Intersects(enemy.Rectangle) && shot.Origin == (int)DamageOrigin.Player))
         {
             enemy.HP -= shot.DamagePoints + player.Strength;
             enemy.SetAnimation(AnimationType.Hurt);
