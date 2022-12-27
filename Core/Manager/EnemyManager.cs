@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
 using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.World;
@@ -14,9 +13,9 @@ public static class EnemyManager
 {
     private static List<Enemy> Enemies = new();
     private static List<Enemy> _enemyTypes = new();
+    private static Enemy _keyEnemy;
     public static Player Player { set; get;}
     public static Level Level { set; get; }
-    
 
     static EnemyManager()
     {
@@ -36,6 +35,12 @@ public static class EnemyManager
         }
     }
 
+    public static bool EnemyDropsKey(Enemy enemy)
+    { 
+        if (_keyEnemy == null) return false;
+        return enemy.Equals(_keyEnemy);
+    }
+    
     public static void KillEnemies()
     {
         Enemies.Clear();
@@ -54,6 +59,7 @@ public static class EnemyManager
                 CombatManager.AddEnemy(en);
             }
         }
+        ChooseEnemyForKey();
     }
 
     private static Enemy GetRandomEnemy()
@@ -93,6 +99,15 @@ public static class EnemyManager
         {
             en.Draw(spriteBatch);
         }
+    }
+
+    private static void ChooseEnemyForKey()
+    {
+        var random = new Random();
+        //var randomInt = random.Next(Enemies.Count);
+        var randomInt = random.Next(1);
+        _keyEnemy = Enemies[randomInt];
+        Debug.WriteLine("Index: " + randomInt);
     }
 
 }
