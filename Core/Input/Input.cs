@@ -1,6 +1,6 @@
 ﻿using System;
-using ECS2022_23.Core.Combat;
 using ECS2022_23.Core.Entities.Characters;
+using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.Ui.InventoryManagement;
 using ECS2022_23.Enums;
@@ -22,7 +22,7 @@ public class Input
     {
         var velocity = new Vector2();
         var speed = 3f;
-        var animation = "Default";
+        var animation = AnimationType.Default;
 
         if (Keyboard.GetState().IsKeyDown(Keys.I) && _prevState != Keyboard.GetState())
         {
@@ -53,44 +53,44 @@ public class Input
             // UP + RIGHT
             velocity.X = speed;
             velocity.Y = -speed;
-            animation = "WalkRight";
+            animation = AnimationType.WalkRight;
         } else if (Keyboard.GetState().IsKeyDown(Keys.W) && Keyboard.GetState().IsKeyDown(Keys.A))
         {
             // UP + LEFT
             velocity.X = -speed;
             velocity.Y = -speed;
-            animation = "WalkLeft";
+            animation = AnimationType.WalkLeft;
         }else if (Keyboard.GetState().IsKeyDown(Keys.S) && Keyboard.GetState().IsKeyDown(Keys.D))
         {
             //DOWN + RIGHT
             velocity.X = speed;
             velocity.Y = speed;
-            animation = "WalkRight";
+            animation = AnimationType.WalkRight;
         }else if (Keyboard.GetState().IsKeyDown(Keys.S) && Keyboard.GetState().IsKeyDown(Keys.A))
         {
             //DOWN + LEFT
             velocity.X = -speed;
             velocity.Y = speed;
-            animation = "WalkLeft";
+            animation = AnimationType.WalkLeft;
         }
         else // Straight Movement & Attack
         {
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
                 velocity.Y = -speed;
-                animation = "WalkUp";
+                animation = AnimationType.WalkUp;
             } else if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
                 velocity.Y = speed;
-                animation = "WalkDown";
+                animation = AnimationType.WalkDown;
             } else if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 velocity.X = -speed;
-                animation = "WalkLeft";
+                animation = AnimationType.WalkLeft;
             } else if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 velocity.X = speed;
-                animation = "WalkRight";
+                animation = AnimationType.WalkRight;
             } 
         }
 

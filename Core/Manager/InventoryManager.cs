@@ -1,21 +1,37 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.Ui.InventoryManagement;
+namespace ECS2022_23.Core.Manager;
 
 public static class InventoryManager
 {
-    private static Pocket _pocket = new(3, 3);
-    private static ToolBar _toolBar = new(1, 9);
-    private static WeaponSlot _weaponSlot = new WeaponSlot();
-    private static TrinketSlot _trinketSlot = new TrinketSlot();
+    private static Pocket _pocket;
+    private static ToolBar _toolBar;
+    private static WeaponSlot _weaponSlot;
+    private static TrinketSlot _trinketSlot;
     private static Weapon _prevWeapon;
     private static Trinket _prevTrinket;
     public static bool Show = false;
 
+    public static void Init(Player player)
+    {
+        _pocket = new Pocket(3, 3);
+        _toolBar = new ToolBar(1, 9);
+        _weaponSlot = new WeaponSlot();
+        _trinketSlot = new TrinketSlot();
+        _prevTrinket = null;
+        _prevWeapon = null;
+        Show = false;
+        if (player.Items == null) return;
+        foreach (var item in player.Items)
+        {
+            AddItem(item);
+        }
+    }
+    
     public static void Update(Player player)
     {
         UpdateWeapon(player);

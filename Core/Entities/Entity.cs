@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using ECS2022_23.Core.Animations;
+using ECS2022_23.Core.Manager;
+using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -10,7 +12,7 @@ public abstract class Entity
     public Texture2D Texture; 
     public Vector2 Position { get; set; }
     
-    protected Dictionary<string, Animation> Animations;
+    protected Dictionary<AnimationType, Animation> Animations;
     protected readonly AnimationManager AnimationManager = new();
     protected int SpriteWidth = 16;
     protected int SpriteHeight = 16;
@@ -23,21 +25,21 @@ public abstract class Entity
         Position = spawn;
     }
     
-    protected Entity(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations) : this(spawn, texture)
+    protected Entity(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations) : this(spawn, texture)
     {
         Animations = animations;
     }
     
-    public void AddAnimation(string name, Animation animation)
+    public void AddAnimation(AnimationType name, Animation animation)
     {
         if (Animations == null)
         {
-            Animations = new Dictionary<string, Animation>();
+            Animations = new Dictionary<AnimationType, Animation>();
         }
         Animations.Add(name, animation);
     }
     
-    public void SetAnimation(string name)
+    public void SetAnimation(AnimationType name)
     {
         try
         {

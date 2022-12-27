@@ -42,7 +42,7 @@ public abstract class Item : Entity
         }
 
         var toCompare = (Item)obj;
-        return Equals(toCompare) && toCompare.Texture == this.Texture;
+        return Equals(toCompare) && toCompare.Texture == this.Texture && Position == toCompare.Position;
     }
 
     private bool Equals(Item other)

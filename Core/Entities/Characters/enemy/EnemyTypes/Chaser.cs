@@ -1,6 +1,5 @@
-using System.Collections.Generic;
-using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
+using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
@@ -11,7 +10,7 @@ public class Chaser : Enemy
 {
     private Character _target;
     
-    public Chaser(Character target, Level level) : base(Vector2.Zero, UiLoader.GetSpritesheet(), AnimationLoader.CreateZombieEnemyAnimations(), new ChaseMotor(target), level)
+    public Chaser(Character target, Level level) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateZombieEnemyAnimations(), new ChaseMotor(target), level)
     {
         Velocity = 1f;
         HP = 10;

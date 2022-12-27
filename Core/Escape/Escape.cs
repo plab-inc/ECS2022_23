@@ -12,7 +12,7 @@ namespace ECS2022_23.Core.Game;
 public class Escape
 {
     private Level _currentLevel;
-    private Player _player;
+    public Player _player;
     private Camera _camera;
     
 

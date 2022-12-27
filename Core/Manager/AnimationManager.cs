@@ -1,7 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ECS2022_23.Core.Animations;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.Animations;
+namespace ECS2022_23.Core.Manager;
 
 public class AnimationManager
 {

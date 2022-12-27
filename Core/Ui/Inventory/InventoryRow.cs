@@ -53,7 +53,7 @@ public class InventoryRow
     {
         try
         {
-            return Slots.Where(slot => slot.IsUsed).FirstOrDefault(slot => slot.Item.Equals(item));
+            return Slots.Where(slot => slot.IsUsed).FirstOrDefault(slot => slot.Item.SourceRect == item.SourceRect && slot.Item.Texture == item.Texture);
         }
         catch (NullReferenceException e)
         {

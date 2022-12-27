@@ -7,24 +7,28 @@ namespace ECS2022_23.Core.Ui.Inventory;
 
 public class InventorySlot
 {
-    public Rectangle DestinationRec;
-    public bool IsUsed = false;
+    public int Index;
     public Item Item;
     public int ItemCount = 0;
-    private Texture2D _backgroundTexture;
+    
+    public bool IsSelected;
+    public bool IsActive = false;
+    public bool IsUsed = false;
+    
+    public Rectangle DestinationRec;
+    
     private UiText _text;
     private int _scale;
-    public bool Selected;
-    public bool Active = false;
-    private Texture2D _spriteSheet = UiLoader._texture2D;
     private Rectangle _selectedSourceRec = new Rectangle(9*16, 4*16, 16, 16);
     private Rectangle _frameSourceRec = new Rectangle(8 * 16, 4 * 16, 16, 16);
+    private Texture2D _activeTexture;
+    private Texture2D _spriteSheet;
     
-    public int Index;
     public InventorySlot(Rectangle dest, int scale, int index)
     {
         DestinationRec = dest;
-        _backgroundTexture = UiLoader.CreateColorTexture(new Color(192, 91, 255, 255));
+        _activeTexture = UiLoader.CreateColorTexture(new Color(192, 91, 255, 255));
+        _spriteSheet = UiLoader.SpriteSheet;
         _text = UiLoader.CreateTextElement("");
         _text.DestinationRec = new Rectangle(DestinationRec.X+DestinationRec.Width/8, DestinationRec.Y, DestinationRec.Width / 2,
             DestinationRec.Height / 2);
@@ -37,9 +41,9 @@ public class InventorySlot
     {
         try
         {
-            if (Active)
+            if (IsActive)
             {
-                spriteBatch.Draw(_backgroundTexture, DestinationRec, Color.White);
+                spriteBatch.Draw(_activeTexture, DestinationRec, Color.White);
             }
             spriteBatch.Draw(_spriteSheet, DestinationRec, _frameSourceRec, Color.White);
             if (IsUsed)
@@ -49,7 +53,7 @@ public class InventorySlot
                 _text.Text = "" + ItemCount;
                 _text.Draw(spriteBatch);
             }
-            if (Selected)
+            if (IsSelected)
             {
                 spriteBatch.Draw(_spriteSheet, DestinationRec, _selectedSourceRec, Color.White);
             }
