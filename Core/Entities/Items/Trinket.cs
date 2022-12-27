@@ -18,13 +18,14 @@ public class Trinket : Item
         throw new System.NotImplementedException();
     }
     
-    public override void Use(Player player)
+    public override bool Use(Player player)
     {
         player.Strength += 1*DamageMultiplier;
         player.XpToNextLevel += 1*XpMultiplier;
         player.Armor += 1*ArmorMultiplier;
         player.Trinket = this;
         player.ImmuneToWater = true;
+        return true;
     }
 
     public void Unequip(Player player)
