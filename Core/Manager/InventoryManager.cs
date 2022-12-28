@@ -116,8 +116,10 @@ public static class InventoryManager
             }
             return;
         }
-        player.UseItem(item);
-        RemoveItem(item);
+        if (player.UseItem(item))
+        {
+            RemoveItem(item);
+        }
     }
 
     private static void UpdateWeapon(Player player)

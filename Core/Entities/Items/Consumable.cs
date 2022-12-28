@@ -20,7 +20,7 @@ public class Consumable : Item
         throw new System.NotImplementedException();
     }
 
-    public override void Use(Player player)
+    public override bool Use(Player player)
     {
         var maxHp = player.MaxHP;
         player.HP += HealMultiplier*maxHp;
@@ -30,6 +30,7 @@ public class Consumable : Item
         }
         player.XpToNextLevel += XpPoints;
         player.Armor += ArmorPoints;
+        return true;
     }
 
 }

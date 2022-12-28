@@ -218,17 +218,19 @@ public class Player : Character
         Items?.Remove(item);
     }
 
-    public void UseItem(Item item)
+    public bool UseItem(Item item)
     {
-        if (Items.Count <= 0) return;
+        if (Items.Count <= 0) return false;
         if (item.GetType() == typeof(Trinket))
         {
-            item.Use(this);
-        }
-        else
+            return item.Use(this);
+        } 
+        if (item.Use(this))
         {
-            if (!Items.Remove(item)) return;
-            item.Use(this);
+            Items.Remove(item);
+            return true;
         }
+
+        return false;
     }
 }
