@@ -24,6 +24,7 @@ internal static class UiLoader
         _graphicsDevice = graphicsDevice;
         try
         {
+            UiManager.Init();
             SpriteSheet = _content.Load<Texture2D>("sprites/spritesheet");
             _font = _content.Load<SpriteFont>("fonts/rainyhearts");
         

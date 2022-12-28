@@ -153,12 +153,12 @@ public static class CombatManager
     {
         enemy.SetAnimation(AnimationType.Death);
         SoundManager.Play(enemy.DeathSound);
-        ItemManager.DropRandomLoot(enemy.Position);
+        ItemManager.DropLoot(enemy);
         EnemyManager.RemoveEnemy(enemy);
         player.Money += enemy.MoneyReward;
         player.XpToNextLevel += enemy.XpReward;
     }
-    
+
     public static void Draw(SpriteBatch spriteBatch)
     {
         foreach (var shot in _activeShots)

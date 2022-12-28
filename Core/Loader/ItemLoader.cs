@@ -96,14 +96,9 @@ public static class ItemLoader
     {
         return new Trinket(position, _texturePink, new Rectangle(18*16, 3*16, 16,16));
     }
-    
-    public static Currency CreateCoin(Vector2 position)
+
+    public static Key CreateKey(Vector2 position)
     {
-        return new Currency(position, _texturePink, new Rectangle(17*16, 4*16, 16,16));
-    }
-    
-    public static Currency CreateKey(Vector2 position)
-    {
-        return new Currency(position, _texturePink, new Rectangle(18*16, 4*16, 16,16));
+        return new Key(position, _texturePink, new Rectangle(18*16, 4*16, 16,16));
     }
 }

@@ -13,14 +13,14 @@ public abstract class Item : Entity
         SourceRect = sourceRect;
     }
 
-    public virtual void Use()
+    public virtual bool Use()
     {
-
+        return true;
     }
 
-    public virtual void Use(Player player)
+    public virtual bool Use(Player player)
     {
-
+        return true;
     }
 
     public override void Draw(SpriteBatch spriteBatch)

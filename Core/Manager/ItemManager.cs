@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ECS2022_23.Core.Entities.Characters;
+using ECS2022_23.Core.Entities.Characters.enemy;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Loader;
 using Microsoft.Xna.Framework;
@@ -11,9 +12,11 @@ namespace ECS2022_23.Core.Manager;
 public static class ItemManager
 {
     private static List<Item> _activeItems;
-
+    private static bool _keyHasDropped = false;
+    
     public static void Init()
     {
+        _keyHasDropped = false;
         _activeItems = new List<Item>();
     }
     
@@ -43,8 +46,29 @@ public static class ItemManager
         }
        
     }
+    public static void DropLoot(Enemy enemy) 
+    {
+        if (!_keyHasDropped)
+        {
+            var enemyDropsKey = EnemyManager.EnemyDropsKey(enemy);
+            
+            if (enemyDropsKey)
+            {
+                DropKey(enemy.Position);
+                _keyHasDropped = true;
+            }
+            else
+            {
+               DropRandomLoot(enemy.Position);
+            }
+        }
+        else
+        {
+            DropRandomLoot(enemy.Position);
+        }
+    }
 
-    public static void DropRandomLoot(Vector2 position)
+    private static void DropRandomLoot(Vector2 position)
     {
         var random = new Random();
         var randomInt = random.Next(10);
@@ -67,6 +91,12 @@ public static class ItemManager
         {
             AddItem(GetRandomConsumable(position));
         }
+    }
+
+    private static void DropKey(Vector2 position)
+    {
+        AddItem(ItemLoader.CreateKey(position));
+        
     }
 
     private static Weapon GetRandomWeapon(Vector2 position)
