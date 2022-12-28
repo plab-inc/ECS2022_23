@@ -43,9 +43,16 @@ public static class EnemyManager
 
     public static void SpawnEnemies()
     {
+        bool skipFirst = true;
         Random rand = new Random();
         foreach (var room in Level.Rooms)
         {
+            if (skipFirst)
+            {
+                skipFirst = false;
+                continue;
+            }
+
             if (room.Spawns != null && room.Spawns.Count > 0)
             {
                 Enemy en = GetRandomEnemy();
@@ -98,5 +105,4 @@ public static class EnemyManager
             en.Draw(spriteBatch);
         }
     }
-
 }
