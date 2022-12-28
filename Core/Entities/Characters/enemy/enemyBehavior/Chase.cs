@@ -15,7 +15,7 @@ public class Chase : Behavior
     public override Vector2 Move(Vector2 position, float velocity)
     {
         Vector2 direction = Vector2.Normalize(Target.Position - position) * velocity;
-        if(!Owner.Collides(direction))
+        if(Owner.Collides(direction))
             return direction;
         
         return Vector2.Zero;
