@@ -1,4 +1,6 @@
-﻿using ECS2022_23.Core.Animations;
+﻿using System;
+using System.Diagnostics;
+using ECS2022_23.Core.Animations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -9,6 +11,7 @@ public class AnimationManager
     private float _timer;
     private Animation CurrentAnimation { get; set; }
     private int _currentFrame;
+    private Vector2 _scale = new Vector2(1,1);
     public bool AnimationFinished { get; private set; } = true;
 
     public void Play(Animation animation)
@@ -58,23 +61,39 @@ public class AnimationManager
                 }
         }
     }
+
+    public void SetScale(Vector2 scale)
+    {
+        _scale = scale;
+    }
     
     public void Draw(SpriteBatch spriteBatch, Vector2 position)
     {
         if (CurrentAnimation == null) return;
         var sourceRec = new Rectangle((int)(_currentFrame + CurrentAnimation.StartFrame.X) * CurrentAnimation.Width, (int)CurrentAnimation.StartFrame.Y * CurrentAnimation.Height, CurrentAnimation.Width, CurrentAnimation.Height);
-        var scale = new Vector2(1, 1);
 
-        if (CurrentAnimation.FlipX)
+        try
         {
-            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, Color.White, 0, Vector2.Zero, scale, SpriteEffects.FlipHorizontally, 0f);
-        } else if (CurrentAnimation.FlipY)
-        {
-            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, Color.White, 0, Vector2.Zero, scale, SpriteEffects.FlipVertically, 0f);
+            if (CurrentAnimation.FlipX)
+            {
+                spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, Color.White, 0, Vector2.Zero, _scale,
+                    SpriteEffects.FlipHorizontally, 0f);
+            }
+            else if (CurrentAnimation.FlipY)
+            {
+                spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, Color.White, 0, Vector2.Zero, _scale,
+                    SpriteEffects.FlipVertically, 0f);
+            }
+            else
+            {
+                spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, Color.White, 0, Vector2.Zero, _scale,
+                    SpriteEffects.None, 0f);
+            }
         }
-        else
+        catch (ArgumentNullException e)
         {
-            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            Debug.WriteLine(e.Message);
+            Debug.WriteLine("Texture not found.");
         }
     }
     
@@ -84,16 +103,24 @@ public class AnimationManager
         var sourceRec = new Rectangle((int)(_currentFrame + CurrentAnimation.StartFrame.X) * CurrentAnimation.Width, (int)CurrentAnimation.StartFrame.Y * CurrentAnimation.Height, CurrentAnimation.Width, CurrentAnimation.Height);
         var scale = new Vector2(1, 1);
 
-        if (CurrentAnimation.FlipX)
+        try
         {
-            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale, SpriteEffects.FlipHorizontally, 0f);
-        } else if (CurrentAnimation.FlipY)
-        {
-            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale, SpriteEffects.FlipVertically, 0f);
+            if (CurrentAnimation.FlipX)
+            {
+                spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale, SpriteEffects.FlipHorizontally, 0f);
+            } else if (CurrentAnimation.FlipY)
+            {
+                spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale, SpriteEffects.FlipVertically, 0f);
+            }
+            else
+            {
+                spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            }
         }
-        else
+        catch (ArgumentNullException e)
         {
-            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            Debug.WriteLine(e.Message);
+            Debug.WriteLine("Texture not found.");
         }
     }
 }
