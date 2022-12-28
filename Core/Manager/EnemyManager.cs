@@ -49,9 +49,16 @@ public static class EnemyManager
 
     public static void SpawnEnemies()
     {
+        bool skipFirst = true;
         Random rand = new Random();
         foreach (var room in Level.Rooms)
         {
+            if (skipFirst)
+            {
+                skipFirst = false;
+                continue;
+            }
+
             if (room.Spawns != null && room.Spawns.Count > 0)
             {
                 Enemy en = GetRandomEnemy();
@@ -66,12 +73,15 @@ public static class EnemyManager
     private static Enemy GetRandomEnemy()
     {
         Random rand = new Random();
-        // rand.Next(0, EnemyTypes.Count)
-        switch (0)
+        switch (rand.Next(0, 4))
         {
             case 0: return new Walker(Level);
-            case 1: return new Chaser(Player, Level);
+            case 1: return new Chaser(Level, Player);
+            case 2: return new Turret(Level, Player);
+            case 3: return new Gunner(Level, Player);
         }
+
+        return new Walker(Level);
     }
 
     public static void CheckEnemyStatus()
@@ -87,7 +97,6 @@ public static class EnemyManager
 
     public static void Update(GameTime gameTime)
     {
-        
         foreach (var enemy in Enemies)
         {
             enemy.Update(gameTime);
@@ -96,6 +105,7 @@ public static class EnemyManager
 
     public static void Draw(SpriteBatch spriteBatch)
     {
+        
         foreach (var en in Enemies)
         {
             en.Draw(spriteBatch);

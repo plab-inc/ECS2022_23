@@ -8,19 +8,23 @@ namespace ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
 
 public class Walker : Enemy
 {
-    public override void Attack()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public Walker(Level level) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateBlobEnemyAnimations(), new RandomMotor(), level)
+   public Walker(Level level) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateBlobEnemyAnimations(), new RandomBehavior(), level)
     {
         Velocity = 1f;
         HP = 10;
-        ActivationRectangle.Inflate(35, 35);
-        Motor.SetEnemy(this);
         MoneyReward = 1;
+        XpReward = 1;
+        
+        ActivationRectangle.Inflate(35, 35);
+        Behavior.SetEnemy(this);
+        
         Color = Color.Cyan;
         DeathSound = SoundLoader.BlobDeathSound;
     }
+   
+   public override void Attack()
+   {
+        
+   }
+   
 }
