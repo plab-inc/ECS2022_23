@@ -50,7 +50,6 @@ public static class EnemyManager
     public static void SpawnEnemies()
     {
         bool skipFirst = true;
-        Random rand = new Random();
         foreach (var room in Level.Rooms)
         {
             if (skipFirst)
@@ -65,6 +64,37 @@ public static class EnemyManager
                 en.Position = room.GetRandomSpawnPos(en);
                 AddEnemy(en);
                 CombatManager.AddEnemy(en);
+            }
+        }
+        ChooseEnemyForKey();
+    }
+
+    public static void SpawnMultipleEnemies(int max)
+    {
+        Random rand = new Random();
+        
+        bool skipFirst = true;
+        foreach (var room in Level.Rooms)
+        {
+            if (skipFirst)
+            {
+                skipFirst = false;
+                continue;
+            }
+
+            if (room.Spawns != null && room.Spawns.Count > 0)
+            {
+                int amount = rand.Next(1,room.Spawns.Count);
+                if (amount > max)
+                    amount = max;
+                
+                for (int a = 0; a < amount; a++)
+                {
+                    Enemy en = GetRandomEnemy();
+                    en.Position = room.GetRandomSpawnPos(en);
+                    AddEnemy(en);
+                    CombatManager.AddEnemy(en);
+                }
             }
         }
         ChooseEnemyForKey();
