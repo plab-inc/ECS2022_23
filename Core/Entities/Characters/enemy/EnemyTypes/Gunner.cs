@@ -24,6 +24,7 @@ public class Gunner : Enemy
         _target = target;
         ActivationRectangle.Inflate(35, 35);
         Behavior.SetEnemy(this);
+        Strength = 1;
         
         Color = Color.Cyan;
         DeathSound = SoundLoader.BlobDeathSound;

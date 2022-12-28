@@ -17,6 +17,7 @@ public static class CombatManager
     private static List<ProjectileShot> _activeShots = new List<ProjectileShot>();
     public static void Update(GameTime gameTime, Player player)
     {
+        CheckShotPlayerCollision(player);
         if (player.IsAttacking)
         {
             foreach (var enemy in _activeEnemies)
@@ -47,6 +48,15 @@ public static class CombatManager
         _activeShots.RemoveAll(shot => shot.HitTarget || !shot.Collides());
         _activeEnemies.RemoveAll(enemy => !enemy.IsAlive());
     }
+    
+    public static void Draw(SpriteBatch spriteBatch)
+    {
+        foreach (var shot in _activeShots)
+        {
+            shot.Draw(spriteBatch);
+        }
+    }
+    
     private static void PlayerAttack(Player attacker, Enemy defender)
     {
         if (!defender.IsAlive()) return;
@@ -63,23 +73,7 @@ public static class CombatManager
         if (!defender.IsAlive()) return;
         if (EntitiesCollide(attacker, defender))
         {
-            var armor = defender.Armor;
-            armor -= attacker.Strength;
-            if (armor < 0)
-            {
-                defender.Armor = 0;
-                defender.HP += armor;
-                defender.SetAnimation(AnimationType.Hurt);
-            }
-            else
-            {
-                defender.Armor = armor;
-            }
-           
-            if (!defender.IsAlive())
-            {
-                defender.SetAnimation(AnimationType.Death);
-            }
+            defender.TakesDamage(attacker.Strength);
         }
         attacker.IsAttacking = false;
     }
@@ -148,6 +142,16 @@ public static class CombatManager
             return;
         }
     }
+
+    private static void CheckShotPlayerCollision(Player player)
+    {
+        foreach (var shot in _activeShots.Where(shot => shot.Rectangle.Intersects(player.Rectangle) && shot.Origin == (int)DamageOrigin.Enemy))
+        {
+            player.TakesDamage(shot.DamagePoints);
+            shot.HitTarget = true;
+            return;
+        }
+    }
   
     private static void EnemyDies(Enemy enemy, Player player)
     {
@@ -157,13 +161,5 @@ public static class CombatManager
         EnemyManager.RemoveEnemy(enemy);
         player.Money += enemy.MoneyReward;
         player.XpToNextLevel += enemy.XpReward;
-    }
-
-    public static void Draw(SpriteBatch spriteBatch)
-    {
-        foreach (var shot in _activeShots)
-        {
-            shot.Draw(spriteBatch);
-        }
     }
 }

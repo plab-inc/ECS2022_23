@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ECS2022_23.Core.Animations;
+using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
@@ -14,6 +15,7 @@ public class Weapon : Item
     public readonly float DamagePoints;
     public readonly WeaponType WeaponType = WeaponType.Close;
     public readonly SoundEffect AttackSound;
+    public int AimDirection;
 
     public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Rectangle sourceRect, float damagePoints) : base(spawn, texture, sourceRect)
     {
@@ -55,6 +57,64 @@ public class Weapon : Item
     public override int GetHashCode()
     {
         return HashCode.Combine(base.GetHashCode(), DamagePoints, (int)WeaponType, AttackSound);
+    }
+
+    public void SetAnimationDirection(int direction)
+    {
+        AimDirection = direction;
+        switch (direction)
+        {
+            case (int) Direction.Right:
+                SetAnimation(AnimationType.AttackRight);
+                break;
+            case (int)Direction.Left:
+                SetAnimation(AnimationType.AttackLeft);
+                break;
+            case (int)Direction.Up:
+                //_weapon.SetAnimation("AttackUp");
+                break;
+            case (int)Direction.Down:
+                //_weapon.SetAnimation("AttackDown");
+                break;
+            case (int) Direction.None:
+                SetAnimation(AnimationType.AttackRight);
+                break;
+            default:
+                SetAnimation(AnimationType.AttackRight);
+                break;
+        }
+    }
+
+    public void SetPosition(Player player)
+    {
+        var direction = player.AimDirection;
+        var playerPos = player.Position;
+        var width = player.Rectangle.Width;
+        if (!AnimationManager.AnimationFinished)
+        {
+            direction = AimDirection;
+        }
+        switch (direction)
+        {
+            case (int) Direction.Right:
+                Position = new Vector2(playerPos.X + width, playerPos.Y);
+                break;
+            case (int)Direction.Left:
+                Position = new Vector2(playerPos.X - width, playerPos.Y);
+                break;
+            case (int)Direction.Up:
+                Position = new Vector2(playerPos.X, playerPos.Y - width);
+                break;
+            case (int)Direction.Down:
+                Position = new Vector2(playerPos.X, playerPos.Y + width);
+                break;
+            case (int) Direction.None:
+                Position = new Vector2(playerPos.X + width, playerPos.Y);
+                break;
+            default:
+                Position = new Vector2(playerPos.X + width, playerPos.Y);
+                break;
+        }
     }
 }
 
