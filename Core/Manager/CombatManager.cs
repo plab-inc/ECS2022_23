@@ -15,6 +15,13 @@ public static class CombatManager
 {
     private static List<Enemy> _activeEnemies = new List<Enemy>();
     private static List<ProjectileShot> _activeShots = new List<ProjectileShot>();
+
+    public static void Init()
+    {
+        _activeEnemies = new List<Enemy>();
+        _activeShots = new List<ProjectileShot>();
+    }
+    
     public static void Update(GameTime gameTime, Player player)
     {
         CheckShotPlayerCollision(player);
