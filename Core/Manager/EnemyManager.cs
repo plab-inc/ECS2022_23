@@ -51,7 +51,7 @@ public static class EnemyManager
     {
         bool skipFirst = true;
         foreach (var room in Level.Rooms)
-        {
+        {   //TODO Clean up
             if (skipFirst)
             {
                 skipFirst = false;
