@@ -36,6 +36,8 @@ public class Escape
     }
     private void InitializeLevel()
     { 
+        CombatManager.Init();
+        ItemManager.Init();
         _currentLevel = LevelGenerator.GenerateLevel(_difficulty * 2, _difficulty * 4);
         _currentLevel.Player = _player;
         _player.Level = _currentLevel;
