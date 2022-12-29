@@ -123,6 +123,11 @@
 /processor:TiledProcessor
 /build:../Assets/world/rooms/boss000.tmx;world/rooms/boss000.tmx
 
+#begin ../Assets/world/rooms/boss001.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/world/rooms/boss001.tmx;world/rooms/boss001.tmx
+
 #begin ../Assets/world/rooms/room000.tmx
 /importer:TiledImporter
 /processor:TiledProcessor
