@@ -31,7 +31,7 @@ public class AnimationManager
         if (!CurrentAnimation.IsLooped) AnimationFinished = false;
     }
 
-    private void Stop()
+    public void Stop()
     {
         AnimationFinished = true;
         CurrentAnimation = null;

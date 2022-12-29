@@ -59,11 +59,6 @@ namespace ECS2022_23.Core.Screens
                 content = new ContentManager(ScreenManager.Game.Services, "Content/gameStateManagement");
 
             backgroundTexture = content.Load<Texture2D>("background");
-            var _texturePink = content.Load<Texture2D>("../sprites/spritesheet");
-            _idleAnimation = new Animation(_texturePink, 16, 16, 7, new Vector2(1, 2), true);
-            _animationManager = new AnimationManager();
-            _animationManager.SetScale(new Vector2(2,2));
-            _animationManager.Play(_idleAnimation);
         }
 
         /// <summary>
@@ -89,7 +84,6 @@ namespace ECS2022_23.Core.Screens
                                                        bool coveredByOtherScreen)
         {
             base.Update(gameTime, otherScreenHasFocus, false);
-            _animationManager.Update(gameTime);
         }
 
         /// <summary>
@@ -105,7 +99,6 @@ namespace ECS2022_23.Core.Screens
 
             spriteBatch.Draw(backgroundTexture, fullscreen,
                              new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha));
-            _animationManager.Draw(spriteBatch, new Vector2(16*18, 16*21));
             spriteBatch.End();
         }
 
