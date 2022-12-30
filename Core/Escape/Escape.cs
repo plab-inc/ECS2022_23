@@ -75,7 +75,7 @@ public class Escape
             Failed = true;
         }
 
-        if (!_currentLevel.isCompleted) return;
+        if (!_currentLevel.IsCompleted) return;
         
         _levelsCompleted++;
             
