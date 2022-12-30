@@ -87,16 +87,12 @@ public static class CombatManager
 
     private static bool EntitiesCollide(Entity attacker, Entity defender) 
     {
-        var figureRect = attacker.Rectangle;
-        var defenderRect = defender.Rectangle;
-
-        return figureRect.Intersects(defenderRect);
+        return attacker.IntersectPixels(defender.Rectangle, defender.EntityTextureData);
     }
 
     private static bool WeaponCollide(Player attacker, Entity defender)
     {
         var figureRect = attacker.Rectangle;
-        var defenderRect = defender.Rectangle;
         var weaponRect = attacker.Weapon.Rectangle;
         Rectangle attackRect; 
         
@@ -104,18 +100,19 @@ public static class CombatManager
         {
             case (int) Direction.Right:
                 attackRect = new Rectangle(figureRect.X + figureRect.Width, figureRect.Y, weaponRect.Width, weaponRect.Height);
-                return attackRect.Intersects(defenderRect);
+                break;
             case (int) Direction.Left:
                 attackRect = new Rectangle(figureRect.X - weaponRect.Width, figureRect.Y, weaponRect.Width, weaponRect.Height);
-                return attackRect.Intersects(defenderRect);
+                break;
             case (int) Direction.Up:
                 attackRect = new Rectangle(figureRect.X, figureRect.Y - weaponRect.Width, weaponRect.Width, weaponRect.Height);
-                return attackRect.Intersects(defenderRect);
+                break;
             case (int) Direction.Down:
                 attackRect = new Rectangle(figureRect.X, figureRect.Y + figureRect.Height, weaponRect.Width, weaponRect.Height);
-                return attackRect.Intersects(defenderRect);
+                break;
             default: return false;
         }
+        return defender.IntersectPixels(attackRect, attacker.Weapon.EntityTextureData);
     }
     
     public static void AddEnemy(Enemy enemy)
@@ -139,35 +136,26 @@ public static class CombatManager
 
     private static void CheckShotEnemyCollision(Enemy enemy, Player player)
     {
-        foreach (var projectileShot in _activeShots)
+        foreach (var projectileShot in _activeShots.Where(projectileShot => projectileShot.IntersectPixels(enemy.Rectangle, enemy.EntityTextureData) &&
+                                                                            projectileShot.Origin == (int)DamageOrigin.Player))
         {
-            if (projectileShot.IntersectPixels(enemy.Rectangle, enemy.EntityTextureData) && projectileShot.Origin == (int)DamageOrigin.Player)
-            {
-                enemy.HP -= projectileShot.DamagePoints + player.Strength;
-                enemy.SetAnimation(AnimationType.Hurt);
-                projectileShot.HitTarget = true;
-                if (enemy.HP > 0) continue;
-                EnemyDies(enemy, player);
-                return;
-            }
+            enemy.HP -= projectileShot.DamagePoints + player.Strength;
+            enemy.SetAnimation(AnimationType.Hurt);
+            projectileShot.HitTarget = true;
+            if (enemy.HP > 0) continue;
+            EnemyDies(enemy, player);
+            return;
         }
-        
     }
 
     private static void CheckShotPlayerCollision(Player player)
     {
-        
-        foreach (var projectileShot in _activeShots)
+        foreach (var projectileShot in _activeShots.Where(projectileShot => projectileShot.IntersectPixels(player.Rectangle, player.EntityTextureData) && projectileShot.Origin == (int)DamageOrigin.Enemy))
         {
-            if (projectileShot.IntersectPixels(player.Rectangle, player.EntityTextureData) && projectileShot.Origin == (int)DamageOrigin.Enemy)
-            {
-                player.TakesDamage(projectileShot.DamagePoints);
-                projectileShot.HitTarget = true;
-                return;
-            }
+            player.TakesDamage(projectileShot.DamagePoints);
+            projectileShot.HitTarget = true;
+            return;
         }
-        
-        
     }
   
     private static void EnemyDies(Enemy enemy, Player player)
