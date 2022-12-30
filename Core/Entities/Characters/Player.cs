@@ -15,17 +15,13 @@ public class Player : Character
     public float Armor;
     public float XpToNextLevel;
     public float Money;
-
-    private float speed = 3;
     public List<Item> Items;
     public Weapon Weapon { get; set; }
     public Trinket Trinket { get; set; }
     public Room Room { get; set; }
-    
-    private Input _input;
     public bool ImmuneToWater = false;
-    
-        
+    private Input _input;
+
     public Player(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations) : base(spawn, texture, animations)
     {
         Velocity = 0.5f;
@@ -45,11 +41,13 @@ public class Player : Character
     
     public override void Update(GameTime gameTime)
     {
-        if (AnimationManager.AnimationFinished)
+        if (IsAttacking && AnimationManager.AnimationFinished)
         {
-            _input.Move();
-            _input.Aim();
+            IsAttacking = false;
         }
+        _input.Move(); 
+        _input.Aim();
+        Weapon.SetPosition(this);
         AnimationManager.Update(gameTime);
         Weapon?.Update(gameTime);
     }
@@ -68,9 +66,10 @@ public class Player : Character
 
     public override void Attack()
     {
+        if(IsAttacking) return;
         if (Weapon != null)
         {
-            SetWeaponPosition();
+            Weapon.SetAnimationDirection(AimDirection);
             if (Weapon.WeaponType == WeaponType.Range)
             {
                 CombatManager.Shoot(this);
@@ -172,50 +171,11 @@ public class Player : Character
         
         return false;
     }
-    private void SetWeaponPosition()
-    {
-        switch (AimDirection)
-        {
-            case (int) Direction.Right:
-                Weapon.Position = new Vector2(Position.X + SpriteWidth, Position.Y);
-                Weapon.SetAnimation(AnimationType.AttackRight);
-                break;
-            case (int)Direction.Left:
-                Weapon.Position = new Vector2(Position.X - SpriteWidth, Position.Y);
-                Weapon.SetAnimation(AnimationType.AttackLeft);
-                break;
-            case (int)Direction.Up:
-                Weapon.Position = new Vector2(Position.X, Position.Y - SpriteWidth);
-                //_weapon.SetAnimation("AttackUp");
-                break;
-            case (int)Direction.Down:
-                Weapon.Position = new Vector2(Position.X, Position.Y + SpriteWidth);
-                //_weapon.SetAnimation("AttackDown");
-                break;
-            case (int) Direction.None:
-                Weapon.Position = new Vector2(Position.X + SpriteWidth, Position.Y);
-                Weapon.SetAnimation(AnimationType.AttackRight);
-                break;
-            default:
-                Weapon.Position = new Vector2(Position.X + SpriteWidth, Position.Y);
-                Weapon.SetAnimation(AnimationType.AttackRight);
-                break;
-        }
-    }
-    public void SetWeapon(Weapon weapon)
-    {
-        Weapon = weapon;
-    }
 
     public void AddItem(Item item)
     {
         Items ??= new List<Item>();
         Items.Add(item);
-    }
-
-    public void RemoveItem(Item item)
-    {
-        Items?.Remove(item);
     }
 
     public bool UseItem(Item item)
@@ -232,5 +192,21 @@ public class Player : Character
         }
 
         return false;
+    }
+    
+    public void TakesDamage(float damagePoints)
+    {
+        Armor -= damagePoints;
+        if (Armor < 0)
+        {
+            HP += Armor;
+            Armor = 0;
+            SetAnimation(AnimationType.Hurt);
+        }
+           
+        if (!IsAlive())
+        {
+            SetAnimation(AnimationType.Death);
+        }
     }
 }

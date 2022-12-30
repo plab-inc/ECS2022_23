@@ -24,6 +24,7 @@ public class Turret : Enemy
         
         ActivationRectangle.Inflate(35, 35);
         Behavior.SetEnemy(this);
+        Strength = 1;
         DeathSound = SoundLoader.BlobDeathSound;
     }
     
