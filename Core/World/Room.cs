@@ -118,7 +118,6 @@ public class Room
     public Room(string mapName, Point renderPos)
     {
         _renderPos = renderPos;
-
         MapName = mapName;
         Map = Helper.DeepCopy.Create(ContentLoader.Tilemaps[mapName]);
     }
@@ -161,6 +160,19 @@ public class Room
 
     public List<Vector2> GetInteractablePositions(String interactableName)
     {
+        var interactables = GetInteractableMapPositions(interactableName);
+        var interactablesRelativeToWorld = new List<Vector2>();
+        
+        foreach (var interactable in interactables)
+        {
+            interactablesRelativeToWorld.Add(interactable + new Vector2(_renderPos.X,_renderPos.Y));
+        }
+
+        return interactablesRelativeToWorld;
+    }
+    
+    public List<Vector2> GetInteractableMapPositions(String interactableName)
+    {
         var interactableObjects = Map.Layers.First(l => l.name == "Interactables").objects;
         var interactablePositions = new List<Vector2>();
 
@@ -168,8 +180,8 @@ public class Room
         {
             if (tiledObject.name.Contains(interactableName))
             {
-                var posX = tiledObject.x + _renderPos.X;
-                var posY = tiledObject.y + _renderPos.Y;
+                var posX = tiledObject.x;
+                var posY = tiledObject.y;
 
                 interactablePositions.Add(new Vector2(posX, posY));
             }

@@ -34,7 +34,7 @@ internal class MainMenuScreen : MenuScreen
     /// Constructor fills in the menu contents.
     /// </summary>
     public MainMenuScreen()
-        : base("Main Menu")
+        : base("ECS20XX")
     {
         // Create our menu entries.
         MenuEntry playGameMenuEntry = new MenuEntry("Play Game");
@@ -48,7 +48,7 @@ internal class MainMenuScreen : MenuScreen
 
         // Add entries to the menu.
         MenuEntries.Add(playGameMenuEntry);
-        MenuEntries.Add(optionsMenuEntry);
+        //MenuEntries.Add(optionsMenuEntry);
         MenuEntries.Add(exitMenuEntry);
     }
 
