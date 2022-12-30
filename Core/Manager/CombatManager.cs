@@ -139,25 +139,35 @@ public static class CombatManager
 
     private static void CheckShotEnemyCollision(Enemy enemy, Player player)
     {
-        foreach (var shot in _activeShots.Where(shot => shot.Rectangle.Intersects(enemy.Rectangle) && shot.Origin == (int)DamageOrigin.Player))
+        foreach (var projectileShot in _activeShots)
         {
-            enemy.HP -= shot.DamagePoints + player.Strength;
-            enemy.SetAnimation(AnimationType.Hurt);
-            shot.HitTarget = true;
-            if (enemy.HP > 0) continue;
-            EnemyDies(enemy, player);
-            return;
+            if (projectileShot.IntersectPixels(enemy.Rectangle, enemy.EntityTextureData) && projectileShot.Origin == (int)DamageOrigin.Player)
+            {
+                enemy.HP -= projectileShot.DamagePoints + player.Strength;
+                enemy.SetAnimation(AnimationType.Hurt);
+                projectileShot.HitTarget = true;
+                if (enemy.HP > 0) continue;
+                EnemyDies(enemy, player);
+                return;
+            }
         }
+        
     }
 
     private static void CheckShotPlayerCollision(Player player)
     {
-        foreach (var shot in _activeShots.Where(shot => shot.Rectangle.Intersects(player.Rectangle) && shot.Origin == (int)DamageOrigin.Enemy))
+        
+        foreach (var projectileShot in _activeShots)
         {
-            player.TakesDamage(shot.DamagePoints);
-            shot.HitTarget = true;
-            return;
+            if (projectileShot.IntersectPixels(player.Rectangle, player.EntityTextureData) && projectileShot.Origin == (int)DamageOrigin.Enemy)
+            {
+                player.TakesDamage(projectileShot.DamagePoints);
+                projectileShot.HitTarget = true;
+                return;
+            }
         }
+        
+        
     }
   
     private static void EnemyDies(Enemy enemy, Player player)
