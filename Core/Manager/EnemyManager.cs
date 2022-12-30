@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Characters.enemy;
 using ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
@@ -49,15 +50,8 @@ public static class EnemyManager
 
     public static void SpawnEnemies()
     {
-        bool skipFirst = true;
-        foreach (var room in Level.Rooms)
-        {   //TODO Clean up
-            if (skipFirst)
-            {
-                skipFirst = false;
-                continue;
-            }
-
+        foreach (var room in Level.Rooms.Skip(1))
+        {
             if (room.Spawns != null && room.Spawns.Count > 0)
             {
                 Enemy en = GetRandomEnemy();
@@ -73,21 +67,14 @@ public static class EnemyManager
     {
         Random rand = new Random();
         
-        bool skipFirst = true;
-        foreach (var room in Level.Rooms)
+        foreach (var room in Level.Rooms.Skip(1))
         {
-            if (skipFirst)
-            {
-                skipFirst = false;
-                continue;
-            }
-
             if (room.Spawns != null && room.Spawns.Count > 0)
             {
                 int amount = rand.Next(1,room.Spawns.Count);
                 if (amount > max)
                     amount = max;
-                
+               
                 for (int a = 0; a < amount; a++)
                 {
                     Enemy en = GetRandomEnemy();
