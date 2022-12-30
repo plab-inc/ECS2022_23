@@ -11,7 +11,7 @@ namespace ECS2022_23.Core.Manager;
 
 public static class ItemManager
 {
-    private static List<Item> _activeItems;
+    private static List<Item> _activeItems = new List<Item>();
     private static bool _keyHasDropped = false;
     
     public static void Init()

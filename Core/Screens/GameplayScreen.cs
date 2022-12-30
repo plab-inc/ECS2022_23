@@ -81,7 +81,6 @@ internal class GameplayScreen : GameScreen
         ItemLoader.Load(content);
         SoundManager.Initialize();
         UiLoader.Load(content, ScreenManager.GraphicsDevice);
-        ItemManager.Init();
 
         _player = new Player(content.Load<Texture2D>("sprites/astro"), AnimationLoader.CreatePlayerAnimations())
         {
