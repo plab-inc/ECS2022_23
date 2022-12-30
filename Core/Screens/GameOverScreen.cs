@@ -34,20 +34,20 @@ internal class GameOverScreen : MenuScreen
     { 
         if (content == null)
             content = new ContentManager(ScreenManager.Game.Services, "Content/gameStateManagement");
-        Texture2D = content.Load<Texture2D>("../sprites/spritesheet");
+        Spritesheet = content.Load<Texture2D>("../sprites/spritesheet");
 
-        if (Texture2D != null)
+        if (Spritesheet != null)
         {
             if (gameIsWon)
             {
                 //Walk Up Animation
-                Animation = new Animation(Texture2D, 16, 16, 6, new Vector2(1, 5), true);
+                Animation = new Animation(Spritesheet, 16, 16, 6, new Vector2(1, 5), true);
                 AnimationPosition = new Vector2(16 * 18, 16 * 21);
             }
             else
             {
                 //Death Animation
-                Animation = new Animation(Texture2D, 16, 16, 1, new Vector2(4, 6), true);
+                Animation = new Animation(Spritesheet, 16, 16, 1, new Vector2(4, 6), true);
                 AnimationPosition = new Vector2(16 * 18, 16 * 21);
             }
 
