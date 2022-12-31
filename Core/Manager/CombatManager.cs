@@ -87,16 +87,12 @@ public static class CombatManager
 
     private static bool EntitiesCollide(Entity attacker, Entity defender) 
     {
-        var figureRect = attacker.Rectangle;
-        var defenderRect = defender.Rectangle;
-
-        return figureRect.Intersects(defenderRect);
+        return attacker.IntersectPixels(defender.Rectangle, defender.EntityTextureData);
     }
 
     private static bool WeaponCollide(Player attacker, Entity defender)
     {
         var figureRect = attacker.Rectangle;
-        var defenderRect = defender.Rectangle;
         var weaponRect = attacker.Weapon.Rectangle;
         Rectangle attackRect; 
         
@@ -104,18 +100,19 @@ public static class CombatManager
         {
             case (int) Direction.Right:
                 attackRect = new Rectangle(figureRect.X + figureRect.Width, figureRect.Y, weaponRect.Width, weaponRect.Height);
-                return attackRect.Intersects(defenderRect);
+                break;
             case (int) Direction.Left:
                 attackRect = new Rectangle(figureRect.X - weaponRect.Width, figureRect.Y, weaponRect.Width, weaponRect.Height);
-                return attackRect.Intersects(defenderRect);
+                break;
             case (int) Direction.Up:
                 attackRect = new Rectangle(figureRect.X, figureRect.Y - weaponRect.Width, weaponRect.Width, weaponRect.Height);
-                return attackRect.Intersects(defenderRect);
+                break;
             case (int) Direction.Down:
                 attackRect = new Rectangle(figureRect.X, figureRect.Y + figureRect.Height, weaponRect.Width, weaponRect.Height);
-                return attackRect.Intersects(defenderRect);
+                break;
             default: return false;
         }
+        return defender.IntersectPixels(attackRect, attacker.Weapon.EntityTextureData);
     }
     
     public static void AddEnemy(Enemy enemy)
@@ -139,11 +136,12 @@ public static class CombatManager
 
     private static void CheckShotEnemyCollision(Enemy enemy, Player player)
     {
-        foreach (var shot in _activeShots.Where(shot => shot.Rectangle.Intersects(enemy.Rectangle) && shot.Origin == (int)DamageOrigin.Player))
+        foreach (var projectileShot in _activeShots.Where(projectileShot => projectileShot.IntersectPixels(enemy.Rectangle, enemy.EntityTextureData) &&
+                                                                            projectileShot.Origin == (int)DamageOrigin.Player))
         {
-            enemy.HP -= shot.DamagePoints + player.Strength;
+            enemy.HP -= projectileShot.DamagePoints + player.Strength;
             enemy.SetAnimation(AnimationType.Hurt);
-            shot.HitTarget = true;
+            projectileShot.HitTarget = true;
             if (enemy.HP > 0) continue;
             EnemyDies(enemy, player);
             return;
@@ -152,10 +150,10 @@ public static class CombatManager
 
     private static void CheckShotPlayerCollision(Player player)
     {
-        foreach (var shot in _activeShots.Where(shot => shot.Rectangle.Intersects(player.Rectangle) && shot.Origin == (int)DamageOrigin.Enemy))
+        foreach (var projectileShot in _activeShots.Where(projectileShot => projectileShot.IntersectPixels(player.Rectangle, player.EntityTextureData) && projectileShot.Origin == (int)DamageOrigin.Enemy))
         {
-            player.TakesDamage(shot.DamagePoints);
-            shot.HitTarget = true;
+            player.TakesDamage(projectileShot.DamagePoints);
+            projectileShot.HitTarget = true;
             return;
         }
     }

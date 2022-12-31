@@ -1,4 +1,5 @@
-﻿using ECS2022_23.Core.Entities.Characters;
+﻿using System.Linq;
+using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Characters.enemy;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.World;
@@ -87,18 +88,7 @@ public class ProjectileShot : Entity
 
     public bool Collides()
     {
-        var onGround = false;
         var bottom = new Point(Rectangle.Center.X, Rectangle.Bottom);
-
-        foreach (var rectangle in Level.GroundLayer)
-        {
-            if (rectangle.Contains(bottom))
-            {
-                onGround = true;
-                break;
-            }
-        }
-
-        return onGround;
+        return Level.GroundLayer.Any(rectangle => rectangle.Contains(bottom));
     }
 }
