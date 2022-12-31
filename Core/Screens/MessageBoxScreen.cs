@@ -30,6 +30,7 @@ internal class MessageBoxScreen : GameScreen
     #region Fields
 
     private string message;
+    private string usageText;
     private Texture2D gradientTexture;
 
     #endregion Fields
@@ -56,18 +57,19 @@ internal class MessageBoxScreen : GameScreen
     /// Constructor lets the caller specify whether to include the standard
     /// "A=ok, B=cancel" usage text prompt.
     /// </summary>
-    public MessageBoxScreen(string message, bool includeUsageText)
+    public MessageBoxScreen(string message, bool showUsageText)
     {
-        const string usageText = "\nA button, Space, Enter = ok" +
-                                 "\nB button, Esc = cancel";
-
-        if (includeUsageText)
-            this.message = message + usageText;
+        this.message = message;
+        
+        if(showUsageText){
+            usageText = "\nConfirm with Space or Enter." + "\nEsc to Cancel.";
+        }
         else
-            this.message = message;
-
-        IsPopup = true;
-
+        {
+            usageText = "";
+        }
+        
+        IsPopup = false;
         TransitionOnTime = TimeSpan.FromSeconds(0.2);
         TransitionOffTime = TimeSpan.FromSeconds(0.2);
     }
@@ -81,8 +83,7 @@ internal class MessageBoxScreen : GameScreen
     public override void LoadContent()
     {
         ContentManager content = ScreenManager.Game.Content;
-
-        gradientTexture = content.Load<Texture2D>("gameStateManagement/gradient");
+        
     }
 
     #endregion Initialization
@@ -132,36 +133,33 @@ internal class MessageBoxScreen : GameScreen
         SpriteFont font = ScreenManager.Font;
 
         // Darken down any other screens that were drawn beneath the popup.
-        ScreenManager.FadeBackBufferToBlack(TransitionAlpha * 2 / 3);
+        ScreenManager.FadeBackBufferToBlack(TransitionAlpha * 2 / 2.5f);
 
         // Center the message text in the viewport.
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
         Vector2 viewportSize = new Vector2(viewport.Width, viewport.Height);
-        Vector2 textSize = font.MeasureString(message);
-        Vector2 textPosition = (viewportSize - textSize / 2);
-
-        // The background includes a border somewhat larger than the text itself.
-        const int hPad = 32;
-        const int vPad = 16;
         
-        Texture2D background = new Texture2D(ScreenManager.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
-        background.SetData<Color>(new Color[] { new Color(28,23,97) });
-        
-        Rectangle backgroundRectangle = new Rectangle((int)textPosition.X / 2 -vPad,
-            (int)textPosition.Y / 2 - hPad,
-            (int)textSize.X / 2 + vPad * 2,
-            (int)textSize.Y / 2 + hPad * 2);
+        Vector2 messageSize = font.MeasureString(message);
+        Vector2 messagePosition = (viewportSize - messageSize / 2);
+        messagePosition.Y /= 1.5f;
 
-        // Fade the popup alpha during transitions.
+        Vector2 usageTextSize = font.MeasureString(usageText);
+        Vector2 usageTextPosition = (viewportSize - usageTextSize / 2);
+
         
         spriteBatch.Begin();
 
         // Draw the background rectangle.
-        spriteBatch.Draw(background, backgroundRectangle, Color.White);
 
         // Draw the message box text.
-        spriteBatch.DrawString(font, message, textPosition, Color.White, 0,
-            textPosition, 0.5f, SpriteEffects.None, 0);
+        spriteBatch.DrawString(font, message, messagePosition, Color.White, 0,
+            messagePosition, 0.5f, SpriteEffects.None, 0);
+
+        if (usageText != "")
+        {
+            spriteBatch.DrawString(font, usageText, usageTextPosition, Color.White, 0,
+                usageTextPosition, 0.5f, SpriteEffects.None, 0);
+        }
 
         spriteBatch.End();
     }
