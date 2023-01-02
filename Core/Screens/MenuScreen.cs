@@ -37,6 +37,7 @@ internal abstract class MenuScreen : GameScreen
     private string menuTitle;
 
     private AnimationManager _animationManager = new();
+    protected const float FrameSpeed = 0.4f;
     protected Vector2 AnimationPosition;
     protected Animation Animation;
     protected Texture2D Spritesheet;

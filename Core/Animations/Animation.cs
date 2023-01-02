@@ -9,7 +9,7 @@ public class Animation
     public bool FlipX { get; set; }
     public bool FlipY { get; set; }
     public Vector2 StartFrame { get; }
-    public float FrameSpeed { get; }
+    public float FrameSpeed { get; set; }
     public readonly bool IsLooped;
 
     public Texture2D Texture

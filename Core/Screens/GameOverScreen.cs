@@ -12,7 +12,7 @@ namespace ECS2022_23.Core.Screens;
 internal class GameOverScreen : MenuScreen
 {
     private ContentManager content;
-    private int EndPosition;
+    private float StartPosition;
     private bool gameIsWon;
     
     #region Initialization
@@ -50,8 +50,8 @@ internal class GameOverScreen : MenuScreen
                 Animation = new Animation(Spritesheet, 16, 16, 1, new Vector2(4, 6), true);
                 AnimationPosition = new Vector2(16 * 18, 16 * 21);
             }
-
-            EndPosition = (int) AnimationPosition.Y;
+            Animation.FrameSpeed = FrameSpeed;
+            StartPosition = AnimationPosition.Y;
             SetAnimation(Animation);
         }
     }
@@ -75,10 +75,10 @@ internal class GameOverScreen : MenuScreen
     {
         if (gameIsWon)
         {
-            AnimationPosition += new Vector2(0, -4);
-            if (AnimationPosition.Y <= EndPosition - 16*3)
+            AnimationPosition += new Vector2(0, -0.5f);
+            //Check if at door 
+            if (AnimationPosition.Y <= StartPosition - 16*5)
             {
-                //TODO Choose EndPosition for ending animation
                 //Stop walking when through door
                 StopAnimation();
             }

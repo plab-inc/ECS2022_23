@@ -62,6 +62,7 @@ internal class MainMenuScreen : MenuScreen
         {
             Animation =  new Animation(Spritesheet, 16, 16, 7, new Vector2(1, 2), true);
             AnimationPosition = new Vector2(16 * 18, 16 * 21);
+            Animation.FrameSpeed = FrameSpeed;
             SetAnimation(Animation);
         }
     }
