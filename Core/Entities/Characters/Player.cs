@@ -15,12 +15,13 @@ public class Player : Character
     public float Armor;
     public float XpToNextLevel;
     public float Money;
+    public bool Invincible;
+    public bool ImmuneToWater = false;
+    
     public List<Item> Items;
     public Weapon Weapon { get; set; }
     public Trinket Trinket { get; set; }
     public Room Room { get; set; }
-    public bool ImmuneToWater = false;
-    public bool Invincible = false;
     private Input _input;
 
     public Player(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations) : base(spawn, texture, animations)
@@ -60,6 +61,14 @@ public class Player : Character
         }
         else
         {
+            if (Invincible)
+            {
+                AnimationManager.StartColorChange();
+            }
+            else
+            {
+                AnimationManager.StopColorChange();
+            }
             AnimationManager.Draw(spriteBatch, Position);
             Weapon?.Draw(spriteBatch);
         }
