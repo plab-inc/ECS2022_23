@@ -6,6 +6,7 @@ using ECS2022_23.Core.Entities.Characters.enemy;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Sound;
 using ECS2022_23.Enums;
+using ECS2022_23.Helper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -14,17 +15,35 @@ namespace ECS2022_23.Core.Manager;
 public static class CombatManager
 {
     private static List<Enemy> _activeEnemies = new List<Enemy>();
-    private static List<ProjectileShot> _activeShots = new List<ProjectileShot>();
+    private static List<ProjectileShot> _activeShotsByPlayer = new List<ProjectileShot>();
+    private static List<ProjectileShot> _activeShotsByEnemy = new List<ProjectileShot>();
+    private static Timer _damageCooldown;
 
     public static void Init()
     {
         _activeEnemies = new List<Enemy>();
-        _activeShots = new List<ProjectileShot>();
+        _activeShotsByPlayer = new List<ProjectileShot>();
+        _damageCooldown = new Timer(2f);
     }
     
     public static void Update(GameTime gameTime, Player player)
     {
+        if (player.Invincible)
+        {
+            //if player was hurt, wait for cooldown until player can take damage again 
+            _damageCooldown.Update(gameTime);
+            if (_damageCooldown.LimitReached())
+            {
+                player.Invincible = false;
+            }
+        }
+        
         CheckShotPlayerCollision(player);
+        if (!player.Invincible)
+        {
+            CheckEnemyCollision(player);
+        }
+      
         if (player.IsAttacking)
         {
             foreach (var enemy in _activeEnemies)
@@ -48,17 +67,26 @@ public static class CombatManager
             }
         }
         
-        foreach (var shot in _activeShots)
+        foreach (var shot in _activeShotsByPlayer)
         {
             shot.Update(gameTime);
         }
-        _activeShots.RemoveAll(shot => shot.HitTarget || !shot.Collides());
+        foreach (var shot in _activeShotsByEnemy)
+        {
+            shot.Update(gameTime);
+        }
+        _activeShotsByPlayer.RemoveAll(shot => shot.HitTarget || !shot.Collides());
+        _activeShotsByEnemy.RemoveAll(shot => shot.HitTarget || !shot.Collides());
         _activeEnemies.RemoveAll(enemy => !enemy.IsAlive());
     }
     
     public static void Draw(SpriteBatch spriteBatch)
     {
-        foreach (var shot in _activeShots)
+        foreach (var shot in _activeShotsByPlayer)
+        {
+            shot.Draw(spriteBatch);
+        }
+        foreach (var shot in _activeShotsByEnemy)
         {
             shot.Draw(spriteBatch);
         }
@@ -124,19 +152,19 @@ public static class CombatManager
     {
         var shot = ItemLoader.CreateLaserShot(player.Weapon, player.AimDirection);
         shot.Level = player.Level;
-        _activeShots.Add(shot);
+        _activeShotsByPlayer.Add(shot);
     }
 
     public static void Shoot(Enemy enemy)
     {
         var shot = ItemLoader.CreateLaserShot(enemy);
         shot.Level = enemy.Level;
-        _activeShots.Add(shot);
+        _activeShotsByEnemy.Add(shot);
     }
 
     private static void CheckShotEnemyCollision(Enemy enemy, Player player)
     {
-        foreach (var projectileShot in _activeShots.Where(projectileShot => projectileShot.IntersectPixels(enemy.Rectangle, enemy.EntityTextureData) &&
+        foreach (var projectileShot in _activeShotsByPlayer.Where(projectileShot => projectileShot.IntersectPixels(enemy.Rectangle, enemy.EntityTextureData) &&
                                                                             projectileShot.Origin == (int)DamageOrigin.Player))
         {
             enemy.HP -= projectileShot.DamagePoints + player.Strength;
@@ -150,7 +178,7 @@ public static class CombatManager
 
     private static void CheckShotPlayerCollision(Player player)
     {
-        foreach (var projectileShot in _activeShots.Where(projectileShot => projectileShot.IntersectPixels(player.Rectangle, player.EntityTextureData) && projectileShot.Origin == (int)DamageOrigin.Enemy))
+        foreach (var projectileShot in _activeShotsByEnemy.Where(projectileShot => projectileShot.IntersectPixels(player.Rectangle, player.EntityTextureData) && projectileShot.Origin == (int)DamageOrigin.Enemy))
         {
             player.TakesDamage(projectileShot.DamagePoints);
             projectileShot.HitTarget = true;
@@ -166,5 +194,17 @@ public static class CombatManager
         EnemyManager.RemoveEnemy(enemy);
         player.Money += enemy.MoneyReward;
         player.XpToNextLevel += enemy.XpReward;
+    }
+
+    private static void CheckEnemyCollision(Player player)
+    {
+        foreach (var enemy in _activeEnemies)
+        {
+            if (EntitiesCollide(player, enemy))
+            {
+                player.TakesDamage(enemy.Strength);
+                return;
+            }
+        }
     }
 }

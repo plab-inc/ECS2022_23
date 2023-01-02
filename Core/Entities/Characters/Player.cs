@@ -20,6 +20,7 @@ public class Player : Character
     public Trinket Trinket { get; set; }
     public Room Room { get; set; }
     public bool ImmuneToWater = false;
+    public bool Invincible = false;
     private Input _input;
 
     public Player(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations) : base(spawn, texture, animations)
@@ -196,16 +197,20 @@ public class Player : Character
     
     public void TakesDamage(float damagePoints)
     {
+        if (Invincible) return;
+        
         Armor -= damagePoints;
         if (Armor < 0)
         {
             HP += Armor;
             Armor = 0;
+            Invincible = true;
             SetAnimation(AnimationType.Hurt);
         }
            
         if (!IsAlive())
         {
+            Invincible = true;
             SetAnimation(AnimationType.Death);
         }
     }
