@@ -204,9 +204,17 @@ internal abstract class MenuScreen : GameScreen
         GraphicsDevice graphics = ScreenManager.GraphicsDevice;
         SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
         SpriteFont font = ScreenManager.Font;
-
+        
         spriteBatch.Begin(samplerState: SamplerState.LinearClamp);
-
+        
+        Color titleColor = Color.White * TransitionAlpha;
+        const float titleScale = 1f;
+        Vector2 titlePosition = PlaceTitle(graphics);
+        Vector2 titleOrigin = font.MeasureString(menuTitle) / 2;
+        
+        spriteBatch.DrawString(font, menuTitle, titlePosition, titleColor, 0,
+            titleOrigin, titleScale, SpriteEffects.None, 0);
+        
         // Draw each menu entry in turn.
         for (int i = 0; i < menuEntries.Count; i++)
         {
@@ -217,15 +225,6 @@ internal abstract class MenuScreen : GameScreen
             menuEntry.Draw(this, isSelected, gameTime);
         }
         
-        Color titleColor = Color.White;
-        
-        const float titleScale = 1f;
-
-        Vector2 titlePosition = PlaceTitle(graphics);
-        Vector2 titleOrigin = font.MeasureString(menuTitle) / 2;
-        spriteBatch.DrawString(font, menuTitle, titlePosition, titleColor, 0,
-            titleOrigin, titleScale, SpriteEffects.None, 0);
-            
         spriteBatch.End();
         
         spriteBatch.Begin(samplerState: SamplerState.PointClamp);

@@ -48,7 +48,7 @@ internal class MainMenuScreen : MenuScreen
 
         // Add entries to the menu.
         MenuEntries.Add(playGameMenuEntry);
-        //MenuEntries.Add(optionsMenuEntry);
+        MenuEntries.Add(optionsMenuEntry);
         MenuEntries.Add(exitMenuEntry);
     }
 
@@ -93,7 +93,7 @@ internal class MainMenuScreen : MenuScreen
     /// </summary>
     protected override void OnCancel(PlayerIndex playerIndex)
     {
-        const string message = "Are you sure you want to exit this sample?";
+        const string message = "Are you sure you want to exit this game?";
 
         MessageBoxScreen confirmExitMessageBox = new MessageBoxScreen(message);
 
