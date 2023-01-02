@@ -69,6 +69,23 @@ internal class GameOverScreen : MenuScreen
         LoadingScreen.Load(ScreenManager, false, e.PlayerIndex, new BackgroundScreen(),
             new MainMenuScreen());
     }
+
+    protected override void OnCancel(PlayerIndex playerIndex)
+    {
+        const string message = "Are you sure you want to exit this game?";
+
+        MessageBoxScreen confirmExitMessageBox = new MessageBoxScreen(message);
+
+        confirmExitMessageBox.Accepted += ConfirmExitMessageBoxAccepted;
+
+        ScreenManager.AddScreen(confirmExitMessageBox, playerIndex);
+    }
+    
+    private void ConfirmExitMessageBoxAccepted(object sender, PlayerIndexEventArgs e)
+    {
+        ScreenManager.Game.Exit();
+    }
+
     #endregion Handle Input
 
     public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
