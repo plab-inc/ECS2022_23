@@ -12,7 +12,6 @@
 #region Using Statements
 
 using ECS2022_23.Core.Animations;
-using GameStateManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
