@@ -189,7 +189,7 @@ public static class AnimationLoader
             },
             {
                 AnimationType.Hurt,
-                new Animation(_textureRed, 16, 16, 1, new Vector2(6, 2), false)
+                new Animation(_textureRed, 16, 16, 1, new Point(6, 2), false)
             },
             {
                 AnimationType.Default,

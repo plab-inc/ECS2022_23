@@ -137,12 +137,12 @@ internal class GameplayScreen : GameScreen
             if (_escape.WasSuccessful)
             {
                 LoadingScreen.Load(ScreenManager, false, null,
-                    new BackgroundScreen(), new GameOverScreen(true));
+                    new BackgroundScreen(true, true), new GameOverScreen(true));
             }
             if (_escape.Failed)
             {
                 LoadingScreen.Load(ScreenManager, false, null,
-                    new BackgroundScreen(), new GameOverScreen(false));
+                    new BackgroundScreen(true, false), new GameOverScreen(false));
             }
                 
             UiManager.Update(_player);

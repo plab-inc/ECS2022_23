@@ -34,11 +34,6 @@
             <HintPath>lib\TiledPipelineReader.dll</HintPath>
         </Reference>
     </ItemGroup>
-    <ItemGroup>
-      <Content Include="Assets\GameStateManagement\background.png" />
-      <Content Include="Assets\GameStateManagement\blank.png" />
-      <Content Include="Assets\GameStateManagement\gradient.png" />
-    </ItemGroup>
     <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
         <Message Text="Restoring dotnet tools" Importance="High" />
         <Exec Command="dotnet tool restore" />

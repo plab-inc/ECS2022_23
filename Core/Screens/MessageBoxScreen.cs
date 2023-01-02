@@ -31,8 +31,7 @@ internal class MessageBoxScreen : GameScreen
 
     private string message;
     private string usageText;
-    private Texture2D gradientTexture;
-
+    
     #endregion Fields
 
     #region Events
