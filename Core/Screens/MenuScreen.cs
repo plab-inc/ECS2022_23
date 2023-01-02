@@ -36,10 +36,10 @@ internal abstract class MenuScreen : GameScreen
     private int selectedEntry;
     private string menuTitle;
 
-    private AnimationManager _animationManager = new AnimationManager();
+    private AnimationManager _animationManager = new();
     protected Vector2 AnimationPosition;
     protected Animation Animation;
-    protected Texture2D Texture2D;
+    protected Texture2D Spritesheet;
 
     #endregion Fields
 
