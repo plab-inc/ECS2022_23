@@ -87,7 +87,7 @@ internal class GameplayScreen : GameScreen
             Weapon = ItemLoader.CreatePhaserWeapon(Vector2.Zero)
         };
         InventoryManager.Init(_player);
-        _escape = new Escape(_player, 3,3);
+        _escape = new Escape(_player, 3,1);
         _escape.AttachCamera(_camera);
             
         // once the load has finished, we use ResetElapsedTime to tell the game's

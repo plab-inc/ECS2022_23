@@ -13,8 +13,11 @@
 
 using System;
 using System.Collections.Generic;
+using ECS2022_23.Core.Animations;
+using ECS2022_23.Core.Manager;
 using GameStateManagement;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 #endregion Using Statements
@@ -33,6 +36,11 @@ internal abstract class MenuScreen : GameScreen
     private int selectedEntry;
     private string menuTitle;
 
+    private AnimationManager _animationManager = new();
+    protected const float FrameSpeed = 0.4f;
+    protected Vector2 AnimationPosition;
+    protected Animation Animation;
+    protected Texture2D Spritesheet;
 
     #endregion Fields
 
@@ -57,6 +65,7 @@ internal abstract class MenuScreen : GameScreen
 
         TransitionOnTime = TimeSpan.FromSeconds(0.5);
         TransitionOffTime = TimeSpan.FromSeconds(0.5);
+        _animationManager.SetScale(new Vector2(2,2));
     }
 
     #endregion Initialization
@@ -181,6 +190,7 @@ internal abstract class MenuScreen : GameScreen
 
             menuEntries[i].Update(this, isSelected, gameTime);
         }
+        _animationManager.Update(gameTime);
     }
 
     /// <summary>
@@ -216,6 +226,21 @@ internal abstract class MenuScreen : GameScreen
         }
         
         spriteBatch.End();
+        
+        spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        _animationManager.Draw(spriteBatch, AnimationPosition);
+        spriteBatch.End();
+    }
+
+    protected void SetAnimation(Animation animation)
+    {
+        _animationManager ??= new AnimationManager();
+        _animationManager.Play(animation);
+    }
+
+    protected void StopAnimation()
+    {
+        _animationManager.Stop();
     }
 
     protected virtual Vector2 PlaceTitle(GraphicsDevice graphics)

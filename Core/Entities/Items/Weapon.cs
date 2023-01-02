@@ -71,10 +71,10 @@ public class Weapon : Item
                 SetAnimation(AnimationType.AttackLeft);
                 break;
             case (int)Direction.Up:
-                //_weapon.SetAnimation("AttackUp");
+                SetAnimation(AnimationType.AttackUp);
                 break;
             case (int)Direction.Down:
-                //_weapon.SetAnimation("AttackDown");
+                SetAnimation(AnimationType.AttackDown);
                 break;
             case (int) Direction.None:
                 SetAnimation(AnimationType.AttackRight);

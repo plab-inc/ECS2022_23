@@ -11,8 +11,11 @@
 
 #region Using Statements
 
+using ECS2022_23.Core.Animations;
 using GameStateManagement;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 #endregion Using Statements
 
@@ -23,6 +26,8 @@ namespace ECS2022_23.Core.Screens;
 /// </summary>
 internal class MainMenuScreen : MenuScreen
 {
+    private ContentManager content;
+    
     #region Initialization
 
     /// <summary>
@@ -47,6 +52,21 @@ internal class MainMenuScreen : MenuScreen
         MenuEntries.Add(exitMenuEntry);
     }
 
+    public override void LoadContent()
+    { 
+        if (content == null)
+            content = new ContentManager(ScreenManager.Game.Services, "Content/gameStateManagement");
+        Spritesheet = content.Load<Texture2D>("../sprites/spritesheet");
+
+        if (Spritesheet != null)
+        {
+            Animation =  new Animation(Spritesheet, 16, 16, 7, new Point(1, 2), true);
+            AnimationPosition = new Vector2(16 * 18, 16 * 21);
+            Animation.FrameSpeed = FrameSpeed;
+            SetAnimation(Animation);
+        }
+    }
+    
     #endregion Initialization
 
     #region Handle Input
