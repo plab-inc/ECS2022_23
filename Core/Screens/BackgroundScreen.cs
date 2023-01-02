@@ -33,6 +33,9 @@ namespace ECS2022_23.Core.Screens
         private AnimationManager _animationManager;
         private Animation _idleAnimation;
 
+        private bool _gameOver;
+        private bool _playerWins;
+
         #endregion Fields
 
         #region Initialization
@@ -42,6 +45,14 @@ namespace ECS2022_23.Core.Screens
         /// </summary>
         public BackgroundScreen()
         {
+            TransitionOnTime = TimeSpan.FromSeconds(0.5);
+            TransitionOffTime = TimeSpan.FromSeconds(0.5);
+        }
+        public BackgroundScreen(bool gameOver, bool playerWins)
+        {
+            _gameOver = gameOver;
+            _playerWins = playerWins;
+            
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
         }
@@ -58,7 +69,24 @@ namespace ECS2022_23.Core.Screens
             if (content == null)
                 content = new ContentManager(ScreenManager.Game.Services, "Content/gameStateManagement");
 
-            backgroundTexture = content.Load<Texture2D>("background");
+            if (!_gameOver)
+            {
+                backgroundTexture = content.Load<Texture2D>("background_default");
+            }
+
+            if (_gameOver)
+            {
+                if (_playerWins)
+                {
+                    backgroundTexture = content.Load<Texture2D>("background_win");
+                }
+
+                if (!_playerWins)
+                {
+                    backgroundTexture = content.Load<Texture2D>("background_loose");
+
+                }
+            }
         }
 
         /// <summary>
