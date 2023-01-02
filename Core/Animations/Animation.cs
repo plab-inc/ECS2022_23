@@ -8,7 +8,7 @@ public class Animation
     private Texture2D _texture;
     public bool FlipX { get; set; }
     public bool FlipY { get; set; }
-    public Vector2 StartFrame { get; }
+    public Point StartFrame { get; }
     public float FrameSpeed { get; set; }
     public readonly bool IsLooped;
 
@@ -24,7 +24,7 @@ public class Animation
 
     public int FrameCount { get; set; }
 
-    public Animation(Texture2D texture, int width, int height, int frameCount, Vector2 startFrame, bool isLooped)
+    public Animation(Texture2D texture, int width, int height, int frameCount, Point startFrame, bool isLooped)
     {
         _texture = texture;
         Width = width;
@@ -35,7 +35,7 @@ public class Animation
         IsLooped = isLooped;
     }
     
-    public Animation(Texture2D texture, int width, int height, int frameCount, Vector2 startFrame, bool isLooped, bool flipX, bool flipY) 
+    public Animation(Texture2D texture, int width, int height, int frameCount, Point startFrame, bool isLooped, bool flipX, bool flipY) 
         : this(texture, width, height, frameCount, startFrame, isLooped)
     {
         FlipX = flipX;

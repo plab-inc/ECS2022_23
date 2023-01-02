@@ -36,48 +36,48 @@ public static class AnimationLoader
         {
             {
                AnimationType.WalkUp,
-                new Animation(_texturePink, 16, 16, 6, new Vector2(1, 5), true)
+                new Animation(_texturePink, 16, 16, 6, new Point(1, 5), true)
             },
             {
                 AnimationType.WalkRight,
-                new Animation(_texturePink, 16, 16, 6, new Vector2(1, 4), true)
+                new Animation(_texturePink, 16, 16, 6, new Point(1, 4), true)
             },
             {
                 AnimationType.WalkLeft,
-                new Animation(_texturePink, 16, 16, 6, new Vector2(1, 4), true, true,
+                new Animation(_texturePink, 16, 16, 6, new Point(1, 4), true, true,
                     false)
             },
             {
                 AnimationType.WalkDown,
-                new Animation(_texturePink, 16, 16, 6, new Vector2(1, 3), true)
+                new Animation(_texturePink, 16, 16, 6, new Point(1, 3), true)
             },
             {
                 AnimationType.AttackRight,
-                new Animation(_texturePink, 16, 16, 3, new Vector2(6, 6), false)
+                new Animation(_texturePink, 16, 16, 3, new Point(6, 6), false)
             },
             {
                 AnimationType.AttackLeft,
-                new Animation(_texturePink, 16, 16, 3, new Vector2(6, 6), false, true, false)
+                new Animation(_texturePink, 16, 16, 3, new Point(6, 6), false, true, false)
             },
             {
                 AnimationType.AttackUp,
-                new Animation(_texturePink, 16, 16, 2, new Vector2(9, 6), false)
+                new Animation(_texturePink, 16, 16, 2, new Point(9, 6), false)
             },
             {
                 AnimationType.AttackDown,
-                new Animation(_texturePink, 16, 16, 2, new Vector2(11, 6), false)
+                new Animation(_texturePink, 16, 16, 2, new Point(11, 6), false)
             },
             {
                 AnimationType.Hurt,
-                new Animation(_texturePink, 16, 16, 2, new Vector2(2, 6), false)
+                new Animation(_texturePink, 16, 16, 2, new Point(2, 6), false)
             },
             {
                 AnimationType.Death,
-                new Animation(_texturePink, 16, 16, 1, new Vector2(4, 6), true)
+                new Animation(_texturePink, 16, 16, 1, new Point(4, 6), true)
             },
             {
                 AnimationType.Default,
-                new Animation(_texturePink, 16, 16, 7, new Vector2(1, 2), true)
+                new Animation(_texturePink, 16, 16, 7, new Point(1, 2), true)
             }
         };
     }
@@ -88,39 +88,39 @@ public static class AnimationLoader
         {
             {
                 AnimationType.Walk,
-                new Animation(_texturePink, 16, 16, 2, new Vector2(10, 1), true)
+                new Animation(_texturePink, 16, 16, 2, new Point(10, 1), true)
             },
             {
                 AnimationType.WalkRight,
-                new Animation(_texturePink, 16, 16, 2, new Vector2(10, 1), true, true, false)
+                new Animation(_texturePink, 16, 16, 2, new Point(10, 1), true, true, false)
             },
             {
                 AnimationType.WalkLeft,
-                new Animation(_texturePink, 16, 16, 2, new Vector2(10, 1), true)
+                new Animation(_texturePink, 16, 16, 2, new Point(10, 1), true)
             },
             {
                 AnimationType.WalkUp,
-                new Animation(_texturePink, 16, 16, 2, new Vector2(10, 1), true, true, false)
+                new Animation(_texturePink, 16, 16, 2, new Point(10, 1), true, true, false)
             },
             {
                 AnimationType.WalkDown,
-                new Animation(_texturePink, 16, 16, 2, new Vector2(10, 1), true, true, false)
+                new Animation(_texturePink, 16, 16, 2, new Point(10, 1), true, true, false)
             },
             {
                 AnimationType.Attack,
-                new Animation(_texturePink, 16, 16, 5, new Vector2(10, 1), false)
+                new Animation(_texturePink, 16, 16, 5, new Point(10, 1), false)
             },
             {
                 AnimationType.Hurt,
-                new Animation(_texturePink, 16, 16, 1, new Vector2(15, 1), false)
+                new Animation(_texturePink, 16, 16, 1, new Point(15, 1), false)
             },
             {
                 AnimationType.Death,
-                new Animation(_texturePink, 16, 16, 1, new Vector2(14, 1), true)
+                new Animation(_texturePink, 16, 16, 1, new Point(14, 1), true)
             },
             {
                 AnimationType.Default,
-                new Animation(_texturePink, 16, 16, 3, new Vector2(10, 1), true)
+                new Animation(_texturePink, 16, 16, 3, new Point(10, 1), true)
             }
         };
     }
@@ -131,39 +131,39 @@ public static class AnimationLoader
         {
             {
                 AnimationType.Walk,
-                new Animation(_texturePink, 16, 16, 4, new Vector2(10, 2), true)
+                new Animation(_texturePink, 16, 16, 4, new Point(10, 2), true)
             },
             {
                 AnimationType.WalkRight,
-                new Animation(_texturePink, 16, 16, 4, new Vector2(10, 2), true, true, false)
+                new Animation(_texturePink, 16, 16, 4, new Point(10, 2), true, true, false)
             },
             {
                 AnimationType.WalkLeft,
-                new Animation(_texturePink, 16, 16, 4, new Vector2(10, 2), true)
+                new Animation(_texturePink, 16, 16, 4, new Point(10, 2), true)
             },
             {
                 AnimationType.WalkUp,
-                new Animation(_texturePink, 16, 16, 4, new Vector2(10, 2), true, true, false)
+                new Animation(_texturePink, 16, 16, 4, new Point(10, 2), true, true, false)
             },
             {
                 AnimationType.WalkDown,
-                new Animation(_texturePink, 16, 16, 4, new Vector2(10, 2), true, true, false)
+                new Animation(_texturePink, 16, 16, 4, new Point(10, 2), true, true, false)
             },
             {
                 AnimationType.Attack,
-                new Animation(_texturePink, 16, 16, 2, new Vector2(12, 2), false)
+                new Animation(_texturePink, 16, 16, 2, new Point(12, 2), false)
             },
             {
                 AnimationType.Hurt,
-                new Animation(_texturePink, 16, 16, 1, new Vector2(14, 2), false)
+                new Animation(_texturePink, 16, 16, 1, new Point(14, 2), false)
             },
             {
                 AnimationType.Death,
-                new Animation(_texturePink, 16, 16, 1, new Vector2(15, 2), true)
+                new Animation(_texturePink, 16, 16, 1, new Point(15, 2), true)
             },
             {
                 AnimationType.Default,
-                new Animation(_texturePink, 16, 16, 4, new Vector2(10, 2), true)
+                new Animation(_texturePink, 16, 16, 4, new Point(10, 2), true)
             }
         };
     }
@@ -173,23 +173,23 @@ public static class AnimationLoader
         {
             {
                 AnimationType.WalkRight,
-                new Animation(_textureRed, 16, 16, 2, new Vector2(4, 2), true)
+                new Animation(_textureRed, 16, 16, 2, new Point(4, 2), true)
             },
             {
                 AnimationType.WalkLeft,
-                new Animation(_textureRed, 16, 16, 2, new Vector2(4, 2), true, true, false)
+                new Animation(_textureRed, 16, 16, 2, new Point(4, 2), true, true, false)
             },
             {
                 AnimationType.WalkUp,
-                new Animation(_textureRed, 16, 16, 2, new Vector2(2, 2), true)
+                new Animation(_textureRed, 16, 16, 2, new Point(2, 2), true)
             },
             {
                 AnimationType.WalkDown,
-                new Animation(_textureRed, 16, 16, 2, new Vector2(0, 2), true)
+                new Animation(_textureRed, 16, 16, 2, new Point(0, 2), true)
             },
             {
                 AnimationType.Default,
-                new Animation(_textureRed, 16, 16, 2, new Vector2(2, 2), true)
+                new Animation(_textureRed, 16, 16, 2, new Point(2, 2), true)
             },
         };
     }
@@ -200,19 +200,19 @@ public static class AnimationLoader
         {
             {
                 AnimationType.AttackRight,
-                new Animation(_texturePink, 16, 16, 3, new Vector2(13, 6), false)
+                new Animation(_texturePink, 16, 16, 3, new Point(13, 6), false)
             },
             {
                 AnimationType.AttackLeft,
-                new Animation(_texturePink, 16, 16, 3, new Vector2(13, 6), false, true, false)
+                new Animation(_texturePink, 16, 16, 3, new Point(13, 6), false, true, false)
             },
             {
                 AnimationType.AttackUp,
-                new Animation(_texturePink, 16, 16, 3, new Vector2(13, 6), false)
+                new Animation(_texturePink, 16, 16, 2, new Point(16, 2), false,false, true)
             },
             {
                 AnimationType.AttackDown,
-                new Animation(_texturePink, 16, 16, 3, new Vector2(13, 6), false)
+                new Animation(_texturePink, 16, 16, 2, new Point(16, 2), false, true, true)
             }
         };
     }
@@ -223,19 +223,19 @@ public static class AnimationLoader
         {
             {
                 AnimationType.AttackRight,
-                new Animation(_texturePink, 16, 16, 3, new Vector2(16, 5), false)
+                new Animation(_texturePink, 16, 16, 3, new Point(16, 5), false)
             },
             {
                 AnimationType.AttackLeft,
-                new Animation(_texturePink, 16, 16, 3, new Vector2(16, 5), false, true, false)
+                new Animation(_texturePink, 16, 16, 3, new Point(16, 5), false, true, false)
             },
             {
                 AnimationType.AttackUp,
-                new Animation(_texturePink, 16, 16, 3, new Vector2(16, 5), false)
+                new Animation(_texturePink, 16, 16, 2, new Point(16, 1), false, false, true)
             },
             {
                 AnimationType.AttackDown,
-                new Animation(_texturePink, 16, 16, 3, new Vector2(16, 5), false)
+                new Animation(_texturePink, 16, 16, 2, new Point(16, 1), false, true, false)
             }
         };
     }
@@ -246,19 +246,19 @@ public static class AnimationLoader
         {
             {
                 AnimationType.AttackRight,
-                new Animation(_texturePink, 16, 16, 3, new Vector2(13, 5), false)
+                new Animation(_texturePink, 16, 16, 3, new Point(13, 5), false)
             },
             {
                 AnimationType.AttackLeft,
-                new Animation(_texturePink, 16, 16, 3, new Vector2(13, 5), false, true, false)
+                new Animation(_texturePink, 16, 16, 3, new Point(13, 5), false, true, false)
             },
             {
                 AnimationType.AttackUp,
-                new Animation(_texturePink, 16, 16, 3, new Vector2(13, 5), false)
+                new Animation(_texturePink, 16, 16, 2, new Point(18, 2), false, false, true)
             },
             {
                 AnimationType.AttackDown,
-                new Animation(_texturePink, 16, 16, 3, new Vector2(13, 5), false)
+                new Animation(_texturePink, 16, 16, 2, new Point(18, 2), false, true, false)
             }
         };
     }
@@ -269,19 +269,19 @@ public static class AnimationLoader
         {
             {
                 AnimationType.AttackRight,
-                new Animation(_texturePink, 16, 16, 3, new Vector2(19, 6), false)
+                new Animation(_texturePink, 16, 16, 3, new Point(19, 6), false)
             },
             {
                 AnimationType.AttackLeft,
-                new Animation(_texturePink, 16, 16, 3, new Vector2(19, 6), false, true, false)
+                new Animation(_texturePink, 16, 16, 3, new Point(19, 6), false, true, false)
             },
             {
                 AnimationType.AttackUp,
-                new Animation(_texturePink, 16, 16, 3, new Vector2(19, 6), false)
+                new Animation(_texturePink, 16, 16, 2, new Point(20, 2), false, false, true)
             },
             {
                 AnimationType.AttackDown,
-                new Animation(_texturePink, 16, 16, 3, new Vector2(19, 6), false)
+                new Animation(_texturePink, 16, 16, 2, new Point(20, 2), false, true, false)
             }
         };
     }
@@ -292,19 +292,19 @@ public static class AnimationLoader
         {
             {
                 AnimationType.AttackRight,
-                new Animation(_texturePink, 16, 16, 3, new Vector2(16, 6), false)
+                new Animation(_texturePink, 16, 16, 3, new Point(16, 6), false)
             },
             {
                 AnimationType.AttackLeft,
-                new Animation(_texturePink, 16, 16, 3, new Vector2(16, 6), false, true, false)
+                new Animation(_texturePink, 16, 16, 3, new Point(16, 6), false, true, false)
             },
             {
                 AnimationType.AttackUp,
-                new Animation(_texturePink, 16, 16, 3, new Vector2(16, 6), false)
+                new Animation(_texturePink, 16, 16, 2, new Point(18, 1), false, false, true)
             },
             {
                 AnimationType.AttackDown,
-                new Animation(_texturePink, 16, 16, 3, new Vector2(16, 6), false)
+                new Animation(_texturePink, 16, 16, 2, new Point(18, 1), false, true, false)
             }
         };
     }

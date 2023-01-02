@@ -41,13 +41,13 @@ internal class GameOverScreen : MenuScreen
             if (gameIsWon)
             {
                 //Walk Up Animation
-                Animation = new Animation(Spritesheet, 16, 16, 6, new Vector2(1, 5), true);
+                Animation = new Animation(Spritesheet, 16, 16, 6, new Point(1, 5), true);
                 AnimationPosition = new Vector2(16 * 18, 16 * 21);
             }
             else
             {
                 //Death Animation
-                Animation = new Animation(Spritesheet, 16, 16, 1, new Vector2(4, 6), true);
+                Animation = new Animation(Spritesheet, 16, 16, 1, new Point(4, 6), true);
                 AnimationPosition = new Vector2(16 * 18, 16 * 21);
             }
             Animation.FrameSpeed = FrameSpeed;

@@ -70,7 +70,7 @@ public class AnimationManager
     public void Draw(SpriteBatch spriteBatch, Vector2 position)
     {
         if (CurrentAnimation == null) return;
-        var sourceRec = new Rectangle((int)(_currentFrame + CurrentAnimation.StartFrame.X) * CurrentAnimation.Width, (int)CurrentAnimation.StartFrame.Y * CurrentAnimation.Height, CurrentAnimation.Width, CurrentAnimation.Height);
+        var sourceRec = new Rectangle((_currentFrame + CurrentAnimation.StartFrame.X) * CurrentAnimation.Width, CurrentAnimation.StartFrame.Y * CurrentAnimation.Height, CurrentAnimation.Width, CurrentAnimation.Height);
 
         try
         {
@@ -100,7 +100,7 @@ public class AnimationManager
     public void Draw(SpriteBatch spriteBatch, Vector2 position, Color color)
     {
         if (CurrentAnimation == null) return;
-        var sourceRec = new Rectangle((int)(_currentFrame + CurrentAnimation.StartFrame.X) * CurrentAnimation.Width, (int)CurrentAnimation.StartFrame.Y * CurrentAnimation.Height, CurrentAnimation.Width, CurrentAnimation.Height);
+        var sourceRec = new Rectangle((_currentFrame + CurrentAnimation.StartFrame.X) * CurrentAnimation.Width, CurrentAnimation.StartFrame.Y * CurrentAnimation.Height, CurrentAnimation.Width, CurrentAnimation.Height);
         var scale = new Vector2(1, 1);
 
         try
