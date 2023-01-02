@@ -166,54 +166,12 @@ internal class GameplayScreen : GameScreen
         int playerIndex = (int)ControllingPlayer.Value;
 
         KeyboardState keyboardState = input.CurrentKeyboardStates[playerIndex];
-        GamePadState gamePadState = input.CurrentGamePadStates[playerIndex];
-
-        // The game pauses either if the user presses the pause button, or if
-        // they unplug the active gamepad. This requires us to keep track of
-        // whether a gamepad was ever plugged in, because we don't want to pause
-        // on PC if they are playing with a keyboard and have no gamepad at all!
-        bool gamePadDisconnected = !gamePadState.IsConnected &&
-                                   input.GamePadWasConnected[playerIndex];
-
-        if (input.IsPauseGame(ControllingPlayer) || gamePadDisconnected)
+        
+        if (input.IsPauseGame(ControllingPlayer))
         {
             ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
         }
-        else
-        {
-            Vector2 movement = Vector2.Zero;
-
-            if (keyboardState.IsKeyDown(Keys.Left))
-            {
-                movement.X--;
-            }
-
-            if (keyboardState.IsKeyDown(Keys.Right))
-            {
-                movement.X++;
-            }
-
-            if (keyboardState.IsKeyDown(Keys.Up))
-            {
-                movement.Y--;
-            }
-
-            if (keyboardState.IsKeyDown(Keys.Down))
-            {
-                movement.Y++;
-            }
-
-            Vector2 thumbstick = gamePadState.ThumbSticks.Left;
-
-            movement.X += thumbstick.X;
-            movement.Y -= thumbstick.Y;
-
-            if (movement.Length() > 1)
-            {
-                movement.Normalize();
-            }
-                
-        }
+    
     }
     /// <summary>
     /// Draws the gameplay screen.
