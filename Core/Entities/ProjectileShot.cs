@@ -12,7 +12,7 @@ namespace ECS2022_23.Core.Entities;
 public class ProjectileShot : Entity
 {
     private Weapon Weapon { get; set; }
-    private int AimDirection { get; set; }
+    private Direction AimDirection { get; set; }
     private Vector2 AimVector { get; set; }
     private Rectangle SourceRectangle { get; }
     public float DamagePoints { get; private set; }
@@ -21,7 +21,7 @@ public class ProjectileShot : Entity
 
     public int Origin { get; set; }
 
-    public ProjectileShot(Texture2D texture2D, Rectangle sourceRect, Weapon weapon, int aimDirection) : base(weapon.Position, texture2D)
+    public ProjectileShot(Texture2D texture2D, Rectangle sourceRect, Weapon weapon, Direction aimDirection) : base(weapon.Position, texture2D)
     {
         SourceRectangle = sourceRect;
         Weapon = weapon;
@@ -61,21 +61,22 @@ public class ProjectileShot : Entity
     private Vector2 AddToPositionPlayer(float toAdd)
     {
         Vector2 result; 
+        
         switch (AimDirection)
         {
-            case (int) Direction.Right:
+            case Direction.Right:
                 result = new Vector2(Position.X + toAdd, Position.Y);
                 break;
-            case (int)Direction.Left:
+            case Direction.Left:
                 result = new Vector2(Position.X - toAdd, Position.Y);
                 break;
-            case (int)Direction.Up:
+            case Direction.Up:
                 result = new Vector2(Position.X, Position.Y - toAdd);
                 break;
-            case (int)Direction.Down:
+            case Direction.Down:
                 result = new Vector2(Position.X, Position.Y + toAdd);
                 break;
-            case (int)Direction.None:
+            case Direction.None:
                 result = new Vector2(Position.X + toAdd, Position.Y);
                 break;
             default:

@@ -4,6 +4,7 @@ using System.IO;
 using ECS2022_23.Core.Entities;
 using ECS2022_23.Core.Entities.Characters.enemy;
 using ECS2022_23.Core.Entities.Items;
+using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -31,7 +32,7 @@ public static class ItemLoader
             Debug.WriteLine("Asset not found");
         }
     }
-     public static ProjectileShot CreateLaserShot(Weapon weapon, int aimDirection)
+     public static ProjectileShot CreateLaserShot(Weapon weapon, Direction aimDirection)
      {
          return new ProjectileShot(_texturePink, new Rectangle(19 * 16, 5 * 16, 16, 16), weapon, aimDirection);
      }

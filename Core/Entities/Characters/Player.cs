@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Manager;
@@ -22,20 +23,9 @@ public class Player : Character
     public Weapon Weapon { get; set; }
     public Trinket Trinket { get; set; }
     public Room Room { get; set; }
-    private Input _input;
-
-    public Player(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations) : base(spawn, texture, animations)
-    {
-        Velocity = 0.5f;
-        _input = new Input(this);
-        HP = 10;
-        SpriteWidth = 16;
-        Strength = 5;
-    }
     public Player(Texture2D texture, Dictionary<AnimationType, Animation> animations) : base(Vector2.Zero,texture, animations)
     {
-        Velocity = 0.5f;
-        _input = new Input(this);
+        Velocity = 3f;
         HP = 10;
         SpriteWidth = 16;
         Strength = 5;
@@ -47,8 +37,15 @@ public class Player : Character
         {
             IsAttacking = false;
         }
-        _input.Move(); 
-        _input.Aim();
+
+        if (IsInWater(Rectangle))
+        {
+            if (!ImmuneToWater)
+            {
+                Kill();
+            }
+        }
+        
         Weapon.SetPosition(this);
         AnimationManager.Update(gameTime);
         Weapon?.Update(gameTime);
@@ -77,6 +74,7 @@ public class Player : Character
     public override void Attack()
     {
         if(IsAttacking) return;
+        
         if (Weapon != null)
         {
             Weapon.SetAnimationDirection(AimDirection);
@@ -89,19 +87,19 @@ public class Player : Character
 
         switch (AimDirection)
         {
-            case (int) Direction.Right:
+            case Direction.Right:
                 SetAnimation(AnimationType.AttackRight);
                 break;
-            case (int)Direction.Left:
+            case Direction.Left:
                 SetAnimation(AnimationType.AttackLeft);
                 break;
-            case (int)Direction.Up:
+            case Direction.Up:
                 SetAnimation(AnimationType.AttackUp);
                 break;
-            case (int)Direction.Down:
+            case Direction.Down:
                 SetAnimation(AnimationType.AttackDown);
                 break;
-            case (int)Direction.None:
+            case Direction.None:
                 SetAnimation(AnimationType.AttackRight);
                 break;
             default:
@@ -111,16 +109,38 @@ public class Player : Character
 
         IsAttacking = true;
     }
+    public virtual void Moves(Vector2 direction)
+    {
+        var moveDirection = Helper.Transform.vector2ToDirection(direction);
+        
+        switch (moveDirection)
+        {
+            case Direction.Right:
+                SetAnimation(AnimationType.WalkRight);
+                break;
+            case Direction.Left:
+                SetAnimation(AnimationType.WalkLeft);
+                break;
+            case Direction.Up:
+                SetAnimation(AnimationType.WalkUp);
+                break;
+            case Direction.Down:
+                SetAnimation(AnimationType.WalkDown);
+                break;
+            case Direction.None:
+                SetAnimation(AnimationType.Default);
+                break;
+        }
+        
+        if (!Collides(direction * Velocity)) 
+            return;
+
+        Position += direction * Velocity;
+        
+    }
     public override bool IsInWater(Rectangle body)
     {
-        foreach (var rectangle in Level.WaterLayer)
-        {
-            if (rectangle.Contains(body))
-            {
-                return true;
-            }
-        }
-        return false;
+        return Level.WaterLayer.Any(rectangle => rectangle.Contains(body));
     }
     public override bool Collides(Vector2 velocity)
     {
@@ -222,5 +242,10 @@ public class Player : Character
             Invincible = true;
             SetAnimation(AnimationType.Death);
         }
+    }
+
+    public void Aims(Direction getAimDirection)
+    {
+        AimDirection = getAimDirection;
     }
 }

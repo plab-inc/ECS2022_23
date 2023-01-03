@@ -126,16 +126,16 @@ public static class CombatManager
         
         switch (attacker.AimDirection)
         {
-            case (int) Direction.Right:
+            case Direction.Right:
                 attackRect = new Rectangle(figureRect.X + figureRect.Width, figureRect.Y, weaponRect.Width, weaponRect.Height);
                 break;
-            case (int) Direction.Left:
+            case Direction.Left:
                 attackRect = new Rectangle(figureRect.X - weaponRect.Width, figureRect.Y, weaponRect.Width, weaponRect.Height);
                 break;
-            case (int) Direction.Up:
+            case Direction.Up:
                 attackRect = new Rectangle(figureRect.X, figureRect.Y - weaponRect.Width, weaponRect.Width, weaponRect.Height);
                 break;
-            case (int) Direction.Down:
+            case Direction.Down:
                 attackRect = new Rectangle(figureRect.X, figureRect.Y + figureRect.Height, weaponRect.Width, weaponRect.Height);
                 break;
             default: return false;

@@ -15,7 +15,7 @@ public class Weapon : Item
     public readonly float DamagePoints;
     public readonly WeaponType WeaponType = WeaponType.Close;
     public readonly SoundEffect AttackSound;
-    public int AimDirection;
+    public Direction AimDirection;
 
     public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Rectangle sourceRect, float damagePoints) : base(spawn, texture, sourceRect)
     {
@@ -59,21 +59,21 @@ public class Weapon : Item
         return HashCode.Combine(base.GetHashCode(), DamagePoints, (int)WeaponType, AttackSound);
     }
 
-    public void SetAnimationDirection(int direction)
+    public void SetAnimationDirection(Direction direction)
     {
         AimDirection = direction;
         switch (direction)
         {
-            case (int) Direction.Right:
+            case Direction.Right:
                 SetAnimation(AnimationType.AttackRight);
                 break;
-            case (int)Direction.Left:
+            case Direction.Left:
                 SetAnimation(AnimationType.AttackLeft);
                 break;
-            case (int)Direction.Up:
+            case Direction.Up:
                 SetAnimation(AnimationType.AttackUp);
                 break;
-            case (int)Direction.Down:
+            case Direction.Down:
                 SetAnimation(AnimationType.AttackDown);
                 break;
             case (int) Direction.None:
@@ -96,19 +96,19 @@ public class Weapon : Item
         }
         switch (direction)
         {
-            case (int) Direction.Right:
+            case Direction.Right:
                 Position = new Vector2(playerPos.X + width, playerPos.Y);
                 break;
-            case (int)Direction.Left:
+            case Direction.Left:
                 Position = new Vector2(playerPos.X - width, playerPos.Y);
                 break;
-            case (int)Direction.Up:
+            case Direction.Up:
                 Position = new Vector2(playerPos.X, playerPos.Y - width);
                 break;
-            case (int)Direction.Down:
+            case Direction.Down:
                 Position = new Vector2(playerPos.X, playerPos.Y + width);
                 break;
-            case (int) Direction.None:
+            case Direction.None:
                 Position = new Vector2(playerPos.X + width, playerPos.Y);
                 break;
             default:
