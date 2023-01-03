@@ -111,7 +111,7 @@ public class Player : Character
     }
     public virtual void Moves(Vector2 direction)
     {
-        var moveDirection = Helper.Transform.vector2ToDirection(direction);
+        var moveDirection = Helper.Transform.Vector2ToDirection(direction);
         
         switch (moveDirection)
         {
