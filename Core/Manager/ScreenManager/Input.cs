@@ -74,7 +74,6 @@ public static class Input
 
     public static Action GetPlayerAction()
     {
-        
         if (keyboardState.IsKeyDown(Keys.E) && keyboardState != lastKeyboardState)
         {
             return Action.OpensLocker;

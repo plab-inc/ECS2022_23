@@ -37,13 +37,7 @@ namespace GameStateManagement
 
         public readonly KeyboardState[] LastKeyboardStates;
         public readonly GamePadState[] LastGamePadStates;
-
-        public readonly bool[] GamePadWasConnected;
-
-        public TouchCollection TouchState;
-
-        public readonly List<GestureSample> Gestures = new List<GestureSample>();
-
+        
         #endregion Fields
 
         #region Initialization
@@ -58,8 +52,6 @@ namespace GameStateManagement
 
             LastKeyboardStates = new KeyboardState[MaxInputs];
             LastGamePadStates = new GamePadState[MaxInputs];
-
-            GamePadWasConnected = new bool[MaxInputs];
         }
 
         #endregion Initialization
@@ -109,7 +101,6 @@ namespace GameStateManagement
                         IsNewKeyPress(key, PlayerIndex.Four, out playerIndex));
             }
         }
-
         public bool IsNewKeyPress(Keys key)
         {
             return (CurrentKeyboardStates[0].IsKeyDown(key) && LastKeyboardStates[0].IsKeyUp(key));
@@ -170,8 +161,7 @@ namespace GameStateManagement
                                  out PlayerIndex playerIndex)
         {
             return IsNewKeyPress(Keys.Escape, controllingPlayer, out playerIndex) ||
-                   IsNewButtonPress(Buttons.B, controllingPlayer, out playerIndex) ||
-                   IsNewButtonPress(Buttons.Back, controllingPlayer, out playerIndex);
+                   IsNewKeyPress(Keys.E, controllingPlayer, out playerIndex);
         }
 
         /// <summary>

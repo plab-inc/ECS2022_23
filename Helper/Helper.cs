@@ -18,22 +18,23 @@ public static class DeepCopy
 
 public static class Transform
 {
-    public static Direction vector2ToDirection(Vector2 vector2)
+    public static Direction Vector2ToDirection(Vector2 vector2)
     {
-
-        if (vector2.X > 0 && vector2.Y == 0)
+        var (x, y) = vector2;
+        
+        if (x > 0 && y == 0)
         {
             return Direction.Right;
         }
-        if (vector2.X < 0 && vector2.Y == 0)
+        if (x < 0 && y == 0)
         {
             return Direction.Left;
         }
-        if (vector2.X == 0 && vector2.Y > 0)
+        if (x == 0 && y > 0)
         {
             return Direction.Down;
         }
-        if (vector2.X == 0 && vector2.Y < 0)
+        if (x == 0 && y < 0)
         {
             return Direction.Up;
         }

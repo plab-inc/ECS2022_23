@@ -191,7 +191,7 @@ internal class GameplayScreen : GameScreen
             {
                 if (_player.Level.PlayerIsInfrontOfLocker)
                 {
-                    ScreenManager.AddScreen(new PauseMenuScreen(),ControllingPlayer);
+                    ScreenManager.AddScreen(new LockerMenuScreen(),ControllingPlayer);
                 }
             }
             if (action == Action.UseItem)
