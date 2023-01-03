@@ -23,7 +23,7 @@ using GameStateManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using Action = ECS2022_23.Enums.Action;
 
 #endregion Using Statements
 
@@ -163,15 +163,43 @@ internal class GameplayScreen : GameScreen
         }
 
         // Look up inputs for the active player profile.
-        int playerIndex = (int)ControllingPlayer.Value;
-
-        KeyboardState keyboardState = input.CurrentKeyboardStates[playerIndex];
+        int playerIndex = (int) ControllingPlayer.Value;
         
+
         if (input.IsPauseGame(ControllingPlayer))
         {
             ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
         }
-    
+        else
+        {
+            Input.Update(input,playerIndex);
+            
+            Action action = Input.GetPlayerAction();
+
+            _player.Moves(Input.GetMovementDirection());
+            _player.Aims(Input.GetAimDirection());
+                
+            if (action == Action.Attacks)
+            {
+                _player.Attack();
+            }
+            if (action == Action.PicksUpItem)
+            {
+                ItemManager.PickItemUp(_player);
+            }
+            if (action == Action.OpensLocker)
+            {
+                if (_player.Level.PlayerIsInfrontOfLocker)
+                {
+                    ScreenManager.AddScreen(new PauseMenuScreen(),ControllingPlayer);
+                }
+            }
+            if (action == Action.UseItem)
+            {
+                InventoryManager.UseItemAtIndex(_player, Input.ToolbarKeyDownIndex());
+            }
+            
+        }
     }
     /// <summary>
     /// Draws the gameplay screen.

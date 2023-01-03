@@ -19,6 +19,7 @@ public class Level
     public Player Player { get; set; }
     public bool IsCompleted { get; private set; }
     public bool PlayerIsInfrontOfBossDoor{ get; set; }
+    public bool PlayerIsInfrontOfLocker{ get; set; }
 
     public Room StartRoom
     {
@@ -48,9 +49,11 @@ public class Level
 
             if (room.GetInteractablePositions("Locker").Any())
             {
+                PlayerIsInfrontOfLocker = false;
+                
                 if (Player.Rectangle.Contains(room.GetInteractablePositions("Locker").First()))
                 {
-                    Console.WriteLine("Wow a locker");
+                    PlayerIsInfrontOfLocker = true;
                 }
             }
             if (room.GetInteractablePositions("Bossdoor").Any())
@@ -62,13 +65,6 @@ public class Level
                     PlayerIsInfrontOfBossDoor = true;
                 }
             }
-            if (room.GetInteractablePositions("Chest").Any())
-            {
-                if (Player.Rectangle.Contains(room.GetInteractablePositions("Chest").First()))
-                {
-                    Console.WriteLine("Wow a chest");
-                }
-            }
             if (room.GetInteractablePositions("Exit").Any())
             {
                 if (Player.Rectangle.Contains(room.GetInteractablePositions("Exit").First()))
@@ -76,7 +72,7 @@ public class Level
                     IsCompleted = true;
                 }
             }
-
+            break;
         }
     }
     public void Draw(SpriteBatch spriteBatch)
