@@ -9,13 +9,16 @@ public static class SoundLoader
     public static SoundEffect LaserSound;
     public static Song BackgroundMusic;
     public static SoundEffect BlobDeathSound;
-    
+    public static SoundEffect PlayerDamageSound;
+    public static SoundEffect ShieldBreak;
     
     public static void LoadSounds(ContentManager content)
     {
         LaserSound = content.Load<SoundEffect>("sound/laserSound");
         BackgroundMusic = content.Load<Song>("sound/backgroundMusic");
         BlobDeathSound = content.Load<SoundEffect>("sound/slimeDeath");
+        PlayerDamageSound = content.Load<SoundEffect>("sound/playerDamage");
+        ShieldBreak = content.Load<SoundEffect>("sound/shieldBreak");
     }
     
 }

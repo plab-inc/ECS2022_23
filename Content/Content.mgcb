@@ -247,3 +247,21 @@
 /processor:TiledProcessor
 /build:../Assets/world/tilesets/tilesets/tileset001_tileset_purple.tsx;world/tilesets/tilesets/tileset001_tileset_purple.tsx
 
+#begin sound/levelUp.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/levelUp.wav
+
+#begin sound/playerDamage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/playerDamage.wav
+
+#begin sound/shieldBreak.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/shieldBreak.wav
+
