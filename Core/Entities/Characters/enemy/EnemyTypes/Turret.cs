@@ -13,7 +13,7 @@ namespace ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
 
 public class Turret : Enemy
 {
-    private int attackDelay;
+    private int _attackDelay;
     
     public Turret(Level level, Character target) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(), new StationaryShooter(target), level)
     {
@@ -30,9 +30,9 @@ public class Turret : Enemy
     
     public override void Attack()
     {
-        if (++attackDelay >= 75)
+        if (++_attackDelay >= 75)
         {
-            attackDelay = 0;
+            _attackDelay = 0;
             CombatManager.Shoot(this);
         }
     }

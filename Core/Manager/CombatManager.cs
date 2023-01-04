@@ -5,6 +5,7 @@ using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Characters.enemy;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Sound;
+using ECS2022_23.Core.World;
 using ECS2022_23.Enums;
 using ECS2022_23.Helper;
 using Microsoft.Xna.Framework;
@@ -160,6 +161,13 @@ public static class CombatManager
     {
         var shot = ItemLoader.CreateLaserShot(enemy);
         shot.Level = enemy.Level;
+        _activeShotsByEnemy.Add(shot);
+    }
+
+    public static void Shoot(Vector2 position, Vector2 direction, Level level)
+    {
+        var shot = ItemLoader.CreateLaserShot(position, direction);
+        shot.Level = level;
         _activeShotsByEnemy.Add(shot);
     }
 

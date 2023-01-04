@@ -37,7 +37,14 @@ public class ProjectileShot : Entity
         DamagePoints = enemy.Strength;
         Origin = (int)DamageOrigin.Enemy;
     }
-
+    
+    public ProjectileShot(Vector2 position, Vector2 direction, Texture2D texture2D, Rectangle sourceRect) : base(position, texture2D)
+    {
+        SourceRectangle = sourceRect;
+        AimVector = direction;
+        DamagePoints = 1;
+        Origin = (int)DamageOrigin.Enemy;
+    }
 
     public override void Update(GameTime gameTime)
     { 

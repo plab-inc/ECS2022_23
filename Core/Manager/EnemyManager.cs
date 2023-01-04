@@ -69,7 +69,7 @@ public static class EnemyManager
         
         foreach (var room in Level.Rooms.Skip(1))
         {
-            if (room.Spawns.Count > 0)
+            if (room.Spawns.Count > 0 && !room.MapName.Contains("boss"))
             {
                 int amount = rand.Next(1,Math.Min(room.Spawns.Count, enemyLimit));
                 for (int a = 0; a < amount; a++)
@@ -91,14 +91,23 @@ public static class EnemyManager
                     } while (rety < 4);
                 }
             }
+            if (room.MapName.Contains("boss"))
+            {
+                Enemy boss = new GiantBlob(Level,Player);
+                boss.Position = room.Spawns[0];
+                AddEnemy(boss);
+                CombatManager.AddEnemy(boss);
+            }
         }
+        
+        
         ChooseEnemyForKey();
     }
 
     private static Enemy GetRandomEnemy()
     {
         Random rand = new Random();
-        switch (rand.Next(0, 4))
+        switch (rand.Next(0,4))
         {
             case 0: return new Walker(Level);
             case 1: return new Chaser(Level, Player);
