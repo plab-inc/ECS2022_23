@@ -1,4 +1,4 @@
-using ECS2022_23.Core.Entities.Characters.Enemy.Behavior;
+using ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.World;
@@ -18,7 +18,6 @@ public class Chaser : Enemy
         MoneyReward = 1;
         SpriteHeight = 14;
         SpriteWidth = 14;
-        ActivationRectangle.Location = Position.ToPoint();
         Behavior.SetEnemy(this);
         DeathSound = SoundLoader.BlobDeathSound;
         Strength = 1;

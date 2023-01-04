@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ECS2022_23.Core.Animations;
+using ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.World;
 using ECS2022_23.Enums;
@@ -12,10 +13,8 @@ public abstract class Enemy : Character
 {
     public float XpReward;
     public float MoneyReward;
-    
-    protected Behavior.Behavior Behavior;
+    protected Behavior Behavior;
     protected bool IsActive;
-    
     public Rectangle ActivationRectangle;
     protected int ActivationWith;
     protected int ActivationHeight;
@@ -23,11 +22,11 @@ public abstract class Enemy : Character
 
     public Vector2 AimVector;
     
-    public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Behavior.Behavior behavior, Level level) : base(spawn, texture, animations)
+    public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Behavior behavior, Level level) : base(spawn, texture, animations)
     {
         Behavior = behavior;
-        ActivationWith = 100;
-        ActivationHeight = 100;
+        ActivationWith = 125;
+        ActivationHeight = 125;
         Level = level;
     }
     

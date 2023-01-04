@@ -1,4 +1,4 @@
-using ECS2022_23.Core.Entities.Characters.Enemy.Behavior;
+using ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.Ui;
@@ -17,9 +17,9 @@ public class Turret : Enemy
         HP = 20;
         XpReward = 1;
         MoneyReward = 1;
-        
-        ActivationRectangle.Location = Position.ToPoint();
         Behavior.SetEnemy(this);
+        ActivationHeight = 175;
+        ActivationWith = 175;
         Strength = 1;
         DeathSound = SoundLoader.BlobDeathSound;
     }

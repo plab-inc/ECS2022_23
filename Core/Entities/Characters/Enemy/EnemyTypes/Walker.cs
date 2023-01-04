@@ -1,4 +1,4 @@
-using ECS2022_23.Core.Entities.Characters.Enemy.Behavior;
+using ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.World;
@@ -14,8 +14,6 @@ public class Walker : Enemy
         HP = 10;
         MoneyReward = 1;
         XpReward = 1;
-
-        ActivationRectangle.Location = Position.ToPoint();
         Behavior.SetEnemy(this);
         
         Color = Color.Cyan;

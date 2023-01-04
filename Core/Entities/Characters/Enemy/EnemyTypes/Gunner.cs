@@ -1,4 +1,4 @@
-using ECS2022_23.Core.Entities.Characters.Enemy.Behavior;
+using ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.Ui;
@@ -19,7 +19,8 @@ public class Gunner : Enemy
         MoneyReward = 1;
         XpReward = 1;
         _target = target;
-        ActivationRectangle.Location = Position.ToPoint();
+        ActivationHeight = 150;
+        ActivationWith = 150;
         Behavior.SetEnemy(this);
         Strength = 1;
         
