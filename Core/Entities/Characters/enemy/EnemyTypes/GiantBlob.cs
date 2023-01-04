@@ -16,6 +16,7 @@ public class GiantBlob : Enemy
     public GiantBlob(Level level, Character target) : base(Vector2.Zero, UiLoader.SpriteSheet,
         AnimationLoader.CreateBlobEnemyAnimations(), new Boss(target), level)
     {
+        IsBoss = true;
         Velocity = 0.5f;
         HP = 150;
         XpReward = 5;
@@ -45,14 +46,15 @@ public class GiantBlob : Enemy
 
     private void SpawnBulletWave()
     {
-        CombatManager.Shoot(Position, new Vector2(0,-1), Level);
-        CombatManager.Shoot(Position, new Vector2(1,-1), Level);
-        CombatManager.Shoot(Position, new Vector2(1,0), Level);
-        CombatManager.Shoot(Position, new Vector2(1,1), Level);
-        CombatManager.Shoot(Position, new Vector2(0,1), Level);
-        CombatManager.Shoot(Position, new Vector2(-1,1), Level);
-        CombatManager.Shoot(Position, new Vector2(-1,0), Level);
-        CombatManager.Shoot(Position, new Vector2(-1,-1), Level);
+        Vector2 adjustedPosition = Position + new Vector2(SpriteWidth / 2f, SpriteHeight / 2f);
+        CombatManager.Shoot(adjustedPosition, new Vector2(0,-1), Level);
+        CombatManager.Shoot(adjustedPosition, new Vector2(1,-1), Level);
+        CombatManager.Shoot(adjustedPosition, new Vector2(1,0), Level);
+        CombatManager.Shoot(adjustedPosition, new Vector2(1,1), Level);
+        CombatManager.Shoot(adjustedPosition, new Vector2(0,1), Level);
+        CombatManager.Shoot(adjustedPosition, new Vector2(-1,1), Level);
+        CombatManager.Shoot(adjustedPosition, new Vector2(-1,0), Level);
+        CombatManager.Shoot(adjustedPosition, new Vector2(-1,-1), Level);
     }
 
 }
