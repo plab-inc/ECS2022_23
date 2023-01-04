@@ -26,6 +26,7 @@ public abstract class Enemy : Character
         Behavior = behavior;
         Level = level;
         ActivationRectangle = Rectangle;
+        ActivationRectangle.Location = Rectangle.Location;
     }
     
     public override void Update(GameTime gameTime)
@@ -68,5 +69,14 @@ public abstract class Enemy : Character
     public override void Draw(SpriteBatch spriteBatch)
     {
         AnimationManager.Draw(spriteBatch, Position, Color);
+    }
+
+    public void SetActivationRectangle()
+    {
+        //ActivationRectangle.Inflate(50,50);
+        //ActivationRectangle.Offset(-ActivationRectangle.Width/2,-ActivationRectangle.Height/2);
+        //ActivationRectangle.Width = 50;
+        //ActivationRectangle.Height = 50;
+        //ActivationRectangle.Location -= new Point(ActivationRectangle.Width, ActivationRectangle.Height);
     }
 }

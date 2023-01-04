@@ -58,10 +58,11 @@ public static class EnemyManager
                 continue;
             }
 
-            if (room.Spawns != null && room.Spawns.Count > 0)
+            if (room.Spawns.Count > 0)
             {
                 Enemy en = GetRandomEnemy();
                 en.Position = room.GetRandomSpawnPos(en);
+                en.SetActivationRectangle();
                 AddEnemy(en);
                 CombatManager.AddEnemy(en);
             }
@@ -72,7 +73,7 @@ public static class EnemyManager
     private static Enemy GetRandomEnemy()
     {
         Random rand = new Random();
-        switch (rand.Next(0, 4))
+        switch (1)
         {
             case 0: return new Walker(Level);
             case 1: return new Chaser(Level, Player);
@@ -82,21 +83,10 @@ public static class EnemyManager
 
         return new Walker(Level);
     }
-
-    public static void CheckEnemyStatus()
-    {
-        foreach (var enemy in Enemies)
-        {
-            if (!enemy.IsAlive())
-            {
-                RemoveEnemy(enemy);
-            }
-        }
-    }
-
+    
     public static void Update(GameTime gameTime)
     {
-        Debug.WriteLine("Enemy:" + Enemies[0].ActivationRectangle + "Player: " + Player.Position);
+        Debug.WriteLine("Act Center:" + Enemies[0].ActivationRectangle.Center + "Rec Center: " + Enemies[0].Rectangle.Center);
         foreach (var enemy in Enemies)
         {
             enemy.Update(gameTime);

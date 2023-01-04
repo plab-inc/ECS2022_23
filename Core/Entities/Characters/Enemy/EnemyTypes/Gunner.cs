@@ -19,7 +19,7 @@ public class Gunner : Enemy
         MoneyReward = 1;
         XpReward = 1;
         _target = target;
-        ActivationRectangle.Inflate(35, 35);
+        ActivationRectangle.Location = Position.ToPoint();
         Behavior.SetEnemy(this);
         Strength = 1;
         

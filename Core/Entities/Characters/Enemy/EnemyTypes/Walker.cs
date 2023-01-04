@@ -14,8 +14,8 @@ public class Walker : Enemy
         HP = 10;
         MoneyReward = 1;
         XpReward = 1;
-        
-        ActivationRectangle.Inflate(35, 35);
+
+        ActivationRectangle.Location = Position.ToPoint();
         Behavior.SetEnemy(this);
         
         Color = Color.Cyan;

@@ -18,7 +18,7 @@ public class Turret : Enemy
         XpReward = 1;
         MoneyReward = 1;
         
-        ActivationRectangle.Inflate(35, 35);
+        ActivationRectangle.Location = Position.ToPoint();
         Behavior.SetEnemy(this);
         Strength = 1;
         DeathSound = SoundLoader.BlobDeathSound;
