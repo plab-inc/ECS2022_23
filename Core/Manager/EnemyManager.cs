@@ -14,8 +14,7 @@ namespace ECS2022_23.Core.Manager;
 public static class EnemyManager
 {
     private static List<Enemy> Enemies = new();
-    private static List<Enemy> _enemyTypes = new();
-    private static Enemy _keyEnemy;
+   private static Enemy _keyEnemy;
     public static Player Player { set; get;}
     public static Level Level { set; get; }
 
@@ -63,7 +62,7 @@ public static class EnemyManager
         ChooseEnemyForKey();
     }
 
-    public static void SpawnMultipleEnemies(int max)
+    public static void SpawnMultipleEnemies(int enemyLimit)
     {
         Random rand = new Random();
         List<Vector2> closedList = new List<Vector2>();
@@ -72,30 +71,26 @@ public static class EnemyManager
         {
             if (room.Spawns != null && room.Spawns.Count > 0)
             {
-                int amount = rand.Next(1,room.Spawns.Count);
-                if (amount > max)
-                    amount = max;
-               
+                int amount = rand.Next(1,Math.Max(room.Spawns.Count, enemyLimit));
+                
+                Debug.WriteLine("Spawning: " + amount);
                 for (int a = 0; a < amount; a++)
                 {
-                    Enemy en = GetRandomEnemy();
-                    Vector2 pos = room.GetRandomSpawnPos(en);
                     int rety=0;
                     do
                     {
+                        Enemy en = GetRandomEnemy();
+                        Vector2 pos = room.GetRandomSpawnPos(en);
                         if (!closedList.Contains(pos))
                         {
                             closedList.Add(pos);
                             en.Position = pos;
+                            AddEnemy(en);
+                            CombatManager.AddEnemy(en);
+                            break;
                         }
-                        else
-                        {
-                            pos = room.GetRandomSpawnPos(en);
-                            rety++;
-                        }
+                        rety++;
                     } while (rety < 4);
-                    AddEnemy(en);
-                    CombatManager.AddEnemy(en);
                 }
             }
         }
