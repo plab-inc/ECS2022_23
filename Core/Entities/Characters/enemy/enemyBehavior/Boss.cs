@@ -19,9 +19,9 @@ public class Boss : Chase
         return Vector2.Zero;
     }
     
-    public void Aim(Character Target)
+    public void Aim(Character target)
     {
-        Owner.AimVector = Vector2.Normalize((Target.Position - Owner.Position));
+        Owner.AimVector = Vector2.Normalize((target.Position - Owner.Position));
     }
     
 }

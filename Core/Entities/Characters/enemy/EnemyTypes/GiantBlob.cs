@@ -4,8 +4,6 @@ using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
-
-
 namespace ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
 
 public class GiantBlob : Enemy
@@ -46,7 +44,6 @@ public class GiantBlob : Enemy
 
     private void SpawnBulletWave()
     {
-        //Vector2 adjustedPosition = Position + new Vector2(SpriteWidth / 2f, SpriteHeight / 2f);
         CombatManager.Shoot(Position, new Vector2(0,-1), Level);
         CombatManager.Shoot(Position, new Vector2(1,-1), Level);
         CombatManager.Shoot(Position, new Vector2(1,0), Level);

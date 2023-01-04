@@ -68,7 +68,7 @@ public abstract class Enemy : Character
     public override void Draw(SpriteBatch spriteBatch)
     {
         if(IsBoss)
-            AnimationManager.Draw(spriteBatch, Position, Color.Red, new Vector2(1.5f,1.5f));
+            AnimationManager.Draw(spriteBatch, Position, new Vector2(1.5f,1.5f));
         else    
             AnimationManager.Draw(spriteBatch, Position, Color);
     }
