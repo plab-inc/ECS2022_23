@@ -1,4 +1,5 @@
 ﻿using ECS2022_23.Core.Screens;
+using ECS2022_23.Core.Sound;
 using GameStateManagement;
 using Microsoft.Xna.Framework;
 
@@ -30,6 +31,8 @@ public class Game1 : Game
         _graphics.PreferredBackBufferWidth = ScreenWidth;
         _graphics.PreferredBackBufferHeight = ScreenHeight;
         _graphics.ApplyChanges();
+        
+        SoundManager.Initialize();
         
         base.Initialize();
     }
