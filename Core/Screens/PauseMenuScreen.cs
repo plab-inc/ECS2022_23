@@ -63,7 +63,6 @@ internal class PauseMenuScreen : MenuScreen
 
     protected override void UpdateMenuEntryLocations()
     {
-        
         // start at Y = 175; each X value is generated per entry
         Vector2 position = new Vector2(0f, 300f);
 

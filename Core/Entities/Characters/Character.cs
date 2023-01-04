@@ -13,21 +13,21 @@ public abstract class Character : Entity
 {
     public int MaxHP = 10;
     public float HP;
+    
     public float Strength;
+   
     protected float Velocity;
-    public int AimDirection;
+    public Direction AimDirection;
     public SoundEffect DamageSound;
     public SoundEffect DeathSound;
     public Level Level { get; set; }
     public bool IsAttacking { get; set; }
-    
+
     protected Character(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations) : base(spawn, texture, animations)
     {
         
     }
-
     public abstract void Attack();
-    
     public virtual bool Collides(Vector2 velocity)
     {
         var newPoint = (Position + velocity).ToPoint();

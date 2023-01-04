@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using ECS2022_23.Core.Entities.Characters;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,10 +16,14 @@ public class Key : Item
     {
         
     }
-    
     public override bool Use(Player player)
     {
-        Debug.WriteLine("Tried to use key!");
+        if (player.Level.PlayerIsInfrontOfBossDoor)
+        {
+            player.Level.OpenBossDoor();
+            return true;
+        }
+
         return false;
     }
     

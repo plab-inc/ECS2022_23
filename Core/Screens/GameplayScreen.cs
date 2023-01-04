@@ -23,7 +23,7 @@ using GameStateManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using Action = ECS2022_23.Enums.Action;
 
 #endregion Using Statements
 
@@ -87,7 +87,7 @@ internal class GameplayScreen : GameScreen
             Weapon = ItemLoader.CreatePhaserWeapon(Vector2.Zero)
         };
         InventoryManager.Init(_player);
-        _escape = new Escape(_player, 3,3);
+        _escape = new Escape(_player, 3,1);
         _escape.AttachCamera(_camera);
             
         // once the load has finished, we use ResetElapsedTime to tell the game's
@@ -137,12 +137,12 @@ internal class GameplayScreen : GameScreen
             if (_escape.WasSuccessful)
             {
                 LoadingScreen.Load(ScreenManager, false, null,
-                    new BackgroundScreen(), new GameOverScreen(true));
+                    new BackgroundScreen(true, true), new GameOverScreen(true));
             }
             if (_escape.Failed)
             {
                 LoadingScreen.Load(ScreenManager, false, null,
-                    new BackgroundScreen(), new GameOverScreen(false));
+                    new BackgroundScreen(true, false), new GameOverScreen(false));
             }
                 
             UiManager.Update(_player);
@@ -163,56 +163,42 @@ internal class GameplayScreen : GameScreen
         }
 
         // Look up inputs for the active player profile.
-        int playerIndex = (int)ControllingPlayer.Value;
+        int playerIndex = (int) ControllingPlayer.Value;
+        
 
-        KeyboardState keyboardState = input.CurrentKeyboardStates[playerIndex];
-        GamePadState gamePadState = input.CurrentGamePadStates[playerIndex];
-
-        // The game pauses either if the user presses the pause button, or if
-        // they unplug the active gamepad. This requires us to keep track of
-        // whether a gamepad was ever plugged in, because we don't want to pause
-        // on PC if they are playing with a keyboard and have no gamepad at all!
-        bool gamePadDisconnected = !gamePadState.IsConnected &&
-                                   input.GamePadWasConnected[playerIndex];
-
-        if (input.IsPauseGame(ControllingPlayer) || gamePadDisconnected)
+        if (input.IsPauseGame(ControllingPlayer))
         {
             ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
         }
         else
         {
-            Vector2 movement = Vector2.Zero;
+            Input.Update(input,playerIndex);
+            
+            Action action = Input.GetPlayerAction();
 
-            if (keyboardState.IsKeyDown(Keys.Left))
-            {
-                movement.X--;
-            }
-
-            if (keyboardState.IsKeyDown(Keys.Right))
-            {
-                movement.X++;
-            }
-
-            if (keyboardState.IsKeyDown(Keys.Up))
-            {
-                movement.Y--;
-            }
-
-            if (keyboardState.IsKeyDown(Keys.Down))
-            {
-                movement.Y++;
-            }
-
-            Vector2 thumbstick = gamePadState.ThumbSticks.Left;
-
-            movement.X += thumbstick.X;
-            movement.Y -= thumbstick.Y;
-
-            if (movement.Length() > 1)
-            {
-                movement.Normalize();
-            }
+            _player.Moves(Input.GetMovementDirection());
+            _player.Aims(Input.GetAimDirection());
                 
+            if (action == Action.Attacks)
+            {
+                _player.Attack();
+            }
+            if (action == Action.PicksUpItem)
+            {
+                ItemManager.PickItemUp(_player);
+            }
+            if (action == Action.OpensLocker)
+            {
+                if (_player.Level.PlayerIsInfrontOfLocker)
+                {
+                    ScreenManager.AddScreen(new LockerMenuScreen(),ControllingPlayer);
+                }
+            }
+            if (action == Action.UseItem)
+            {
+                InventoryManager.UseItemAtIndex(_player, Input.ToolbarKeyDownIndex());
+            }
+            
         }
     }
     /// <summary>

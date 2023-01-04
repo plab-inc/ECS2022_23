@@ -21,6 +21,7 @@ public class Chaser : Enemy
         ActivationRectangle.Inflate(35, 35);
         Behavior.SetEnemy(this);
         DeathSound = SoundLoader.BlobDeathSound;
+        Strength = 1;
     }
 
     public override void Attack()

@@ -33,6 +33,9 @@ namespace ECS2022_23.Core.Screens
         private AnimationManager _animationManager;
         private Animation _idleAnimation;
 
+        private bool _gameOver;
+        private bool _playerWins;
+
         #endregion Fields
 
         #region Initialization
@@ -42,6 +45,14 @@ namespace ECS2022_23.Core.Screens
         /// </summary>
         public BackgroundScreen()
         {
+            TransitionOnTime = TimeSpan.FromSeconds(0.5);
+            TransitionOffTime = TimeSpan.FromSeconds(0.5);
+        }
+        public BackgroundScreen(bool gameOver, bool playerWins)
+        {
+            _gameOver = gameOver;
+            _playerWins = playerWins;
+            
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
         }
@@ -58,12 +69,24 @@ namespace ECS2022_23.Core.Screens
             if (content == null)
                 content = new ContentManager(ScreenManager.Game.Services, "Content/gameStateManagement");
 
-            backgroundTexture = content.Load<Texture2D>("background");
-            var _texturePink = content.Load<Texture2D>("../sprites/spritesheet");
-            _idleAnimation = new Animation(_texturePink, 16, 16, 7, new Vector2(1, 2), true);
-            _animationManager = new AnimationManager();
-            _animationManager.SetScale(new Vector2(2,2));
-            _animationManager.Play(_idleAnimation);
+            if (!_gameOver)
+            {
+                backgroundTexture = content.Load<Texture2D>("background_default");
+            }
+
+            if (_gameOver)
+            {
+                if (_playerWins)
+                {
+                    backgroundTexture = content.Load<Texture2D>("background_win");
+                }
+
+                if (!_playerWins)
+                {
+                    backgroundTexture = content.Load<Texture2D>("background_loose");
+
+                }
+            }
         }
 
         /// <summary>
@@ -89,7 +112,6 @@ namespace ECS2022_23.Core.Screens
                                                        bool coveredByOtherScreen)
         {
             base.Update(gameTime, otherScreenHasFocus, false);
-            _animationManager.Update(gameTime);
         }
 
         /// <summary>
@@ -105,7 +127,6 @@ namespace ECS2022_23.Core.Screens
 
             spriteBatch.Draw(backgroundTexture, fullscreen,
                              new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha));
-            _animationManager.Draw(spriteBatch, new Vector2(16*18, 16*21));
             spriteBatch.End();
         }
 

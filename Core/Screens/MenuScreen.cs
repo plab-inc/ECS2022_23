@@ -13,8 +13,11 @@
 
 using System;
 using System.Collections.Generic;
+using ECS2022_23.Core.Animations;
+using ECS2022_23.Core.Manager;
 using GameStateManagement;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 #endregion Using Statements
@@ -33,6 +36,11 @@ internal abstract class MenuScreen : GameScreen
     private int selectedEntry;
     private string menuTitle;
 
+    private AnimationManager _animationManager = new();
+    protected const float FrameSpeed = 0.4f;
+    protected Vector2 AnimationPosition;
+    protected Animation Animation;
+    protected Texture2D Spritesheet;
 
     #endregion Fields
 
@@ -57,6 +65,7 @@ internal abstract class MenuScreen : GameScreen
 
         TransitionOnTime = TimeSpan.FromSeconds(0.5);
         TransitionOffTime = TimeSpan.FromSeconds(0.5);
+        _animationManager.SetScale(new Vector2(2,2));
     }
 
     #endregion Initialization
@@ -181,6 +190,7 @@ internal abstract class MenuScreen : GameScreen
 
             menuEntries[i].Update(this, isSelected, gameTime);
         }
+        _animationManager.Update(gameTime);
     }
 
     /// <summary>
@@ -194,9 +204,17 @@ internal abstract class MenuScreen : GameScreen
         GraphicsDevice graphics = ScreenManager.GraphicsDevice;
         SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
         SpriteFont font = ScreenManager.Font;
-
+        
         spriteBatch.Begin(samplerState: SamplerState.LinearClamp);
-
+        
+        Color titleColor = Color.White * TransitionAlpha;
+        const float titleScale = 1f;
+        Vector2 titlePosition = PlaceTitle(graphics);
+        Vector2 titleOrigin = font.MeasureString(menuTitle) / 2;
+        
+        spriteBatch.DrawString(font, menuTitle, titlePosition, titleColor, 0,
+            titleOrigin, titleScale, SpriteEffects.None, 0);
+        
         // Draw each menu entry in turn.
         for (int i = 0; i < menuEntries.Count; i++)
         {
@@ -207,16 +225,22 @@ internal abstract class MenuScreen : GameScreen
             menuEntry.Draw(this, isSelected, gameTime);
         }
         
-        Color titleColor = Color.White;
-        
-        const float titleScale = 1f;
-
-        Vector2 titlePosition = PlaceTitle(graphics);
-        Vector2 titleOrigin = font.MeasureString(menuTitle) / 2;
-        spriteBatch.DrawString(font, menuTitle, titlePosition, titleColor, 0,
-            titleOrigin, titleScale, SpriteEffects.None, 0);
-            
         spriteBatch.End();
+        
+        spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        _animationManager.Draw(spriteBatch, AnimationPosition);
+        spriteBatch.End();
+    }
+
+    protected void SetAnimation(Animation animation)
+    {
+        _animationManager ??= new AnimationManager();
+        _animationManager.Play(animation);
+    }
+
+    protected void StopAnimation()
+    {
+        _animationManager.Stop();
     }
 
     protected virtual Vector2 PlaceTitle(GraphicsDevice graphics)

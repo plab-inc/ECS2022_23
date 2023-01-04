@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ECS2022_23.Core.Entities.Characters;
+using ECS2022_23.Core.Entities.Items;
+using GameStateManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -13,8 +15,11 @@ public class Level
     public List<Room> Rooms;
     public List<Rectangle> GroundLayer;
     public List<Rectangle> WaterLayer;
+
     public Player Player { get; set; }
-    public bool isCompleted { get; private set; }
+    public bool IsCompleted { get; private set; }
+    public bool PlayerIsInfrontOfBossDoor{ get; set; }
+    public bool PlayerIsInfrontOfLocker{ get; set; }
 
     public Room StartRoom
     {
@@ -22,6 +27,13 @@ public class Level
         {
             return Rooms.First(room => room.MapName.Contains("start"));
         }
+    }
+    public Room BossRoom
+    {
+        get
+        {
+            return Rooms.First(room => room.MapName.Contains("boss"));
+        } 
     }
     public Level(List<Room> rooms, List<Rectangle> groundLayer, List<Rectangle> waterLayer)
     {
@@ -37,38 +49,40 @@ public class Level
 
             if (room.GetInteractablePositions("Locker").Any())
             {
+                PlayerIsInfrontOfLocker = false;
+                
                 if (Player.Rectangle.Contains(room.GetInteractablePositions("Locker").First()))
                 {
-                    Console.WriteLine("Wow a locker");
+                    PlayerIsInfrontOfLocker = true;
                 }
             }
-            if (room.GetInteractablePositions("Chest").Any())
+            if (room.GetInteractablePositions("Bossdoor").Any())
             {
-                if (Player.Rectangle.Contains(room.GetInteractablePositions("Chest").First()))
+                PlayerIsInfrontOfBossDoor = false;
+                
+                if (Player.Rectangle.Contains(room.GetInteractablePositions("Bossdoor").First()))
                 {
-                    Console.WriteLine("Wow a chest");
+                    PlayerIsInfrontOfBossDoor = true;
                 }
             }
             if (room.GetInteractablePositions("Exit").Any())
             {
                 if (Player.Rectangle.Contains(room.GetInteractablePositions("Exit").First()))
                 {
-                    isCompleted = true;
+                    IsCompleted = true;
                 }
             }
-
+            break;
         }
     }
     public void Draw(SpriteBatch spriteBatch)
     {
-        
         DrawBackground(spriteBatch);
         
         foreach (var room in Rooms)
         {
             room.Draw(spriteBatch);
         }
-        
     }
     private Rectangle Background {
         
@@ -94,6 +108,9 @@ public class Level
         var mapTileset = startroom.Map.GetTiledMapTileset(++gid);
         var tileset = startroom.Tilesets[mapTileset.firstgid];
         var tilesetFilename = Path.GetFileNameWithoutExtension(mapTileset.source);
+
+        if (tilesetFilename == null) return;
+        
         var tilesetImageName = tilesetFilename.Replace("_tileset", "_image");
         var tilesetTexture = ContentLoader.TilesetTextures[tilesetImageName];
         
@@ -102,6 +119,17 @@ public class Level
         
         var destination = new Rectangle(Background.X,Background.Y, Background.Width, Background.Height);
         spriteBatch.Draw(tilesetTexture, destination, source, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0);
+    }
+    public void OpenBossDoor()
+    {
+        var bossdoorPos = BossRoom.GetInteractableMapPositions("Bossdoor").First();
+        BossRoom.ChangeTile((int) bossdoorPos.X / BossRoom.Map.TileWidth,(int) bossdoorPos.Y / BossRoom.Map.TileHeight,98,"decoration");
         
+        bossdoorPos = BossRoom.GetInteractablePositions("Bossdoor").First();
+        var x = (int) Math.Floor(bossdoorPos.X / BossRoom.Map.TileWidth) * BossRoom.Map.TileWidth;
+        var y = (int) Math.Floor(bossdoorPos.Y / BossRoom.Map.TileHeight) * BossRoom.Map.TileHeight;
+        var rect = new Rectangle(x, y, 16, 16);
+        
+        GroundLayer.Add(rect);
     }
 }

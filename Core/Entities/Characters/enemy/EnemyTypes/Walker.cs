@@ -20,6 +20,8 @@ public class Walker : Enemy
         
         Color = Color.Cyan;
         DeathSound = SoundLoader.BlobDeathSound;
+
+        Strength = 1;
     }
    
    public override void Attack()

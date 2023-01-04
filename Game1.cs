@@ -9,14 +9,10 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private ScreenManager _screenManager;
     
-    private static readonly string[] preloadAssets =
-    {
-        "gameStateManagement/gradient",
-    };
+    private static readonly string[] PreloadAssets = System.Array.Empty<string>();
     
     public static int ScreenWidth = 1280;
     public static int ScreenHeight = 720;
-    
     
     public Game1()
     {
@@ -39,7 +35,7 @@ public class Game1 : Game
     }
     protected override void LoadContent()
     {
-        foreach (string asset in preloadAssets)
+        foreach (string asset in PreloadAssets)
         {
             Content.Load<object>(asset);
         }
