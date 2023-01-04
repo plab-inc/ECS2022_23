@@ -24,6 +24,7 @@ internal class LockerMenuScreen : MenuScreen
         {
             OnCancel(playerIndex);
         }
+        
     }
 
     public override void Draw(GameTime gameTime)
@@ -33,7 +34,6 @@ internal class LockerMenuScreen : MenuScreen
         SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
         SpriteFont font = ScreenManager.Font;
         Color fontColor = Color.White * TransitionAlpha;
-
         
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
         
@@ -47,12 +47,10 @@ internal class LockerMenuScreen : MenuScreen
 
         
         spriteBatch.Begin(samplerState: SamplerState.LinearClamp);
-
         spriteBatch.DrawString(font, usageText, usageTextPosition, fontColor, 0,
             usageTextOrigin, 0.5f, SpriteEffects.None, 0);
 
         spriteBatch.End();
-        
         
     }
 }
