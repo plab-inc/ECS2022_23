@@ -88,11 +88,23 @@
 /processorParam:Quality=Best
 /build:../Assets/sound/LaserSound.wav;sound/laserSound.wav
 
+#begin ../Assets/sound/playerDamage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:../Assets/sound/playerDamage.wav;sound/playerDamage.wav
+
 #begin ../Assets/sound/pop.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:../Assets/sound/pop.wav;sound/slimeDeath.wav
+
+#begin ../Assets/sound/shieldBreak.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:../Assets/sound/shieldBreak.wav;sound/shieldBreak.wav
 
 #begin ../Assets/sprites/astro.png
 /importer:TextureImporter

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Entities.Items;
+using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.Sound;
 using ECS2022_23.Core.World;
@@ -29,6 +30,8 @@ public class Player : Character
         HP = 10;
         SpriteWidth = 16;
         Strength = 5;
+        DamageSound = SoundLoader.PlayerDamageSound;
+        Armor = 1;
     }
     
     public override void Update(GameTime gameTime)
@@ -227,14 +230,21 @@ public class Player : Character
     public void TakesDamage(float damagePoints)
     {
         if (Invincible) return;
-        
+
+        bool shieldBreak = Armor > 0;
+
         Armor -= damagePoints;
+            
+        if(shieldBreak && Armor<=0)
+            SoundManager.Play(SoundLoader.ShieldBreak);
+        
         if (Armor < 0)
         {
             HP += Armor;
             Armor = 0;
             Invincible = true;
             SetAnimation(AnimationType.Hurt);
+            SoundManager.Play(DamageSound);
         }
            
         if (!IsAlive())
