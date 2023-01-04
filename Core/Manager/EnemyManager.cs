@@ -66,6 +66,7 @@ public static class EnemyManager
     public static void SpawnMultipleEnemies(int max)
     {
         Random rand = new Random();
+        List<Vector2> closedList = new List<Vector2>();
         
         foreach (var room in Level.Rooms.Skip(1))
         {
@@ -78,7 +79,21 @@ public static class EnemyManager
                 for (int a = 0; a < amount; a++)
                 {
                     Enemy en = GetRandomEnemy();
-                    en.Position = room.GetRandomSpawnPos(en);
+                    Vector2 pos = room.GetRandomSpawnPos(en);
+                    int rety=0;
+                    do
+                    {
+                        if (!closedList.Contains(pos))
+                        {
+                            closedList.Add(pos);
+                            en.Position = pos;
+                        }
+                        else
+                        {
+                            pos = room.GetRandomSpawnPos(en);
+                            rety++;
+                        }
+                    } while (rety < 4);
                     AddEnemy(en);
                     CombatManager.AddEnemy(en);
                 }
