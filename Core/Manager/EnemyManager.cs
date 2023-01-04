@@ -98,12 +98,13 @@ public static class EnemyManager
     private static Enemy GetRandomEnemy()
     {
         Random rand = new Random();
-        switch (rand.Next(0, 4))
+        switch (4)
         {
             case 0: return new Walker(Level);
             case 1: return new Chaser(Level, Player);
             case 2: return new Turret(Level, Player);
             case 3: return new Gunner(Level, Player);
+            case 4: return new GiantBlob(Level, Player);
         }
 
         return new Walker(Level);

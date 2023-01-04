@@ -1,23 +1,27 @@
-﻿using System.Diagnostics;
-using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
 
 namespace ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
 
-public class Chase : Behavior
+public class Boss : Chase
 {
-    protected Character Target;
-    public Chase(Character target)
+    public Boss(Character target) : base(target)
     {
-        Target = target;
+        
     }
-
+    
     public override Vector2 Move(Vector2 position, float velocity)
     {
+        Aim(Target);
         Vector2 direction = Vector2.Normalize(Target.Position - position) * velocity;
         if(Owner.Collides(direction))
             return direction;
         
         return Vector2.Zero;
     }
+    
+    public void Aim(Character Target)
+    {
+        Owner.AimVector = Vector2.Normalize((Target.Position - Owner.Position));
+    }
+    
 }
