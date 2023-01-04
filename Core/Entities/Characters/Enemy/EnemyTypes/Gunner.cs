@@ -1,15 +1,12 @@
-using System.Collections.Generic;
-using ECS2022_23.Core.Animations;
-using ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
+using ECS2022_23.Core.Entities.Characters.Enemy.Behavior;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.World;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
+namespace ECS2022_23.Core.Entities.Characters.Enemy.EnemyTypes;
 
 public class Gunner : Enemy
 {

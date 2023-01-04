@@ -1,10 +1,10 @@
-using ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
+using ECS2022_23.Core.Entities.Characters.Enemy.Behavior;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
 
-namespace ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
+namespace ECS2022_23.Core.Entities.Characters.Enemy.EnemyTypes;
 
 public class Chaser : Enemy
 {

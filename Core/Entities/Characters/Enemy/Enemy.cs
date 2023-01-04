@@ -1,27 +1,27 @@
 ﻿using System.Collections.Generic;
 using ECS2022_23.Core.Animations;
-using ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
+using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.World;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.Entities.Characters.enemy;
+namespace ECS2022_23.Core.Entities.Characters.Enemy;
 
 public abstract class Enemy : Character
 {
     public float XpReward;
     public float MoneyReward;
     
-    protected Behavior Behavior;
-    protected bool _isActive=true;
+    protected Behavior.Behavior Behavior;
+    protected bool IsActive;
     
-    protected Rectangle ActivationRectangle;
+    public Rectangle ActivationRectangle;
     protected Color Color = Color.White;
 
     public Vector2 AimVector;
     
-    public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Behavior behavior, Level level) : base(spawn, texture, animations)
+    public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Behavior.Behavior behavior, Level level) : base(spawn, texture, animations)
     {
         Behavior = behavior;
         Level = level;
@@ -30,13 +30,14 @@ public abstract class Enemy : Character
     
     public override void Update(GameTime gameTime)
     {
-        if (_isActive)
+        SetAnimation(AnimationType.WalkDown);
+        if (IsActive)
         {
            Act();
         }
         else
         {
-            _isActive = Activate();
+            IsActive = Activate();
         }
         
         if(!IsAlive())
@@ -53,15 +54,15 @@ public abstract class Enemy : Character
    private void Act()
     {
         Position += Behavior.Move(Position, Velocity);
-        
-        SetAnimation(AnimationType.WalkDown);
-        // Check for Attack
         Attack();
     }
 
    private bool Activate()
     {
-        return true;
+        if(ActivationRectangle.Contains(EnemyManager.Player.Position))
+            return true;
+
+        return false;
     }
  
     public override void Draw(SpriteBatch spriteBatch)

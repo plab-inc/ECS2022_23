@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using ECS2022_23.Core.Entities.Characters;
-using ECS2022_23.Core.Entities.Characters.enemy;
-using ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
+using ECS2022_23.Core.Entities.Characters.Enemy;
+using ECS2022_23.Core.Entities.Characters.Enemy.EnemyTypes;
 using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -50,7 +50,6 @@ public static class EnemyManager
     public static void SpawnEnemies()
     {
         bool skipFirst = true;
-        Random rand = new Random();
         foreach (var room in Level.Rooms)
         {
             if (skipFirst)
@@ -97,6 +96,7 @@ public static class EnemyManager
 
     public static void Update(GameTime gameTime)
     {
+        Debug.WriteLine("Enemy:" + Enemies[0].ActivationRectangle + "Player: " + Player.Position);
         foreach (var enemy in Enemies)
         {
             enemy.Update(gameTime);
