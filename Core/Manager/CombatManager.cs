@@ -23,6 +23,7 @@ public static class CombatManager
     {
         _activeEnemies = new List<Enemy>();
         _activeShotsByPlayer = new List<ProjectileShot>();
+        _activeShotsByEnemy = new List<ProjectileShot>();
         _damageCooldown = new Timer(2f);
     }
     
