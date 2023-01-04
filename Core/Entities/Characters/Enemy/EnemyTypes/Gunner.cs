@@ -31,7 +31,7 @@ public class Gunner : Enemy
     {
         if (Vector2.Distance(Position, _target.Position)>50)
         {
-            if (++delay > 30)
+            if (++delay > 50)
             {
                 delay = 0;
                 CombatManager.Shoot(this);

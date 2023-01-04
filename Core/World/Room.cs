@@ -170,6 +170,18 @@ public class Room
 
         return interactablesRelativeToWorld;
     }
+    public List<Vector2> GetInteractableRectangle(String interactableName)
+    {
+        var interactables = GetInteractableMapPositions(interactableName);
+        var interactablesRelativeToWorld = new List<Vector2>();
+        
+        foreach (var interactable in interactables)
+        {
+            interactablesRelativeToWorld.Add(interactable + new Vector2(_renderPos.X,_renderPos.Y));
+        }
+
+        return interactablesRelativeToWorld;
+    }
     
     public List<Vector2> GetInteractableMapPositions(String interactableName)
     {
