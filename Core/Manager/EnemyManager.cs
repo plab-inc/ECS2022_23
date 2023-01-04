@@ -69,11 +69,9 @@ public static class EnemyManager
         
         foreach (var room in Level.Rooms.Skip(1))
         {
-            if (room.Spawns != null && room.Spawns.Count > 0)
+            if (room.Spawns.Count > 0)
             {
-                int amount = rand.Next(1,Math.Max(room.Spawns.Count, enemyLimit));
-                
-                Debug.WriteLine("Spawning: " + amount);
+                int amount = rand.Next(1,Math.Min(room.Spawns.Count, enemyLimit));
                 for (int a = 0; a < amount; a++)
                 {
                     int rety=0;
