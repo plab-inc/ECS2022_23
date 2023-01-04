@@ -76,10 +76,12 @@ internal class GameplayScreen : GameScreen
         };
             
         ContentLoader.Load(content);
+        
         SoundLoader.LoadSounds(content);
+        SoundManager.PlayMusic(SoundLoader.BackgroundMusic);
+        
         AnimationLoader.Load(content);
         ItemLoader.Load(content);
-        SoundManager.Initialize();
         UiLoader.Load(content, ScreenManager.GraphicsDevice);
 
         _player = new Player(content.Load<Texture2D>("sprites/astro"), AnimationLoader.CreatePlayerAnimations())
@@ -119,7 +121,9 @@ internal class GameplayScreen : GameScreen
         bool coveredByOtherScreen)
     {
         base.Update(gameTime, otherScreenHasFocus, false);
-
+        
+        SoundManager.Update(gameTime);
+        
         // Gradually fade in or out depending on whether we are covered by the pause screen.
         if (coveredByOtherScreen)
         {

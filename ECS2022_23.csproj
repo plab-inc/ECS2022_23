@@ -36,6 +36,12 @@
     </ItemGroup>
     <ItemGroup>
       <Content Include="Assets\GameStateManagement\blank.png" />
+      <Content Include="Assets\Sprites\astro.png" />
+      <Content Include="Assets\Sprites\spritesheet.png" />
+      <Content Include="Assets\Sprites\spritesheet_red.png" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Assets\sound" />
     </ItemGroup>
     <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
         <Message Text="Restoring dotnet tools" Importance="High" />
