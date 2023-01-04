@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.World;
+using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,30 +13,25 @@ public abstract class Character : Entity
 {
     public int MaxHP = 10;
     public float HP;
+    
     public float Strength;
-    public float Velocity;
-    protected int SpriteWidth;
-    public int AimDirection;
+   
+    protected float Velocity;
+    public Direction AimDirection;
     public SoundEffect DamageSound;
     public SoundEffect DeathSound;
     public Level Level { get; set; }
     public bool IsAttacking { get; set; }
-    
-    protected Character(Vector2 spawn, Texture2D texture) : base(spawn, texture)
-    {
-    }
-    
-    protected Character(Vector2 spawn, Texture2D texture, Dictionary<string, Animation> animations) : base(spawn, texture, animations)
+
+    protected Character(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations) : base(spawn, texture, animations)
     {
         
     }
-
     public abstract void Attack();
-    
     public virtual bool Collides(Vector2 velocity)
     {
         var newPoint = (Position + velocity).ToPoint();
-        var body = new Rectangle(newPoint, new Point(Texture.Width, Texture.Height));
+        var body = new Rectangle(newPoint, new Point(SpriteWidth, SpriteHeight)); // 16x16 für Sprite größe.
         var feet = new Point(body.Center.X, body.Bottom);
 
         if (velocity == Vector2.Zero)
@@ -85,6 +81,10 @@ public abstract class Character : Entity
 
     public void Kill()
     {
+        if (Animations != null)
+        {
+            SetAnimation(AnimationType.Death);
+        }
         HP = 0;
     }
 

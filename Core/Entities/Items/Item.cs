@@ -13,14 +13,14 @@ public abstract class Item : Entity
         SourceRect = sourceRect;
     }
 
-    public virtual void Use()
+    public virtual bool Use()
     {
-
+        return true;
     }
 
-    public virtual void Use(Player player)
+    public virtual bool Use(Player player)
     {
-
+        return true;
     }
 
     public override void Draw(SpriteBatch spriteBatch)
@@ -42,7 +42,7 @@ public abstract class Item : Entity
         }
 
         var toCompare = (Item)obj;
-        return Equals(toCompare) && toCompare.Texture == this.Texture;
+        return Equals(toCompare) && toCompare.Texture == this.Texture && Position == toCompare.Position;
     }
 
     private bool Equals(Item other)

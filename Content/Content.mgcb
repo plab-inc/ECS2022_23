@@ -21,100 +21,66 @@
 /processorParam:TextureFormat=Compressed
 /build:../Assets/fonts/rainyhearts.spritefont;fonts/rainyhearts.spritefont
 
-#begin ../Assets/rooms/boss000.tmx
-/importer:TiledImporter
-/processor:TiledProcessor
-/build:../Assets/rooms/boss000.tmx;rooms/boss000.tmx
+#begin ../Assets/GameStateManagement/background_default.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Assets/GameStateManagement/background_default.png;gameStateManagement/background_default.png
 
-#begin ../Assets/rooms/room000.tmx
-/importer:TiledImporter
-/processor:TiledProcessor
-/build:../Assets/rooms/room000.tmx;rooms/room000.tmx
+#begin ../Assets/GameStateManagement/background_loose.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Assets/GameStateManagement/background_loose.png;gameStateManagement/background_loose.png
 
-#begin ../Assets/rooms/room001.tmx
-/importer:TiledImporter
-/processor:TiledProcessor
-/build:../Assets/rooms/room001.tmx;rooms/room001.tmx
+#begin ../Assets/GameStateManagement/background_win.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Assets/GameStateManagement/background_win.png;gameStateManagement/background_win.png
 
-#begin ../Assets/rooms/room002.tmx
-/importer:TiledImporter
-/processor:TiledProcessor
-/build:../Assets/rooms/room002.tmx;rooms/room002.tmx
+#begin ../Assets/GameStateManagement/menufont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:../Assets/GameStateManagement/menufont.spritefont;gameStateManagement/menufont.spritefont
 
-#begin ../Assets/rooms/room003.tmx
-/importer:TiledImporter
-/processor:TiledProcessor
-/build:../Assets/rooms/room003.tmx;rooms/room003.tmx
+#begin ../Assets/sound/backgroundMusic.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:../Assets/sound/backgroundMusic.mp3;sound/backgroundMusic.mp3
 
-#begin ../Assets/rooms/room004.tmx
-/importer:TiledImporter
-/processor:TiledProcessor
-/build:../Assets/rooms/room004.tmx;rooms/room004.tmx
+#begin ../Assets/sound/LaserSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:../Assets/sound/LaserSound.wav;sound/laserSound.wav
 
-#begin ../Assets/rooms/room005.tmx
-/importer:TiledImporter
-/processor:TiledProcessor
-/build:../Assets/rooms/room005.tmx;rooms/room005.tmx
-
-#begin ../Assets/rooms/room006.tmx
-/importer:TiledImporter
-/processor:TiledProcessor
-/build:../Assets/rooms/room006.tmx;rooms/room006.tmx
-
-#begin ../Assets/rooms/room007.tmx
-/importer:TiledImporter
-/processor:TiledProcessor
-/build:../Assets/rooms/room007.tmx;rooms/room007.tmx
-
-#begin ../Assets/rooms/room008.tmx
-/importer:TiledImporter
-/processor:TiledProcessor
-/build:../Assets/rooms/room008.tmx;rooms/room008.tmx
-
-#begin ../Assets/rooms/room009.tmx
-/importer:TiledImporter
-/processor:TiledProcessor
-/build:../Assets/rooms/room009.tmx;rooms/room009.tmx
-
-#begin ../Assets/rooms/room010.tmx
-/importer:TiledImporter
-/processor:TiledProcessor
-/build:../Assets/rooms/room010.tmx;rooms/room010.tmx
-
-#begin ../Assets/rooms/room011.tmx
-/importer:TiledImporter
-/processor:TiledProcessor
-/build:../Assets/rooms/room011.tmx;rooms/room011.tmx
-
-#begin ../Assets/rooms/room012.tmx
-/importer:TiledImporter
-/processor:TiledProcessor
-/build:../Assets/rooms/room012.tmx;rooms/room012.tmx
-
-#begin ../Assets/rooms/room013.tmx
-/importer:TiledImporter
-/processor:TiledProcessor
-/build:../Assets/rooms/room013.tmx;rooms/room013.tmx
-
-#begin ../Assets/rooms/room014.tmx
-/importer:TiledImporter
-/processor:TiledProcessor
-/build:../Assets/rooms/room014.tmx;rooms/room014.tmx
-
-#begin ../Assets/rooms/start000.tmx
-/importer:TiledImporter
-/processor:TiledProcessor
-/build:../Assets/rooms/start000.tmx;rooms/start000.tmx
-
-#begin ../Assets/rooms/start001.tmx
-/importer:TiledImporter
-/processor:TiledProcessor
-/build:../Assets/rooms/start001.tmx;rooms/start001.tmx
-
-#begin ../Assets/rooms/start002.tmx
-/importer:TiledImporter
-/processor:TiledProcessor
-/build:../Assets/rooms/start002.tmx;rooms/start002.tmx
+#begin ../Assets/sound/pop.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:../Assets/sound/pop.wav;sound/slimeDeath.wav
 
 #begin ../Assets/sprites/astro.png
 /importer:TextureImporter
@@ -152,7 +118,107 @@
 /processorParam:TextureFormat=Color
 /build:../Assets/sprites/spritesheet.png;sprites/spritesheet.png
 
-#begin ../Assets/tilesets/images/tileset001_image_purple.png
+#begin ../Assets/world/rooms/boss000.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/world/rooms/boss000.tmx;world/rooms/boss000.tmx
+
+#begin ../Assets/world/rooms/boss001.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/world/rooms/boss001.tmx;world/rooms/boss001.tmx
+
+#begin ../Assets/world/rooms/room000.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/world/rooms/room000.tmx;world/rooms/room000.tmx
+
+#begin ../Assets/world/rooms/room001.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/world/rooms/room001.tmx;world/rooms/room001.tmx
+
+#begin ../Assets/world/rooms/room002.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/world/rooms/room002.tmx;world/rooms/room002.tmx
+
+#begin ../Assets/world/rooms/room003.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/world/rooms/room003.tmx;world/rooms/room003.tmx
+
+#begin ../Assets/world/rooms/room004.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/world/rooms/room004.tmx;world/rooms/room004.tmx
+
+#begin ../Assets/world/rooms/room005.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/world/rooms/room005.tmx;world/rooms/room005.tmx
+
+#begin ../Assets/world/rooms/room006.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/world/rooms/room006.tmx;world/rooms/room006.tmx
+
+#begin ../Assets/world/rooms/room007.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/world/rooms/room007.tmx;world/rooms/room007.tmx
+
+#begin ../Assets/world/rooms/room008.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/world/rooms/room008.tmx;world/rooms/room008.tmx
+
+#begin ../Assets/world/rooms/room009.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/world/rooms/room009.tmx;world/rooms/room009.tmx
+
+#begin ../Assets/world/rooms/room010.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/world/rooms/room010.tmx;world/rooms/room010.tmx
+
+#begin ../Assets/world/rooms/room011.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/world/rooms/room011.tmx;world/rooms/room011.tmx
+
+#begin ../Assets/world/rooms/room012.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/world/rooms/room012.tmx;world/rooms/room012.tmx
+
+#begin ../Assets/world/rooms/room013.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/world/rooms/room013.tmx;world/rooms/room013.tmx
+
+#begin ../Assets/world/rooms/room014.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/world/rooms/room014.tmx;world/rooms/room014.tmx
+
+#begin ../Assets/world/rooms/start000.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/world/rooms/start000.tmx;world/rooms/start000.tmx
+
+#begin ../Assets/world/rooms/start001.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/world/rooms/start001.tmx;world/rooms/start001.tmx
+
+#begin ../Assets/world/rooms/start002.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/world/rooms/start002.tmx;world/rooms/start002.tmx
+
+#begin ../Assets/world/tilesets/images/tileset001_image_purple.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -162,28 +228,10 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:../Assets/tilesets/images/tileset001_image_purple.png;tilesets/images/tileset001_image_purple.png
+/build:../Assets/world/tilesets/images/tileset001_image_purple.png;world/tilesets/images/tileset001_image_purple.png
 
-#begin ../Assets/tilesets/tilesets/tileset001_tileset_purple.tsx
+#begin ../Assets/world/tilesets/tilesets/tileset001_tileset_purple.tsx
 /importer:TiledImporter
 /processor:TiledProcessor
-/build:../Assets/tilesets/tilesets/tileset001_tileset_purple.tsx;tilesets/tilesets/tileset001_tileset_purple.tsx
-
-#begin sound/backgroundMusic.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:sound/backgroundMusic.mp3
-
-#begin sound/LaserSound.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:sound/LaserSound.wav;sound/laserSound.wav
-
-#begin sound/pop.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:sound/pop.wav;sound/slimeDeath.wav
+/build:../Assets/world/tilesets/tilesets/tileset001_tileset_purple.tsx;world/tilesets/tilesets/tileset001_tileset_purple.tsx
 
