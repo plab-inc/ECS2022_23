@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using ECS2022_23.Core.Entities.Characters;
-using ECS2022_23.Core.Entities.Characters.enemy;
-using ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
+using ECS2022_23.Core.Entities.Characters.Enemy;
+using ECS2022_23.Core.Entities.Characters.Enemy.EnemyTypes;
 using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -83,6 +83,7 @@ public static class EnemyManager
                         {
                             closedList.Add(pos);
                             en.Position = pos;
+                            en.SetActivationRectangle();
                             AddEnemy(en);
                             CombatManager.AddEnemy(en);
                             break;
@@ -98,7 +99,7 @@ public static class EnemyManager
     private static Enemy GetRandomEnemy()
     {
         Random rand = new Random();
-        switch (rand.Next(0, 4))
+        switch (1)
         {
             case 0: return new Walker(Level);
             case 1: return new Chaser(Level, Player);

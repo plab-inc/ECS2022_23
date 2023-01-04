@@ -17,6 +17,8 @@ public abstract class Enemy : Character
     protected bool IsActive;
     
     public Rectangle ActivationRectangle;
+    protected int ActivationWith;
+    protected int ActivationHeight;
     protected Color Color = Color.White;
 
     public Vector2 AimVector;
@@ -24,9 +26,9 @@ public abstract class Enemy : Character
     public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Behavior.Behavior behavior, Level level) : base(spawn, texture, animations)
     {
         Behavior = behavior;
+        ActivationWith = 100;
+        ActivationHeight = 100;
         Level = level;
-        ActivationRectangle = Rectangle;
-        ActivationRectangle.Location = Rectangle.Location;
     }
     
     public override void Update(GameTime gameTime)
@@ -73,10 +75,8 @@ public abstract class Enemy : Character
 
     public void SetActivationRectangle()
     {
-        //ActivationRectangle.Inflate(50,50);
-        //ActivationRectangle.Offset(-ActivationRectangle.Width/2,-ActivationRectangle.Height/2);
-        //ActivationRectangle.Width = 50;
-        //ActivationRectangle.Height = 50;
-        //ActivationRectangle.Location -= new Point(ActivationRectangle.Width, ActivationRectangle.Height);
+        Rectangle rec = new Rectangle((int)Position.X, (int)Position.Y, ActivationWith, ActivationHeight);
+        rec.Offset(-ActivationWith/2, -ActivationHeight/2);
+        ActivationRectangle = rec;
     }
 }
