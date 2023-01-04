@@ -21,8 +21,8 @@ public class GiantBlob : Enemy
         HP = 150;
         XpReward = 5;
         MoneyReward = 10;
-        SpriteHeight = 16;
-        SpriteWidth = 16;
+        SpriteHeight = 32;
+        SpriteWidth = 32;
         Behavior.SetEnemy(this);
         DeathSound = SoundLoader.BlobDeathSound;
         Strength = 2;
@@ -30,7 +30,7 @@ public class GiantBlob : Enemy
 
     public override void Attack()
     {
-        if (++_bulletWaveDelay>300)
+        if (++_bulletWaveDelay>280)
         {
             _bulletWaveDelay = 0;
             SpawnBulletWave();
@@ -46,15 +46,15 @@ public class GiantBlob : Enemy
 
     private void SpawnBulletWave()
     {
-        Vector2 adjustedPosition = Position + new Vector2(SpriteWidth / 2f, SpriteHeight / 2f);
-        CombatManager.Shoot(adjustedPosition, new Vector2(0,-1), Level);
-        CombatManager.Shoot(adjustedPosition, new Vector2(1,-1), Level);
-        CombatManager.Shoot(adjustedPosition, new Vector2(1,0), Level);
-        CombatManager.Shoot(adjustedPosition, new Vector2(1,1), Level);
-        CombatManager.Shoot(adjustedPosition, new Vector2(0,1), Level);
-        CombatManager.Shoot(adjustedPosition, new Vector2(-1,1), Level);
-        CombatManager.Shoot(adjustedPosition, new Vector2(-1,0), Level);
-        CombatManager.Shoot(adjustedPosition, new Vector2(-1,-1), Level);
+        //Vector2 adjustedPosition = Position + new Vector2(SpriteWidth / 2f, SpriteHeight / 2f);
+        CombatManager.Shoot(Position, new Vector2(0,-1), Level);
+        CombatManager.Shoot(Position, new Vector2(1,-1), Level);
+        CombatManager.Shoot(Position, new Vector2(1,0), Level);
+        CombatManager.Shoot(Position, new Vector2(1,1), Level);
+        CombatManager.Shoot(Position, new Vector2(0,1), Level);
+        CombatManager.Shoot(Position, new Vector2(-1,1), Level);
+        CombatManager.Shoot(Position, new Vector2(-1,0), Level);
+        CombatManager.Shoot(Position, new Vector2(-1,-1), Level);
     }
 
 }
