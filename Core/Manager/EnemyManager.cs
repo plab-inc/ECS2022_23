@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Characters.enemy;
 using ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
@@ -13,8 +14,7 @@ namespace ECS2022_23.Core.Manager;
 public static class EnemyManager
 {
     private static List<Enemy> Enemies = new();
-    private static List<Enemy> _enemyTypes = new();
-    private static Enemy _keyEnemy;
+   private static Enemy _keyEnemy;
     public static Player Player { set; get;}
     public static Level Level { set; get; }
 
@@ -49,22 +49,47 @@ public static class EnemyManager
 
     public static void SpawnEnemies()
     {
-        bool skipFirst = true;
-        Random rand = new Random();
-        foreach (var room in Level.Rooms)
+        foreach (var room in Level.Rooms.Skip(1))
         {
-            if (skipFirst)
-            {
-                skipFirst = false;
-                continue;
-            }
-
             if (room.Spawns != null && room.Spawns.Count > 0)
             {
                 Enemy en = GetRandomEnemy();
                 en.Position = room.GetRandomSpawnPos(en);
                 AddEnemy(en);
                 CombatManager.AddEnemy(en);
+            }
+        }
+        ChooseEnemyForKey();
+    }
+
+    public static void SpawnMultipleEnemies(int enemyLimit)
+    {
+        Random rand = new Random();
+        List<Vector2> closedList = new List<Vector2>();
+        
+        foreach (var room in Level.Rooms.Skip(1))
+        {
+            if (room.Spawns.Count > 0)
+            {
+                int amount = rand.Next(1,Math.Min(room.Spawns.Count, enemyLimit));
+                for (int a = 0; a < amount; a++)
+                {
+                    int rety=0;
+                    do
+                    {
+                        Enemy en = GetRandomEnemy();
+                        Vector2 pos = room.GetRandomSpawnPos(en);
+                        if (!closedList.Contains(pos))
+                        {
+                            closedList.Add(pos);
+                            en.Position = pos;
+                            AddEnemy(en);
+                            CombatManager.AddEnemy(en);
+                            break;
+                        }
+                        rety++;
+                    } while (rety < 4);
+                }
             }
         }
         ChooseEnemyForKey();

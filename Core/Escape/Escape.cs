@@ -49,7 +49,7 @@ public class Escape
         EnemyManager.Player = _player;
         
         EnemyManager.KillEnemies();
-        EnemyManager.SpawnEnemies();
+        EnemyManager.SpawnMultipleEnemies(_difficulty);
     }
     public void AttachCamera(Camera camera)
     {
