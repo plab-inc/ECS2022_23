@@ -42,6 +42,11 @@ public static class ItemLoader
          return new ProjectileShot(enemy, _texturePink, new Rectangle(19 * 16, 5 * 16, 16, 16),
              enemy.AimVector);
      }
+     
+     public static ProjectileShot CreateLaserShot(Vector2 position, Vector2 direction)
+     {
+         return new ProjectileShot(position, direction, _texturePink, new Rectangle(19 * 16, 5 * 16, 16, 16));
+     }
 
      public static Weapon CreateSwordWeapon(Vector2 position)
     {

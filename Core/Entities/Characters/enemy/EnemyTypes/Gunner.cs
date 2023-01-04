@@ -44,6 +44,5 @@ public class Gunner : Enemy
         {
             Behavior.State = (int)EnemyStates.Move;
         }
-        
     }
 }
