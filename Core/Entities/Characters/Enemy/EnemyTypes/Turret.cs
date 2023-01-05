@@ -17,9 +17,8 @@ public class Turret : Enemy
         HP = 20;
         XpReward = 1;
         MoneyReward = 1;
+        ActivationRadius = 150f;
         Behavior.SetEnemy(this);
-        ActivationHeight = 175;
-        ActivationWith = 175;
         Strength = 1;
         DeathSound = SoundLoader.BlobDeathSound;
     }

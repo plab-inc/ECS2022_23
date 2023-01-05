@@ -15,9 +15,8 @@ public abstract class Enemy : Character
     public float MoneyReward;
     protected Behavior Behavior;
     protected bool IsActive;
-    public Rectangle ActivationRectangle;
-    protected int ActivationWith;
-    protected int ActivationHeight;
+    public BoundingSphere ActivationSphere;
+    protected float ActivationRadius;
     protected Color Color = Color.White;
 
     public Vector2 AimVector;
@@ -26,14 +25,14 @@ public abstract class Enemy : Character
     public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Behavior behavior, Level level) : base(spawn, texture, animations)
     {
         Behavior = behavior;
-        ActivationWith = 125;
-        ActivationHeight = 125;
+        ActivationRadius = 100;
         Level = level;
     }
     
     public override void Update(GameTime gameTime)
     {
         SetAnimation(AnimationType.WalkDown);
+        SetActivationRadius();
         if (IsActive)
         {
            Act();
@@ -61,12 +60,10 @@ public abstract class Enemy : Character
     }
 
    private bool Activate()
-    {
-        if(ActivationRectangle.Contains(EnemyManager.Player.Position))
-            return true;
-
-        return false;
-    }
+   {
+       Vector3 vec = new Vector3(EnemyManager.Player.Position.X, EnemyManager.Player.Position.Y, 0);
+        return ActivationSphere.Contains(vec) == ContainmentType.Contains|| ActivationSphere.Contains(vec) == ContainmentType.Intersects;
+   }
  
     public override void Draw(SpriteBatch spriteBatch)
     {
@@ -75,11 +72,12 @@ public abstract class Enemy : Character
         else    
             AnimationManager.Draw(spriteBatch, Position, Color);
     }
-
-    public void SetActivationRectangle()
+    
+    public void SetActivationRadius()
     {
-        Rectangle rec = new Rectangle((int)Position.X, (int)Position.Y, ActivationWith, ActivationHeight);
-        rec.Offset(-ActivationWith/2, -ActivationHeight/2);
-        ActivationRectangle = rec;
+        Vector3 vec = new Vector3(Position.X, Position.Y, 0);
+        BoundingSphere spr = new BoundingSphere(vec, ActivationRadius);
+        ActivationSphere = spr;
     }
+
 }

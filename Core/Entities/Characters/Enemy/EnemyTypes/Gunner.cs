@@ -18,9 +18,8 @@ public class Gunner : Enemy
         HP = 10;
         MoneyReward = 1;
         XpReward = 1;
+        ActivationRadius = 150f;
         _target = target;
-        ActivationHeight = 150;
-        ActivationWith = 150;
         Behavior.SetEnemy(this);
         Strength = 1;
         

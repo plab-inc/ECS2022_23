@@ -61,7 +61,6 @@ public static class EnemyManager
                         {
                             closedList.Add(pos);
                             en.Position = pos;
-                            en.SetActivationRectangle();
                             AddEnemy(en);
                             CombatManager.AddEnemy(en);
                             break;
