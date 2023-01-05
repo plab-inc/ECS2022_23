@@ -1,0 +1,4 @@
+[submodule "Assets"]
+	path = Assets
+	url = https://github.com/TheLethalGoose/SpaceStation
+	branch = main
