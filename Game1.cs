@@ -1,4 +1,5 @@
 ﻿using System;
+using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Screens;
 using ECS2022_23.Core.Sound;
 using GameStateManagement;
@@ -22,8 +23,11 @@ public class Game1 : Game
         Content.RootDirectory = "Content";
         _screenManager = new ScreenManager(this);
         Components.Add(_screenManager);
+        
+        SoundLoader.LoadSounds(Content);
+        
         _screenManager.AddScreen(new BackgroundScreen(), null);
-        _screenManager.AddScreen(new MainMenuScreen(), null);
+        _screenManager.AddScreen(new MainMenuScreen(), null, true);
         IsMouseVisible = true;
     }
     protected override void Initialize()

@@ -6,6 +6,11 @@ namespace ECS2022_23.Core.Loader;
 
 public static class SoundLoader
 {
+
+    public static SoundEffect Background;
+    public static SoundEffect Blueberry;
+    public static SoundEffect Ominous;
+    
     public static SoundEffect LaserSound;
     public static SoundEffect BlobDeathSound;
     public static SoundEffect PlayerDamageSound;
@@ -17,6 +22,11 @@ public static class SoundLoader
         BlobDeathSound = content.Load<SoundEffect>("Sounds/Sfx/sfx_pop");
         PlayerDamageSound = content.Load<SoundEffect>("Sounds/Sfx/sfx_player_damage");
         ShieldBreak = content.Load<SoundEffect>("Sounds/Sfx/sfx_shield_break");
+
+        Background = content.Load<SoundEffect>("GameStateManagement/Sounds/Music/music_background");
+        Blueberry = content.Load<SoundEffect>("GameStateManagement/Sounds/Music/music_blueberry");
+        Ominous = content.Load<SoundEffect>("GameStateManagement/Sounds/Music/music_ominous");
+        
     }
     
 }

@@ -56,6 +56,7 @@ internal class GameplayScreen : GameScreen
     /// </summary>
     public GameplayScreen()
     {
+        ScreenMusic = SoundLoader.Background;
         TransitionOnTime = TimeSpan.FromSeconds(1.5);
         TransitionOffTime = TimeSpan.FromSeconds(0.5);
     }
@@ -69,11 +70,8 @@ internal class GameplayScreen : GameScreen
 
         if (content == null)
             content = new ContentManager(ScreenManager.Game.Services, "Content");
-
-        ScreenMusic = content.Load<SoundEffect>("GameStateManagement/Sounds/Music/music_background");
         
         ContentLoader.Load(content);
-        SoundLoader.LoadSounds(content);
         AnimationLoader.Load(content);
         ItemLoader.Load(content);
         UiLoader.Load(content, ScreenManager.GraphicsDevice);

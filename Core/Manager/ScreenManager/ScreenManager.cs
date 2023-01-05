@@ -119,7 +119,6 @@ namespace GameStateManagement
             foreach (GameScreen screen in screens)
             {
                 screen.LoadContent();
-                screen.PlayScreenMusic();
             }
         }
 
@@ -228,7 +227,7 @@ namespace GameStateManagement
         /// <summary>
         /// Adds a new screen to the screen manager.
         /// </summary>
-        public void AddScreen(GameScreen screen, PlayerIndex? controllingPlayer)
+        public void AddScreen(GameScreen screen, PlayerIndex? controllingPlayer, bool playScreenMusic = false)
         {
             screen.ControllingPlayer = controllingPlayer;
             screen.ScreenManager = this;
@@ -240,7 +239,10 @@ namespace GameStateManagement
                 screen.LoadContent();
             }
 
-            screen.PlayScreenMusic();
+            if (playScreenMusic)
+            {
+                screen.PlayScreenMusic();
+            }
             screens.Add(screen);
 
             // update the TouchPanel to respond to gestures this screen is interested in
@@ -260,10 +262,9 @@ namespace GameStateManagement
             {
                 screen.UnloadContent();
             }
-
-            screens.Remove(screen);
-            screen.StopScreenMusic();
             
+            screen.StopScreenMusic();
+            screens.Remove(screen);
             screensToUpdate.Remove(screen);
 
             // if there is a screen still in the manager, update TouchPanel

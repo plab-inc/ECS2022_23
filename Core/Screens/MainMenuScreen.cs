@@ -12,6 +12,7 @@
 #region Using Statements
 
 using ECS2022_23.Core.Animations;
+using ECS2022_23.Core.Loader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -36,6 +37,8 @@ internal class MainMenuScreen : MenuScreen
     public MainMenuScreen()
         : base("ECS20XX")
     {
+        ScreenMusic = SoundLoader.Blueberry;
+        
         // Create our menu entries.
         MenuEntry playGameMenuEntry = new MenuEntry("Play Game");
         MenuEntry optionsMenuEntry = new MenuEntry("Options");
@@ -58,7 +61,6 @@ internal class MainMenuScreen : MenuScreen
             content = new ContentManager(ScreenManager.Game.Services, "Content/gameStateManagement");
         
         Spritesheet = content.Load<Texture2D>("../sprites/spritesheet");
-        ScreenMusic = content.Load<SoundEffect>("Sounds/Music/music_blueberry");
         
         if (Spritesheet != null)
         {
