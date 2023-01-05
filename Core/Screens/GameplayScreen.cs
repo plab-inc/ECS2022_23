@@ -70,7 +70,7 @@ internal class GameplayScreen : GameScreen
         if (content == null)
             content = new ContentManager(ScreenManager.Game.Services, "Content");
 
-        ScreenMusic = content.Load<SoundEffect>("Sounds/Music/music_background");
+        ScreenMusic = content.Load<SoundEffect>("GameStateManagement/Sounds/Music/music_background");
         
         ContentLoader.Load(content);
         SoundLoader.LoadSounds(content);
