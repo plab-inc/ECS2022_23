@@ -255,15 +255,19 @@ namespace GameStateManagement
         /// the screen can gradually transition off rather than just being
         /// instantly removed.
         /// </summary>
-        public void RemoveScreen(GameScreen screen)
+        public void RemoveScreen(GameScreen screen, bool stopMusic = true)
         {
             // If we have a graphics device, tell the screen to unload content.
             if (isInitialized)
             {
                 screen.UnloadContent();
             }
+
+            if (stopMusic)
+            {
+                screen.StopScreenMusic();
+            }
             
-            screen.StopScreenMusic();
             screens.Remove(screen);
             screensToUpdate.Remove(screen);
 

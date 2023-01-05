@@ -190,7 +190,7 @@ namespace GameStateManagement
                 if (!UpdateTransition(gameTime, TransitionOffTime, 1))
                 {
                     // When the transition finishes, remove the screen.
-                    ScreenManager.RemoveScreen(this);
+                    ScreenManager.RemoveScreen(this,false);
                 }
             }
             else if (coveredByOtherScreen)
@@ -295,7 +295,7 @@ namespace GameStateManagement
             if (TransitionOffTime == TimeSpan.Zero)
             {
                 // If the screen has a zero transition time, remove it immediately.
-                ScreenManager.RemoveScreen(this);
+                ScreenManager.RemoveScreen(this,false);
             }
             else
             {

@@ -51,7 +51,7 @@ internal class MainMenuScreen : MenuScreen
 
         // Add entries to the menu.
         MenuEntries.Add(playGameMenuEntry);
-        MenuEntries.Add(optionsMenuEntry);
+        //MenuEntries.Add(optionsMenuEntry);
         MenuEntries.Add(exitMenuEntry);
     }
     
