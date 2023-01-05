@@ -32,10 +32,10 @@ namespace GameStateManagement
     {
         #region Fields
 
-        private List<GameScreen> screens = new List<GameScreen>();
-        private List<GameScreen> screensToUpdate = new List<GameScreen>();
+        private List<GameScreen> screens = new();
+        private List<GameScreen> screensToUpdate = new();
 
-        private InputState input = new InputState();
+        private InputState input = new();
 
         private SpriteBatch spriteBatch;
         private SpriteFont font;
@@ -119,6 +119,7 @@ namespace GameStateManagement
             foreach (GameScreen screen in screens)
             {
                 screen.LoadContent();
+                screen.PlayScreenMusic();
             }
         }
 
@@ -239,6 +240,7 @@ namespace GameStateManagement
                 screen.LoadContent();
             }
 
+            screen.PlayScreenMusic();
             screens.Add(screen);
 
             // update the TouchPanel to respond to gestures this screen is interested in
@@ -260,6 +262,8 @@ namespace GameStateManagement
             }
 
             screens.Remove(screen);
+            screen.StopScreenMusic();
+            
             screensToUpdate.Remove(screen);
 
             // if there is a screen still in the manager, update TouchPanel

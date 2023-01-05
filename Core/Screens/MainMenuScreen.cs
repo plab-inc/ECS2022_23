@@ -13,6 +13,7 @@
 
 using ECS2022_23.Core.Animations;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -50,13 +51,15 @@ internal class MainMenuScreen : MenuScreen
         MenuEntries.Add(optionsMenuEntry);
         MenuEntries.Add(exitMenuEntry);
     }
-
+    
     public override void LoadContent()
-    { 
+    {
         if (content == null)
             content = new ContentManager(ScreenManager.Game.Services, "Content/gameStateManagement");
+        
         Spritesheet = content.Load<Texture2D>("../sprites/spritesheet");
-
+        ScreenMusic = content.Load<SoundEffect>("Sounds/Music/music_blueberry");
+        
         if (Spritesheet != null)
         {
             Animation =  new Animation(Spritesheet, 16, 16, 7, new Point(1, 2), true);

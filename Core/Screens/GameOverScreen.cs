@@ -1,8 +1,8 @@
 #region Using Statements
 
 using ECS2022_23.Core.Animations;
-using GameStateManagement;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -36,24 +36,30 @@ internal class GameOverScreen : MenuScreen
             content = new ContentManager(ScreenManager.Game.Services, "Content/gameStateManagement");
         Spritesheet = content.Load<Texture2D>("../sprites/spritesheet");
 
-        if (Spritesheet != null)
+        if (Spritesheet == null) return;
+        
+        switch (gameIsWon)
         {
-            if (gameIsWon)
-            {
+            case true:
+                ScreenMusic = content.Load<SoundEffect>("Sounds/Music/music_blueberry");
+                
                 //Walk Up Animation
                 Animation = new Animation(Spritesheet, 16, 16, 6, new Point(1, 5), true);
                 AnimationPosition = new Vector2(16 * 18, 16 * 21);
-            }
-            else
-            {
+                break;
+            
+            case false:
+                ScreenMusic = content.Load<SoundEffect>("Sounds/Music/music_ominous");
+                
                 //Death Animation
                 Animation = new Animation(Spritesheet, 16, 16, 1, new Point(4, 6), true);
                 AnimationPosition = new Vector2(16 * 18, 16 * 21);
-            }
-            Animation.FrameSpeed = FrameSpeed;
-            StartPosition = AnimationPosition.Y;
-            SetAnimation(Animation);
+                break;
         }
+
+        Animation.FrameSpeed = FrameSpeed;
+        StartPosition = AnimationPosition.Y;
+        SetAnimation(Animation);
     }
 
     #endregion Initialization

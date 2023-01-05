@@ -1,32 +1,29 @@
-using System;
-using ECS2022_23.Core.Loader;
-using ECS2022_23.Helper;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Media;
 
 namespace ECS2022_23.Core.Sound;
 
 public static class SoundManager
 {
-    private static GameTime currentGameTime;
+
+    private static SoundEffectInstance SoundEffectInstance;
+    
     public static void Play(SoundEffect sound)
     {
         sound.Play();
     }
-
-    public static void Update(GameTime gameTime)
+    public static void StopMusic()
     {
-        currentGameTime = gameTime;
-        Console.WriteLine(gameTime);
+        SoundEffectInstance?.Dispose();
     }
-
+    
     public static void PlayMusic(SoundEffect Sound)
     {
-        SoundEffectInstance SongInstance = Sound.CreateInstance();
-        SongInstance.IsLooped = true;
-        SongInstance.Volume = 0.5f;
-        SongInstance.Play();
+        if (Sound == null) return;
+        
+        SoundEffectInstance = Sound.CreateInstance();
+        SoundEffectInstance.IsLooped = true;
+        SoundEffectInstance.Volume = 0.5f;
+        SoundEffectInstance.Play();
     }
     
     public static void Initialize()
