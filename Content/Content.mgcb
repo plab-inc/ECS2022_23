@@ -76,17 +76,29 @@
 /processorParam:TextureFormat=Compressed
 /build:../Assets/GameStateManagement/menufont.spritefont;GameStateManagement/menufont.spritefont
 
-#begin ../Assets/Sounds/Music/music_background.wav
+#begin ../Assets/GameStateManagement/Sounds/Music/music_background.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:../Assets/Sounds/Music/music_background.wav;Sounds/Music/music_background.wav
+/build:../Assets/GameStateManagement/Sounds/Music/music_background.wav;GameStateManagement/Sounds/Music/music_background.wav
 
-#begin ../Assets/Sounds/Music/music_hum.wav
+#begin ../Assets/GameStateManagement/Sounds/Music/music_blueberry.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:../Assets/Sounds/Music/music_hum.wav;Sounds/Music/music_hum.wav
+/build:../Assets/GameStateManagement/Sounds/Music/music_blueberry.wav;GameStateManagement/Sounds/Music/music_blueberry.wav
+
+#begin ../Assets/GameStateManagement/Sounds/Music/music_hum.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:../Assets/GameStateManagement/Sounds/Music/music_hum.wav;GameStateManagement/Sounds/Music/music_hum.wav
+
+#begin ../Assets/GameStateManagement/Sounds/Music/music_ominous.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:../Assets/GameStateManagement/Sounds/Music/music_ominous.wav;GameStateManagement/Sounds/Music/music_ominous.wav
 
 #begin ../Assets/Sounds/Sfx/sfx_laser_sound.wav
 /importer:WavImporter

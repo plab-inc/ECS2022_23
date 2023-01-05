@@ -1,8 +1,9 @@
 #region Using Statements
 
 using ECS2022_23.Core.Animations;
-using GameStateManagement;
+using ECS2022_23.Core.Loader;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -20,6 +21,9 @@ internal class GameOverScreen : MenuScreen
         : base(gameIsWon ? "You escaped!" : "Game Over" )
     {
         this.gameIsWon = gameIsWon;
+
+        ScreenMusic = gameIsWon ? SoundLoader.Blueberry : SoundLoader.Ominous;
+        
         MenuEntry replayGameMenuEntry = new MenuEntry("Restart Game");
         MenuEntry backToMenu = new MenuEntry("Return to Menu");
             
@@ -36,24 +40,26 @@ internal class GameOverScreen : MenuScreen
             content = new ContentManager(ScreenManager.Game.Services, "Content/gameStateManagement");
         Spritesheet = content.Load<Texture2D>("../sprites/spritesheet");
 
-        if (Spritesheet != null)
+        if (Spritesheet == null) return;
+        
+        switch (gameIsWon)
         {
-            if (gameIsWon)
-            {
+            case true:
                 //Walk Up Animation
                 Animation = new Animation(Spritesheet, 16, 16, 6, new Point(1, 5), true);
                 AnimationPosition = new Vector2(16 * 18, 16 * 21);
-            }
-            else
-            {
+                break;
+            
+            case false:
                 //Death Animation
                 Animation = new Animation(Spritesheet, 16, 16, 1, new Point(4, 6), true);
                 AnimationPosition = new Vector2(16 * 18, 16 * 21);
-            }
-            Animation.FrameSpeed = FrameSpeed;
-            StartPosition = AnimationPosition.Y;
-            SetAnimation(Animation);
+                break;
         }
+
+        Animation.FrameSpeed = FrameSpeed;
+        StartPosition = AnimationPosition.Y;
+        SetAnimation(Animation);
     }
 
     #endregion Initialization

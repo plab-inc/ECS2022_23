@@ -14,6 +14,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input.Touch;
 using System;
+using ECS2022_23.Core.Sound;
+using Microsoft.Xna.Framework.Audio;
 
 #endregion Using Statements
 
@@ -150,6 +152,8 @@ namespace GameStateManagement
 
         private GestureType enabledGestures = GestureType.None;
 
+        public SoundEffect ScreenMusic;
+
         #endregion Properties
 
         #region Initialization
@@ -263,6 +267,19 @@ namespace GameStateManagement
         /// This is called when the screen should draw itself.
         /// </summary>
         public virtual void Draw(GameTime gameTime) { }
+
+        public void PlayScreenMusic()
+        {
+            if (ScreenMusic != null)
+            {
+                SoundManager.PlayMusic(ScreenMusic);
+            }
+        }
+        
+        public void StopScreenMusic()
+        {
+            SoundManager.StopMusic();
+        }
 
         #endregion Update and Draw
 
