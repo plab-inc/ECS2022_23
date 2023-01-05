@@ -1,4 +1,4 @@
-using ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
+using ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.Ui;
@@ -6,8 +6,7 @@ using ECS2022_23.Core.World;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 
-
-namespace ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
+namespace ECS2022_23.Core.Entities.Characters.Enemy.EnemyTypes;
 
 public class Gunner : Enemy
 {
@@ -19,8 +18,8 @@ public class Gunner : Enemy
         HP = 10;
         MoneyReward = 1;
         XpReward = 1;
+        ActivationRadius = 150f;
         _target = target;
-        ActivationRectangle.Inflate(35, 35);
         Behavior.SetEnemy(this);
         Strength = 1;
         
@@ -42,5 +41,6 @@ public class Gunner : Enemy
         {
             Behavior.State = (int)EnemyStates.Move;
         }
+        
     }
 }
