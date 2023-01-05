@@ -14,13 +14,12 @@ public abstract class Enemy : Character
     public float XpReward;
     public float MoneyReward;
     protected Behavior Behavior;
-    protected bool IsActive;
-    public BoundingSphere ActivationSphere;
+    private bool _isActive;
+    private BoundingSphere _activationSphere;
     protected float ActivationRadius;
     protected Color Color = Color.White;
-
     public Vector2 AimVector;
-    public bool IsBoss;
+    protected bool IsBoss;
     
     public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Behavior behavior, Level level) : base(spawn, texture, animations)
     {
@@ -33,13 +32,13 @@ public abstract class Enemy : Character
     {
         SetAnimation(AnimationType.WalkDown);
         SetActivationRadius();
-        if (IsActive)
+        if (_isActive)
         {
            Act();
         }
         else
         {
-            IsActive = Activate();
+            _isActive = Activate();
         }
         
         if(!IsAlive())
@@ -62,7 +61,7 @@ public abstract class Enemy : Character
    private bool Activate()
    {
        Vector3 vec = new Vector3(EnemyManager.Player.Position.X, EnemyManager.Player.Position.Y, 0);
-        return ActivationSphere.Contains(vec) == ContainmentType.Contains|| ActivationSphere.Contains(vec) == ContainmentType.Intersects;
+        return _activationSphere.Contains(vec) == ContainmentType.Contains|| _activationSphere.Contains(vec) == ContainmentType.Intersects;
    }
  
     public override void Draw(SpriteBatch spriteBatch)
@@ -72,12 +71,11 @@ public abstract class Enemy : Character
         else    
             AnimationManager.Draw(spriteBatch, Position, Color);
     }
-    
-    public void SetActivationRadius()
+
+    private void SetActivationRadius()
     {
         Vector3 vec = new Vector3(Position.X, Position.Y, 0);
-        BoundingSphere spr = new BoundingSphere(vec, ActivationRadius);
-        ActivationSphere = spr;
+        _activationSphere = new BoundingSphere(vec, ActivationRadius);
     }
 
 }
