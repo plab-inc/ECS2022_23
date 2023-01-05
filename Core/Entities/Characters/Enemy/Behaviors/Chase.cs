@@ -4,7 +4,7 @@ namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 
 public class Chase : Behavior
 {
-    private Character Target;
+    protected Character Target;
     public Chase(Character target)
     {
         Target = target;

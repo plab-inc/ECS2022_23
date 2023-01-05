@@ -1,10 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
+using System.Reflection;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Media;
 using TiledCS;
 
 namespace ECS2022_23.Core;
@@ -12,6 +11,7 @@ namespace ECS2022_23.Core;
 public static class ContentLoader
 {
     private static ContentManager _content;
+    private static string executingPath;
     
     public static Dictionary<string, TiledMap> Tilemaps =  new();
     public static Dictionary<string, TiledTileset> Tilesets =  new();
@@ -19,10 +19,17 @@ public static class ContentLoader
     
     public static void Load(ContentManager content)
     {
-        if (!Directory.Exists("Content")) throw new DirectoryNotFoundException();
         
-        _content = content;
+        executingPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        if (executingPath != null) Directory.SetCurrentDirectory(executingPath);
 
+        if (!Directory.Exists(content.RootDirectory))
+        {
+            throw new DirectoryNotFoundException();
+        }
+
+        _content = content;
+        
         LoadTilemaps();
         LoadTilesets();
     }

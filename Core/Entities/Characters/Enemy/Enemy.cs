@@ -21,6 +21,7 @@ public abstract class Enemy : Character
     protected Color Color = Color.White;
 
     public Vector2 AimVector;
+    public bool IsBoss;
     
     public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Behavior behavior, Level level) : base(spawn, texture, animations)
     {
@@ -69,7 +70,10 @@ public abstract class Enemy : Character
  
     public override void Draw(SpriteBatch spriteBatch)
     {
-        AnimationManager.Draw(spriteBatch, Position, Color);
+        if(IsBoss)
+            AnimationManager.Draw(spriteBatch, Position, new Vector2(1.5f,1.5f));
+        else    
+            AnimationManager.Draw(spriteBatch, Position, Color);
     }
 
     public void SetActivationRectangle()

@@ -62,7 +62,7 @@ public abstract class Entity
         spriteBatch.Draw(Texture, Position, Color.White);
     }
     
-   public bool IntersectPixels(Rectangle rectangleB, Color[] dataB)
+    public bool IntersectPixels(Rectangle rectangleB, Color[] dataB)
     {
         // Find the bounds of the rectangle intersection
         int top = Math.Max(Rectangle.Top, rectangleB.Top);
