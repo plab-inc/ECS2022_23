@@ -1,4 +1,6 @@
-﻿using ECS2022_23.Core.Screens;
+﻿using System;
+using ECS2022_23.Core.Loader;
+using ECS2022_23.Core.Screens;
 using ECS2022_23.Core.Sound;
 using GameStateManagement;
 using Microsoft.Xna.Framework;
@@ -10,7 +12,7 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private ScreenManager _screenManager;
     
-    private static readonly string[] PreloadAssets = System.Array.Empty<string>();
+    private static readonly string[] PreloadAssets = Array.Empty<string>();
     
     public static int ScreenWidth = 1280;
     public static int ScreenHeight = 720;
@@ -21,8 +23,11 @@ public class Game1 : Game
         Content.RootDirectory = "Content";
         _screenManager = new ScreenManager(this);
         Components.Add(_screenManager);
+        
+        SoundLoader.LoadSounds(Content);
+        
         _screenManager.AddScreen(new BackgroundScreen(), null);
-        _screenManager.AddScreen(new MainMenuScreen(), null);
+        _screenManager.AddScreen(new MainMenuScreen(), null, true);
         IsMouseVisible = true;
     }
     protected override void Initialize()

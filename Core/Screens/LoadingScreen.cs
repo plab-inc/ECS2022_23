@@ -101,7 +101,7 @@ internal class LoadingScreen : GameScreen
             {
                 if (screen != null)
                 {
-                    ScreenManager.AddScreen(screen, ControllingPlayer);
+                    ScreenManager.AddScreen(screen, ControllingPlayer, true);
                 }
             }
 

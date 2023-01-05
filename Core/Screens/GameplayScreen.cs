@@ -17,10 +17,10 @@ using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Game;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Manager;
-using ECS2022_23.Core.Sound;
 using ECS2022_23.Core.Ui;
 using GameStateManagement;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Action = ECS2022_23.Enums.Action;
@@ -56,6 +56,7 @@ internal class GameplayScreen : GameScreen
     /// </summary>
     public GameplayScreen()
     {
+        ScreenMusic = SoundLoader.Background;
         TransitionOnTime = TimeSpan.FromSeconds(1.5);
         TransitionOffTime = TimeSpan.FromSeconds(0.5);
     }
@@ -66,20 +67,11 @@ internal class GameplayScreen : GameScreen
     public override void LoadContent()
     {
         Console.WriteLine("Loading");
-            
+
         if (content == null)
             content = new ContentManager(ScreenManager.Game.Services, "Content");
-
-        _camera = new Camera(ScreenManager.GraphicsDevice)
-        {
-            Zoom = 3f
-        };
-            
+        
         ContentLoader.Load(content);
-        
-        SoundLoader.LoadSounds(content);
-        SoundManager.PlayMusic(SoundLoader.BackgroundMusic);
-        
         AnimationLoader.Load(content);
         ItemLoader.Load(content);
         UiLoader.Load(content, ScreenManager.GraphicsDevice);
@@ -88,10 +80,16 @@ internal class GameplayScreen : GameScreen
         {
             Weapon = ItemLoader.CreatePhaserWeapon(Vector2.Zero)
         };
+        
         InventoryManager.Init(_player);
+        
+        _camera = new Camera(ScreenManager.GraphicsDevice)
+        {
+            Zoom = 3f
+        };
+        
         _escape = new Escape(_player, 3,1);
         _escape.AttachCamera(_camera);
-            
         // once the load has finished, we use ResetElapsedTime to tell the game's
         // timing mechanism that we have just finished a very long frame, and that
         // it should not try to catch up.
@@ -121,8 +119,6 @@ internal class GameplayScreen : GameScreen
         bool coveredByOtherScreen)
     {
         base.Update(gameTime, otherScreenHasFocus, false);
-        
-        SoundManager.Update(gameTime);
         
         // Gradually fade in or out depending on whether we are covered by the pause screen.
         if (coveredByOtherScreen)
