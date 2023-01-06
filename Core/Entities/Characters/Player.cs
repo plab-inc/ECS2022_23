@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Entities.Items;
@@ -19,6 +20,7 @@ public class Player : Character
     public float Money;
     public bool Invincible;
     public bool ImmuneToWater = false;
+    public float PlayerLevel;
     
     public List<Item> Items;
     public Weapon Weapon { get; set; }
@@ -31,7 +33,9 @@ public class Player : Character
         SpriteWidth = 16;
         Strength = 5;
         DamageSound = SoundLoader.PlayerDamageSound;
+        XpToNextLevel = 0;
         Armor = 1;
+        PlayerLevel = 1;
     }
     
     public override void Update(GameTime gameTime)
@@ -49,6 +53,7 @@ public class Player : Character
             }
         }
         
+        LevelUp();
         Weapon.SetPosition(this);
         AnimationManager.Update(gameTime);
         Weapon?.Update(gameTime);
@@ -236,7 +241,7 @@ public class Player : Character
         Armor -= damagePoints;
             
         if(shieldBreak && Armor<=0)
-            SoundManager.Play(SoundLoader.ShieldBreak);
+            SoundManager.Play(SoundLoader.ShieldBreakSound);
         
         if (Armor < 0)
         {
@@ -251,6 +256,18 @@ public class Player : Character
         {
             Invincible = true;
             SetAnimation(AnimationType.Death);
+        }
+    }
+
+    public void LevelUp()
+    {
+        Debug.WriteLine(Strength);
+        if (25 <= XpToNextLevel)
+        {
+            XpToNextLevel -= 25;
+            Strength += 1+PlayerLevel*0.25f;
+            PlayerLevel++;
+            SoundManager.Play(SoundLoader.LevelUpSound);
         }
     }
 

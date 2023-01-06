@@ -14,7 +14,7 @@ public class Chaser : Enemy
     {
         Velocity = 1.5f;
         HP = 10;
-        XpReward = 1;
+        XpReward = 2;
         MoneyReward = 1;
         SpriteHeight = 14;
         SpriteWidth = 14;
