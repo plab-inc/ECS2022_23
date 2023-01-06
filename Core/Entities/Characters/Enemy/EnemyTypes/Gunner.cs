@@ -17,7 +17,7 @@ public class Gunner : Enemy
         Velocity = 1f;
         HP = 10;
         MoneyReward = 1;
-        XpReward = 1;
+        XpReward = 2;
         ActivationRadius = 150f;
         _target = target;
         Behavior.SetEnemy(this);

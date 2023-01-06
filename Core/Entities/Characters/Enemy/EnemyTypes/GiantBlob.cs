@@ -19,7 +19,7 @@ public class GiantBlob : Enemy
         IsBoss = true;
         Velocity = 0.5f;
         HP = 150;
-        XpReward = 5;
+        XpReward = 10;
         MoneyReward = 10;
         SpriteHeight = 32;
         SpriteWidth = 32;
