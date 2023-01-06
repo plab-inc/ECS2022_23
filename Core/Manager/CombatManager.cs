@@ -201,7 +201,7 @@ public static class CombatManager
         SoundManager.Play(enemy.DeathSound);
         ItemManager.DropLoot(enemy);
         EnemyManager.RemoveEnemy(enemy);
-        player.Ep += enemy.XpReward;
+        player.EP += enemy.XpReward;
     }
 
     private static void CheckEnemyCollision(Player player)

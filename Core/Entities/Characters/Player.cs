@@ -16,7 +16,7 @@ namespace ECS2022_23.Core.Entities.Characters;
 public class Player : Character
 {
     public float Armor;
-    public float Ep;
+    public float EP;
     public float Level;
     
     public bool Invincible;
@@ -33,7 +33,7 @@ public class Player : Character
         
         Velocity = 3f;
         HP = 10;
-        Ep = 0;
+        EP = 0;
         Armor = 1;
         Level = 1;
         Strength = 5;
@@ -263,9 +263,9 @@ public class Player : Character
     public void LevelUp()
     {
         Debug.WriteLine(Strength);
-        if (25 <= Ep)
+        if (25 <= EP)
         {
-            Ep -= 25;
+            EP -= 25;
             Strength += 1+Level*0.25f;
             Level++;
             SoundManager.Play(SoundLoader.LevelUpSound);

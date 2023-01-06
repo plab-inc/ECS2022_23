@@ -85,7 +85,7 @@ public static class UiManager
     private static void UpdateStats(Player player)
     {
         UpdateHearts(player);
-        UpdateText(StatsPanel, UiLabel.EpText, player.Ep);
+        UpdateText(StatsPanel, UiLabel.EpText, player.EP);
         UpdateText(StatsPanel, UiLabel.LevelText, player.Level);
         UpdateText(StatsPanel, UiLabel.ArmorText, player.Armor);
     }
