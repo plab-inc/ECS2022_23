@@ -60,6 +60,9 @@ public abstract class Enemy : Character
 
    private bool Activate()
    {
+       if (HP < MaxHP)
+           return true;
+       
        Vector3 vec = new Vector3(EnemyManager.Player.Position.X, EnemyManager.Player.Position.Y, 0);
         return _activationSphere.Contains(vec) == ContainmentType.Contains|| _activationSphere.Contains(vec) == ContainmentType.Intersects;
    }
