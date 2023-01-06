@@ -153,21 +153,21 @@ public static class CombatManager
     public static void Shoot(Player player)
     {
         var shot = ItemLoader.CreateLaserShot(player.Weapon, player.AimDirection);
-        shot.Level = player.Level;
+        shot.Stage = player.Stage;
         _activeShotsByPlayer.Add(shot);
     }
 
     public static void Shoot(Enemy enemy)
     {
         var shot = ItemLoader.CreateLaserShot(enemy);
-        shot.Level = enemy.Level;
+        shot.Stage = enemy.Stage;
         _activeShotsByEnemy.Add(shot);
     }
 
-    public static void Shoot(Vector2 position, Vector2 direction, Level level)
+    public static void Shoot(Vector2 position, Vector2 direction, Stage stage)
     {
         var shot = ItemLoader.CreateLaserShot(position, direction);
-        shot.Level = level;
+        shot.Stage = stage;
         _activeShotsByEnemy.Add(shot);
     }
 
@@ -201,8 +201,7 @@ public static class CombatManager
         SoundManager.Play(enemy.DeathSound);
         ItemManager.DropLoot(enemy);
         EnemyManager.RemoveEnemy(enemy);
-        player.Money += enemy.MoneyReward;
-        player.XpToNextLevel += enemy.XpReward;
+        player.Ep += enemy.XpReward;
     }
 
     private static void CheckEnemyCollision(Player player)

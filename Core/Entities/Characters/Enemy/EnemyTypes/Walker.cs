@@ -8,7 +8,7 @@ namespace ECS2022_23.Core.Entities.Characters.Enemy.EnemyTypes;
 
 public class Walker : Enemy
 {
-   public Walker(Level level) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateBlobEnemyAnimations(), new RandomBehavior(), level)
+   public Walker(Stage stage) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateBlobEnemyAnimations(), new RandomBehavior(), stage)
     {
         Velocity = 1f;
         HP = 10;

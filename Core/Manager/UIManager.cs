@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Items;
 using Microsoft.Xna.Framework.Graphics;
@@ -37,7 +38,7 @@ public static class UiManager
     {
         var heartCount = (int) player.HP;
         if (heartCount == _preHeartCount) return;
-        var index = StatsPanel.GetIndexFromLabel(UiLabels.HpIcon);
+        var index = StatsPanel.GetIndexFromLabel(UiLabel.HpIcon);
         if (index < 0) return;
 
         if (heartCount > 0)
@@ -49,27 +50,27 @@ public static class UiManager
             {
                 for (int i = 1; i <= change; i++)
                 {
-                    StatsPanel.InsertAtIndex(UiLoader.CreateHeart(), index+i);
+                    StatsPanel.InsertAtIndex(UiLoader.CreateUiElementNew(UiLabel.HeartIcon), index+i);
                 }
             } else if (change < 0)
             {
                 change *= -1;
                 for (int i = 1; i <= change; i++)
                 {
-                    StatsPanel.RemoveAtIndex(index+i,UiLabels.Heart);
+                    StatsPanel.RemoveAtIndex(index+i,UiLabel.HeartIcon);
                 }
             }
             _preHeartCount = heartCount;
         } else 
         {
             _preHeartCount = 0;
-            StatsPanel.RemoveAll( component => component.UiLabel == UiLabels.Heart);
+            StatsPanel.RemoveAll( component => component.UiLabel == UiLabel.HeartIcon);
         }
 
         _statsHaveChanged = true;
     }
 
-    private static void UpdateText(UiPanel panel, UiLabels label, float stats)
+    private static void UpdateText(UiPanel panel, UiLabel label, float stats)
     {
         UiText uiText = (UiText) panel.GetComponentByLabel(label);
         if (uiText == null) return;
@@ -84,8 +85,8 @@ public static class UiManager
     private static void UpdateStats(Player player)
     {
         UpdateHearts(player);
-        UpdateText(StatsPanel, UiLabels.CoinText, player.Money);
-        UpdateText(StatsPanel, UiLabels.XpText, player.XpToNextLevel);
-        UpdateText(StatsPanel, UiLabels.ArmorText, player.Armor);
+        UpdateText(StatsPanel, UiLabel.EpText, player.Ep);
+        UpdateText(StatsPanel, UiLabel.LevelText, player.Level);
+        UpdateText(StatsPanel, UiLabel.ArmorText, player.Armor);
     }
 }

@@ -7,7 +7,7 @@ public class UiElement : Component
 {
     private Texture2D _texture;
  
-    public UiElement(Rectangle sourceRec, Texture2D texture, UiLabels uiLabel) : base(sourceRec)
+    public UiElement(Rectangle sourceRec, Texture2D texture, UiLabel uiLabel) : base(sourceRec)
     {
         _texture = texture;
         this.UiLabel = uiLabel;

@@ -28,7 +28,7 @@ public class Consumable : Item
         {
             player.HP = maxHp;
         }
-        player.XpToNextLevel += XpPoints;
+        player.Ep += XpPoints;
         player.Armor += ArmorPoints;
         return true;
     }

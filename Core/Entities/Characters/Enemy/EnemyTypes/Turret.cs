@@ -11,7 +11,7 @@ public class Turret : Enemy
 {
     private int _attackDelay;
     
-    public Turret(Level level, Character target) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(), new StationaryShooter(target), level)
+    public Turret(Stage stage, Character target) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(), new StationaryShooter(target), stage)
     {
         Velocity = 0f;
         HP = 20;

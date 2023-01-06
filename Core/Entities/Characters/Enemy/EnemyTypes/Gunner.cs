@@ -12,7 +12,7 @@ public class Gunner : Enemy
 {
     private Character _target;
     private int delay;
-    public Gunner(Level level, Character target) : base(Vector2.Zero, UiLoader.SpriteSheet , AnimationLoader.CreateEyeEnemyAnimations(), new Dodger(target), level)
+    public Gunner(Stage stage, Character target) : base(Vector2.Zero, UiLoader.SpriteSheet , AnimationLoader.CreateEyeEnemyAnimations(), new Dodger(target), stage)
     {
         Velocity = 1f;
         HP = 10;
