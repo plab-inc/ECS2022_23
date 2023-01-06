@@ -33,7 +33,7 @@ public class Player : Character
         SpriteWidth = 16;
         Strength = 5;
         DamageSound = SoundLoader.PlayerDamageSound;
-        XpToNextLevel = 0;
+        XpToNextLevel = 24;
         Armor = 1;
         PlayerLevel = 1;
     }
@@ -261,10 +261,11 @@ public class Player : Character
 
     public void LevelUp()
     {
+        Debug.WriteLine(Strength);
         if (25 <= XpToNextLevel)
         {
-            XpToNextLevel = 0;
-            Strength *= 1+PlayerLevel*0.1f;
+            XpToNextLevel -= 25;
+            Strength += 1+PlayerLevel*0.25f;
             PlayerLevel++;
             SoundManager.Play(SoundLoader.LevelUpSound);
         }
