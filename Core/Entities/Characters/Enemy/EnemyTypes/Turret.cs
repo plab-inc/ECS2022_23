@@ -1,15 +1,11 @@
-using System.Diagnostics;
-using System.Threading;
-using ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
-using ECS2022_23.Core.Entities.Items;
+using ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
 
-
-namespace ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
+namespace ECS2022_23.Core.Entities.Characters.Enemy.EnemyTypes;
 
 public class Turret : Enemy
 {
@@ -21,8 +17,7 @@ public class Turret : Enemy
         HP = 20;
         XpReward = 1;
         MoneyReward = 1;
-        
-        ActivationRectangle.Inflate(35, 35);
+        ActivationRadius = 150f;
         Behavior.SetEnemy(this);
         Strength = 1;
         DeathSound = SoundLoader.BlobDeathSound;

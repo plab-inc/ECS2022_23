@@ -1,7 +1,7 @@
 ﻿using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 
-namespace ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
+namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 
 public abstract class Behavior
 {

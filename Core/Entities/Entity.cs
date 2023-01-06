@@ -19,7 +19,7 @@ public abstract class Entity
     protected int SpriteHeight = 16;
 
     public Color[] EntityTextureData { get; }
-    public Rectangle Rectangle => new((int) Position.X,(int) Position.Y, (int) SpriteWidth, (int) SpriteHeight);
+    public Rectangle Rectangle => new((int) Position.X,(int) Position.Y, SpriteWidth, SpriteHeight);
 
     protected Entity(Vector2 spawn, Texture2D texture)
     {

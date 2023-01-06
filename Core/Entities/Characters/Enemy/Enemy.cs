@@ -1,36 +1,37 @@
 ﻿using System.Collections.Generic;
 using ECS2022_23.Core.Animations;
-using ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
+using ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
+using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.World;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.Entities.Characters.enemy;
+namespace ECS2022_23.Core.Entities.Characters.Enemy;
 
 public abstract class Enemy : Character
 {
     public float XpReward;
     public float MoneyReward;
-    
     protected Behavior Behavior;
-    protected bool _isActive=true;
-    
-    protected Rectangle ActivationRectangle;
+    private bool _isActive;
+    private BoundingSphere _activationSphere;
+    protected float ActivationRadius;
     protected Color Color = Color.White;
-
     public Vector2 AimVector;
-    public bool IsBoss;
+    protected bool IsBoss;
     
     public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Behavior behavior, Level level) : base(spawn, texture, animations)
     {
         Behavior = behavior;
+        ActivationRadius = 125;
         Level = level;
-        ActivationRectangle = Rectangle;
     }
     
     public override void Update(GameTime gameTime)
     {
+        SetAnimation(AnimationType.WalkDown);
+        SetActivationRadius();
         if (_isActive)
         {
            Act();
@@ -54,16 +55,14 @@ public abstract class Enemy : Character
    private void Act()
     {
         Position += Behavior.Move(Position, Velocity);
-        
-        SetAnimation(AnimationType.WalkDown);
-        // Check for Attack
         Attack();
     }
 
    private bool Activate()
-    {
-        return true;
-    }
+   {
+       Vector3 vec = new Vector3(EnemyManager.Player.Position.X, EnemyManager.Player.Position.Y, 0);
+        return _activationSphere.Contains(vec) == ContainmentType.Contains|| _activationSphere.Contains(vec) == ContainmentType.Intersects;
+   }
  
     public override void Draw(SpriteBatch spriteBatch)
     {
@@ -72,4 +71,11 @@ public abstract class Enemy : Character
         else    
             AnimationManager.Draw(spriteBatch, Position, Color);
     }
+
+    private void SetActivationRadius()
+    {
+        Vector3 vec = new Vector3(Position.X, Position.Y, 0);
+        _activationSphere = new BoundingSphere(vec, ActivationRadius);
+    }
+
 }

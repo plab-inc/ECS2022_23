@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using ECS2022_23.Core.Entities.Characters;
-using ECS2022_23.Core.Entities.Characters.enemy;
-using ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
+using ECS2022_23.Core.Entities.Characters.Enemy;
+using ECS2022_23.Core.Entities.Characters.Enemy.EnemyTypes;
 using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
 namespace ECS2022_23.Core.Manager;
 
 public static class EnemyManager
@@ -17,12 +16,8 @@ public static class EnemyManager
    private static Enemy _keyEnemy;
     public static Player Player { set; get;}
     public static Level Level { set; get; }
-
-    static EnemyManager()
-    {
-
-    }
-
+    private  static List<Vector2> closedList = new List<Vector2>();
+    
     private static void AddEnemy(Enemy e)
     {
         Enemies.Add(e);
@@ -46,26 +41,11 @@ public static class EnemyManager
     {
         Enemies.Clear();
     }
-
-    public static void SpawnEnemies()
-    {
-        foreach (var room in Level.Rooms.Skip(1))
-        {
-            if (room.Spawns != null && room.Spawns.Count > 0)
-            {
-                Enemy en = GetRandomEnemy();
-                en.Position = room.GetRandomSpawnPos(en);
-                AddEnemy(en);
-                CombatManager.AddEnemy(en);
-            }
-        }
-        ChooseEnemyForKey();
-    }
-
+    
     public static void SpawnMultipleEnemies(int enemyLimit)
     {
         Random rand = new Random();
-        List<Vector2> closedList = new List<Vector2>();
+        
         
         foreach (var room in Level.Rooms.Skip(1))
         {
@@ -79,7 +59,8 @@ public static class EnemyManager
                     {
                         Enemy en = GetRandomEnemy();
                         Vector2 pos = room.GetRandomSpawnPos(en);
-                        if (!closedList.Contains(pos))
+                        pos.Floor();
+                        if (!closedList.Contains(pos) && !WithinRange(pos))
                         {
                             closedList.Add(pos);
                             en.Position = pos;
@@ -99,11 +80,20 @@ public static class EnemyManager
                 CombatManager.AddEnemy(boss);
             }
         }
-        
-        
         ChooseEnemyForKey();
     }
 
+    private static bool WithinRange(Vector2 vec)
+    {
+        foreach (var closedVec in closedList)
+        {
+            if (vec.X - 1 == closedVec.X || vec.X + 1 == closedVec.X)
+                if (vec.Y - 1 == closedVec.Y || vec.Y + 1 == closedVec.Y)
+                    return true;
+        }
+        return false;
+    }
+    
     private static Enemy GetRandomEnemy()
     {
         Random rand = new Random();
@@ -114,21 +104,9 @@ public static class EnemyManager
             case 2: return new Turret(Level, Player);
             case 3: return new Gunner(Level, Player);
         }
-
         return new Walker(Level);
     }
-
-    public static void CheckEnemyStatus()
-    {
-        foreach (var enemy in Enemies)
-        {
-            if (!enemy.IsAlive())
-            {
-                RemoveEnemy(enemy);
-            }
-        }
-    }
-
+    
     public static void Update(GameTime gameTime)
     {
         foreach (var enemy in Enemies)
@@ -158,5 +136,4 @@ public static class EnemyManager
             _keyEnemy = Enemies[randomInt];
         }
     }
-
 }

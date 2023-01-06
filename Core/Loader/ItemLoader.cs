@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using ECS2022_23.Core.Entities;
-using ECS2022_23.Core.Entities.Characters.enemy;
+using ECS2022_23.Core.Entities.Characters.Enemy;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;

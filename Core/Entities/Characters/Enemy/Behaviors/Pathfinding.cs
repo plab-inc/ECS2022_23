@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ECS2022_23.Core.World;
 
-namespace ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
+namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 
 public class Pathfinding
 {
