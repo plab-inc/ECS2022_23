@@ -33,7 +33,7 @@ public class Player : Character
         SpriteWidth = 16;
         Strength = 5;
         DamageSound = SoundLoader.PlayerDamageSound;
-        XpToNextLevel = 24;
+        XpToNextLevel = 0;
         Armor = 1;
         PlayerLevel = 1;
     }
