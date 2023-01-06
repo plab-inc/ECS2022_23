@@ -82,6 +82,7 @@ internal class GameplayScreen : GameScreen
         };
         
         InventoryManager.Init(_player);
+        LockerManager.Init();
         
         _camera = new Camera(ScreenManager.GraphicsDevice)
         {

@@ -1,3 +1,5 @@
+using ECS2022_23.Core.Manager;
+using ECS2022_23.Enums;
 using GameStateManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,6 +27,12 @@ internal class LockerMenuScreen : MenuScreen
             OnCancel(playerIndex);
         }
         
+        Input.Update(input, (int) playerIndex);
+        
+        if (Input.GetPlayerAction() == Action.LockerAction)
+        {
+            LockerManager.HandleInput(Input.LockerKeyDownAction());
+        }
     }
 
     public override void Draw(GameTime gameTime)
@@ -49,8 +57,10 @@ internal class LockerMenuScreen : MenuScreen
         spriteBatch.Begin(samplerState: SamplerState.LinearClamp);
         spriteBatch.DrawString(font, usageText, usageTextPosition, fontColor, 0,
             usageTextOrigin, 0.5f, SpriteEffects.None, 0);
-
         spriteBatch.End();
         
+        spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        LockerManager.Draw(spriteBatch);
+        spriteBatch.End();
     }
 }
