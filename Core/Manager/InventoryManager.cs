@@ -13,7 +13,7 @@ public static class InventoryManager
     private static TrinketSlot _trinketSlot;
     private static Weapon _prevWeapon;
     private static Trinket _prevTrinket;
-
+    private static Player _player;
     public static void Init(Player player)
     {
         _toolBar = new ToolBar(1, 9);
@@ -21,7 +21,7 @@ public static class InventoryManager
         _trinketSlot = new TrinketSlot();
         _prevTrinket = null;
         _prevWeapon = null;
-        
+        _player = player;
         if (player.Items == null) return;
         foreach (var item in player.Items)
         {
@@ -52,11 +52,16 @@ public static class InventoryManager
         {
             _toolBar.AddItem(item);
         }
+        LockerManager.AddToPocket(item);
     }
     
     public static void RemoveItem(Item item)
     {
+        if(_toolBar.IsItemActive(item)) {
+            UseItem(_player, item);
+        }
         _toolBar.RemoveItem(item);
+        LockerManager.RemoveFromPocket(item);
     }
     
     public static void UseItemAtIndex(Player player, int index)
