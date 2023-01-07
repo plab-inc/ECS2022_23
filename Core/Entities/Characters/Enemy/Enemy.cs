@@ -79,6 +79,7 @@ public abstract class Enemy : Character
    public Vector2 ReturnToSpawn()
    {
         Vector2 direction = Vector2.Normalize(OriginalSpawn - Position) * Velocity;
+        direction.Floor();
         if (Collides(direction))
             return direction;
         return Vector2.Zero;
