@@ -20,6 +20,9 @@ public abstract class Enemy : Character
     public Vector2 AimVector;
     protected bool IsBoss;
     
+    public Vector2 OriginalSpawn;
+    public Room OriginalRoom;
+    
     public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Behavior behavior, Stage stage) : base(spawn, texture, animations)
     {
         Behavior = behavior;
@@ -53,7 +56,14 @@ public abstract class Enemy : Character
 
    private void Act()
     {
-        Position += Behavior.Move(Position, Velocity);
+        if (!OriginalRoom.Rectangle.Intersects(EnemyManager.Player.Rectangle))
+        {
+            Position += ReturnToSpawn();
+        }
+        else
+        {
+            Position += Behavior.Move(Position, Velocity);
+        }
         Attack();
     }
 
@@ -65,8 +75,16 @@ public abstract class Enemy : Character
        Vector3 vec = new Vector3(EnemyManager.Player.Position.X, EnemyManager.Player.Position.Y, 0);
        return _activationSphere.Contains(vec) == ContainmentType.Contains|| _activationSphere.Contains(vec) == ContainmentType.Intersects;
    }
- 
-    public override void Draw(SpriteBatch spriteBatch)
+
+   public Vector2 ReturnToSpawn()
+   {
+        Vector2 direction = Vector2.Normalize(OriginalSpawn - Position) * Velocity;
+        if (Collides(direction))
+            return direction;
+        return Vector2.Zero;
+   }
+
+   public override void Draw(SpriteBatch spriteBatch)
     {
         if(IsBoss)
             AnimationManager.Draw(spriteBatch, Position, new Vector2(1.5f,1.5f));
@@ -80,4 +98,6 @@ public abstract class Enemy : Character
         _activationSphere = new BoundingSphere(vec, ActivationRadius);
     }
 
+    
+    
 }

@@ -64,6 +64,8 @@ public static class EnemyManager
                         {
                             closedList.Add(pos);
                             en.Position = pos;
+                            en.OriginalSpawn = pos;
+                            en.OriginalRoom = room;
                             AddEnemy(en);
                             CombatManager.AddEnemy(en);
                             break;

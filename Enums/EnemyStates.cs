@@ -5,6 +5,5 @@ public enum EnemyStates
     Initial,
     Move,
     Attack,
-    Wait,
-    Stunned
+    Return
 }
