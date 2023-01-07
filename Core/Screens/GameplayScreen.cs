@@ -138,12 +138,12 @@ internal class GameplayScreen : GameScreen
             if (_escape.WasSuccessful)
             {
                 LoadingScreen.Load(ScreenManager, false, null,
-                    new BackgroundScreen(true, true), new GameOverScreen(true));
+                    new BackgroundScreen(true, true), new GameOverScreen());
             }
             if (_escape.Failed)
             {
                 LoadingScreen.Load(ScreenManager, false, null,
-                    new BackgroundScreen(true, false), new GameOverScreen(false));
+                    new BackgroundScreen(true, false), new GameOverScreen(_player.DeathCause));
             }
                 
             UiManager.Update(_player);
@@ -190,7 +190,7 @@ internal class GameplayScreen : GameScreen
             }
             if (action == Action.OpensLocker)
             {
-                if (_player.Level.PlayerIsInfrontOfLocker)
+                if (_player.Stage.PlayerIsInfrontOfLocker)
                 {
                     ScreenManager.AddScreen(new LockerMenuScreen(),ControllingPlayer);
                 }

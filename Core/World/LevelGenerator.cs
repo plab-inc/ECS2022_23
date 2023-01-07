@@ -13,7 +13,7 @@ internal static class LevelGenerator
     private static readonly int PossibleStarts = Directory.GetFiles("Content/world/rooms","start*.xnb").Length;
     private static readonly Random Random = new((int)DateTime.Now.Ticks);
     
-    public static Level GenerateLevel(int minimumRooms, int maximumRooms)
+    public static Stage GenerateLevel(int minimumRooms, int maximumRooms)
     {
         List<Room> rooms = new();
         List<Rectangle> groundLayer = new();
@@ -72,7 +72,7 @@ internal static class LevelGenerator
         
         Console.WriteLine("Open doors closed. \nDone!");
         
-        return new Level(rooms, groundLayer, waterLayer);
+        return new Stage(rooms, groundLayer, waterLayer);
     }
     private static Room CreateBossRoom(List<Door> openDoors,List<Room> rooms)
     {

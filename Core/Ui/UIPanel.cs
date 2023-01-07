@@ -11,7 +11,7 @@ public class UiPanel : Component
     private List<Component> _components;
     private Texture2D _texture2D;
     private int _scale = 2;
-    public UiPanel(Rectangle sourceRec, Rectangle destRec, UiLabels uiLabel) : base(sourceRec)
+    public UiPanel(Rectangle sourceRec, Rectangle destRec, UiLabel uiLabel) : base(sourceRec)
     {
         DestinationRec = destRec;
         DestinationRec.Height *= _scale;
@@ -24,7 +24,7 @@ public class UiPanel : Component
         UiLabel = uiLabel;
     }
     
-    public UiPanel(Rectangle sourceRec, Rectangle destRec, Texture2D texture2D, UiLabels uiLabel) : base(sourceRec)
+    public UiPanel(Rectangle sourceRec, Rectangle destRec, Texture2D texture2D, UiLabel uiLabel) : base(sourceRec)
     {
         DestinationRec = destRec;
         _components = new List<Component>();
@@ -106,7 +106,7 @@ public class UiPanel : Component
         SetPositions();
     }
 
-    public bool RemoveAtIndex(int index, UiLabels componentUiLabel)
+    public bool RemoveAtIndex(int index, UiLabel componentUiLabel)
     {
         if (index < 0 || index > _components.Count) return false;
         
@@ -130,7 +130,7 @@ public class UiPanel : Component
         return false;
     }
 
-    public int GetIndexFromLabel(UiLabels uiLabel)
+    public int GetIndexFromLabel(UiLabel uiLabel)
     {
         var index = 0;
         foreach (var component in _components)
@@ -161,7 +161,7 @@ public class UiPanel : Component
         return null;
     }
 
-    public Component GetComponentByLabel(UiLabels label)
+    public Component GetComponentByLabel(UiLabel label)
     {
         foreach (var component in _components)
         {

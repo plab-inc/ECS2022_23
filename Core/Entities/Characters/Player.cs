@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Entities.Items;
@@ -15,23 +16,28 @@ namespace ECS2022_23.Core.Entities.Characters;
 public class Player : Character
 {
     public float Armor;
-    public float XpToNextLevel;
-    public float Money;
+    public float EP;
+    public float Level;
+    
     public bool Invincible;
     public bool ImmuneToWater = false;
-    
+
+    public DeathCause DeathCause;
     public List<Item> Items;
     public Weapon Weapon { get; set; }
     public Trinket Trinket { get; set; }
     public Room Room { get; set; }
     public Player(Texture2D texture, Dictionary<AnimationType, Animation> animations) : base(Vector2.Zero,texture, animations)
     {
-        Velocity = 3f;
-        HP = 10;
         SpriteWidth = 16;
-        Strength = 5;
         DamageSound = SoundLoader.PlayerDamageSound;
+        
+        Velocity = 3f;
+        HP = 3;
+        EP = 0;
         Armor = 1;
+        Level = 1;
+        Strength = 5;
     }
     
     public override void Update(GameTime gameTime)
@@ -45,10 +51,12 @@ public class Player : Character
         {
             if (!ImmuneToWater)
             {
+                DeathCause = DeathCause.Water;
                 Kill();
             }
         }
         
+        LevelUp();
         Weapon.SetPosition(this);
         AnimationManager.Update(gameTime);
         Weapon?.Update(gameTime);
@@ -143,7 +151,7 @@ public class Player : Character
     }
     public override bool IsInWater(Rectangle body)
     {
-        return Level.WaterLayer.Any(rectangle => rectangle.Contains(body));
+        return Stage.WaterLayer.Any(rectangle => rectangle.Contains(body));
     }
     public override bool Collides(Vector2 velocity)
     {
@@ -166,7 +174,7 @@ public class Player : Character
 
         var feetOnGround = false;
 
-        foreach (var rectangle in Level.GroundLayer)
+        foreach (var rectangle in Stage.GroundLayer)
         {
             if (rectangle.Contains(feet))
             {
@@ -176,7 +184,7 @@ public class Player : Character
 
         if (!feetOnGround) return false;
 
-        foreach (var rectangle in Level.GroundLayer)
+        foreach (var rectangle in Stage.GroundLayer)
         {
             if (velocity.Y == 0 && velocity.X > 0)
             {
@@ -227,7 +235,7 @@ public class Player : Character
         return false;
     }
     
-    public void TakesDamage(float damagePoints)
+    public void TakesDamage(float damagePoints, Entity entity)
     {
         if (Invincible) return;
 
@@ -236,7 +244,7 @@ public class Player : Character
         Armor -= damagePoints;
             
         if(shieldBreak && Armor<=0)
-            SoundManager.Play(SoundLoader.ShieldBreak);
+            SoundManager.Play(SoundLoader.ShieldBreakSound);
         
         if (Armor < 0)
         {
@@ -250,7 +258,20 @@ public class Player : Character
         if (!IsAlive())
         {
             Invincible = true;
+            DeathCause = Helper.Transform.EntityToDeathCause(entity);
             SetAnimation(AnimationType.Death);
+        }
+    }
+
+    public void LevelUp()
+    {
+        Debug.WriteLine(Strength);
+        if (25 <= EP)
+        {
+            EP -= 25;
+            Strength += 1+Level*0.25f;
+            Level++;
+            SoundManager.Play(SoundLoader.LevelUpSound);
         }
     }
 

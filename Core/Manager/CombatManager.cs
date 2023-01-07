@@ -41,6 +41,7 @@ public static class CombatManager
         }
         
         CheckShotPlayerCollision(player);
+        
         if (!player.Invincible)
         {
             CheckEnemyCollision(player);
@@ -105,12 +106,13 @@ public static class CombatManager
         EnemyDies(defender, attacker);
     }
     
-    private static void EnemyAttack(Character attacker, Player defender)
+    private static void EnemyAttack(Enemy attacker, Player player)
     {
-        if (!defender.IsAlive()) return;
-        if (EntitiesCollide(attacker, defender))
+        if (!player.IsAlive()) return;
+        
+        if (EntitiesCollide(attacker, player))
         {
-            defender.TakesDamage(attacker.Strength);
+            player.TakesDamage(attacker.Strength, attacker);
         }
         attacker.IsAttacking = false;
     }
@@ -153,21 +155,21 @@ public static class CombatManager
     public static void Shoot(Player player)
     {
         var shot = ItemLoader.CreateLaserShot(player.Weapon, player.AimDirection);
-        shot.Level = player.Level;
+        shot.Stage = player.Stage;
         _activeShotsByPlayer.Add(shot);
     }
 
     public static void Shoot(Enemy enemy)
     {
         var shot = ItemLoader.CreateLaserShot(enemy);
-        shot.Level = enemy.Level;
+        shot.Stage = enemy.Stage;
         _activeShotsByEnemy.Add(shot);
     }
 
-    public static void Shoot(Vector2 position, Vector2 direction, Level level)
+    public static void Shoot(Vector2 position, Vector2 direction, Stage stage)
     {
         var shot = ItemLoader.CreateLaserShot(position, direction);
-        shot.Level = level;
+        shot.Stage = stage;
         _activeShotsByEnemy.Add(shot);
     }
 
@@ -189,7 +191,7 @@ public static class CombatManager
     {
         foreach (var projectileShot in _activeShotsByEnemy.Where(projectileShot => projectileShot.IntersectPixels(player.Rectangle, player.EntityTextureData) && projectileShot.Origin == (int)DamageOrigin.Enemy))
         {
-            player.TakesDamage(projectileShot.DamagePoints);
+            player.TakesDamage(projectileShot.DamagePoints, projectileShot);
             projectileShot.HitTarget = true;
             return;
         }
@@ -201,8 +203,7 @@ public static class CombatManager
         SoundManager.Play(enemy.DeathSound);
         ItemManager.DropLoot(enemy);
         EnemyManager.RemoveEnemy(enemy);
-        player.Money += enemy.MoneyReward;
-        player.XpToNextLevel += enemy.XpReward;
+        player.EP += enemy.EpReward;
     }
 
     private static void CheckEnemyCollision(Player player)
@@ -211,7 +212,7 @@ public static class CombatManager
         {
             if (EntitiesCollide(player, enemy))
             {
-                player.TakesDamage(enemy.Strength);
+                player.TakesDamage(enemy.Strength, enemy);
                 return;
             }
         }

@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.World;
 
-public class Level
+public class Stage
 {
     public List<Room> Rooms;
     public List<Rectangle> GroundLayer;
@@ -35,7 +35,7 @@ public class Level
             return Rooms.First(room => room.MapName.Contains("boss"));
         } 
     }
-    public Level(List<Room> rooms, List<Rectangle> groundLayer, List<Rectangle> waterLayer)
+    public Stage(List<Room> rooms, List<Rectangle> groundLayer, List<Rectangle> waterLayer)
     {
         Rooms = rooms;
         GroundLayer = groundLayer;

@@ -21,7 +21,7 @@ public class Trinket : Item
     public override bool Use(Player player)
     {
         player.Strength += 1*DamageMultiplier;
-        player.XpToNextLevel += 1*XpMultiplier;
+        player.EP += 1*XpMultiplier;
         player.Armor += 1*ArmorMultiplier;
         player.Trinket = this;
         player.ImmuneToWater = true;

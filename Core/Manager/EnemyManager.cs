@@ -15,7 +15,7 @@ public static class EnemyManager
     private static List<Enemy> Enemies = new();
    private static Enemy _keyEnemy;
     public static Player Player { set; get;}
-    public static Level Level { set; get; }
+    public static Stage Stage { set; get; }
     private  static List<Vector2> closedList = new List<Vector2>();
     
     private static void AddEnemy(Enemy e)
@@ -47,7 +47,7 @@ public static class EnemyManager
         Random rand = new Random();
         
         
-        foreach (var room in Level.Rooms.Skip(1))
+        foreach (var room in Stage.Rooms.Skip(1))
         {
             if (room.Spawns.Count > 0 && !room.MapName.Contains("boss"))
             {
@@ -74,7 +74,7 @@ public static class EnemyManager
             }
             if (room.MapName.Contains("boss"))
             {
-                Enemy boss = new GiantBlob(Level,Player);
+                Enemy boss = new GiantBlob(Stage,Player);
                 boss.Position = room.Spawns[0];
                 AddEnemy(boss);
                 CombatManager.AddEnemy(boss);
@@ -99,12 +99,12 @@ public static class EnemyManager
         Random rand = new Random();
         switch (rand.Next(0,4))
         {
-            case 0: return new Walker(Level);
-            case 1: return new Chaser(Level, Player);
-            case 2: return new Turret(Level, Player);
-            case 3: return new Gunner(Level, Player);
+            case 0: return new Blob(Stage);
+            case 1: return new Chaser(Stage, Player);
+            case 2: return new Turret(Stage, Player);
+            case 3: return new Gunner(Stage, Player);
         }
-        return new Walker(Level);
+        return new Blob(Stage);
     }
     
     public static void Update(GameTime gameTime)

@@ -8,7 +8,7 @@ public class UiText : Component
     public SpriteFont Font { get; set; }
     public string Text { get; set; }
     public Vector2 Scale { get; set; } = Vector2.One;
-    public UiText(Rectangle sourceRec, SpriteFont font, string text, UiLabels uiLabel) : base(sourceRec)
+    public UiText(Rectangle sourceRec, SpriteFont font, string text, UiLabel uiLabel) : base(sourceRec)
     {
         Font = font;
         Text = text;

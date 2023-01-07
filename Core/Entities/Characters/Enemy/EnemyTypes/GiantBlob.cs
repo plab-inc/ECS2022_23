@@ -13,19 +13,20 @@ public class GiantBlob : Enemy
     private int _bulletWaveDelay;
     private int _shotDelay;
     
-    public GiantBlob(Level level, Character target) : base(Vector2.Zero, UiLoader.SpriteSheet,
-        AnimationLoader.CreateBlobEnemyAnimations(), new Boss(target), level)
+    public GiantBlob(Stage stage, Character target) : base(Vector2.Zero, UiLoader.SpriteSheet,
+        AnimationLoader.CreateBlobEnemyAnimations(), new Boss(target), stage)
     {
         IsBoss = true;
+        Behavior.SetEnemy(this);
+
         Velocity = 0.5f;
         HP = 150;
-        XpReward = 5;
-        MoneyReward = 10;
+        Strength = 2;
+        EpReward = 10;
+        
         SpriteHeight = 32;
         SpriteWidth = 32;
-        Behavior.SetEnemy(this);
         DeathSound = SoundLoader.BlobDeathSound;
-        Strength = 2;
     }
 
     public override void Attack()
@@ -46,14 +47,14 @@ public class GiantBlob : Enemy
 
     private void SpawnBulletWave()
     {
-        CombatManager.Shoot(Position, new Vector2(0,-1), Level);
-        CombatManager.Shoot(Position, new Vector2(1,-1), Level);
-        CombatManager.Shoot(Position, new Vector2(1,0), Level);
-        CombatManager.Shoot(Position, new Vector2(1,1), Level);
-        CombatManager.Shoot(Position, new Vector2(0,1), Level);
-        CombatManager.Shoot(Position, new Vector2(-1,1), Level);
-        CombatManager.Shoot(Position, new Vector2(-1,0), Level);
-        CombatManager.Shoot(Position, new Vector2(-1,-1), Level);
+        CombatManager.Shoot(Position, new Vector2(0,-1), Stage);
+        CombatManager.Shoot(Position, new Vector2(1,-1), Stage);
+        CombatManager.Shoot(Position, new Vector2(1,0), Stage);
+        CombatManager.Shoot(Position, new Vector2(1,1), Stage);
+        CombatManager.Shoot(Position, new Vector2(0,1), Stage);
+        CombatManager.Shoot(Position, new Vector2(-1,1), Stage);
+        CombatManager.Shoot(Position, new Vector2(-1,0), Stage);
+        CombatManager.Shoot(Position, new Vector2(-1,-1), Stage);
     }
 
 }
