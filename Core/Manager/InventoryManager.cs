@@ -100,6 +100,7 @@ public static class InventoryManager
         }
         LockerManager.RemoveFromPocket(item);
         _toolBar.RemoveItem(item);
+        _player.Items.Remove(item);
     }
 
     private static void UseTrinket(Player player, Trinket trinket)
