@@ -76,7 +76,7 @@ public abstract class Inventory
         }
     }
 
-    public void SelectIndex(int index)
+    protected void SelectIndex(int index)
     {
         if (index < 0)
         {
@@ -157,15 +157,25 @@ public abstract class Inventory
         return false;
     }
     
-    public bool LastIndex()
+    public bool IsAtLastIndex()
     {
         return _prevIndex+1 == SlotCount;
     }
     
-    public bool FirstIndex()
+    public bool IsAtFirstIndex()
     {
         return _prevIndex == 0;
     }
-    
+
+    public void ClearItems()
+    {
+        foreach (var row in InventoryRows)
+        {
+            foreach (var slot in row.Slots)
+            {
+                slot.RemoveItem();
+            }
+        }
+    }
     
 }

@@ -75,6 +75,7 @@ public class InventorySlot
     {
         Item = null;
         IsUsed = false;
+        IsActive = false;
         ItemCount = 0;
     }
 }
