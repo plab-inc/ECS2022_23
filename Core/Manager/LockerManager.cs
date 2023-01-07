@@ -107,11 +107,13 @@ public static class LockerManager
         {
             case true:
                 toTransfer = _locker.GetSelectedItem();
+                if (toTransfer == null) return;
                 InventoryManager.AddItem(toTransfer);
                 _locker.RemoveItem(toTransfer);
                 break;
             case false:
                 toTransfer = _pocket.GetSelectedItem();
+                if (toTransfer == null) return;
                 _locker.AddItem(toTransfer);
                InventoryManager.RemoveItem(toTransfer);
                 break;

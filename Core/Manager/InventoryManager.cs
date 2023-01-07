@@ -43,6 +43,7 @@ public static class InventoryManager
     
     public static void AddItem(Item item)
     {
+        if (item == null) return;
         if (item.GetType() == typeof(Weapon))
         {
             _weaponSlot.AddItem(item);
@@ -56,6 +57,7 @@ public static class InventoryManager
     
     public static void RemoveItem(Item item)
     {
+        if (item == null) return;
         if(_toolBar.IsItemActive(item)) {
             UseItem(_player, item);
         }
