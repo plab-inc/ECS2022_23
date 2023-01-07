@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ECS2022_23.Core.Entities.Items;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
@@ -18,12 +19,27 @@ public class Pocket : Inventory
         DrawText(spriteBatch);
     }
 
+    public override bool AddItem(Item item)
+    {
+        if(item.GetType() != typeof(Weapon)) return base.AddItem(item);
+
+        var weapon = GetWeapon();
+        RemoveItem(weapon);
+        return base.AddItem(item);
+    }
+    
     private void DrawText(SpriteBatch spriteBatch)
     {
-        var text = UiLoader.CreateTextElement("Current Inventory");
+        var text = UiLoader.CreateTextElement("Inventory");
         text.DestinationRec =
             new Rectangle(DestinationRec.X, DestinationRec.Y - Height/RowCount/2, Width, Height);
         text.Scale = new Vector2(Scale/2, Scale/2);
         text.Draw(spriteBatch);
+    }
+    
+    public bool WeaponLimitReached()
+    {
+        var weapon = GetWeapon();
+        return weapon != null;
     }
 }

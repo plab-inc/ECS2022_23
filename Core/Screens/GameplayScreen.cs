@@ -81,9 +81,9 @@ internal class GameplayScreen : GameScreen
             Weapon = ItemLoader.CreatePhaserWeapon(Vector2.Zero)
         };
         
-        InventoryManager.Init(_player);
         LockerManager.Init();
-        
+        InventoryManager.Init(_player);
+
         _camera = new Camera(ScreenManager.GraphicsDevice)
         {
             Zoom = 3f

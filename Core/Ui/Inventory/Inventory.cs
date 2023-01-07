@@ -55,9 +55,9 @@ public abstract class Inventory
         }
     }
     
-    public virtual void AddItem(Item item)
+    public virtual bool AddItem(Item item)
     {
-        if (item == null) return;
+        if (item == null) return false;
         
         foreach (var row in InventoryRows)
         {
@@ -66,14 +66,16 @@ public abstract class Inventory
             if (slot != null)
             {
                 slot.ItemCount++;
-                return;
+                return true;
             }
 
             slot = row.GetFreeSlot();
             if (slot == null) continue;
             slot.AddItem(item, 1);
-            return;
+            return true;
         }
+
+        return false;
     }
 
     protected void SelectIndex(int index)
@@ -117,7 +119,7 @@ public abstract class Inventory
         return null;
     }
 
-    public void RemoveItem(Item item)
+    public virtual bool RemoveItem(Item item)
     {
         foreach (var row in InventoryRows)
         {
@@ -129,9 +131,10 @@ public abstract class Inventory
             { 
                 slot.RemoveItem();
             }
-
-            return;
+            return true;
         }
+
+        return false;
     }
 
     public void SwitchActiveState(Item item)
@@ -176,6 +179,23 @@ public abstract class Inventory
                 slot.RemoveItem();
             }
         }
+    }
+    
+    public Weapon GetWeapon()
+    {
+        foreach (var row in InventoryRows)
+        {
+            foreach (var slot in row.Slots)
+            {
+                if (slot.Item == null) continue;
+                if (slot.Item.GetType() == typeof(Weapon))
+                {
+                    return (Weapon) slot.Item;
+                }
+            }
+        }
+
+        return null;
     }
     
 }

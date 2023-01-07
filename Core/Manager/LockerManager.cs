@@ -20,7 +20,7 @@ public static class LockerManager
     private static Point _scale = new Point(6, 6);
     public static void Init()
     {
-        _locker = new Locker(3, 3);
+        _locker = new Locker(3, 2);
         _pocket = _pocket = new Pocket(3, 3);
         _spriteSheet = UiLoader.SpriteSheet;
         _lockerIsActive = true;
@@ -41,9 +41,9 @@ public static class LockerManager
         _locker = locker;
     }
 
-    public static void AddToPocket(Item item)
+    public static bool AddToPocket(Item item)
     {
-        _pocket.AddItem(item);
+        return _pocket.AddItem(item);
     }
 
     public static void RemoveFromPocket(Item item)
@@ -102,22 +102,54 @@ public static class LockerManager
 
     private static void Transfer()
     {
-        Item toTransfer; 
+        Item toTransfer;
         switch (_lockerIsActive)
         {
             case true:
                 toTransfer = _locker.GetSelectedItem();
                 if (toTransfer == null) return;
-                InventoryManager.AddItem(toTransfer);
-                _locker.RemoveItem(toTransfer);
+                if (toTransfer.GetType() == typeof(Weapon))
+                {
+                    if (SwitchBothWeapons(_locker, _pocket, toTransfer))
+                    {
+                        return;
+                    }
+                }
+                if (InventoryManager.AddItem(toTransfer))
+                { 
+                    _locker.RemoveItem(toTransfer);
+                }
                 break;
             case false:
                 toTransfer = _pocket.GetSelectedItem();
                 if (toTransfer == null) return;
-                _locker.AddItem(toTransfer);
-               InventoryManager.RemoveItem(toTransfer);
+                if (toTransfer.GetType() == typeof(Weapon))
+                {
+                    if (SwitchBothWeapons(_pocket, _locker, toTransfer))
+                    {
+                        return;
+                    }
+                }
+                if (_locker.AddItem(toTransfer))
+                {
+                    InventoryManager.RemoveItem(toTransfer);
+                }
                 break;
         }
+    }
+
+    private static bool SwitchBothWeapons(Inventory from, Inventory to, Item selection)
+    {
+        if (_locker.WeaponLimitReached() && _pocket.WeaponLimitReached())
+        {
+            from.RemoveItem(selection);
+            var weapon = to.GetWeapon();
+            to.RemoveItem(weapon);
+            from.AddItem(weapon);
+            to.AddItem(selection);
+            return true;
+        }
+        return false;
     }
 
     private static void SwitchActiveInventory(Keys actionKey)

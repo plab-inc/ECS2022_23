@@ -15,11 +15,11 @@ public class TrinketSlot : Inventory
         CreateRows();
     }
     
-    public override void AddItem(Item item)
+    public override bool AddItem(Item item)
     {
         try
         {
-            if (item == null) return;
+            if (item == null) return false;
             var row = InventoryRows[0];
             var slot = row.Slots[0];
             slot.AddItem(item, 1);
@@ -31,6 +31,6 @@ public class TrinketSlot : Inventory
             RowCount = 1;
             CreateRows();
         }
-     
+        return true;
     }
 }

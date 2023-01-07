@@ -57,7 +57,7 @@ public class Player : Character
         }
         
         LevelUp();
-        Weapon.SetPosition(this);
+        Weapon?.SetPosition(this);
         AnimationManager.Update(gameTime);
         Weapon?.Update(gameTime);
     }
