@@ -265,7 +265,6 @@ public class Player : Character
 
     public void LevelUp()
     {
-        Debug.WriteLine(Strength);
         if (25 <= EP)
         {
             EP -= 25;
