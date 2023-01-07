@@ -17,15 +17,16 @@ public class GiantBlob : Enemy
         AnimationLoader.CreateBlobEnemyAnimations(), new Boss(target), stage)
     {
         IsBoss = true;
+        Behavior.SetEnemy(this);
+
         Velocity = 0.5f;
         HP = 150;
-        XpReward = 10;
-        MoneyReward = 10;
+        Strength = 2;
+        EpReward = 10;
+        
         SpriteHeight = 32;
         SpriteWidth = 32;
-        Behavior.SetEnemy(this);
         DeathSound = SoundLoader.BlobDeathSound;
-        Strength = 2;
     }
 
     public override void Attack()

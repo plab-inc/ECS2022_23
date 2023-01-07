@@ -14,15 +14,16 @@ public class Gunner : Enemy
     private int delay;
     public Gunner(Stage stage, Character target) : base(Vector2.Zero, UiLoader.SpriteSheet , AnimationLoader.CreateEyeEnemyAnimations(), new Dodger(target), stage)
     {
+        Behavior.SetEnemy(this);
+        
         Velocity = 1f;
         HP = 10;
-        MoneyReward = 1;
-        XpReward = 2;
+        Strength = 1;
+        EpReward = 2;
+
         ActivationRadius = 150f;
         _target = target;
-        Behavior.SetEnemy(this);
-        Strength = 1;
-        
+
         Color = Color.Cyan;
         DeathSound = SoundLoader.BlobDeathSound;
     }

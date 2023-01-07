@@ -6,20 +6,19 @@ using Microsoft.Xna.Framework;
 
 namespace ECS2022_23.Core.Entities.Characters.Enemy.EnemyTypes;
 
-public class Walker : Enemy
+public class Blob : Enemy
 {
-   public Walker(Stage stage) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateBlobEnemyAnimations(), new RandomBehavior(), stage)
+   public Blob(Stage stage) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateBlobEnemyAnimations(), new RandomBehavior(), stage)
     {
-        Velocity = 1f;
-        HP = 10;
-        MoneyReward = 1;
-        XpReward = 1;
         Behavior.SetEnemy(this);
         
+        Velocity = 1f;
+        HP = 10;
+        Strength = 1;
+        EpReward = 1;
+
         Color = Color.Cyan;
         DeathSound = SoundLoader.BlobDeathSound;
-
-        Strength = 1;
     }
    
    public override void Attack()

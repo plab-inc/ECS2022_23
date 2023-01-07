@@ -41,6 +41,7 @@ public static class CombatManager
         }
         
         CheckShotPlayerCollision(player);
+        
         if (!player.Invincible)
         {
             CheckEnemyCollision(player);
@@ -105,12 +106,13 @@ public static class CombatManager
         EnemyDies(defender, attacker);
     }
     
-    private static void EnemyAttack(Character attacker, Player defender)
+    private static void EnemyAttack(Enemy attacker, Player player)
     {
-        if (!defender.IsAlive()) return;
-        if (EntitiesCollide(attacker, defender))
+        if (!player.IsAlive()) return;
+        
+        if (EntitiesCollide(attacker, player))
         {
-            defender.TakesDamage(attacker.Strength);
+            player.TakesDamage(attacker.Strength, attacker);
         }
         attacker.IsAttacking = false;
     }
@@ -189,7 +191,7 @@ public static class CombatManager
     {
         foreach (var projectileShot in _activeShotsByEnemy.Where(projectileShot => projectileShot.IntersectPixels(player.Rectangle, player.EntityTextureData) && projectileShot.Origin == (int)DamageOrigin.Enemy))
         {
-            player.TakesDamage(projectileShot.DamagePoints);
+            player.TakesDamage(projectileShot.DamagePoints, projectileShot);
             projectileShot.HitTarget = true;
             return;
         }
@@ -201,7 +203,7 @@ public static class CombatManager
         SoundManager.Play(enemy.DeathSound);
         ItemManager.DropLoot(enemy);
         EnemyManager.RemoveEnemy(enemy);
-        player.EP += enemy.XpReward;
+        player.EP += enemy.EpReward;
     }
 
     private static void CheckEnemyCollision(Player player)
@@ -210,7 +212,7 @@ public static class CombatManager
         {
             if (EntitiesCollide(player, enemy))
             {
-                player.TakesDamage(enemy.Strength);
+                player.TakesDamage(enemy.Strength, enemy);
                 return;
             }
         }

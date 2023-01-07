@@ -99,12 +99,12 @@ public static class EnemyManager
         Random rand = new Random();
         switch (rand.Next(0,4))
         {
-            case 0: return new Walker(Stage);
+            case 0: return new Blob(Stage);
             case 1: return new Chaser(Stage, Player);
             case 2: return new Turret(Stage, Player);
             case 3: return new Gunner(Stage, Player);
         }
-        return new Walker(Stage);
+        return new Blob(Stage);
     }
     
     public static void Update(GameTime gameTime)

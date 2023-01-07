@@ -7,7 +7,7 @@ namespace ECS2022_23.Core.Entities.Items;
 public class Consumable : Item
 {
     public float HealMultiplier { get; set; }
-    public float XpPoints { get; set; }
+    public float EpReward { get; set; }
     public float ArmorPoints { get; set; }
     public float DamageMultiplier { get; set; }
     public float Duration { get; set; }
@@ -28,7 +28,7 @@ public class Consumable : Item
         {
             player.HP = maxHp;
         }
-        player.EP += XpPoints;
+        player.EP += EpReward;
         player.Armor += ArmorPoints;
         return true;
     }
