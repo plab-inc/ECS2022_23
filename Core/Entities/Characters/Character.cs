@@ -20,7 +20,7 @@ public abstract class Character : Entity
     public Direction AimDirection;
     public SoundEffect DamageSound;
     public SoundEffect DeathSound;
-    public Level Level { get; set; }
+    public Stage Stage { get; set; }
     public bool IsAttacking { get; set; }
 
     protected Character(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations) : base(spawn, texture, animations)
@@ -39,7 +39,7 @@ public abstract class Character : Entity
             return true;
         }
         
-        foreach (var rectangle in Level.GroundLayer)
+        foreach (var rectangle in Stage.GroundLayer)
         {
             if (rectangle.Contains(feet) && !IsInWater(body))
             {
@@ -52,7 +52,7 @@ public abstract class Character : Entity
 
     public virtual bool IsInWater(Rectangle body)
     {
-        foreach (var rectangle in Level.WaterLayer)
+        foreach (var rectangle in Stage.WaterLayer)
         {
             if (rectangle.Intersects(body))
             {

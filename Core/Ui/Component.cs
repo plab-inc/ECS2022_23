@@ -7,7 +7,7 @@ public abstract class Component
 {
     public Rectangle SourceRec;
     public Rectangle DestinationRec;
-    public UiLabels UiLabel;
+    public UiLabel UiLabel;
 
     protected Component(Rectangle sourceRec)
     {

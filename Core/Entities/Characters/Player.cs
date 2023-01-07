@@ -16,11 +16,11 @@ namespace ECS2022_23.Core.Entities.Characters;
 public class Player : Character
 {
     public float Armor;
-    public float XpToNextLevel;
-    public float Money;
+    public float EP;
+    public float Level;
+    
     public bool Invincible;
     public bool ImmuneToWater = false;
-    public float PlayerLevel;
     
     public List<Item> Items;
     public Weapon Weapon { get; set; }
@@ -28,14 +28,15 @@ public class Player : Character
     public Room Room { get; set; }
     public Player(Texture2D texture, Dictionary<AnimationType, Animation> animations) : base(Vector2.Zero,texture, animations)
     {
+        SpriteWidth = 16;
+        DamageSound = SoundLoader.PlayerDamageSound;
+        
         Velocity = 3f;
         HP = 10;
-        SpriteWidth = 16;
-        Strength = 5;
-        DamageSound = SoundLoader.PlayerDamageSound;
-        XpToNextLevel = 0;
+        EP = 0;
         Armor = 1;
-        PlayerLevel = 1;
+        Level = 1;
+        Strength = 5;
     }
     
     public override void Update(GameTime gameTime)
@@ -148,7 +149,7 @@ public class Player : Character
     }
     public override bool IsInWater(Rectangle body)
     {
-        return Level.WaterLayer.Any(rectangle => rectangle.Contains(body));
+        return Stage.WaterLayer.Any(rectangle => rectangle.Contains(body));
     }
     public override bool Collides(Vector2 velocity)
     {
@@ -171,7 +172,7 @@ public class Player : Character
 
         var feetOnGround = false;
 
-        foreach (var rectangle in Level.GroundLayer)
+        foreach (var rectangle in Stage.GroundLayer)
         {
             if (rectangle.Contains(feet))
             {
@@ -181,7 +182,7 @@ public class Player : Character
 
         if (!feetOnGround) return false;
 
-        foreach (var rectangle in Level.GroundLayer)
+        foreach (var rectangle in Stage.GroundLayer)
         {
             if (velocity.Y == 0 && velocity.X > 0)
             {
@@ -262,11 +263,11 @@ public class Player : Character
     public void LevelUp()
     {
         Debug.WriteLine(Strength);
-        if (25 <= XpToNextLevel)
+        if (25 <= EP)
         {
-            XpToNextLevel -= 25;
-            Strength += 1+PlayerLevel*0.25f;
-            PlayerLevel++;
+            EP -= 25;
+            Strength += 1+Level*0.25f;
+            Level++;
             SoundManager.Play(SoundLoader.LevelUpSound);
         }
     }

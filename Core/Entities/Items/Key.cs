@@ -18,9 +18,9 @@ public class Key : Item
     }
     public override bool Use(Player player)
     {
-        if (player.Level.PlayerIsInfrontOfBossDoor)
+        if (player.Stage.PlayerIsInfrontOfBossDoor)
         {
-            player.Level.OpenBossDoor();
+            player.Stage.OpenBossDoor();
             return true;
         }
 

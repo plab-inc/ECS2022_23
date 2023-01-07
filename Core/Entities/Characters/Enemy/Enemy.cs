@@ -21,11 +21,11 @@ public abstract class Enemy : Character
     public Vector2 AimVector;
     protected bool IsBoss;
     
-    public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Behavior behavior, Level level) : base(spawn, texture, animations)
+    public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Behavior behavior, Stage stage) : base(spawn, texture, animations)
     {
         Behavior = behavior;
         ActivationRadius = 125;
-        Level = level;
+        Stage = stage;
     }
     
     public override void Update(GameTime gameTime)

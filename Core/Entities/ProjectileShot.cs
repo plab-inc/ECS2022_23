@@ -17,7 +17,7 @@ public class ProjectileShot : Entity
     private Rectangle SourceRectangle { get; }
     public float DamagePoints { get; private set; }
     public bool HitTarget { get; set; }
-    public Level Level { get; set; }
+    public Stage Stage { get; set; }
 
     public int Origin { get; set; }
 
@@ -97,6 +97,6 @@ public class ProjectileShot : Entity
     public bool Collides()
     {
         var bottom = new Point(Rectangle.Center.X, Rectangle.Bottom);
-        return Level.GroundLayer.Any(rectangle => rectangle.Contains(bottom));
+        return Stage.GroundLayer.Any(rectangle => rectangle.Contains(bottom));
     }
 }
