@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using ECS2022_23.Core.Entities.Characters;
+﻿using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
 using Microsoft.Xna.Framework.Graphics;
@@ -76,24 +75,28 @@ public static class InventoryManager
         if (item.GetType() == typeof(Trinket))
         {
             var trinket = (Trinket)item;
-            
-            _toolBar.SwitchActiveState(trinket);
-            if (trinket.Equals(player.Trinket))
-            {
-                trinket.Unequip(player);
-                _prevTrinket = trinket;
-            }
-            else
-            {
-                _trinketSlot.AddItem(trinket);
-                _prevTrinket = trinket;
-                player.UseItem(trinket);
-            }
+            UseTrinket(player, trinket);
             return;
         }
         if (player.UseItem(item))
         {
             RemoveItem(item);
+        }
+    }
+
+    private static void UseTrinket(Player player, Trinket trinket)
+    {
+        _toolBar.SwitchActiveState(trinket);
+        if (trinket.Equals(player.Trinket))
+        {
+            trinket.Unequip(player);
+            _prevTrinket = trinket;
+        }
+        else
+        {
+            _trinketSlot.AddItem(trinket);
+            _prevTrinket = trinket;
+            player.UseItem(trinket);
         }
     }
 
@@ -145,15 +148,5 @@ public static class InventoryManager
             _trinketSlot.RemoveItem(_prevTrinket);
             _prevTrinket = null;
         }
-    }
-
-    public static void SetWeapon(Weapon weapon)
-    {
-        _weaponSlot.AddItem(weapon);
-    }
-
-    public static void SetTrinket(Trinket trinket)
-    {
-        _trinketSlot.AddItem(trinket);
     }
 }
