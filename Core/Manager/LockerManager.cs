@@ -1,7 +1,9 @@
 ﻿using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Items;
+using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.Ui.InventoryManagement;
 using ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -9,23 +11,34 @@ namespace ECS2022_23.Core.Manager;
 
 public static class LockerManager
 {
-    private static Locker _locker =  _locker = new Locker(3, 3);
-    private static Pocket _pocket = _pocket = new Pocket(3, 3);
+    private static Locker _locker;
+    private static Pocket _pocket;
     private static bool _lockerIsActive;
     
+    private static Texture2D _spriteSheet;
+    private static Rectangle _sourceRecOfArrow = new Rectangle(9*16, 3*16, 16, 16);
+    private static Point _scale = new Point(6, 6);
     public static void Init()
     {
         _locker = new Locker(3, 3);
         _pocket = _pocket = new Pocket(3, 3);
+        _spriteSheet = UiLoader.SpriteSheet;
         _lockerIsActive = true;
     }
 
     public static void AddPlayerItems(Player player)
     {
+        _pocket.ClearItems();
+        
         foreach (var item in player.Items)
         {
             _pocket.AddItem(item);
         }
+    }
+    
+    public static void LoadLocker(Locker locker)
+    {
+        _locker = locker;
     }
 
     public static void AddToPocket(Item item)
@@ -38,13 +51,11 @@ public static class LockerManager
         _pocket.RemoveItem(item);
     }
 
-    public static void LoadLocker(Locker locker)
-    {
-        _locker = locker;
-    }
-
     public static void Draw(SpriteBatch spriteBatch)
     {
+        spriteBatch.Draw(_spriteSheet, new Rectangle(Game1.ScreenWidth/2-(16*_scale.X/2), 
+            Game1.ScreenHeight/2-(16*_scale.Y/2), 
+            16*_scale.X, 16*_scale.Y), _sourceRecOfArrow, Color.White);
         _locker.Draw(spriteBatch);
         _pocket.Draw(spriteBatch);
     }
@@ -113,7 +124,7 @@ public static class LockerManager
         {
             case Keys.Right:
             {
-                if (_lockerIsActive && _locker.LastIndex())
+                if (_lockerIsActive && _locker.IsAtLastIndex())
                 {
                     _lockerIsActive = false;
                 }
@@ -122,7 +133,7 @@ public static class LockerManager
             }
             case Keys.Left:
             {
-                if (!_lockerIsActive && _pocket.FirstIndex())
+                if (!_lockerIsActive && _pocket.IsAtFirstIndex())
                 {
                     _lockerIsActive = true;
                 }
