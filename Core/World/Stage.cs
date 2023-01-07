@@ -46,28 +46,31 @@ public class Stage
         foreach (var room in Rooms.Where(room => room.Rectangle.Contains(Player.Position)))
         {
             Player.Room = room;
+            var lockers = room.GetRectanglesRelativeToWorld("Interactables", "Locker");
+            var exits = room.GetRectanglesRelativeToWorld("Interactables", "Exit");
+            var bossDoors = room.GetRectanglesRelativeToWorld("Interactables", "Bossdoor");
 
-            if (room.GetInteractablePositions("Locker").Any())
+            if (lockers.Any())
             {
                 PlayerIsInfrontOfLocker = false;
                 
-                if (Player.Rectangle.Contains(room.GetInteractablePositions("Locker").First()))
+                if (Player.Rectangle.Intersects(lockers.First()))
                 {
                     PlayerIsInfrontOfLocker = true;
                 }
             }
-            if (room.GetInteractablePositions("Bossdoor").Any())
+            if (bossDoors.Any())
             {
                 PlayerIsInfrontOfBossDoor = false;
                 
-                if (Player.Rectangle.Contains(room.GetInteractablePositions("Bossdoor").First()))
+                if (Player.Rectangle.Intersects(bossDoors.First()))
                 {
                     PlayerIsInfrontOfBossDoor = true;
                 }
             }
-            if (room.GetInteractablePositions("Exit").Any())
+            if (exits.Any())
             {
-                if (Player.Rectangle.Contains(room.GetInteractablePositions("Exit").First()))
+                if (exits.First().Contains(Player.Rectangle.Center))
                 {
                     IsCompleted = true;
                 }
@@ -82,6 +85,18 @@ public class Stage
         foreach (var room in Rooms)
         {
             room.Draw(spriteBatch);
+            
+            var whiteRectangle = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
+            whiteRectangle.SetData(new[] { Color.White });
+        
+            if(room.GetRectanglesRelativeToWorld("Interactables").Any())
+            {
+                foreach (var rectangle in room.GetRectanglesRelativeToWorld("Interactables"))
+                {
+                    //spriteBatch.Draw(whiteRectangle,rectangle,Color.White);
+                }
+            }
+            
         }
     }
     private Rectangle Background {
@@ -122,14 +137,9 @@ public class Stage
     }
     public void OpenBossDoor()
     {
-        var bossdoorPos = BossRoom.GetInteractableMapPositions("Bossdoor").First();
-        BossRoom.ChangeTile((int) bossdoorPos.X / BossRoom.Map.TileWidth,(int) bossdoorPos.Y / BossRoom.Map.TileHeight,98,"decoration");
+        var bossDoor = BossRoom.GetAllRectanglesFromLayer("Interactables", "Bossdoor").First();
+        BossRoom.ChangeTile(bossDoor.X / BossRoom.Map.TileWidth,bossDoor.Y / BossRoom.Map.TileHeight,98,"decoration");
         
-        bossdoorPos = BossRoom.GetInteractablePositions("Bossdoor").First();
-        var x = (int) Math.Floor(bossdoorPos.X / BossRoom.Map.TileWidth) * BossRoom.Map.TileWidth;
-        var y = (int) Math.Floor(bossdoorPos.Y / BossRoom.Map.TileHeight) * BossRoom.Map.TileHeight;
-        var rect = new Rectangle(x, y, 16, 16);
-        
-        GroundLayer.Add(rect);
+        GroundLayer.Add(BossRoom.GetRectanglesRelativeToWorld("Interactables", "Bossdoor").First());
     }
 }
