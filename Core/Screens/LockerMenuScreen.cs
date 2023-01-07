@@ -11,7 +11,7 @@ internal class LockerMenuScreen : MenuScreen
     private string usageText;
     public LockerMenuScreen() : base("Locker")
     {
-        usageText =  "\nHow to use a Locker...." + "\nEsc or E to Cancel.";
+        usageText =  "\nHow to use a Locker:" + "\nMove with Left/Right Arrow Keys" + "\nEnter to Transfer Item" + "\nEsc or E to Cancel.";
     }
     protected override Vector2 PlaceTitle(GraphicsDevice graphics)
     {
