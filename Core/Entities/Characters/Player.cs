@@ -35,7 +35,7 @@ public class Player : Character
         Velocity = 3f;
         HP = 3;
         EP = 0;
-        Armor = 10000;
+        Armor = 10;
         Level = 1;
         Strength = 5;
     }
