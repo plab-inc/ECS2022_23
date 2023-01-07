@@ -6,23 +6,17 @@ namespace ECS2022_23.Core.Entities.Items;
 
 public class Trinket : Item
 {
-    public float DamageMultiplier { get; set; }
-    public float XpMultiplier { get; set; }
-    public float ArmorMultiplier { get; set; }
     public Trinket(Vector2 spawn, Texture2D texture, Rectangle sourceRect) : base(spawn, texture, sourceRect)
     {
     }
 
     public override void Update(GameTime gameTime)
     {
-        throw new System.NotImplementedException();
+        return;
     }
     
     public override bool Use(Player player)
     {
-        player.Strength += 1*DamageMultiplier;
-        player.EP += 1*XpMultiplier;
-        player.Armor += 1*ArmorMultiplier;
         player.Trinket = this;
         player.ImmuneToWater = true;
         return true;

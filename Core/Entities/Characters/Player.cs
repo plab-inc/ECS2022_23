@@ -23,7 +23,7 @@ public class Player : Character
     public bool ImmuneToWater = false;
 
     public DeathCause DeathCause;
-    public List<Item> Items;
+    public List<Item> Items = new List<Item>();
     public Weapon Weapon { get; set; }
     public Trinket Trinket { get; set; }
     public Room Room { get; set; }
@@ -211,12 +211,6 @@ public class Player : Character
         }
         
         return false;
-    }
-
-    public void AddItem(Item item)
-    {
-        Items ??= new List<Item>();
-        Items.Add(item);
     }
 
     public bool UseItem(Item item)
