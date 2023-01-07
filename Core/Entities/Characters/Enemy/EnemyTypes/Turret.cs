@@ -13,13 +13,14 @@ public class Turret : Enemy
     
     public Turret(Stage stage, Character target) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(), new StationaryShooter(target), stage)
     {
+        Behavior.SetEnemy(this);
+        
         Velocity = 0f;
         HP = 20;
-        XpReward = 1;
-        MoneyReward = 1;
-        ActivationRadius = 150f;
-        Behavior.SetEnemy(this);
         Strength = 1;
+        EpReward = 1;
+        ActivationRadius = 150f;
+
         DeathSound = SoundLoader.BlobDeathSound;
     }
     

@@ -11,8 +11,7 @@ namespace ECS2022_23.Core.Entities.Characters.Enemy;
 
 public abstract class Enemy : Character
 {
-    public float XpReward;
-    public float MoneyReward;
+    public float EpReward;
     protected Behavior Behavior;
     private bool _isActive;
     private BoundingSphere _activationSphere;
@@ -64,7 +63,7 @@ public abstract class Enemy : Character
            return true;
        
        Vector3 vec = new Vector3(EnemyManager.Player.Position.X, EnemyManager.Player.Position.Y, 0);
-        return _activationSphere.Contains(vec) == ContainmentType.Contains|| _activationSphere.Contains(vec) == ContainmentType.Intersects;
+       return _activationSphere.Contains(vec) == ContainmentType.Contains|| _activationSphere.Contains(vec) == ContainmentType.Intersects;
    }
  
     public override void Draw(SpriteBatch spriteBatch)

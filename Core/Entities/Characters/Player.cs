@@ -21,7 +21,8 @@ public class Player : Character
     
     public bool Invincible;
     public bool ImmuneToWater = false;
-    
+
+    public DeathCause DeathCause;
     public List<Item> Items;
     public Weapon Weapon { get; set; }
     public Trinket Trinket { get; set; }
@@ -32,7 +33,7 @@ public class Player : Character
         DamageSound = SoundLoader.PlayerDamageSound;
         
         Velocity = 3f;
-        HP = 10;
+        HP = 3;
         EP = 0;
         Armor = 1;
         Level = 1;
@@ -50,6 +51,7 @@ public class Player : Character
         {
             if (!ImmuneToWater)
             {
+                DeathCause = DeathCause.Water;
                 Kill();
             }
         }
@@ -233,7 +235,7 @@ public class Player : Character
         return false;
     }
     
-    public void TakesDamage(float damagePoints)
+    public void TakesDamage(float damagePoints, Entity entity)
     {
         if (Invincible) return;
 
@@ -256,6 +258,7 @@ public class Player : Character
         if (!IsAlive())
         {
             Invincible = true;
+            DeathCause = Helper.Transform.EntityToDeathCause(entity);
             SetAnimation(AnimationType.Death);
         }
     }
