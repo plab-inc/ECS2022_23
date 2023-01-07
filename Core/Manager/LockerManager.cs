@@ -147,6 +147,7 @@ public static class LockerManager
             to.RemoveItem(weapon);
             from.AddItem(weapon);
             to.AddItem(selection);
+            InventoryManager.SetPlayerWeapon(weapon);
             return true;
         }
         return false;

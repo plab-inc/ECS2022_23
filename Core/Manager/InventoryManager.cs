@@ -184,4 +184,9 @@ public static class InventoryManager
             _prevTrinket = null;
         }
     }
+
+    public static void SetPlayerWeapon(Weapon weapon)
+    {
+        _player.Weapon = weapon;
+    }
 }
