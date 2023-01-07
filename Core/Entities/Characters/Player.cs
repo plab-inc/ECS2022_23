@@ -35,7 +35,7 @@ public class Player : Character
         Velocity = 3f;
         HP = 3;
         EP = 0;
-        Armor = 1;
+        Armor = 10000;
         Level = 1;
         Strength = 5;
     }
@@ -157,8 +157,6 @@ public class Player : Character
     {
         var newPoint = (Position + velocity).ToPoint();
         var rect = new Rectangle(newPoint, new Point(Texture.Width, Texture.Height));
-
-        //TODO clean up
         
         var armHitBoxLeft =
             new Rectangle(newPoint.X + 4, newPoint.Y + Texture.Height / 2 + 2, 1, Texture.Height / 2 - 2);
@@ -184,6 +182,14 @@ public class Player : Character
 
         if (!feetOnGround) return false;
 
+        foreach (var rectangle in Room.GetRectanglesRelativeToWorld("Interactables","Locker"))
+        {
+            if (rectangle.Contains(feet) || rectangle.Contains(armHitBoxLeft) || rectangle.Contains(armHitBoxRight))
+            {
+                return false;
+            }
+        }
+        
         foreach (var rectangle in Stage.GroundLayer)
         {
             if (velocity.Y == 0 && velocity.X > 0)

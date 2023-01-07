@@ -16,7 +16,7 @@ public static class EnemyManager
    private static Enemy _keyEnemy;
     public static Player Player { set; get;}
     public static Stage Stage { set; get; }
-    private  static List<Vector2> closedList = new List<Vector2>();
+    private  static List<Vector2> closedList = new();
     
     private static void AddEnemy(Enemy e)
     {
@@ -64,6 +64,8 @@ public static class EnemyManager
                         {
                             closedList.Add(pos);
                             en.Position = pos;
+                            en.OriginalSpawn = pos;
+                            en.OriginalRoom = room;
                             AddEnemy(en);
                             CombatManager.AddEnemy(en);
                             break;
@@ -76,6 +78,8 @@ public static class EnemyManager
             {
                 Enemy boss = new GiantBlob(Stage,Player);
                 boss.Position = room.Spawns[0];
+                boss.OriginalSpawn = room.Spawns[0];
+                boss.OriginalRoom = room;
                 AddEnemy(boss);
                 CombatManager.AddEnemy(boss);
             }
