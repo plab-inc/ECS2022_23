@@ -13,7 +13,7 @@ public abstract class Enemy : Character
 {
     public float EpReward;
     protected Behavior Behavior;
-    private bool _isActive;
+    public bool IsActive;
     private BoundingSphere _activationSphere;
     protected float ActivationRadius;
     protected Color Color = Color.White;
@@ -34,13 +34,13 @@ public abstract class Enemy : Character
     {
         SetAnimation(AnimationType.WalkDown);
         SetActivationRadius();
-        if (_isActive)
+        if (IsActive)
         {
            Act();
         }
         else
         {
-            _isActive = Activate();
+            IsActive = Activate();
         }
         
         if(!IsAlive())
@@ -78,7 +78,13 @@ public abstract class Enemy : Character
 
    public Vector2 ReturnToSpawn()
    {
-        Vector2 direction = Vector2.Normalize(OriginalSpawn - Position) * Velocity;
+       if (Position == OriginalSpawn)
+       {
+           IsActive = false;
+           return Vector2.Zero;
+       }
+
+       Vector2 direction = Vector2.Normalize(OriginalSpawn - Position) * Velocity;
         direction.Floor();
         if (Collides(direction))
             return direction;

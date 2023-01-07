@@ -26,6 +26,9 @@ public class Turret : Enemy
     
     public override void Attack()
     {
+        if(!IsActive)
+            return;
+        
         if (++_attackDelay >= 75)
         {
             _attackDelay = 0;

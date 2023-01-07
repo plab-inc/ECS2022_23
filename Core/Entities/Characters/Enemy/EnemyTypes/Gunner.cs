@@ -30,6 +30,9 @@ public class Gunner : Enemy
 
     public override void Attack()
     {
+        if(!IsActive)
+            return;
+        
         if (Vector2.Distance(Position, _target.Position)>50)
         {
             if (++delay > 50)
@@ -42,6 +45,5 @@ public class Gunner : Enemy
         {
             Behavior.State = (int)EnemyStates.Move;
         }
-        
     }
 }
