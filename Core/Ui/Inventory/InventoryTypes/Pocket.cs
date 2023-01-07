@@ -22,9 +22,13 @@ public class Pocket : Inventory
     public override bool AddItem(Item item)
     {
         if(item.GetType() != typeof(Weapon)) return base.AddItem(item);
-
-        var weapon = GetWeapon();
-        RemoveItem(weapon);
+        
+        if (WeaponLimitReached())
+        { 
+            var weapon = GetWeapon();
+            RemoveItem(weapon);
+        }
+        
         return base.AddItem(item);
     }
     
