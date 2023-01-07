@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using ECS2022_23.Core.Entities.Characters;
+﻿using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,16 +13,11 @@ public static class InventoryManager
     private static WeaponSlot _weaponSlot;
     private static TrinketSlot _trinketSlot;
     
-    private static Weapon _prevWeapon;
-    private static Trinket _prevTrinket;
-
     public static void Init(Player player)
     {
         _toolBar = new ToolBar(1, 9);
         _weaponSlot = new WeaponSlot();
         _trinketSlot = new TrinketSlot();
-        _prevTrinket = null;
-        _prevWeapon = null;
         _player = player;
         
         if (player.Items != null)
@@ -39,13 +33,7 @@ public static class InventoryManager
             AddItem(player.Weapon);
         }
     }
-    
-    public static void Update(Player player)
-    {
-        UpdateWeapon(player);
-        UpdateTrinket(player);
-    }
-    
+
     public static void Draw(SpriteBatch spriteBatch)
     {
         _toolBar.Draw(spriteBatch);
@@ -62,7 +50,6 @@ public static class InventoryManager
 
     private static void UseItem(Player player, Item item)
     {
-
         switch (item) 
         {
             case Trinket trinket:
@@ -82,18 +69,20 @@ public static class InventoryManager
 
         switch (item)
         {
-            case Weapon:
+            case Weapon weapon:
                 _weaponSlot.AddItem(item);
+                SetPlayerWeapon(weapon);
                 break;
             default:
                 _toolBar.AddItem(item);
+                _player.Items.Add(item);
                 break;
         }
         
         LockerManager.AddToPocket(item);
         return true;
     }
-    
+
     public static void RemoveItem(Item item)
     {
         if (item == null) return;
@@ -101,12 +90,12 @@ public static class InventoryManager
         switch (item)
         {
             case Trinket trinket:
-                if(_toolBar.IsItemActive(trinket)) {
+                if(_toolBar.ItemIsActive(trinket)) {
                     UseTrinket(_player, trinket);
                 }
                 break;
             case Weapon:
-                if(_weaponSlot.RemoveItem(item)) _player.Weapon = null;
+                if(_weaponSlot.RemoveItem(item)) SetPlayerWeapon(null);
                 break;
         }
         LockerManager.RemoveFromPocket(item);
@@ -119,73 +108,16 @@ public static class InventoryManager
         if (trinket.Equals(player.Trinket))
         {
             trinket.Unequip(player);
-            _prevTrinket = trinket;
+            _trinketSlot.RemoveItem(trinket);
         }
         else
         {
             _trinketSlot.AddItem(trinket);
-            _prevTrinket = trinket;
             player.UseItem(trinket);
         }
     }
-    
-    private static void UpdateWeapon(Player player)
-    {
-        if (player.Weapon != null)
-        {
-            if (_prevWeapon != null)
-            {
-                if (!_prevWeapon.Equals(player.Weapon))
-                {
-                    _weaponSlot.AddItem(player.Weapon);
-                    LockerManager.AddToPocket(player.Weapon);
-                    _prevWeapon = player.Weapon;
-                }
-            }
-            else
-            {
-                _weaponSlot.AddItem(player.Weapon);
-                LockerManager.AddToPocket(player.Weapon);
-                _prevWeapon = player.Weapon;
-            }
-        }
-        else if(_prevWeapon != null)
-        {
-            _weaponSlot.RemoveItem(_prevWeapon);
-            LockerManager.RemoveFromPocket(_prevWeapon);
-            _prevWeapon = null;
-        }
-    }
 
-    private static void UpdateTrinket(Player player)
-    {
-        if (player.Trinket != null)
-        {
-            if (_prevTrinket != null)
-            {
-                if (!_prevTrinket.Equals(player.Trinket))
-                {
-                    _trinketSlot.AddItem(player.Trinket);
-                    LockerManager.AddToPocket(player.Weapon);
-                    _prevTrinket = player.Trinket;
-                }
-            }
-            else
-            {
-                _trinketSlot.AddItem(player.Trinket);
-                LockerManager.AddToPocket(player.Weapon);
-                _prevTrinket = player.Trinket;
-            }
-        }
-        else if(_prevTrinket != null)
-        {
-            _trinketSlot.RemoveItem(_prevTrinket);
-            LockerManager.RemoveFromPocket(_prevTrinket);
-            _prevTrinket = null;
-        }
-    }
-
-    public static void SetPlayerWeapon(Weapon weapon)
+    private static void SetPlayerWeapon(Weapon weapon)
     {
         _player.Weapon = weapon;
     }

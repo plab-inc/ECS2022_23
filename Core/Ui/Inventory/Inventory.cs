@@ -148,7 +148,7 @@ public abstract class Inventory
         }
     }
 
-    public bool IsItemActive(Item item)
+    public bool ItemIsActive(Item item)
     {
         foreach (var row in InventoryRows)
         {

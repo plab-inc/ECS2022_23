@@ -153,12 +153,10 @@ public static class ItemManager
                         weapon.Position = player.Position;
                         _activeItems.Add(weapon);
                     }
-                    player.Weapon = (Weapon) item;
                     InventoryManager.AddItem(item);
                 }
                 else
                 {
-                    player.AddItem(item);
                     InventoryManager.AddItem(item);
                 }
                 _activeItems.Remove(item);

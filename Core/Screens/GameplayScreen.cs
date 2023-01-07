@@ -148,7 +148,6 @@ internal class GameplayScreen : GameScreen
                 
             UiManager.Update(_player);
             CombatManager.Update(gameTime, _player);
-            InventoryManager.Update(_player);
         }
     }
 
