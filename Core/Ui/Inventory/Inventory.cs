@@ -169,17 +169,6 @@ public abstract class Inventory
     {
         return _prevIndex == 0;
     }
-
-    public void ClearItems()
-    {
-        foreach (var row in InventoryRows)
-        {
-            foreach (var slot in row.Slots)
-            {
-                slot.RemoveItem();
-            }
-        }
-    }
     
     public Weapon GetWeapon()
     {

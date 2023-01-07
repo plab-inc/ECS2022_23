@@ -1,5 +1,4 @@
-﻿using ECS2022_23.Core.Entities.Characters;
-using ECS2022_23.Core.Entities.Items;
+﻿using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.Ui.InventoryManagement;
 using ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
@@ -24,16 +23,6 @@ public static class LockerManager
         _pocket = _pocket = new Pocket(3, 3);
         _spriteSheet = UiLoader.SpriteSheet;
         _lockerIsActive = true;
-    }
-
-    public static void AddPlayerItems(Player player)
-    {
-        _pocket.ClearItems();
-        
-        foreach (var item in player.Items)
-        {
-            _pocket.AddItem(item);
-        }
     }
     
     public static void LoadLocker(Locker locker)
