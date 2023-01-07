@@ -13,7 +13,7 @@ public abstract class Enemy : Character
 {
     public float EpReward;
     protected Behavior Behavior;
-    public bool IsActive;
+    protected bool IsActive;
     private BoundingSphere _activationSphere;
     protected float ActivationRadius;
     protected Color Color = Color.White;
@@ -47,10 +47,6 @@ public abstract class Enemy : Character
         {
             SetAnimation(AnimationType.Death);
         }
-        else
-        {
-            //SetAnimation("Default");
-        }
         AnimationManager.Update(gameTime);
     }
 
@@ -76,7 +72,7 @@ public abstract class Enemy : Character
        return _activationSphere.Contains(vec) == ContainmentType.Contains|| _activationSphere.Contains(vec) == ContainmentType.Intersects;
    }
 
-   public Vector2 ReturnToSpawn()
+   private Vector2 ReturnToSpawn()
    {
        if (Position == OriginalSpawn)
        {
@@ -104,7 +100,4 @@ public abstract class Enemy : Character
         Vector3 vec = new Vector3(Position.X, Position.Y, 0);
         _activationSphere = new BoundingSphere(vec, ActivationRadius);
     }
-
-    
-    
 }

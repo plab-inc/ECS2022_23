@@ -16,7 +16,7 @@ public static class EnemyManager
    private static Enemy _keyEnemy;
     public static Player Player { set; get;}
     public static Stage Stage { set; get; }
-    private  static List<Vector2> closedList = new List<Vector2>();
+    private  static List<Vector2> closedList = new();
     
     private static void AddEnemy(Enemy e)
     {
