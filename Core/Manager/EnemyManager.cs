@@ -78,6 +78,8 @@ public static class EnemyManager
             {
                 Enemy boss = new GiantBlob(Stage,Player);
                 boss.Position = room.Spawns[0];
+                boss.OriginalSpawn = room.Spawns[0];
+                boss.OriginalRoom = room;
                 AddEnemy(boss);
                 CombatManager.AddEnemy(boss);
             }
