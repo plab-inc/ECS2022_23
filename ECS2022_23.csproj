@@ -36,6 +36,7 @@
     </ItemGroup>
     <ItemGroup>
       <Content Include="Assets\GameStateManagement\blank.png" />
+      <Content Include="Assets\GameStateManagement\controls.png" />
       <Content Include="Assets\Sprites\astro.png" />
       <Content Include="Assets\Sprites\spritesheet.png" />
       <Content Include="Assets\Sprites\spritesheet_red.png" />

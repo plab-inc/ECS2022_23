@@ -43,15 +43,18 @@ internal class MainMenuScreen : MenuScreen
         MenuEntry playGameMenuEntry = new MenuEntry("Play Game");
         MenuEntry optionsMenuEntry = new MenuEntry("Options");
         MenuEntry exitMenuEntry = new MenuEntry("Exit");
-
+        MenuEntry controlsMenuEntry = new MenuEntry("Controls");
+        
         // Hook up menu event handlers.
         playGameMenuEntry.Selected += PlayGameMenuEntrySelected;
         optionsMenuEntry.Selected += OptionsMenuEntrySelected;
+        controlsMenuEntry.Selected += ControlsMenuEntrySelected;
         exitMenuEntry.Selected += OnCancel;
 
         // Add entries to the menu.
         MenuEntries.Add(playGameMenuEntry);
         //MenuEntries.Add(optionsMenuEntry);
+        MenuEntries.Add(controlsMenuEntry);
         MenuEntries.Add(exitMenuEntry);
     }
     
@@ -82,6 +85,10 @@ internal class MainMenuScreen : MenuScreen
     {
         LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
             new GameplayScreen());
+    }
+    private void ControlsMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+    {
+        ScreenManager.AddScreen(new ControlsScreen(), e.PlayerIndex);
     }
 
     /// <summary>
