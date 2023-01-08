@@ -1,3 +1,4 @@
+using System;
 using GameStateManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -13,7 +14,8 @@ internal class ControlsScreen : GameScreen
     
     public ControlsScreen()
     {
-        
+        TransitionOnTime = TimeSpan.FromSeconds(0.5);
+        TransitionOffTime = TimeSpan.FromSeconds(0.1);
     }
 
     #endregion Initialization
@@ -53,7 +55,7 @@ internal class ControlsScreen : GameScreen
         // Darken down any other screens that were drawn beneath the popup.
         ScreenManager.FadeBackBufferToBlack(TransitionAlpha * 2 / 2.5f);
         
-        spriteBatch.Begin();
+        spriteBatch.Begin(samplerState: SamplerState.LinearClamp);
 
         spriteBatch.Draw(_controls,Vector2.Zero,Color.White);
 

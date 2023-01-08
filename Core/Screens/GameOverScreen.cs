@@ -171,7 +171,7 @@ internal class GameOverScreen : MenuScreen
             default:
                 deathCauses.Add($"That {_deathCause} did not like you");
                 deathCauses.Add($"{_deathCause} is not your friend");
-                deathCauses.Add($"Next time you will kill {_deathCause}");
+                deathCauses.Add($"Next time you will kill that {_deathCause}");
                 break;
         }
         var index = random.Next(deathCauses.Count);
