@@ -1,5 +1,8 @@
+using System;
 using System.IO;
+using System.Reflection;
 using System.Reflection.Metadata;
+using System.Text.Json;
 using System.Xml.Serialization;
 using ECS2022_23.Core.Entities;
 using ECS2022_23.Core.Entities.Characters;
@@ -20,6 +23,48 @@ public static class DeepCopy
         ms.Seek(0, SeekOrigin.Begin);
         return (T)serializer.Deserialize(ms);
     }
+}
+
+public static class Serialization
+{
+    private static string _executingPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+    public static void Save<T>(T obj)
+    {
+        
+        if (_executingPath != null) Directory.SetCurrentDirectory(_executingPath);
+
+        string savePath = _executingPath + "/Saves/";
+
+        if (!Directory.Exists(savePath))
+        {
+            Directory.CreateDirectory(savePath);
+        }
+        
+        string data = JsonSerializer.Serialize(obj);
+        string filename = obj.GetType().Name + ".json";
+        
+        File.WriteAllText(savePath + filename, data);
+        
+    }
+    
+    public static T Load<T>(string filename)
+    {
+        if (_executingPath != null) Directory.SetCurrentDirectory(_executingPath);
+
+        string loadPath = _executingPath + "/Saves/";
+
+        if (!File.Exists(loadPath + filename))
+        {
+            return default;
+        }
+
+        string jsonString = File.ReadAllText(loadPath + filename);
+
+        return JsonSerializer.Deserialize<T>(jsonString);
+
+    }
+    
+    
 }
 
 public static class Transform

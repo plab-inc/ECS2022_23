@@ -1,9 +1,10 @@
-﻿using ECS2022_23.Core.Entities.Characters;
+﻿using System;
+using ECS2022_23.Core.Entities.Characters;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Entities.Items;
-
+[Serializable]
 public abstract class Item : Entity
 {
     public Rectangle SourceRect { get; }

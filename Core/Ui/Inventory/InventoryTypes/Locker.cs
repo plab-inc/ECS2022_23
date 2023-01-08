@@ -1,10 +1,12 @@
-﻿using ECS2022_23.Core.Entities.Items;
+﻿using System;
+using ECS2022_23.Core.Entities.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
 
-public class Locker : Inventory
+[Serializable]
+public class Locker : Inventory 
 {
     private bool _weaponLimitReached;
     public Locker(int rowCount, int colCount) : base(rowCount, colCount)

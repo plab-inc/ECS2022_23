@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Manager;
 using ECS2022_23.Enums;
@@ -17,7 +18,7 @@ public abstract class Entity
     protected readonly AnimationManager AnimationManager = new();
     protected int SpriteWidth = 16;
     protected int SpriteHeight = 16;
-
+    [JsonIgnore]
     public Color[] EntityTextureData { get; }
     public Rectangle Rectangle => new((int) Position.X,(int) Position.Y, SpriteWidth, SpriteHeight);
 
