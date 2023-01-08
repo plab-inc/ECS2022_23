@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using ECS2022_23.Core.Entities.Items;
+using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.Ui.InventoryManagement;
 using ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
+using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -19,9 +21,9 @@ public static class LockerManager
     private static Point _scale = new Point(6, 6);
 
     public static Locker Locker { get; set; }
-    private static List<Item> _itemsInLocker = new List<Item>();
+    private static List<ItemType> _itemsInLocker = new List<ItemType>();
 
-    public static void Init(List<Item> itemsInLocker)
+    public static void Init(List<ItemType> itemsInLocker)
     {
         Locker = new Locker(3, 2);
         _pocket = _pocket = new Pocket(3, 3);
@@ -30,9 +32,10 @@ public static class LockerManager
 
         _itemsInLocker = itemsInLocker;
 
-        foreach (var item in itemsInLocker)
+        foreach (var itemType in itemsInLocker)
         {
-            Locker.AddItem(item);
+            
+            Locker.AddItem(ItemLoader.CreateItem(Vector2.Zero, itemType));
         }
     }
     
@@ -44,13 +47,13 @@ public static class LockerManager
     public static void AddToPocket(Item item)
     {
         _pocket.AddItem(item);
-        _itemsInLocker.Remove(item);
+        _itemsInLocker.Remove(item.itemType);
     }
 
     public static void RemoveFromPocket(Item item)
     {
         _pocket.RemoveItem(item);
-        _itemsInLocker.Add(item);
+        _itemsInLocker.Add(item.itemType);
     }
 
     public static void Draw(SpriteBatch spriteBatch)

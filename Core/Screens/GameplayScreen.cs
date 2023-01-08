@@ -21,6 +21,7 @@ using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
+using ECS2022_23.Enums;
 using ECS2022_23.Helper;
 using GameStateManagement;
 using Microsoft.Xna.Framework;
@@ -88,16 +89,16 @@ internal class GameplayScreen : GameScreen
         {
             _player = new Player(content.Load<Texture2D>("sprites/astro"), AnimationLoader.CreatePlayerAnimations())
             {
-                Weapon = ItemLoader.CreatePhaserWeapon(Vector2.Zero)
+                Weapon = (Weapon) ItemLoader.CreateItem(Vector2.Zero, ItemType.Phaser)
             };
             _gameSave = new GameSave(_player.EP, _player.Level);
             LockerManager.Init(_gameSave.ItemsInLocker);
         }
-        else
+        if (_gameSave != null)
         {
             _player = new Player(content.Load<Texture2D>("sprites/astro"), AnimationLoader.CreatePlayerAnimations(), _gameSave.EP, _gameSave.Level)
             {
-                Weapon = ItemLoader.CreatePhaserWeapon(Vector2.Zero)
+                Weapon = (Weapon) ItemLoader.CreateItem(Vector2.Zero, ItemType.Phaser)
             };
             LockerManager.Init(_gameSave.ItemsInLocker);
         }
