@@ -156,18 +156,15 @@ internal class GameplayScreen : GameScreen
         {
             _escape.Update(gameTime);
             _gameSave.Update(_player.EP,_player.Level);
+            Serialization.Save(_gameSave);
             
             if (_escape.WasSuccessful)
             {
-                Helper.Serialization.Save(_gameSave);
-                
                 LoadingScreen.Load(ScreenManager, false, null,
                     new BackgroundScreen(true, true), new GameOverScreen());
             }
             if (_escape.Failed)
             {
-                Helper.Serialization.Save(_gameSave);
-                
                 LoadingScreen.Load(ScreenManager, false, null,
                     new BackgroundScreen(true, false), new GameOverScreen(_player.DeathCause));
             }
