@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using ECS2022_23.Core.Entities.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -7,24 +8,27 @@ namespace ECS2022_23.Core.Ui.InventoryManagement;
 
 public abstract class Inventory
 {
-    protected int PixelSize = 16;
     public int Scale = 5;
+    public int SlotCount = 0;
+    
+    protected int PixelSize = 16;
     protected int Width;
     protected int Height;
     protected int RowCount;
     protected int ColCount;
     protected Rectangle DestinationRec;
     protected List<InventoryRow> InventoryRows = new List<InventoryRow>();
-    protected Texture2D BackgroundTexture;
-    protected int PrevIndex = 0;
-    protected InventoryRow PrevRow;
-    public int SlotCount = 0;
+    
+    private Texture2D _backgroundTexture;
+    private int _prevIndex = 0;
+    private InventoryRow _prevRow;
+  
 
     protected Inventory(int rowCount, int colCount)
     {
         RowCount = rowCount;
         ColCount = colCount;
-        BackgroundTexture = UiLoader.CreateColorTexture(new Color(28, 111, 255, 255));
+        _backgroundTexture = UiLoader.CreateColorTexture(new Color(28, 111, 255, 255));
     }
 
     protected void CreateRows()
@@ -37,23 +41,23 @@ public abstract class Inventory
 
         if (InventoryRows.Count > 0)
         {
-            PrevRow = InventoryRows[0];
-            if(PrevRow.Slots.Count > 0) PrevRow.Slots[PrevIndex].IsSelected = true;
+            _prevRow = InventoryRows[0];
+            if(_prevRow.Slots.Count > 0) _prevRow.Slots[_prevIndex].IsSelected = true;
         }
     }
 
     public virtual void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(BackgroundTexture, DestinationRec, Color.White);
+        spriteBatch.Draw(_backgroundTexture, DestinationRec, Color.White);
         foreach (var row in InventoryRows)
         {
             row.Draw(spriteBatch);
         }
     }
     
-    public virtual void AddItem(Item item)
+    public virtual bool AddItem(Item item)
     {
-        if (item == null) return;
+        if (item == null) return false;
         
         foreach (var row in InventoryRows)
         {
@@ -62,43 +66,45 @@ public abstract class Inventory
             if (slot != null)
             {
                 slot.ItemCount++;
-                return;
+                return true;
             }
 
             slot = row.GetFreeSlot();
             if (slot == null) continue;
             slot.AddItem(item, 1);
-            return;
+            return true;
         }
+
+        return false;
     }
 
-    public void SelectIndex(int index)
+    protected void SelectIndex(int index)
     {
         if (index < 0)
         {
             index = 0;
         }
 
-        if (index == PrevIndex) return;
+        if (index == _prevIndex) return;
         foreach (var row in InventoryRows)
         {
             var slot = row.Slots.Find(slot => slot.Index == index);
             if (slot == null) continue;
             slot.IsSelected = true;
-            var prevSlot = PrevRow.Slots[PrevIndex%ColCount];
+            var prevSlot = _prevRow.Slots[_prevIndex%ColCount];
             prevSlot.IsSelected = false;
-            PrevIndex = index;
-            PrevRow = row;
+            _prevIndex = index;
+            _prevRow = row;
             return;
         }
     }
     public void IncreaseIndex()
     {
-        SelectIndex(PrevIndex+1);
+        SelectIndex(_prevIndex+1);
     }
     public void DecreaseIndex()
     {
-        SelectIndex(PrevIndex-1);
+        SelectIndex(_prevIndex-1);
     }
 
     public Item GetSelectedItem()
@@ -113,7 +119,7 @@ public abstract class Inventory
         return null;
     }
 
-    public void RemoveItem(Item item)
+    public virtual bool RemoveItem(Item item)
     {
         foreach (var row in InventoryRows)
         {
@@ -125,9 +131,10 @@ public abstract class Inventory
             { 
                 slot.RemoveItem();
             }
-
-            return;
+            return true;
         }
+
+        return false;
     }
 
     public void SwitchActiveState(Item item)
@@ -141,4 +148,43 @@ public abstract class Inventory
         }
     }
 
+    public bool ItemIsActive(Item item)
+    {
+        foreach (var row in InventoryRows)
+        {
+            var slot = row.FindItem(item);
+            if (slot == null) continue;
+            return slot.IsActive;
+        }
+
+        return false;
+    }
+    
+    public bool IsAtLastIndex()
+    {
+        return _prevIndex+1 == SlotCount;
+    }
+    
+    public bool IsAtFirstIndex()
+    {
+        return _prevIndex == 0;
+    }
+    
+    public Weapon GetWeapon()
+    {
+        foreach (var row in InventoryRows)
+        {
+            foreach (var slot in row.Slots)
+            {
+                if (slot.Item == null) continue;
+                if (slot.Item.GetType() == typeof(Weapon))
+                {
+                    return (Weapon) slot.Item;
+                }
+            }
+        }
+
+        return null;
+    }
+    
 }

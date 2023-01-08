@@ -6,5 +6,6 @@ public enum Action
     PicksUpItem,
     OpensLocker,
     None,
-    UseItem
+    UseItem,
+    LockerAction
 }

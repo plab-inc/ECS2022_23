@@ -1,3 +1,5 @@
+using ECS2022_23.Core.Manager;
+using ECS2022_23.Enums;
 using GameStateManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,7 +11,7 @@ internal class LockerMenuScreen : MenuScreen
     private string usageText;
     public LockerMenuScreen() : base("Locker")
     {
-        usageText =  "\nHow to use a Locker...." + "\nEsc or E to Cancel.";
+        usageText =  "\nHow to use a Locker:" + "\nMove with Left/Right Arrow Keys" + "\nEnter to Transfer Item" + "\nEsc or E to Cancel.";
     }
     protected override Vector2 PlaceTitle(GraphicsDevice graphics)
     {
@@ -25,6 +27,12 @@ internal class LockerMenuScreen : MenuScreen
             OnCancel(playerIndex);
         }
         
+        Input.Update(input, (int) playerIndex);
+        
+        if (Input.GetPlayerAction() == Action.LockerAction)
+        {
+            LockerManager.HandleInput(Input.LockerKeyDownAction());
+        }
     }
 
     public override void Draw(GameTime gameTime)
@@ -49,8 +57,10 @@ internal class LockerMenuScreen : MenuScreen
         spriteBatch.Begin(samplerState: SamplerState.LinearClamp);
         spriteBatch.DrawString(font, usageText, usageTextPosition, fontColor, 0,
             usageTextOrigin, 0.5f, SpriteEffects.None, 0);
-
         spriteBatch.End();
         
+        spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        LockerManager.Draw(spriteBatch);
+        spriteBatch.End();
     }
 }

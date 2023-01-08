@@ -147,14 +147,16 @@ public static class ItemManager
                 if (!item.Rectangle.Intersects(player.Rectangle)) continue;
                 if (item.GetType() == typeof(Weapon))
                 {
-                    var weapon = player.Weapon;
-                    weapon.Position = player.Position;
-                    _activeItems.Add(weapon);
-                    player.Weapon = (Weapon) item;
+                    if (player.Weapon != null)
+                    {
+                        var weapon = player.Weapon;
+                        weapon.Position = player.Position;
+                        _activeItems.Add(weapon);
+                    }
+                    InventoryManager.AddItem(item);
                 }
                 else
                 {
-                    player.AddItem(item);
                     InventoryManager.AddItem(item);
                 }
                 _activeItems.Remove(item);

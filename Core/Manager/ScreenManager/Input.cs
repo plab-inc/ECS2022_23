@@ -90,6 +90,10 @@ public static class Input
         {
             return Action.UseItem;
         }
+        if (LockerKeyDownAction() != Keys.None && keyboardState != lastKeyboardState)
+        {
+            return Action.LockerAction;
+        }
         
         return Action.None;
     }
@@ -104,6 +108,24 @@ public static class Input
         }
 
         return -1;
+    }
+    
+    public static Keys LockerKeyDownAction()
+    {
+        for (var i = 37; i <= 40; i++)
+        {
+            if (keyboardState.IsKeyDown((Keys) i ))
+            {
+                return (Keys) i;
+            }
+        }
+
+        if (keyboardState.IsKeyDown((Keys)13))
+        {
+            return (Keys) 13;
+        }
+
+        return Keys.None;
     }
     
 }

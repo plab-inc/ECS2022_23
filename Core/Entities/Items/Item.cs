@@ -42,12 +42,9 @@ public abstract class Item : Entity
         }
 
         var toCompare = (Item)obj;
-        return Equals(toCompare) && toCompare.Texture == this.Texture && Position == toCompare.Position;
-    }
-
-    private bool Equals(Item other)
-    {
-        return SourceRect.Equals(other.SourceRect);
+        return SourceRect.Equals(toCompare.SourceRect) 
+               && toCompare.Texture == this.Texture 
+               && Position == toCompare.Position;
     }
 
     public override int GetHashCode()

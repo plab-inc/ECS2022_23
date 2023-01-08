@@ -23,7 +23,7 @@ public class Player : Character
     public bool ImmuneToWater = false;
 
     public DeathCause DeathCause;
-    public List<Item> Items;
+    public List<Item> Items = new List<Item>();
     public Weapon Weapon { get; set; }
     public Trinket Trinket { get; set; }
     public Room Room { get; set; }
@@ -35,7 +35,7 @@ public class Player : Character
         Velocity = 3f;
         HP = 3;
         EP = 0;
-        Armor = 10000;
+        Armor = 10;
         Level = 1;
         Strength = 5;
     }
@@ -57,7 +57,7 @@ public class Player : Character
         }
         
         LevelUp();
-        Weapon.SetPosition(this);
+        Weapon?.SetPosition(this);
         AnimationManager.Update(gameTime);
         Weapon?.Update(gameTime);
     }
@@ -219,12 +219,6 @@ public class Player : Character
         return false;
     }
 
-    public void AddItem(Item item)
-    {
-        Items ??= new List<Item>();
-        Items.Add(item);
-    }
-
     public bool UseItem(Item item)
     {
         if (Items.Count <= 0) return false;
@@ -271,7 +265,6 @@ public class Player : Character
 
     public void LevelUp()
     {
-        Debug.WriteLine(Strength);
         if (25 <= EP)
         {
             EP -= 25;

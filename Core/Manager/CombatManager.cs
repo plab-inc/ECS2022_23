@@ -99,7 +99,15 @@ public static class CombatManager
     {
         if (!defender.IsAlive()) return;
         if (!EntitiesCollide(attacker, defender) && !WeaponCollide(attacker, defender)) return;
-        defender.HP -= (attacker.Strength + attacker.Weapon.DamagePoints);
+
+        if (attacker.Weapon == null)
+        {
+            defender.HP -= attacker.Strength;
+        }
+        else
+        {
+            defender.HP -= (attacker.Strength + attacker.Weapon.DamagePoints);
+        }
         defender.SetAnimation(AnimationType.Hurt);
 
         if (defender.HP > 0) return;
@@ -124,6 +132,7 @@ public static class CombatManager
 
     private static bool WeaponCollide(Player attacker, Entity defender)
     {
+        if (attacker.Weapon == null) return false;
         var figureRect = attacker.Rectangle;
         var weaponRect = attacker.Weapon.Rectangle;
         Rectangle attackRect; 

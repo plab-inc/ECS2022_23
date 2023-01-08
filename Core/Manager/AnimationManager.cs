@@ -72,7 +72,6 @@ public class AnimationManager
             _colorTimer.Update(gameTime);
             if (_colorTimer.LimitReached())
             {
-                Debug.WriteLine("Switch Colors");
                 (_activeColor, _prevColor) = (_prevColor, _activeColor);
             }
         }

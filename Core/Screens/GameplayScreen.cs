@@ -81,8 +81,9 @@ internal class GameplayScreen : GameScreen
             Weapon = ItemLoader.CreatePhaserWeapon(Vector2.Zero)
         };
         
+        LockerManager.Init();
         InventoryManager.Init(_player);
-        
+
         _camera = new Camera(ScreenManager.GraphicsDevice)
         {
             Zoom = 3f
@@ -147,7 +148,6 @@ internal class GameplayScreen : GameScreen
                 
             UiManager.Update(_player);
             CombatManager.Update(gameTime, _player);
-            InventoryManager.Update(_player);
         }
     }
 
