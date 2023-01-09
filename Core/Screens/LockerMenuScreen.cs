@@ -11,7 +11,7 @@ internal class LockerMenuScreen : MenuScreen
     private string usageText;
     public LockerMenuScreen() : base("Locker")
     {
-        usageText =  "\nHow to use a Locker:" + "\nMove with Left/Right Arrow Keys" + "\nEnter to Transfer Item" + "\nEsc or E to Cancel.";
+        usageText =  "Select With Left/Right Arrow Keys" + "\nEnter To Transfer Item" + "\nEsc or E to Cancel.";
     }
     protected override Vector2 PlaceTitle(GraphicsDevice graphics)
     {
@@ -49,7 +49,7 @@ internal class LockerMenuScreen : MenuScreen
         Vector2 usageTextPosition = new Vector2
         {
             X = viewport.Width / 2f,
-            Y = viewport.Height - 180
+            Y = viewport.Height - 160
         };
         Vector2 usageTextOrigin = font.MeasureString(usageText) / 2;
 
