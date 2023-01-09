@@ -34,26 +34,18 @@ public static class LockerManager
 
         foreach (var itemType in itemsInLocker)
         {
-            
             Locker.AddItem(ItemLoader.CreateItem(Vector2.Zero, itemType));
         }
     }
     
-    public static void LoadLocker(Locker locker)
-    {
-        Locker = locker;
-    }
-
     public static void AddToPocket(Item item)
     {
         _pocket.AddItem(item);
-        _itemsInLocker.Remove(item.itemType);
     }
 
     public static void RemoveFromPocket(Item item)
     {
         _pocket.RemoveItem(item);
-        _itemsInLocker.Add(item.itemType);
     }
 
     public static void Draw(SpriteBatch spriteBatch)
@@ -130,10 +122,18 @@ public static class LockerManager
         switch (fromInventory)
         {
             case Locker locker:
-                if(InventoryManager.AddItem(toTransfer)) locker.RemoveItem(toTransfer);
+                if (InventoryManager.AddItem(toTransfer))
+                {
+                    locker.RemoveItem(toTransfer);
+                    _itemsInLocker.Remove(toTransfer.itemType);
+                }
                 break;
             case Pocket:
-                if (Locker.AddItem(toTransfer)) InventoryManager.RemoveItem(toTransfer);
+                if (Locker.AddItem(toTransfer))
+                {
+                    InventoryManager.RemoveItem(toTransfer);
+                    _itemsInLocker.Add(toTransfer.itemType);
+                }
                 break;
         }
     }
@@ -152,14 +152,18 @@ public static class LockerManager
                 {
                     locker.RemoveItem(toTransfer);
                     locker.AddItem(toSwitch);
+                    _itemsInLocker.Remove(toTransfer.itemType);
+                    _itemsInLocker.Add(toSwitch.itemType);
                 }
                 break;
             case Pocket:
                 Locker.RemoveItem(toSwitch);
+                _itemsInLocker.Remove(toSwitch.itemType);
                 if (Locker.AddItem(toTransfer))
                 {
                     InventoryManager.RemoveItem(toTransfer);
                     InventoryManager.AddItem(toSwitch);
+                    _itemsInLocker.Add(toTransfer.itemType);
                 }
                 break;
         }
