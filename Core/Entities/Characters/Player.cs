@@ -15,10 +15,10 @@ namespace ECS2022_23.Core.Entities.Characters;
 
 public class Player : Character
 {
-    public float Armor;
     public float EP;
     public float Level;
-    
+
+    public float Armor;
     public bool Invincible;
     public bool ImmuneToWater = false;
 
@@ -37,6 +37,18 @@ public class Player : Character
         EP = 0;
         Armor = 10;
         Level = 1;
+        Strength = 5;
+    }
+    public Player(Texture2D texture, Dictionary<AnimationType, Animation> animations, float ep, float level) : base(Vector2.Zero,texture, animations)
+    {
+        SpriteWidth = 16;
+        DamageSound = SoundLoader.PlayerDamageSound;
+        
+        Velocity = 3f;
+        HP = 3;
+        this.EP = ep;
+        Armor = 10;
+        this.Level = level;
         Strength = 5;
     }
     

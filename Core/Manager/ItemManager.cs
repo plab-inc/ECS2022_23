@@ -4,6 +4,7 @@ using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Characters.Enemy;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Loader;
+using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -95,7 +96,7 @@ public static class ItemManager
 
     private static void DropKey(Vector2 position)
     {
-        AddItem(ItemLoader.CreateKey(position));
+        AddItem(ItemLoader.CreateItem(position, ItemType.Key));
         
     }
 
@@ -105,12 +106,12 @@ public static class ItemManager
         var randomInt = random.Next(5);
         switch (randomInt)
         {
-            case 0: return ItemLoader.CreateSwordWeapon(position);
-            case 1: return ItemLoader.CreatePhaserWeapon(position);
-            case 2: return ItemLoader.CreateCrowbarWeapon(position);
-            case 3: return ItemLoader.CreateKnifeWeapon(position);
-            case 4: return ItemLoader.CreateStickWeapon(position);
-            default: return ItemLoader.CreateSwordWeapon(position);
+            case 0: return (Weapon) ItemLoader.CreateItem(position, ItemType.Sword);
+            case 1: return (Weapon) ItemLoader.CreateItem(position, ItemType.Phaser);
+            case 2: return (Weapon) ItemLoader.CreateItem(position, ItemType.Crowbar);
+            case 3: return (Weapon) ItemLoader.CreateItem(position, ItemType.Knife);
+            case 4: return (Weapon) ItemLoader.CreateItem(position, ItemType.Stick);
+            default: return (Weapon) ItemLoader.CreateItem(position, ItemType.Sword);
         }
     }
     
@@ -120,10 +121,10 @@ public static class ItemManager
         var randomInt = random.Next(3);
         switch (randomInt)
         {
-            case 0: return ItemLoader.CreateHealthPotion(position);
-            case 1: return ItemLoader.CreateArmorPotion(position);
-            case 2: return ItemLoader.CreateCake(position);
-            default: return ItemLoader.CreateHealthPotion(position);
+            case 0: return (Consumable) ItemLoader.CreateItem(position, ItemType.HealthPotion);
+            case 1: return (Consumable) ItemLoader.CreateItem(position, ItemType.Armor);
+            case 2: return (Consumable) ItemLoader.CreateItem(position, ItemType.Cake);
+            default: return (Consumable) ItemLoader.CreateItem(position, ItemType.HealthPotion);
         }
     }
     
@@ -133,8 +134,8 @@ public static class ItemManager
         var randomInt = random.Next(1);
         switch (randomInt)
         {
-            case 0: return ItemLoader.CreateSwimmingGoggles(position);
-            default: return ItemLoader.CreateSwimmingGoggles(position);
+            default: return (Trinket) ItemLoader.CreateItem(position, ItemType.SwimmingGoggles);
+
         }
     }
 

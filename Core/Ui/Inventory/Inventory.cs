@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using ECS2022_23.Core.Entities.Items;
 using Microsoft.Xna.Framework;
@@ -6,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Ui.InventoryManagement;
 
+[Serializable]
 public abstract class Inventory
 {
     public int Scale = 5;

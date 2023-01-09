@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Ui.Inventory;
-
+[Serializable]
 public class InventorySlot
 {
     public int Index;

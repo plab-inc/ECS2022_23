@@ -12,12 +12,17 @@
 #region Using Statements
 
 using System;
+using System.Collections.Generic;
 using Comora;
 using ECS2022_23.Core.Entities.Characters;
+using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Game;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.Ui;
+using ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
+using ECS2022_23.Enums;
+using ECS2022_23.Helper;
 using GameStateManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -44,6 +49,8 @@ internal class GameplayScreen : GameScreen
     private Player _player;
     private Escape _escape;
     private Camera _camera;
+
+    private GameSave _gameSave;
         
     private float pauseAlpha;
 
@@ -75,15 +82,29 @@ internal class GameplayScreen : GameScreen
         AnimationLoader.Load(content);
         ItemLoader.Load(content);
         UiLoader.Load(content, ScreenManager.GraphicsDevice);
-
-        _player = new Player(content.Load<Texture2D>("sprites/astro"), AnimationLoader.CreatePlayerAnimations())
-        {
-            Weapon = ItemLoader.CreatePhaserWeapon(Vector2.Zero)
-        };
         
-        LockerManager.Init();
-        InventoryManager.Init(_player);
+        _gameSave = Serialization.Load<GameSave>("GameSave.json");
 
+        if (_gameSave == null)
+        {
+            _player = new Player(content.Load<Texture2D>("sprites/astro"), AnimationLoader.CreatePlayerAnimations())
+            {
+                Weapon = (Weapon) ItemLoader.CreateItem(Vector2.Zero, ItemType.Phaser)
+            };
+            _gameSave = new GameSave(_player.EP, _player.Level);
+            LockerManager.Init(_gameSave.ItemsInLocker);
+        }
+        if (_gameSave != null)
+        {
+            _player = new Player(content.Load<Texture2D>("sprites/astro"), AnimationLoader.CreatePlayerAnimations(), _gameSave.EP, _gameSave.Level)
+            {
+                Weapon = (Weapon) ItemLoader.CreateItem(Vector2.Zero, ItemType.Phaser)
+            };
+            LockerManager.Init(_gameSave.ItemsInLocker);
+        }
+
+        InventoryManager.Init(_player);
+        
         _camera = new Camera(ScreenManager.GraphicsDevice)
         {
             Zoom = 3f
@@ -134,7 +155,9 @@ internal class GameplayScreen : GameScreen
         if (IsActive)
         {
             _escape.Update(gameTime);
-
+            _gameSave.Update(_player.EP,_player.Level);
+            Serialization.Save(_gameSave);
+            
             if (_escape.WasSuccessful)
             {
                 LoadingScreen.Load(ScreenManager, false, null,

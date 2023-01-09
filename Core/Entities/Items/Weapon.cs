@@ -17,12 +17,12 @@ public class Weapon : Item
     public readonly SoundEffect AttackSound;
     public Direction AimDirection;
 
-    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Rectangle sourceRect, float damagePoints) : base(spawn, texture, sourceRect)
+    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Rectangle sourceRect, ItemType itemType, float damagePoints) : base(spawn, texture, sourceRect, itemType)
     {
         DamagePoints = damagePoints;
         Animations = animations;
     }
-    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Rectangle sourceRect, float damagePoints, WeaponType type) : base(spawn, texture, sourceRect)
+    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Rectangle sourceRect, ItemType itemType, float damagePoints, WeaponType type) : base(spawn, texture, sourceRect, itemType)
     {
         DamagePoints = damagePoints;
         Animations = animations;

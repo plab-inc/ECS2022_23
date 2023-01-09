@@ -47,64 +47,49 @@ public static class ItemLoader
      {
          return new ProjectileShot(position, direction, _texturePink, new Rectangle(19 * 16, 5 * 16, 16, 16));
      }
-
-     public static Weapon CreateSwordWeapon(Vector2 position)
+     
+    public static Item CreateItem(Vector2 position, ItemType itemType)
     {
-        return new Weapon(position, _texturePink, AnimationLoader.CreateSwordAnimations(),
-            new Rectangle(13 * 16, 6 * 16, 16, 16), 1);
-    }
-    public static Weapon CreatePhaserWeapon(Vector2 position)
-    {
-        return new Weapon(position, _texturePink, AnimationLoader.CreatePhaserAnimations(), 
-            new Rectangle(16 * 16, 5 * 16, 16, 16), 3, WeaponType.Range);
-    }
-    
-    public static Weapon CreateKnifeWeapon(Vector2 position)
-    {
-        return new Weapon(position, _texturePink, AnimationLoader.CreateKnifeAnimations(), 
-            new Rectangle(13 * 16, 5 * 16, 16, 16), 2.5f);
-    }
-    
-    public static Weapon CreateCrowbarWeapon(Vector2 position)
-    {
-        return new Weapon(position, _texturePink, AnimationLoader.CreateCrowbarAnimations(),
-            new Rectangle(16 * 16, 6 * 16, 16, 16), 3.5f);
-    }
-    
-    public static Weapon CreateStickWeapon(Vector2 position)
-    {
-        return new Weapon(position, _texturePink, AnimationLoader.CreateStickAnimations(), new Rectangle(19 * 16, 6 * 16, 16, 16), 2);
-    }
-    public static Consumable CreateHealthPotion(Vector2 position)
-    {
-        return new Consumable(position, _texturePink, new Rectangle(19*16, 4*16, 16,16))
+        switch (itemType)
         {
-            HealMultiplier = 0.3f
-        };
-    }
-    public static Consumable CreateCake(Vector2 position)
-    {
-        return new Consumable(position, _texturePink, new Rectangle(21*16, 4*16, 16,16))
-        {
-            HealMultiplier = 1
-        };
-    }
-    public static Consumable CreateArmorPotion(Vector2 position)
-    {
-        return new Consumable(position, _texturePink, new Rectangle(20*16, 4*16, 16,16))
-        {
-            HealMultiplier = 0,
-            ArmorPoints = 2
-        };
-    }
+            case ItemType.Cake:
+                return new Consumable(position, _texturePink, new Rectangle(21*16, 4*16, 16,16), itemType)
+                {
+                    HealMultiplier = 1
+                };
+            case ItemType.HealthPotion:
+                return new Consumable(position, _texturePink, new Rectangle(19*16, 4*16, 16,16), itemType)
+                {
+                    HealMultiplier = 0.3f
+                };
+            case ItemType.Armor:
+                return new Consumable(position, _texturePink, new Rectangle(20*16, 4*16, 16,16), itemType)
+                {
+                    HealMultiplier = 0,
+                    ArmorPoints = 2
+                };
+            case ItemType.SwimmingGoggles:
+                return new Trinket(position, _texturePink, new Rectangle(18*16, 3*16, 16,16), itemType);
+            case ItemType.Key:
+                return new Key(position, _texturePink, new Rectangle(18*16, 4*16, 16,16));
+            
+            case ItemType.Sword:
+                return new Weapon(position, _texturePink, AnimationLoader.CreateSwordAnimations(),
+                    new Rectangle(13 * 16, 6 * 16, 16, 16), itemType,1);
+            case ItemType.Phaser:
+                return new Weapon(position, _texturePink, AnimationLoader.CreatePhaserAnimations(), 
+                    new Rectangle(16 * 16, 5 * 16, 16, 16), itemType, 3, WeaponType.Range);
+            case ItemType.Knife:
+                return new Weapon(position, _texturePink, AnimationLoader.CreateKnifeAnimations(), 
+                    new Rectangle(13 * 16, 5 * 16, 16, 16), itemType, 2.5f);
+            case ItemType.Crowbar:
+                return new Weapon(position, _texturePink, AnimationLoader.CreateCrowbarAnimations(),
+                    new Rectangle(16 * 16, 6 * 16, 16, 16), itemType,3.5f);
+            case ItemType.Stick:
+                return new Weapon(position, _texturePink, AnimationLoader.CreateStickAnimations(), 
+                    new Rectangle(19 * 16, 6 * 16, 16, 16), itemType, 2);
+        }
 
-    public static Trinket CreateSwimmingGoggles(Vector2 position)
-    {
-        return new Trinket(position, _texturePink, new Rectangle(18*16, 3*16, 16,16));
-    }
-
-    public static Key CreateKey(Vector2 position)
-    {
-        return new Key(position, _texturePink, new Rectangle(18*16, 4*16, 16,16));
+        return default;
     }
 }

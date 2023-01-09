@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Ui.InventoryManagement;
 
+[Serializable]
 public class InventoryRow
 {
     private Inventory _inventory;
