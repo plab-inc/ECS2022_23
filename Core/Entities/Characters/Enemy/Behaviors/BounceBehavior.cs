@@ -15,8 +15,9 @@ public class BounceBehavior : Behavior
         {
             State = (int) EnemyStates.Move;
             direction = getRandomDirection();
-            oldDirection = direction;
-            return direction;
+            if(Owner.Collides(direction))
+                oldDirection = direction;
+            return oldDirection;
         }
         
         

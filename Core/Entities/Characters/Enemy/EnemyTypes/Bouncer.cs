@@ -17,8 +17,8 @@ public class Bouncer : Enemy
         HP = 10;
         Strength = 1;
         EpReward = 2;
-        SpriteHeight = 16;
-        SpriteWidth = 16;
+        SpriteHeight = 8;
+        SpriteWidth = 8;
         DeathSound = SoundLoader.BlobDeathSound;
         IsActive = true;
         Color = Color.Green;
