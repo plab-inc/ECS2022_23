@@ -13,14 +13,13 @@ public class Bouncer : Enemy
     {
         Behavior.SetEnemy(this);
         
-        Velocity = 1.5f;
-        HP = 10;
+        Velocity = 1.75f;
+        HP = 8;
         Strength = 1;
-        EpReward = 2;
-        SpriteHeight = 8;
-        SpriteWidth = 8;
+        EpReward = 1;
+        SpriteHeight = 16;
+        SpriteWidth = 16;
         DeathSound = SoundLoader.BlobDeathSound;
-        IsActive = true;
         Color = Color.Green;
     }
 
