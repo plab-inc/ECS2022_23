@@ -7,6 +7,7 @@ namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 public class BounceBehavior : Behavior
 {
     private Vector2 oldDirection;
+    private int count;
     public override Vector2 Move(Vector2 position, float velocity)
     {
         Vector2 direction = oldDirection;
@@ -18,44 +19,58 @@ public class BounceBehavior : Behavior
             return direction;
         }
         
-        if (State == (int)EnemyStates.Move)
-        {
-            if (!Owner.Collides(oldDirection))
+        
+        if (Owner.Collides(oldDirection))
                 return oldDirection;
 
-            if (Owner.Collides(oldDirection))
-            {
-                // Bounce
-                oldDirection *= -1;
-                return oldDirection;
-            }
+        // Bounce
+        oldDirection = Bounce(direction);
+
+        if (count >= 2)
+        {
+            count = 0;
+            direction = getRandomDirection();
+            if(Owner.Collides(direction))
+                return getRandomDirection();
         }
 
-
-        return direction;
+        return oldDirection;
+        
     }
 
     private Vector2 getRandomDirection()
     {
         Random rand = new Random((int)DateTime.Now.Ticks);
-        int temp = rand.Next(0, 5);
-        Vector2 direction = new Vector2();
-        switch (temp)
+        switch (rand.Next(0, 5))
         {
             case 0 : 
-                direction = new Vector2(1,1);
-                break;
+                return new Vector2(1,1);
             case 1 :
-                direction = new Vector2(1, -1);
-                break;
+                return new Vector2(1, -1);
             case 3 :
-                direction = new Vector2(-1, 1);
-                break;
+                return new Vector2(-1, 1);
             case 4:
-                direction = new Vector2(-1, -1);
-                break;
+                return new Vector2(-1, -1);
+           default: return getRandomDirection();
         }
-        return direction;
+    }
+
+    public Vector2 Bounce(Vector2 oldPos)
+    {
+        count++;
+        if (oldPos == new Vector2(1, -1)) 
+            return new Vector2(1, 1);
+        
+        if (oldDirection == new Vector2(1, 1))
+            return new Vector2(-1, 1);
+
+        if (oldDirection == new Vector2(-1, 1))
+            return new Vector2(-1, -1);
+
+        if (oldDirection == new Vector2(-1, -1))
+            return new Vector2(1, -1);
+        
+        return oldPos;
     }
 
 

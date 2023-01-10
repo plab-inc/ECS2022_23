@@ -9,7 +9,7 @@ namespace ECS2022_23.Core.Entities.Characters.Enemy.EnemyTypes;
 
 public class Bouncer : Enemy
 {
-    public Bouncer(Stage stage) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateZombieEnemyAnimations(), new BounceBehavior(), stage)
+    public Bouncer(Stage stage) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(), new BounceBehavior(), stage)
     {
         Behavior.SetEnemy(this);
         
@@ -17,10 +17,11 @@ public class Bouncer : Enemy
         HP = 10;
         Strength = 1;
         EpReward = 2;
-
         SpriteHeight = 16;
         SpriteWidth = 16;
         DeathSound = SoundLoader.BlobDeathSound;
+        IsActive = true;
+        Color = Color.Green;
     }
 
     public override void Attack()
