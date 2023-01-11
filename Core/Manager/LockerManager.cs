@@ -111,12 +111,14 @@ public static class LockerManager
         
         if (toTransfer == null) return;
 
-        switch (toTransfer)
+        if (toTransfer.itemType == ItemType.Key || toTransfer.GetType() == typeof(Key))
         {
-            case Key: return;
-            case Weapon weapon:
-                if (SwitchBothWeapons(fromInventory, toInventory, weapon)) return;
-                break;
+            return;
+        }
+
+        if (toTransfer.GetType() == typeof(Weapon))
+        {
+            if (SwitchBothWeapons(fromInventory, toInventory, toTransfer)) return;
         }
 
         switch (fromInventory)
