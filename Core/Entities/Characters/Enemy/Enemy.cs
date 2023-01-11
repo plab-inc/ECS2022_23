@@ -22,6 +22,7 @@ public abstract class Enemy : Character
     
     public Vector2 OriginalSpawn;
     public Room OriginalRoom;
+    public float ItemSpawnRate;
     
     public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Behavior behavior, Stage stage) : base(spawn, texture, animations)
     {

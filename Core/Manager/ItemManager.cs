@@ -60,31 +60,30 @@ public static class ItemManager
             }
             else
             {
-               DropRandomLoot(enemy.Position);
+               DropRandomLoot(enemy.Position, enemy.ItemSpawnRate);
             }
         }
         else
         {
-            DropRandomLoot(enemy.Position);
+            DropRandomLoot(enemy.Position, enemy.ItemSpawnRate);
         }
     }
 
-    private static void DropRandomLoot(Vector2 position)
+    private static void DropRandomLoot(Vector2 position, float dropChance)
     {
         var random = new Random();
-        var randomInt = random.Next(10);
-        var dropChance = 0;
+        var randomFloat = random.Next(10) * 0.1f;
         
-        if (randomInt < dropChance) return;
+        if (randomFloat > dropChance) return;
         
-        randomInt = random.Next(10);
-        var weaponChance = 5;
-        var trinketChance = 2;
-
-        if (randomInt < trinketChance)
+        randomFloat = random.Next(10) * 0.1f;
+        var weaponChance = 0.4f;
+        var trinketChance = 0.2f;
+ 
+        if (randomFloat < trinketChance)
         {
             AddItem(GetRandomTrinket(position));
-        } else if (randomInt < weaponChance)
+        } else if (randomFloat < weaponChance)
         {
             AddItem(GetRandomWeapon(position));
         }

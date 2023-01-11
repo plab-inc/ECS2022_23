@@ -22,6 +22,7 @@ public class Turret : Enemy
         ActivationRadius = 150f;
 
         DeathSound = SoundLoader.BlobDeathSound;
+        ItemSpawnRate = 0.3f;
     }
     
     public override void Attack()

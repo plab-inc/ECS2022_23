@@ -27,6 +27,7 @@ public class GiantBlob : Enemy
         SpriteHeight = 32;
         SpriteWidth = 32;
         DeathSound = SoundLoader.BlobDeathSound;
+        ItemSpawnRate = 1.0f;
     }
 
     public override void Attack()
