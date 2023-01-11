@@ -26,6 +26,7 @@ public class Gunner : Enemy
 
         Color = Color.Cyan;
         DeathSound = SoundLoader.BlobDeathSound;
+        ItemSpawnRate = 0.6f;
     }
 
     public override void Attack()
