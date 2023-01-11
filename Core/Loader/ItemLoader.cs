@@ -72,7 +72,6 @@ public static class ItemLoader
                 return new Trinket(position, _texturePink, new Rectangle(18*16, 3*16, 16,16), itemType);
             case ItemType.Key:
                 return new Key(position, _texturePink, new Rectangle(18*16, 4*16, 16,16));
-            
             case ItemType.Sword:
                 return new Weapon(position, _texturePink, AnimationLoader.CreateSwordAnimations(),
                     new Rectangle(13 * 16, 6 * 16, 16, 16), itemType,1);
@@ -90,6 +89,7 @@ public static class ItemLoader
                     new Rectangle(19 * 16, 6 * 16, 16, 16), itemType, 2);
         }
 
-        return default;
+
+        throw new InvalidOperationException();
     }
 }
