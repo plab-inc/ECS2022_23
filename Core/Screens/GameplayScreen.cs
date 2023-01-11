@@ -141,6 +141,11 @@ internal class GameplayScreen : GameScreen
         bool coveredByOtherScreen)
     {
         base.Update(gameTime, otherScreenHasFocus, false);
+
+        if (otherScreenHasFocus || coveredByOtherScreen || _escape.WasSuccessful || _escape.Failed)
+        {
+            Serialization.Save(_gameSave);
+        }
         
         // Gradually fade in or out depending on whether we are covered by the pause screen.
         if (coveredByOtherScreen)
@@ -156,8 +161,7 @@ internal class GameplayScreen : GameScreen
         {
             _escape.Update(gameTime);
             _gameSave.Update(_player.EP,_player.Level);
-            Serialization.Save(_gameSave);
-            
+
             if (_escape.WasSuccessful)
             {
                 LoadingScreen.Load(ScreenManager, false, null,
