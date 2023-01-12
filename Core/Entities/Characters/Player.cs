@@ -16,14 +16,23 @@ namespace ECS2022_23.Core.Entities.Characters;
 public class Player : Character
 {
     private bool _invincible;
-
+    private bool _shieldBreak;
     public bool Invincible
     {
         get => _invincible;
         set
         {
             _invincible = value;
-            if (value) AnimationManager.StartColorChange();
+            if (_invincible)
+            {
+                switch (_shieldBreak)
+                {
+                    case true: AnimationManager.StartColorChange(Color.White, Color.Aqua);
+                        break;
+                    case false: AnimationManager.StartColorChange(Color.White, new Color(236, 86, 113, 255));
+                        break;
+                }
+            }
             else AnimationManager.StopColorChange();
         }
     }
@@ -47,7 +56,7 @@ public class Player : Character
         Velocity = 3f;
         HP = 3;
         EP = 0;
-        Armor = 10;
+        Armor = 3;
         Level = 1;
         Strength = 5;
     }
@@ -59,7 +68,7 @@ public class Player : Character
         Velocity = 3f;
         HP = 3;
         this.EP = ep;
-        Armor = 10;
+        Armor = 3;
         this.Level = level;
         Strength = 5;
     }
@@ -255,14 +264,16 @@ public class Player : Character
     {
         if (Invincible) return;
 
-        bool shieldBreak = Armor > 0;
+        _shieldBreak = Armor > 0;
 
         Armor -= damagePoints;
-            
-        if(shieldBreak && Armor<=0)
+
+        if (_shieldBreak)
+        {
             SoundManager.Play(SoundLoader.ShieldBreakSound);
-        
-        if (Armor < 0)
+        }
+
+        if (Armor <= 0)
         {
             HP += Armor;
             Armor = 0;
