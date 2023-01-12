@@ -17,30 +17,29 @@ public class UiContainer : UiComponent
     public void Add(UiComponent uiComponent)
     {
         _components.Add(uiComponent);
-        SetPositions(uiComponent);
+        SetPosition(uiComponent);
     }
-    
-    public void SetPositions(UiComponent uiComponent)
+
+    private void SetPosition(UiComponent uiComponent)
     {
         var count = _components.Count;
         if (count <= 0) return;
         var width = PixelSize * Scale.X;
-        var heigth = PixelSize * Scale.Y;
+        var height = PixelSize * Scale.Y;
         
         if (count == 1)
         {
             uiComponent.DestinationRec =
-                new Rectangle(DestinationRec.X, DestinationRec.Y,  (int) width, (int) heigth);
+                new Rectangle(DestinationRec.X, DestinationRec.Y,  (int) width, (int) height);
         }
         else
         {
             var prevComponent = _components[count - 1];
-            var prevRect = prevComponent.DestinationRec;
-            var newRect = new Rectangle((int)width * (count-1), prevRect.Y, (int)width, (int)heigth);
+            var newRect = new Rectangle((int)width * (count-1), prevComponent.DestinationRec.Y, (int)width, (int)height);
             uiComponent.DestinationRec = newRect;
         }
         
-        uiComponent.Scale = this.Scale;
+        uiComponent.Scale = Scale;
     }
 
     public override void Draw(SpriteBatch spriteBatch)
@@ -70,7 +69,5 @@ public class UiContainer : UiComponent
 
         return null;
     }
-    
-    
     
 }
