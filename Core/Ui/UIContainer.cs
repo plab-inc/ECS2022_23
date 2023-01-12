@@ -10,7 +10,7 @@ public class UiContainer : UiComponent
     public float HeartCount;
     public UiContainer()
     {
-        DestinationRec = new Rectangle(0, 0, 20 * PixelSize, (int)(Scale.X * PixelSize));
+        DestinationRec = new Rectangle(0, 0, (int)(Scale.X * PixelSize), (int)(Scale.Y * PixelSize));
         Scale = new Vector2(2, 2);
     }
 
