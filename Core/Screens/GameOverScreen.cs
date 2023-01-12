@@ -160,8 +160,8 @@ internal class GameOverScreen : MenuScreen
         switch (_deathCause)
         {
             case DeathCause.ProjectileShot:
-                deathCauses.Add("Maybe miss that projectile the next time");
-                deathCauses.Add("Why not doge that?");
+                deathCauses.Add("Maybe avoid that projectile the next time");
+                deathCauses.Add("Why not dodge that?");
                 break;
             case DeathCause.Water:
                 deathCauses.Add("You never learned to swim?");
