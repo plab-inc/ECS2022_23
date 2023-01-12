@@ -15,7 +15,7 @@ namespace ECS2022_23.Core.Manager;
 
 public static class CombatManager
 {
-    private static List<Enemy> _activeEnemies = new List<Enemy>();
+    public static List<Enemy> _activeEnemies = new List<Enemy>();
     private static List<ProjectileShot> _activeShotsByPlayer = new List<ProjectileShot>();
     private static List<ProjectileShot> _activeShotsByEnemy = new List<ProjectileShot>();
     private static Timer _damageCooldown;
@@ -59,7 +59,6 @@ public static class CombatManager
 
         foreach (var enemy in _activeEnemies)
         {
-            //muss noch mit mehreren enemies getestet werden (gleichzeitige Angriffe z.B.)
             if (enemy.IsAlive())
             {
                 CheckShotEnemyCollision(enemy, player);

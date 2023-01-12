@@ -3,6 +3,7 @@ using System.Linq;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Characters.Enemy;
 using ECS2022_23.Core.Manager;
+using ECS2022_23.Core.Sound;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -17,12 +18,14 @@ public class UmlDiagram : Item
 
     public override bool Use(Player player)
     {
-        var killSphere =  new Rectangle(player.Position.ToPoint(),new Point(150,150));
+        var killSphere = new BoundingSphere(new Vector3(player.Position.X, player.Position.Y, 0), 150f);
         List<Enemy> targets = new List<Enemy>();
-        
+       
         foreach (var enemy in EnemyManager.Enemies)
         {
-            if (killSphere.Intersects(enemy.Rectangle))
+            Vector3 pos = new Vector3 (enemy.Position.X, enemy.Position.Y, 0);
+            
+            if (killSphere.Contains(pos) == ContainmentType.Contains || killSphere.Contains(pos) == ContainmentType.Intersects)
             {
                 targets.Add(enemy);
             }
@@ -30,7 +33,9 @@ public class UmlDiagram : Item
         
         foreach (Enemy enemy in targets)
         {
+            SoundManager.Play(enemy.DeathSound);
             EnemyManager.RemoveEnemy(enemy);
+            CombatManager._activeEnemies.Remove(enemy);
         }
         return true;
     }
