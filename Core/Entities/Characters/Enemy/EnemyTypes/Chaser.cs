@@ -22,7 +22,7 @@ public class Chaser : Enemy
         SpriteHeight = 14;
         SpriteWidth = 14;
         DeathSound = SoundLoader.BlobDeathSound;
-        ItemSpawnRate = 0.4f;
+        ItemSpawnRate = 40f;
     }
 
     public override void Attack()

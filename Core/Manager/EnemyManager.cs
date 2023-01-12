@@ -12,8 +12,9 @@ namespace ECS2022_23.Core.Manager;
 
 public static class EnemyManager
 {
-    private static List<Enemy> Enemies = new();
-   private static Enemy _keyEnemy;
+    public static List<Enemy> Enemies = new();
+    
+    private static Enemy _keyEnemy;
     public static Player Player { set; get;}
     public static Stage Stage { set; get; }
     private  static List<Vector2> closedList = new();

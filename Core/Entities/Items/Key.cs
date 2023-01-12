@@ -12,11 +12,6 @@ public class Key : Item
     public Key(Vector2 spawn, Texture2D texture, Rectangle sourceRect) : base(spawn, texture, sourceRect, ItemType.Key)
     {
     }
-
-    public override void Update(GameTime gameTime)
-    {
-        
-    }
     public override bool Use(Player player)
     {
         if (player.Stage.PlayerIsInfrontOfBossDoor)

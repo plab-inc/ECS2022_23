@@ -43,9 +43,6 @@ public abstract class Entity
             AnimationManager.Play(Animations?[name]);
         }
     }
-    
-    public abstract void Update(GameTime gameTime);
-
     public virtual void Draw(SpriteBatch spriteBatch) {
         spriteBatch.Draw(Texture, Position, Color.White);
     }

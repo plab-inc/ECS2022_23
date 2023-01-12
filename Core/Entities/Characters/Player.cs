@@ -44,7 +44,7 @@ public class Player : Character
     public bool ImmuneToWater = false;
 
     public DeathCause DeathCause;
-    public List<Item> Items = new List<Item>();
+    public List<Item> Items = new();
     public Weapon Weapon { get; set; }
     public Trinket Trinket { get; set; }
     public Room Room { get; set; }
@@ -55,10 +55,11 @@ public class Player : Character
         
         Velocity = 3f;
         HP = 3;
-        EP = 0;
-        Armor = 3;
-        Level = 1;
+        Armor = 2;
         Strength = 5;
+        
+        EP = 0;
+        Level = 1;
     }
     public Player(Texture2D texture, Dictionary<AnimationType, Animation> animations, float ep, float level) : base(Vector2.Zero,texture, animations)
     {
@@ -67,13 +68,14 @@ public class Player : Character
         
         Velocity = 3f;
         HP = 3;
-        this.EP = ep;
-        Armor = 3;
-        this.Level = level;
+        Armor = 2;
         Strength = 5;
+
+        EP = ep;
+        Level = level;
     }
     
-    public override void Update(GameTime gameTime)
+    public virtual void Update(GameTime gameTime)
     {
         if (IsAttacking && AnimationManager.AnimationFinished)
         {

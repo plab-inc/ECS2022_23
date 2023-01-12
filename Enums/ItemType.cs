@@ -11,5 +11,6 @@ public enum ItemType
     Stick,
     Armor,
     SwimmingGoggles,
+    UmlDiagram,
     Key
 }

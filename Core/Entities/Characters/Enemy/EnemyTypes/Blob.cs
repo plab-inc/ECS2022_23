@@ -19,7 +19,7 @@ public class Blob : Enemy
 
         Color = Color.Cyan;
         DeathSound = SoundLoader.BlobDeathSound;
-        ItemSpawnRate = 0.1f;
+        ItemSpawnRate = 10f;
     }
    
    public override void Attack()

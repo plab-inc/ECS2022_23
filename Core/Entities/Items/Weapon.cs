@@ -30,7 +30,7 @@ public class Weapon : Item
         AttackSound = SoundLoader.LaserSound;
     }
     
-    public override void Update(GameTime gameTime)
+    public virtual void Update(GameTime gameTime)
     {
         AnimationManager.Update(gameTime);
     }

@@ -15,7 +15,7 @@ namespace ECS2022_23.Core.Manager;
 
 public static class CombatManager
 {
-    private static List<Enemy> _activeEnemies = new List<Enemy>();
+    public static List<Enemy> _activeEnemies = new List<Enemy>();
     private static List<ProjectileShot> _activeShotsByPlayer = new List<ProjectileShot>();
     private static List<ProjectileShot> _activeShotsByEnemy = new List<ProjectileShot>();
     private static Timer _damageCooldown;
@@ -204,7 +204,7 @@ public static class CombatManager
         }
     }
   
-    private static void EnemyDies(Enemy enemy, Player player)
+    public static void EnemyDies(Enemy enemy, Player player)
     {
         enemy.SetAnimation(AnimationType.Death);
         SoundManager.Play(enemy.DeathSound);
