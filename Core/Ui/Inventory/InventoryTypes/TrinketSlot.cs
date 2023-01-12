@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Linq;
 using ECS2022_23.Core.Entities.Items;
 using Microsoft.Xna.Framework;
 
@@ -17,20 +17,11 @@ public class TrinketSlot : Inventory
     
     public override bool AddItem(Item item)
     {
-        try
-        {
-            if (item == null) return false;
-            var row = InventoryRows[0];
-            var slot = row.Slots[0];
-            slot.AddItem(item, 1);
-        }
-        catch (Exception ex) when (ex is ArgumentOutOfRangeException ||
-                                   ex is NullReferenceException) 
-        {
-            ColCount = 1;
-            RowCount = 1;
-            CreateRows();
-        }
+        if (item == null) return false;
+        var row = InventoryRows.First();
+        var slot = row.Slots.First();
+        slot.AddItem(item, 1);
+
         return true;
     }
 }

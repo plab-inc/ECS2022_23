@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -23,30 +22,12 @@ public class UiPanel : Component
         _components = new List<Component>();
         UiLabel = uiLabel;
     }
-    
-    public UiPanel(Rectangle sourceRec, Rectangle destRec, Texture2D texture2D, UiLabel uiLabel) : base(sourceRec)
-    {
-        DestinationRec = destRec;
-        _components = new List<Component>();
-        _texture2D = texture2D;
-        UiLabel = uiLabel;
-    }
 
-    public void AddTexture(Texture2D texture)
-    {
-        _texture2D = texture;
-    }
-    
     public void Add(Component component)
     {
         _components.Add(component);
         SetScaling(component);
         SetPositions();
-    }
-
-    public void Remove(Component component)
-    {
-        _components.Remove(component);
     }
 
     public void Update()
@@ -109,22 +90,14 @@ public class UiPanel : Component
     public bool RemoveAtIndex(int index, UiLabel componentUiLabel)
     {
         if (index < 0 || index > _components.Count) return false;
-        
-        try
-        {
-            var component = _components[index];
 
-            if (component.UiLabel == componentUiLabel)
-            {
-                _components.RemoveAt(index);
-                SetPositions();
-                return true;
-            }
-            
-        }
-        catch (ArgumentOutOfRangeException e)
+        var component = _components[index];
+
+        if (component.UiLabel == componentUiLabel)
         {
-            Debug.WriteLine(e.Message);
+            _components.RemoveAt(index);
+            SetPositions();
+            return true;
         }
 
         return false;
@@ -152,15 +125,6 @@ public class UiPanel : Component
         SetPositions();
     }
 
-    public Component GetComponentAtIndex(int index)
-    {
-        if(index >= 0 && index < _components.Count)
-        {
-            return _components[index];
-        }
-        return null;
-    }
-
     public Component GetComponentByLabel(UiLabel label)
     {
         foreach (var component in _components)
@@ -172,14 +136,5 @@ public class UiPanel : Component
         }
 
         return null;
-    }
-    public Component Find(Predicate<Component> cPredicate)
-    {
-        return _components.Find(cPredicate);
-    }
-    
-    public int GetIndexFromComponent(Component component)
-    {
-        return _components.IndexOf(component);
     }
 }
