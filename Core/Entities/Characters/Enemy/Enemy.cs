@@ -101,4 +101,11 @@ public abstract class Enemy : Character
         Vector3 vec = new Vector3(Position.X, Position.Y, 0);
         _activationSphere = new BoundingSphere(vec, ActivationRadius);
     }
+
+    public void Kill()
+    {
+        HP = 0;
+        EnemyManager.RemoveEnemy(this);
+    }
+
 }

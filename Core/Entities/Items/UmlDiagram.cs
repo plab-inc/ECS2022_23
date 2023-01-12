@@ -18,16 +18,20 @@ public class UmlDiagram : Item
     public override bool Use(Player player)
     {
         var killSphere =  new Rectangle(player.Position.ToPoint(),new Point(150,150));
-
+        List<Enemy> targets = new List<Enemy>();
         
         foreach (var enemy in EnemyManager.Enemies)
         {
             if (killSphere.Intersects(enemy.Rectangle))
             {
-                //TODO Kill all enemies in rectangle
+                targets.Add(enemy);
             }
         }
-
+        
+        foreach (Enemy enemy in targets)
+        {
+            EnemyManager.RemoveEnemy(enemy);
+        }
         return true;
     }
 }
