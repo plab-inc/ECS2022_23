@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using ECS2022_23.Core.Manager;
 using Microsoft.Xna.Framework;
@@ -23,15 +22,18 @@ internal static class UiLoader
 
         _content = content;
         _graphicsDevice = graphicsDevice;
-
-        UiManager.Init();
+        
         SpriteSheet = _content.Load<Texture2D>("sprites/spritesheet");
         _font = _content.Load<SpriteFont>("fonts/rainyhearts");
+    }
 
+    public static void InitializeUi(float maxHearts)
+    { 
+        UiManager.Init();
         UiContainer statsContainer = UiManager.StatsContainer;
             
         statsContainer.Add(CreateUiElementNew(UiLabel.HpIcon));
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < maxHearts; i++)
         {
             statsContainer.Add(CreateUiElementNew(UiLabel.HeartIcon));
         }
