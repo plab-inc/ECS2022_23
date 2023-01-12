@@ -103,6 +103,7 @@ internal class GameplayScreen : GameScreen
             LockerManager.Init(_gameSave.ItemsInLocker);
         }
 
+        UiLoader.InitializeUi(_player.MaxHP);
         InventoryManager.Init(_player);
         
         _camera = new Camera(ScreenManager.GraphicsDevice)

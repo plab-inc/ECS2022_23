@@ -3,20 +3,22 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Ui;
 
-public class UiText : Component
+public class UiText : UiComponent
 {
     public SpriteFont Font { get; set; }
     public string Text { get; set; }
-    public Vector2 Scale { get; set; } = Vector2.One;
-    public UiText(Rectangle sourceRec, SpriteFont font, string text, UiLabel uiLabel) : base(sourceRec)
+
+    public UiText(Rectangle sourceRec, SpriteFont font, string text, UiLabel uiLabel)
     {
+        SourceRec = sourceRec;
         Font = font;
         Text = text;
         UiLabel = uiLabel;
     }
     
-    public UiText(Rectangle sourceRec, SpriteFont font, string text) : base(sourceRec)
+    public UiText(Rectangle sourceRec, SpriteFont font, string text)
     {
+        SourceRec = sourceRec;
         Font = font;
         Text = text;
     }
