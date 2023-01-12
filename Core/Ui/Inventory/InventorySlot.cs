@@ -39,35 +39,28 @@ public class InventorySlot
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        try
+        if (IsActive)
         {
-            if (IsActive)
-            {
-                spriteBatch.Draw(_activeTexture, DestinationRec, Color.White);
-            }
-            spriteBatch.Draw(_spriteSheet, DestinationRec, _frameSourceRec, Color.White);
-            if (IsUsed)
-            {
-                spriteBatch.Draw(Item.Texture, DestinationRec, Item.SourceRect, Color.White);
-
-                _text.Text = "" + ItemCount;
-                _text.Draw(spriteBatch);
-            }
-            if (IsSelected)
-            {
-                spriteBatch.Draw(_spriteSheet, DestinationRec, _selectedSourceRec, Color.White);
-            }
+            spriteBatch.Draw(_activeTexture, DestinationRec, Color.White);
         }
-        catch (ArgumentNullException e)
+        spriteBatch.Draw(_spriteSheet, DestinationRec, _frameSourceRec, Color.White);
+        if (IsUsed)
         {
-            return;
+            spriteBatch.Draw(Item.Texture, DestinationRec, Item.SourceRect, Color.White);
+
+            _text.Text = "" + ItemCount;
+            _text.Draw(spriteBatch);
+        }
+        if (IsSelected)
+        {
+            spriteBatch.Draw(_spriteSheet, DestinationRec, _selectedSourceRec, Color.White);
         }
     }
 
     public void AddItem(Item item, int count)
     {
-        this.Item = item;
-        this.ItemCount = count;
+        Item = item;
+        ItemCount = count;
         IsUsed = true;
     }
 

@@ -35,25 +35,12 @@ public abstract class Entity
     {
         Animations = animations;
     }
-    
-    public void AddAnimation(AnimationType name, Animation animation)
-    {
-        if (Animations == null)
-        {
-            Animations = new Dictionary<AnimationType, Animation>();
-        }
-        Animations.Add(name, animation);
-    }
-    
+
     public void SetAnimation(AnimationType name)
     {
-        try
+        if (Animations.ContainsKey(name))
         {
             AnimationManager.Play(Animations?[name]);
-        }
-        catch (KeyNotFoundException e)
-        {
-            return;
         }
     }
     

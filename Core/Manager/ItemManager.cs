@@ -23,29 +23,15 @@ public static class ItemManager
     
     public static void Draw(SpriteBatch spriteBatch)
     {
-        try
+        foreach (var item in _activeItems)
         {
-            foreach (var item in _activeItems)
-            {
-                item.DrawIcon(spriteBatch);
-            }
-        }
-        catch (NullReferenceException e)
-        {
-            _activeItems = new List<Item>();
+            item.DrawIcon(spriteBatch);
         }
     }
 
     private static void AddItem(Item item)
     {
-        try
-        {
-            _activeItems.Add(item);
-        }  catch (NullReferenceException e)
-        {
-            _activeItems = new List<Item>();
-        }
-       
+        _activeItems.Add(item);
     }
     public static void DropLoot(Enemy enemy) 
     {
@@ -140,32 +126,25 @@ public static class ItemManager
 
     public static void PickItemUp(Player player)
     {
-        try
+        foreach (var item in _activeItems)
         {
-            foreach (var item in _activeItems)
+            if (!item.Rectangle.Intersects(player.Rectangle)) continue;
+            if (item.GetType() == typeof(Weapon))
             {
-                if (!item.Rectangle.Intersects(player.Rectangle)) continue;
-                if (item.GetType() == typeof(Weapon))
+                if (player.Weapon != null)
                 {
-                    if (player.Weapon != null)
-                    {
-                        var weapon = player.Weapon;
-                        weapon.Position = player.Position;
-                        _activeItems.Add(weapon);
-                    }
-                    InventoryManager.AddItem(item);
+                    var weapon = player.Weapon;
+                    weapon.Position = player.Position;
+                    _activeItems.Add(weapon);
                 }
-                else
-                {
-                    InventoryManager.AddItem(item);
-                }
-                _activeItems.Remove(item);
-                return;
-            } 
-        }
-        catch (NullReferenceException e)
-        {
-            _activeItems = new List<Item>();
+                InventoryManager.AddItem(item);
+            }
+            else
+            {
+                InventoryManager.AddItem(item);
+            }
+            _activeItems.Remove(item);
+            return;
         }
     }
 }
