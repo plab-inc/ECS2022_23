@@ -8,8 +8,10 @@ public abstract class UiComponent
     public Rectangle SourceRec;
     public Rectangle DestinationRec;
     public UiLabel UiLabel;
-    public int PixelSize = 16;
     public Vector2 Scale { get; set; } = Vector2.One;
+    
+    protected int PixelSize = 16;
+
     protected UiComponent()
     {
     }
