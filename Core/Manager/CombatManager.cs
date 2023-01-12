@@ -205,7 +205,7 @@ public static class CombatManager
         }
     }
   
-    private static void EnemyDies(Enemy enemy, Player player)
+    public static void EnemyDies(Enemy enemy, Player player)
     {
         enemy.SetAnimation(AnimationType.Death);
         SoundManager.Play(enemy.DeathSound);

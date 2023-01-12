@@ -33,9 +33,8 @@ public class UmlDiagram : Item
         
         foreach (Enemy enemy in targets)
         {
-            SoundManager.Play(enemy.DeathSound);
-            EnemyManager.RemoveEnemy(enemy);
-            CombatManager._activeEnemies.Remove(enemy);
+            enemy.HP = 0;
+            CombatManager.EnemyDies(enemy,player);
         }
         return true;
     }
