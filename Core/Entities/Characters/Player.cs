@@ -16,7 +16,16 @@ namespace ECS2022_23.Core.Entities.Characters;
 public class Player : Character
 {
     private bool _invincible;
+    
+    public float EP;
+    public float Level;
 
+    public float Armor;
+    public bool ImmuneToWater = false;
+    
+    public DeathCause DeathCause;
+    public List<Item> Items = new();
+    
     public bool Invincible
     {
         get => _invincible;
@@ -27,15 +36,6 @@ public class Player : Character
             else AnimationManager.StopColorChange();
         }
     }
-    
-    public float EP;
-    public float Level;
-
-    public float Armor;
-    public bool ImmuneToWater = false;
-
-    public DeathCause DeathCause;
-    public List<Item> Items = new List<Item>();
     public Weapon Weapon { get; set; }
     public Trinket Trinket { get; set; }
     public Room Room { get; set; }
@@ -46,10 +46,11 @@ public class Player : Character
         
         Velocity = 3f;
         HP = 3;
-        EP = 0;
-        Armor = 10;
-        Level = 1;
+        Armor = 2;
         Strength = 5;
+        
+        EP = 0;
+        Level = 1;
     }
     public Player(Texture2D texture, Dictionary<AnimationType, Animation> animations, float ep, float level) : base(Vector2.Zero,texture, animations)
     {
@@ -58,10 +59,11 @@ public class Player : Character
         
         Velocity = 3f;
         HP = 3;
-        this.EP = ep;
-        Armor = 10;
-        this.Level = level;
+        Armor = 2;
         Strength = 5;
+
+        EP = ep;
+        Level = level;
     }
     
     public virtual void Update(GameTime gameTime)

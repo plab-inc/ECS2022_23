@@ -18,7 +18,7 @@ public abstract class Enemy : Character
     protected float ActivationRadius;
     protected Color Color = Color.White;
     public Vector2 AimVector;
-    protected bool IsBoss;
+    public bool IsBoss;
     
     public Vector2 OriginalSpawn;
     public Room OriginalRoom;

@@ -65,34 +65,46 @@ public static class ItemManager
         }
         else
         {
-            DropRandomLoot(enemy.Position, enemy.ItemSpawnRate);
+            if (enemy.IsBoss)
+            {
+                DropRandomLoot(enemy.Position, enemy.ItemSpawnRate, 25);
+            }
+            else
+            {
+                DropRandomLoot(enemy.Position, enemy.ItemSpawnRate);
+            }
+
         }
     }
 
-    private static void DropRandomLoot(Vector2 position, float dropChance)
+    private static void DropRandomLoot(Vector2 position, float dropChance, int umlChance = 5)
     {
-        var random = new Random();
-        var randomFloat = random.Next(10) * 0.1f;
+        var randomDropChance = new Random((int) DateTime.Now.Ticks);
+        var randomDrop = new Random((int) DateTime.Now.Ticks);
         
-        if (randomFloat > dropChance) return;
+        var randomFloat = randomDropChance.Next(0,100);
         
-        randomFloat = random.Next(10) * 0.1f;
-        var weaponChance = 0.4f;
-        var trinketChance = 0.2f;
-        var umlChance = 0.8f;
-
-        if (randomFloat < umlChance)
+        
+        if (randomFloat >= dropChance) return;
+        
+        randomFloat = randomDrop.Next(0,100);
+        
+        var weaponChance = 20;
+        var trinketChance = 15;
+        
+        if (randomFloat <= umlChance)
         {
             AddItem(GenerateUml(position));
             return;
         }
  
-        if (randomFloat < trinketChance)
+        if (randomFloat <= trinketChance)
         {
             AddItem(GetRandomTrinket(position));
             return;
         } 
-        if (randomFloat < weaponChance)
+        
+        if (randomFloat <= weaponChance)
         {
             AddItem(GetRandomWeapon(position));
             return;
@@ -131,12 +143,11 @@ public static class ItemManager
     private static Consumable GetRandomConsumable(Vector2 position)
     {
         var random = new Random();
-        var randomInt = random.Next(3);
+        var randomInt = random.Next(100);
         switch (randomInt)
         {
-            case 0: return (Consumable) ItemLoader.CreateItem(position, ItemType.HealthPotion);
-            case 1: return (Consumable) ItemLoader.CreateItem(position, ItemType.Armor);
-            case 2: return (Consumable) ItemLoader.CreateItem(position, ItemType.Cake);
+            case <= 25: return (Consumable) ItemLoader.CreateItem(position, ItemType.Cake);
+            case <= 50: return (Consumable) ItemLoader.CreateItem(position, ItemType.Armor);
             default: return (Consumable) ItemLoader.CreateItem(position, ItemType.HealthPotion);
         }
     }
