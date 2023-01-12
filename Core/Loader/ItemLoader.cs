@@ -21,16 +21,10 @@ public static class ItemLoader
     {
         if (!Directory.Exists("Content")) throw new DirectoryNotFoundException();
         _content = content;
-        try
-        {
-            _spritesheetPink = _content.Load<Texture2D>("sprites/spritesheet");
-            _spritesheetRed = _content.Load<Texture2D>("sprites/spritesheet_red");
-        }
-        catch (Exception e)
-        {
-            Debug.WriteLine(e.Message);
-            Debug.WriteLine("Asset not found");
-        }
+        
+        _spritesheetPink = _content.Load<Texture2D>("sprites/spritesheet");
+        _spritesheetRed = _content.Load<Texture2D>("sprites/spritesheet_red");
+
     }
      public static ProjectileShot CreateLaserShot(Weapon weapon, Direction aimDirection)
      {

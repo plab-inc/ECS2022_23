@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using ECS2022_23.Core.Animations;
+﻿using ECS2022_23.Core.Animations;
 using ECS2022_23.Helper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -96,28 +94,20 @@ public class AnimationManager
             color = _activeColor;
         }
         
-        try
+        if (CurrentAnimation.FlipX)
         {
-            if (CurrentAnimation.FlipX)
-            {
-                spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale,
-                    SpriteEffects.FlipHorizontally, 0f);
-            }
-            else if (CurrentAnimation.FlipY)
-            {
-                spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale,
-                    SpriteEffects.FlipVertically, 0f);
-            }
-            else
-            {
-                spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale,
-                    SpriteEffects.None, 0f);
-            }
+            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale,
+                SpriteEffects.FlipHorizontally, 0f);
         }
-        catch (ArgumentNullException e)
+        else if (CurrentAnimation.FlipY)
         {
-            Debug.WriteLine(e.Message);
-            Debug.WriteLine("Texture not found.");
+            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale,
+                SpriteEffects.FlipVertically, 0f);
+        }
+        else
+        {
+            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale,
+                SpriteEffects.None, 0f);
         }
     }
     
@@ -134,29 +124,24 @@ public class AnimationManager
             color = _activeColor;
         }
         
-        try
+        if (CurrentAnimation.FlipX)
         {
-            if (CurrentAnimation.FlipX)
-            {
-                spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale, SpriteEffects.FlipHorizontally, 0f);
-            } else if (CurrentAnimation.FlipY)
-            {
-                spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale, SpriteEffects.FlipVertically, 0f);
-            }
-            else
-            {
-                spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
-            }
-        }
-        catch (ArgumentNullException e)
+            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale, SpriteEffects.FlipHorizontally, 0f);
+        } else if (CurrentAnimation.FlipY)
         {
-            Debug.WriteLine(e.Message);
-            Debug.WriteLine("Texture not found.");
+            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale, SpriteEffects.FlipVertically, 0f);
         }
+        else
+        {
+            spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
+        }
+        
     }
 
-    public void StartColorChange()
+    public void StartColorChange(Color color1, Color color2)
     {
+        _activeColor = color1;
+        _prevColor = color2;
         _switchingColors = true;
     }
 

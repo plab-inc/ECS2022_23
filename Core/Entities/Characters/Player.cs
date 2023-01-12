@@ -16,26 +16,35 @@ namespace ECS2022_23.Core.Entities.Characters;
 public class Player : Character
 {
     private bool _invincible;
-    
-    public float EP;
-    public float Level;
-
-    public float Armor;
-    public bool ImmuneToWater = false;
-    
-    public DeathCause DeathCause;
-    public List<Item> Items = new();
-    
+    private bool _shieldBreak;
     public bool Invincible
     {
         get => _invincible;
         set
         {
             _invincible = value;
-            if (value) AnimationManager.StartColorChange();
+            if (_invincible)
+            {
+                switch (_shieldBreak)
+                {
+                    case true: AnimationManager.StartColorChange(Color.White, Color.Aqua);
+                        break;
+                    case false: AnimationManager.StartColorChange(Color.White, new Color(236, 86, 113, 255));
+                        break;
+                }
+            }
             else AnimationManager.StopColorChange();
         }
     }
+    
+    public float EP;
+    public float Level;
+
+    public float Armor;
+    public bool ImmuneToWater = false;
+
+    public DeathCause DeathCause;
+    public List<Item> Items = new();
     public Weapon Weapon { get; set; }
     public Trinket Trinket { get; set; }
     public Room Room { get; set; }
@@ -257,14 +266,16 @@ public class Player : Character
     {
         if (Invincible) return;
 
-        bool shieldBreak = Armor > 0;
+        _shieldBreak = Armor > 0;
 
         Armor -= damagePoints;
-            
-        if(shieldBreak && Armor<=0)
+
+        if (_shieldBreak)
+        {
             SoundManager.Play(SoundLoader.ShieldBreakSound);
-        
-        if (Armor < 0)
+        }
+
+        if (Armor <= 0)
         {
             HP += Armor;
             Armor = 0;

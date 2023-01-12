@@ -22,28 +22,22 @@ internal static class UiLoader
 
         _content = content;
         _graphicsDevice = graphicsDevice;
-        try
-        {
-            UiManager.Init();
-            SpriteSheet = _content.Load<Texture2D>("sprites/spritesheet");
-            _font = _content.Load<SpriteFont>("fonts/rainyhearts");
+
+        UiManager.Init();
+        SpriteSheet = _content.Load<Texture2D>("sprites/spritesheet");
+        _font = _content.Load<SpriteFont>("fonts/rainyhearts");
         
-            UiPanel statsContainer = CreateUiPanel(new Rectangle(0,0, PixelSize, PixelSize), new Rectangle(0,0, Game1.ScreenWidth, 100), UiLabel.StatsContainer);
+        UiPanel statsContainer = CreateUiPanel(new Rectangle(0,0, PixelSize, PixelSize), new Rectangle(0,0, Game1.ScreenWidth, 100), UiLabel.StatsContainer);
             
-            statsContainer.Add(CreateUiElementNew(UiLabel.HpIcon));
-            statsContainer.Add(CreateUiElementNew(UiLabel.EpIcon));
-            statsContainer.Add(CreateTextElement(UiLabel.EpText));
-            statsContainer.Add(CreateUiElementNew(UiLabel.LevelIcon));
-            statsContainer.Add(CreateTextElement(UiLabel.LevelText));
-            statsContainer.Add(CreateUiElementNew(UiLabel.ArmorIcon));
-            statsContainer.Add(CreateTextElement(UiLabel.ArmorText));
+        statsContainer.Add(CreateUiElementNew(UiLabel.HpIcon));
+        statsContainer.Add(CreateUiElementNew(UiLabel.EpIcon));
+        statsContainer.Add(CreateTextElement(UiLabel.EpText));
+        statsContainer.Add(CreateUiElementNew(UiLabel.LevelIcon));
+        statsContainer.Add(CreateTextElement(UiLabel.LevelText));
+        statsContainer.Add(CreateUiElementNew(UiLabel.ArmorIcon));
+        statsContainer.Add(CreateTextElement(UiLabel.ArmorText));
             
-            UiManager.StatsPanel = statsContainer;
-        }
-        catch (Exception e)
-        {
-            Debug.WriteLine("Error while loading assets.\n" + e.Message);
-        }
+        UiManager.StatsPanel = statsContainer;
     }
     
     public static UiElement CreateUiElementNew(UiLabel label)
