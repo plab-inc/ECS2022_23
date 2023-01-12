@@ -22,20 +22,20 @@ public class BounceBehavior : Behavior
         
         
         if (Owner.Collides(oldDirection))
-                return oldDirection;
+                return oldDirection*velocity;
 
         // Bounce
-        oldDirection = Bounce(direction);
+        oldDirection = Bounce(oldDirection);
 
         if (count >= 2)
         {
             count = 0;
             direction = getRandomDirection();
             if(Owner.Collides(direction))
-                return getRandomDirection();
+                oldDirection = direction;
         }
 
-        return oldDirection;
+        return oldDirection*velocity;
         
     }
 
@@ -62,13 +62,13 @@ public class BounceBehavior : Behavior
         if (oldPos == new Vector2(1, -1)) 
             return new Vector2(1, 1);
         
-        if (oldDirection == new Vector2(1, 1))
+        if (oldPos == new Vector2(1, 1))
             return new Vector2(-1, 1);
 
-        if (oldDirection == new Vector2(-1, 1))
+        if (oldPos == new Vector2(-1, 1))
             return new Vector2(-1, -1);
 
-        if (oldDirection == new Vector2(-1, -1))
+        if (oldPos == new Vector2(-1, -1))
             return new Vector2(1, -1);
         
         return oldPos;

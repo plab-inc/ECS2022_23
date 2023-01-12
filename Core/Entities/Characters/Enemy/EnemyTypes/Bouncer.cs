@@ -13,7 +13,7 @@ public class Bouncer : Enemy
     {
         Behavior.SetEnemy(this);
         
-        Velocity = 1.75f;
+        Velocity = 1.55f;
         HP = 8;
         Strength = 1;
         EpReward = 1;
