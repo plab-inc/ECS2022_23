@@ -114,14 +114,14 @@ public static class ItemManager
     private static Weapon GetRandomWeapon(Vector2 position)
     {
         var random = new Random();
-        var randomInt = random.Next(5);
+        var randomInt = random.Next(100);
         switch (randomInt)
         {
-            case 0: return (Weapon) ItemLoader.CreateItem(position, ItemType.Sword);
-            case 1: return (Weapon) ItemLoader.CreateItem(position, ItemType.Phaser);
-            case 2: return (Weapon) ItemLoader.CreateItem(position, ItemType.Crowbar);
-            case 3: return (Weapon) ItemLoader.CreateItem(position, ItemType.Knife);
-            case 4: return (Weapon) ItemLoader.CreateItem(position, ItemType.Stick);
+            case <= 20: return (Weapon) ItemLoader.CreateItem(position, ItemType.Phaser);
+            case <= 30: return (Weapon) ItemLoader.CreateItem(position, ItemType.Crowbar);
+            case <= 40: return (Weapon) ItemLoader.CreateItem(position, ItemType.Stick);
+            case <= 50: return (Weapon) ItemLoader.CreateItem(position, ItemType.Knife);
+            
             default: return (Weapon) ItemLoader.CreateItem(position, ItemType.Sword);
         }
     }
