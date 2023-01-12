@@ -2,8 +2,6 @@
 
 public enum UiLabel
 {
-    StatsContainer,
-    
     HpIcon,
     LevelIcon,
     ArmorIcon,

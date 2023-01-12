@@ -3,12 +3,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Ui;
 
-public class UiElement : Component
+public class UiElement : UiComponent
 {
     private Texture2D _texture;
  
-    public UiElement(Rectangle sourceRec, Texture2D texture, UiLabel uiLabel) : base(sourceRec)
+    public UiElement(Rectangle sourceRec, Texture2D texture, UiLabel uiLabel)
     {
+        SourceRec = sourceRec;
         _texture = texture;
         UiLabel = uiLabel;
     }
