@@ -32,7 +32,6 @@ public static class CombatManager
     {
         if (player.Invincible)
         {
-            //if player was hurt, wait for cooldown until player can take damage again 
             _damageCooldown.Update(gameTime);
             if (_damageCooldown.LimitReached())
             {
