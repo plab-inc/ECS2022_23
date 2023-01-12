@@ -15,11 +15,23 @@ namespace ECS2022_23.Core.Entities.Characters;
 
 public class Player : Character
 {
+    private bool _invincible;
+
+    public bool Invincible
+    {
+        get => _invincible;
+        set
+        {
+            _invincible = value;
+            if (value) AnimationManager.StartColorChange();
+            else AnimationManager.StopColorChange();
+        }
+    }
+    
     public float EP;
     public float Level;
 
     public float Armor;
-    public bool Invincible;
     public bool ImmuneToWater = false;
 
     public DeathCause DeathCause;
@@ -81,14 +93,6 @@ public class Player : Character
         }
         else
         {
-            if (Invincible)
-            {
-                AnimationManager.StartColorChange();
-            }
-            else
-            {
-                AnimationManager.StopColorChange();
-            }
             AnimationManager.Draw(spriteBatch, Position);
             Weapon?.Draw(spriteBatch);
         }
@@ -262,20 +266,20 @@ public class Player : Character
         {
             HP += Armor;
             Armor = 0;
-            Invincible = true;
             SetAnimation(AnimationType.Hurt);
             SoundManager.Play(DamageSound);
         }
            
         if (!IsAlive())
         {
-            Invincible = true;
             DeathCause = Helper.Transform.EntityToDeathCause(entity);
             SetAnimation(AnimationType.Death);
         }
+
+        Invincible = true;
     }
 
-    public void LevelUp()
+    private void LevelUp()
     {
         if (25 <= EP)
         {
@@ -290,4 +294,5 @@ public class Player : Character
     {
         AimDirection = getAimDirection;
     }
+
 }

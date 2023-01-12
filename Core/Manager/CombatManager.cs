@@ -32,7 +32,6 @@ public static class CombatManager
     {
         if (player.Invincible)
         {
-            //if player was hurt, wait for cooldown until player can take damage again 
             _damageCooldown.Update(gameTime);
             if (_damageCooldown.LimitReached())
             {
@@ -59,7 +58,6 @@ public static class CombatManager
 
         foreach (var enemy in _activeEnemies)
         {
-            //muss noch mit mehreren enemies getestet werden (gleichzeitige Angriffe z.B.)
             if (enemy.IsAlive())
             {
                 CheckShotEnemyCollision(enemy, player);
