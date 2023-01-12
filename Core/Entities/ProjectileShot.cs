@@ -46,7 +46,7 @@ public class ProjectileShot : Entity
         Origin = (int)DamageOrigin.Enemy;
     }
 
-    public override void Update(GameTime gameTime)
+    public virtual void Update(GameTime gameTime)
     { 
         var speed = 2f;
 

@@ -15,12 +15,6 @@ public class Consumable : Item
     public Consumable(Vector2 spawn, Texture2D texture, Rectangle sourceRect, ItemType itemType) : base(spawn, texture, sourceRect, itemType)
     {
     }
-
-    public override void Update(GameTime gameTime)
-    {
-        throw new System.NotImplementedException();
-    }
-
     public override bool Use(Player player)
     {
         var maxHp = player.MaxHP;

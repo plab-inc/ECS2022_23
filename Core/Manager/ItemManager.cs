@@ -79,23 +79,37 @@ public static class ItemManager
         randomFloat = random.Next(10) * 0.1f;
         var weaponChance = 0.4f;
         var trinketChance = 0.2f;
+        var umlChance = 0.8f;
+
+        if (randomFloat < umlChance)
+        {
+            AddItem(GenerateUml(position));
+            return;
+        }
  
         if (randomFloat < trinketChance)
         {
             AddItem(GetRandomTrinket(position));
-        } else if (randomFloat < weaponChance)
+            return;
+        } 
+        if (randomFloat < weaponChance)
         {
             AddItem(GetRandomWeapon(position));
+            return;
         }
-        else
-        {
-            AddItem(GetRandomConsumable(position));
-        }
+        
+        AddItem(GetRandomConsumable(position));
+
     }
 
     private static void DropKey(Vector2 position)
     {
         AddItem(ItemLoader.CreateItem(position, ItemType.Key));
+        
+    }
+    private static Item GenerateUml(Vector2 position)
+    {
+        return ItemLoader.CreateItem(position, ItemType.UmlDiagram);
         
     }
 
@@ -137,6 +151,7 @@ public static class ItemManager
 
         }
     }
+    
 
     public static void PickItemUp(Player player)
     {

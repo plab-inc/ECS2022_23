@@ -56,9 +56,6 @@ public abstract class Entity
             return;
         }
     }
-    
-    public abstract void Update(GameTime gameTime);
-
     public virtual void Draw(SpriteBatch spriteBatch) {
         spriteBatch.Draw(Texture, Position, Color.White);
     }

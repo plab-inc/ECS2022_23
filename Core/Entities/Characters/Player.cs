@@ -52,7 +52,7 @@ public class Player : Character
         Strength = 5;
     }
     
-    public override void Update(GameTime gameTime)
+    public virtual void Update(GameTime gameTime)
     {
         if (IsAttacking && AnimationManager.AnimationFinished)
         {
