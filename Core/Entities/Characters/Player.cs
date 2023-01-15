@@ -17,6 +17,23 @@ public class Player : Character
 {
     private bool _invincible;
     private bool _shieldBreak;
+    
+    public float EP;
+    public float Level;
+    public float Armor;
+    
+    public bool ImmuneToWater = false;
+
+    public DeathCause DeathCause;
+    public List<Item> Items = new();
+    public Weapon Weapon { get; set; }
+    public Trinket Trinket { get; set; }
+    public Room Room { get; set; }
+    
+    private float _activationRadius;
+
+    public BoundingSphere ActivationSphere;
+    
     public bool Invincible
     {
         get => _invincible;
@@ -36,21 +53,8 @@ public class Player : Character
             else AnimationManager.StopColorChange();
         }
     }
-    
-    public float EP;
-    public float Level;
-
-    public float Armor;
-    public bool ImmuneToWater = false;
-
-    public DeathCause DeathCause;
-    public List<Item> Items = new();
-    public Weapon Weapon { get; set; }
-    public Trinket Trinket { get; set; }
-    public Room Room { get; set; }
     public Player(Texture2D texture, Dictionary<AnimationType, Animation> animations) : base(Vector2.Zero,texture, animations)
     {
-        SpriteWidth = 16;
         DamageSound = SoundLoader.PlayerDamageSound;
         
         Velocity = 3f;
@@ -60,10 +64,12 @@ public class Player : Character
         
         EP = 0;
         Level = 1;
+        _activationRadius = 100f;
+        ActivationSphere = new BoundingSphere(new Vector3(Position.X, Position.Y, 0), _activationRadius);
+
     }
     public Player(Texture2D texture, Dictionary<AnimationType, Animation> animations, float ep, float level) : base(Vector2.Zero,texture, animations)
     {
-        SpriteWidth = 16;
         DamageSound = SoundLoader.PlayerDamageSound;
         
         Velocity = 3f;
@@ -73,9 +79,11 @@ public class Player : Character
 
         EP = ep;
         Level = level;
+        _activationRadius = 100f;
+        ActivationSphere = new BoundingSphere(new Vector3(Position.X, Position.Y, 0), _activationRadius);
     }
     
-    public virtual void Update(GameTime gameTime)
+    public override void Update(GameTime gameTime)
     {
         if (IsAttacking && AnimationManager.AnimationFinished)
         {
@@ -95,6 +103,9 @@ public class Player : Character
         Weapon?.SetPosition(this);
         AnimationManager.Update(gameTime);
         Weapon?.Update(gameTime);
+
+        ActivationSphere.Center = new Vector3(Position.X, Position.Y, 0);
+
     }
     public override void Draw(SpriteBatch spriteBatch)
     {
@@ -147,7 +158,7 @@ public class Player : Character
 
         IsAttacking = true;
     }
-    public virtual void Moves(Vector2 direction)
+    public void Moves(Vector2 direction)
     {
         var moveDirection = Helper.Transform.Vector2ToDirection(direction);
         
@@ -176,9 +187,9 @@ public class Player : Character
         Position += direction * Velocity;
         
     }
-    public override bool IsInWater(Rectangle body)
+    public override bool IsInWater(Rectangle movedBody)
     {
-        return Stage.WaterLayer.Any(rectangle => rectangle.Contains(body));
+        return Stage.WaterLayer.Any(rectangle => rectangle.Contains(movedBody));
     }
     public override bool Collides(Vector2 velocity)
     {
@@ -303,9 +314,9 @@ public class Player : Character
         }
     }
 
-    public void Aims(Direction getAimDirection)
+    public void Aims(Direction aimDirection)
     {
-        AimDirection = getAimDirection;
+        AimDirection = aimDirection;
     }
 
 }

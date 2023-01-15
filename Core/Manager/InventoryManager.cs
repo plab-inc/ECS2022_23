@@ -1,6 +1,7 @@
 ﻿using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
+using ECS2022_23.Enums;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Manager;
@@ -10,14 +11,14 @@ public static class InventoryManager
     private static Player _player;
     
     private static ToolBar _toolBar;
-    private static WeaponSlot _weaponSlot;
-    private static TrinketSlot _trinketSlot;
+    private static ItemSlot _weaponSlot;
+    private static ItemSlot _trinketSlot;
     
     public static void Init(Player player)
     {
         _toolBar = new ToolBar(1, 9);
-        _weaponSlot = new WeaponSlot();
-        _trinketSlot = new TrinketSlot();
+        _weaponSlot = new ItemSlot(SlotType.WeaponSlot);
+        _trinketSlot = new ItemSlot(SlotType.TrinketSlot);
         _player = player;
         
         if (player.Items != null)
@@ -106,7 +107,7 @@ public static class InventoryManager
     private static void UseTrinket(Player player, Trinket trinket)
     {
         _toolBar.SwitchActiveState(trinket);
-        if (trinket.Equals(player.Trinket))
+        if (trinket.ItemType == player.Trinket?.ItemType)
         {
             trinket.Unequip(player);
             _trinketSlot.RemoveItem(trinket);

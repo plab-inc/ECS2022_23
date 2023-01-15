@@ -5,12 +5,14 @@ namespace ECS2022_23.Core.Animations;
 
 public class Animation
 {
-    private Texture2D _texture;
     public bool FlipX { get; set; }
     public bool FlipY { get; set; }
+
     public Point StartFrame { get; }
     public float FrameSpeed { get; set; }
     public readonly bool IsLooped;
+
+    private Texture2D _texture;
 
     public Texture2D Texture
     {

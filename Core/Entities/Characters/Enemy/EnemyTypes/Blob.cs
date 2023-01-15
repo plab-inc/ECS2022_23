@@ -21,10 +21,4 @@ public class Blob : Enemy
         DeathSound = SoundLoader.BlobDeathSound;
         ItemSpawnRate = 10f;
     }
-   
-   public override void Attack()
-   {
-        
-   }
-   
 }

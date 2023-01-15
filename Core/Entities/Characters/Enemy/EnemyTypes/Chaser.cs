@@ -24,9 +24,5 @@ public class Chaser : Enemy
         DeathSound = SoundLoader.BlobDeathSound;
         ItemSpawnRate = 40f;
     }
-
-    public override void Attack()
-    {
-        
-    }
+    
 }

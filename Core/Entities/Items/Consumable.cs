@@ -10,8 +10,7 @@ public class Consumable : Item
     public float HealMultiplier { get; set; }
     public float EpReward { get; set; }
     public float ArmorPoints { get; set; }
-    public float DamageMultiplier { get; set; }
-    public float Duration { get; set; }
+    
     public Consumable(Vector2 spawn, Texture2D texture, Rectangle sourceRect, ItemType itemType) : base(spawn, texture, sourceRect, itemType)
     {
     }
