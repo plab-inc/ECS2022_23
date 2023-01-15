@@ -10,13 +10,13 @@ public static class InventoryManager
 {
     private static Player _player;
     
-    private static ToolBar _toolBar;
+    private static Toolbar _toolbar;
     private static ItemSlot _weaponSlot;
     private static ItemSlot _trinketSlot;
     
     public static void Init(Player player)
     {
-        _toolBar = new ToolBar(1, 9);
+        _toolbar = new Toolbar(1, 9);
         _weaponSlot = new ItemSlot(InventoryType.WeaponSlot);
         _trinketSlot = new ItemSlot(InventoryType.TrinketSlot);
         _player = player;
@@ -37,14 +37,14 @@ public static class InventoryManager
 
     public static void Draw(SpriteBatch spriteBatch)
     {
-        _toolBar.Draw(spriteBatch);
+        _toolbar.Draw(spriteBatch);
         _weaponSlot.Draw(spriteBatch);
         _trinketSlot.Draw(spriteBatch);
     }
     
     public static void UseItemAtIndex(Player player, int index)
     {
-        var item = _toolBar.GetItemAtIndex(index);
+        var item = _toolbar.GetItemAtIndex(index);
         if (item == null) return;
         UseItem(player, item);
     }
@@ -75,7 +75,7 @@ public static class InventoryManager
                 SetPlayerWeapon(weapon);
                 break;
             default:
-                _toolBar.AddItem(item);
+                _toolbar.AddItem(item);
                 _player.Items.Add(item);
                 break;
         }
@@ -91,7 +91,7 @@ public static class InventoryManager
         switch (item)
         {
             case Trinket trinket:
-                if(_toolBar.ItemIsActive(trinket)) {
+                if(_toolbar.ItemIsActive(trinket)) {
                     UseTrinket(_player, trinket);
                 }
                 break;
@@ -100,13 +100,13 @@ public static class InventoryManager
                 break;
         }
         LockerManager.RemoveFromPocket(item);
-        _toolBar.RemoveItem(item);
+        _toolbar.RemoveItem(item);
         _player.Items.Remove(item);
     }
 
     private static void UseTrinket(Player player, Trinket trinket)
     {
-        _toolBar.SwitchActiveState(trinket);
+        _toolbar.SwitchActiveState(trinket);
         if (trinket.ItemType == player.Trinket?.ItemType)
         {
             trinket.Unequip(player);

@@ -4,9 +4,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
 
-public class ToolBar : Inventory
+public class Toolbar : Inventory
 {
-    public ToolBar(int rowCount, int colCount) : base(rowCount, colCount)
+    public Toolbar(int rowCount, int colCount) : base(rowCount, colCount)
     {
         Scale = 4;
         Width = PixelSize * ColCount * Scale;
