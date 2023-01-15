@@ -30,6 +30,10 @@ public class Player : Character
     public Trinket Trinket { get; set; }
     public Room Room { get; set; }
     
+    private float ActivationRadius;
+
+    public BoundingSphere ActivationSphere;
+    
     public bool Invincible
     {
         get => _invincible;
@@ -60,6 +64,9 @@ public class Player : Character
         
         EP = 0;
         Level = 1;
+        ActivationRadius = 75f;
+        ActivationSphere = new BoundingSphere(new Vector3(Position.X, Position.Y, 0), ActivationRadius);
+
     }
     public Player(Texture2D texture, Dictionary<AnimationType, Animation> animations, float ep, float level) : base(Vector2.Zero,texture, animations)
     {
@@ -72,6 +79,8 @@ public class Player : Character
 
         EP = ep;
         Level = level;
+        ActivationRadius = 75f;
+        ActivationSphere = new BoundingSphere(new Vector3(Position.X, Position.Y, 0), ActivationRadius);
     }
     
     public override void Update(GameTime gameTime)
@@ -94,6 +103,9 @@ public class Player : Character
         Weapon?.SetPosition(this);
         AnimationManager.Update(gameTime);
         Weapon?.Update(gameTime);
+
+        ActivationSphere.Center = new Vector3(Position.X, Position.Y, 0);
+
     }
     public override void Draw(SpriteBatch spriteBatch)
     {

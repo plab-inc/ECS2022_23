@@ -21,8 +21,7 @@ public class Gunner : Enemy
         Strength = 1;
         EpReward = 2;
 
-        ActivationRadius = 150f;
-        _target = target;
+       _target = target;
 
         Color = Color.Cyan;
         DeathSound = SoundLoader.BlobDeathSound;

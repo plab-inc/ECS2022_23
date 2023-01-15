@@ -19,8 +19,7 @@ public class Turret : Enemy
         HP = 20;
         Strength = 1;
         EpReward = 1;
-        ActivationRadius = 150f;
-
+        
         DeathSound = SoundLoader.BlobDeathSound;
         ItemSpawnRate = 30f;
     }
