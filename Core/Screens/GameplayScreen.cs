@@ -73,8 +73,6 @@ internal class GameplayScreen : GameScreen
     /// </summary>
     public override void LoadContent()
     {
-        Console.WriteLine("Loading");
-
         if (content == null)
             content = new ContentManager(ScreenManager.Game.Services, "Content");
         
@@ -124,7 +122,6 @@ internal class GameplayScreen : GameScreen
     /// </summary>
     public override void UnloadContent()
     {
-        Console.WriteLine("Unloading");
         ContentLoader.Unload(content);
         content.Unload();
     }
