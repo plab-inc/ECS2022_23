@@ -25,7 +25,15 @@ public static class ItemManager
     {
         foreach (var item in _activeItems)
         {
-            item.Draw(spriteBatch);
+            if (item.GetType() == typeof(Weapon))
+            {
+                var weapon = (Weapon)item;
+                weapon.DrawIcon(spriteBatch);
+            }
+            else
+            {
+                item.Draw(spriteBatch);
+            }
         }
     }
 

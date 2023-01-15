@@ -39,6 +39,11 @@ public class Weapon : Item
     {
         AnimationManager.Draw(spriteBatch, Position);
     }
+    
+    public void DrawIcon(SpriteBatch spriteBatch)
+    {
+        base.Draw(spriteBatch);
+    }
     public void SetAnimationDirection(Direction direction)
     {
         AimDirection = direction;
