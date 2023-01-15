@@ -76,7 +76,7 @@ internal static class UiLoader
     {
         return new UiText(new Rectangle(0,0, PixelSize, PixelSize), _font, "0", uiLabel);
     }
-    public static UiText CreateTextElement(String text)
+    public static UiText CreateTextElement(string text)
     {
         return new UiText(new Rectangle(0,0, PixelSize, PixelSize), _font, text);
     }
