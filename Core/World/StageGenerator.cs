@@ -8,12 +8,12 @@ using TiledCS;
 
 namespace ECS2022_23.Core.World;
 
-internal static class LevelGenerator
+internal static class StageGenerator
 {
     private static readonly int PossibleStarts = Directory.GetFiles("Content/world/rooms","start*.xnb").Length;
     private static readonly Random Random = new((int)DateTime.Now.Ticks);
     
-    public static Stage GenerateLevel(int minimumRooms, int maximumRooms)
+    public static Stage GenerateStage(int minimumRooms, int maximumRooms)
     {
         List<Room> rooms = new();
         List<Rectangle> groundLayer = new();

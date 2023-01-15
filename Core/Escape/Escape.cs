@@ -12,23 +12,23 @@ namespace ECS2022_23.Core.Game;
 
 public class Escape
 {
-    private Stage _currentStage;
-    public Player _player;
-    private Camera _camera;
-    
-
-    private int _difficulty;
-    private int _levelsCompleted;
-    private int _levelsToComplete;
+    private Player _player;
     public bool WasSuccessful { get; private set; }
     public bool Failed { get; private set; }
     
-    public Escape(Player player, int startDifficulty, int levelsToComplete)
+    private Stage _currentStage;
+    private Camera _camera;
+    
+    private int _difficulty;
+    private int _stagesCompleted;
+    private int _stagesToComplete;
+    
+    public Escape(Player player, int startDifficulty, int stagesToComplete)
     {
         
         _player = player;
         _difficulty = startDifficulty;
-        _levelsToComplete = levelsToComplete;
+        _stagesToComplete = stagesToComplete;
         
         InitializeLevel();
         
@@ -37,7 +37,7 @@ public class Escape
     { 
         CombatManager.Init();
         ItemManager.Init();
-        _currentStage = LevelGenerator.GenerateLevel(_difficulty * 2, _difficulty * 4);
+        _currentStage = StageGenerator.GenerateStage(_difficulty * 2, _difficulty * 4);
         _currentStage.Player = _player;
         _player.Stage = _currentStage;
         _player.Room = _currentStage.StartRoom;
@@ -76,9 +76,9 @@ public class Escape
 
         if (!_currentStage.IsCompleted) return;
         
-        _levelsCompleted++;
+        _stagesCompleted++;
             
-        if (_levelsCompleted < _levelsToComplete)
+        if (_stagesCompleted < _stagesToComplete)
         {
             _difficulty++;
             InitializeLevel();

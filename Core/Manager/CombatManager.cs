@@ -76,8 +76,8 @@ public static class CombatManager
         {
             shot.Update(gameTime);
         }
-        _activeShotsByPlayer.RemoveAll(shot => shot.HitTarget || !shot.Collides());
-        _activeShotsByEnemy.RemoveAll(shot => shot.HitTarget || !shot.Collides());
+        _activeShotsByPlayer.RemoveAll(shot => shot.HitTarget || !shot.IsInAir());
+        _activeShotsByEnemy.RemoveAll(shot => shot.HitTarget || !shot.IsInAir());
         _activeEnemies.RemoveAll(enemy => !enemy.IsAlive());
     }
     
@@ -125,7 +125,7 @@ public static class CombatManager
 
     private static bool EntitiesCollide(Entity attacker, Entity defender) 
     {
-        return attacker.IntersectPixels(defender.Rectangle, defender.EntityTextureData);
+        return attacker.IntersectPixels(defender);
     }
 
     private static bool WeaponCollide(Player attacker, Entity defender)
@@ -151,7 +151,7 @@ public static class CombatManager
                 break;
             default: return false;
         }
-        return defender.IntersectPixels(attackRect, attacker.Weapon.EntityTextureData);
+        return defender.IntersectPixels(attacker.Weapon);
     }
     
     public static void AddEnemy(Enemy enemy)
@@ -182,8 +182,8 @@ public static class CombatManager
 
     private static void CheckShotEnemyCollision(Enemy enemy, Player player)
     {
-        foreach (var projectileShot in _activeShotsByPlayer.Where(projectileShot => projectileShot.IntersectPixels(enemy.Rectangle, enemy.EntityTextureData) &&
-                                                                            projectileShot.Origin == (int)DamageOrigin.Player))
+        foreach (var projectileShot in _activeShotsByPlayer.Where(projectileShot => projectileShot.IntersectPixels(enemy) &&
+                                                                            projectileShot.DamageOrigin == (int)DamageOrigin.Player))
         {
             enemy.HP -= projectileShot.DamagePoints + player.Strength;
             enemy.SetAnimation(AnimationType.Hurt);
@@ -196,7 +196,7 @@ public static class CombatManager
 
     private static void CheckShotPlayerCollision(Player player)
     {
-        foreach (var projectileShot in _activeShotsByEnemy.Where(projectileShot => projectileShot.IntersectPixels(player.Rectangle, player.EntityTextureData) && projectileShot.Origin == (int)DamageOrigin.Enemy))
+        foreach (var projectileShot in _activeShotsByEnemy.Where(projectileShot => projectileShot.IntersectPixels(player) && projectileShot.DamageOrigin == DamageOrigin.Enemy))
         {
             player.TakesDamage(projectileShot.DamagePoints, projectileShot);
             projectileShot.HitTarget = true;

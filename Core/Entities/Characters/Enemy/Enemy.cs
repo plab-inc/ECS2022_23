@@ -12,18 +12,19 @@ namespace ECS2022_23.Core.Entities.Characters.Enemy;
 public abstract class Enemy : Character
 {
     public float EpReward;
-    protected Behavior Behavior;
-    protected bool IsActive;
-    private BoundingSphere _activationSphere;
-    protected float ActivationRadius;
-    protected Color Color = Color.White;
     public Vector2 AimVector;
     public bool IsBoss;
-    
     public Vector2 OriginalSpawn;
     public Room OriginalRoom;
     public float ItemSpawnRate;
-    
+
+    protected Color Color = Color.White;
+    protected Behavior Behavior;
+    protected bool IsActive;
+    protected float ActivationRadius;
+
+    private BoundingSphere _activationSphere;
+
     public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Behavior behavior, Stage stage) : base(spawn, texture, animations)
     {
         Behavior = behavior;
@@ -31,7 +32,7 @@ public abstract class Enemy : Character
         Stage = stage;
     }
     
-    public void Update(GameTime gameTime)
+    public override void Update(GameTime gameTime)
     {
         SetAnimation(AnimationType.WalkDown);
         SetActivationRadius();

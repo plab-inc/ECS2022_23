@@ -25,7 +25,7 @@ public static class ItemManager
     {
         foreach (var item in _activeItems)
         {
-            item.DrawIcon(spriteBatch);
+            item.Draw(spriteBatch);
         }
     }
 
@@ -75,7 +75,7 @@ public static class ItemManager
         
         randomFloat = randomDrop.Next(0,100);
         
-        var weaponChance = 20;
+        var weaponChance = 30;
         var trinketChance = 15;
         
         if (randomFloat <= umlChance)

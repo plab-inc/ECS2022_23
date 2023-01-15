@@ -53,7 +53,7 @@ public class InventoryRow
         {
             if(slot.Item == null) continue;
             var itemInSlot = slot.Item;
-            if (itemInSlot.itemType == item.itemType || itemInSlot.Equals(item))
+            if (itemInSlot.ItemType == item.ItemType || itemInSlot.ItemType == item.ItemType)
             {
                 return slot;
             }

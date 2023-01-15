@@ -111,7 +111,7 @@ public static class LockerManager
         
         if (toTransfer == null) return;
 
-        if (toTransfer.itemType == ItemType.Key || toTransfer.GetType() == typeof(Key))
+        if (toTransfer.ItemType == ItemType.Key || toTransfer.GetType() == typeof(Key))
         {
             return;
         }
@@ -127,14 +127,14 @@ public static class LockerManager
                 if (InventoryManager.AddItem(toTransfer))
                 {
                     locker.RemoveItem(toTransfer);
-                    _itemsInLocker.Remove(toTransfer.itemType);
+                    _itemsInLocker.Remove(toTransfer.ItemType);
                 }
                 break;
             case Pocket:
                 if (Locker.AddItem(toTransfer))
                 {
                     InventoryManager.RemoveItem(toTransfer);
-                    _itemsInLocker.Add(toTransfer.itemType);
+                    _itemsInLocker.Add(toTransfer.ItemType);
                 }
                 break;
         }
@@ -154,18 +154,18 @@ public static class LockerManager
                 {
                     locker.RemoveItem(toTransfer);
                     locker.AddItem(toSwitch);
-                    _itemsInLocker.Remove(toTransfer.itemType);
-                    _itemsInLocker.Add(toSwitch.itemType);
+                    _itemsInLocker.Remove(toTransfer.ItemType);
+                    _itemsInLocker.Add(toSwitch.ItemType);
                 }
                 break;
             case Pocket:
                 Locker.RemoveItem(toSwitch);
-                _itemsInLocker.Remove(toSwitch.itemType);
+                _itemsInLocker.Remove(toSwitch.ItemType);
                 if (Locker.AddItem(toTransfer))
                 {
                     InventoryManager.RemoveItem(toTransfer);
                     InventoryManager.AddItem(toSwitch);
-                    _itemsInLocker.Add(toTransfer.itemType);
+                    _itemsInLocker.Add(toTransfer.ItemType);
                 }
                 break;
         }
