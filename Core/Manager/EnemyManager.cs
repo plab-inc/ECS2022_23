@@ -65,8 +65,6 @@ public static class EnemyManager
                         {
                             closedList.Add(pos);
                             en.Position = pos;
-                            en.OriginalSpawn = pos;
-                            en.OriginalRoom = room;
                             AddEnemy(en);
                             CombatManager.AddEnemy(en);
                             break;
@@ -79,8 +77,6 @@ public static class EnemyManager
             {
                 Enemy boss = new GiantBlob(Stage,Player);
                 boss.Position = room.Spawns[0];
-                boss.OriginalSpawn = room.Spawns[0];
-                boss.OriginalRoom = room;
                 AddEnemy(boss);
                 CombatManager.AddEnemy(boss);
             }

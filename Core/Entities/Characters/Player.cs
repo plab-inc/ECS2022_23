@@ -64,7 +64,7 @@ public class Player : Character
         
         EP = 0;
         Level = 1;
-        ActivationRadius = 75f;
+        ActivationRadius = 100f;
         ActivationSphere = new BoundingSphere(new Vector3(Position.X, Position.Y, 0), ActivationRadius);
 
     }
@@ -79,7 +79,7 @@ public class Player : Character
 
         EP = ep;
         Level = level;
-        ActivationRadius = 75f;
+        ActivationRadius = 100f;
         ActivationSphere = new BoundingSphere(new Vector3(Position.X, Position.Y, 0), ActivationRadius);
     }
     
