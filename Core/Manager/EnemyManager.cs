@@ -16,11 +16,11 @@ public static class EnemyManager
     private static Enemy _keyEnemy;
     public static Player Player { set; get;}
     public static Stage Stage { set; get; }
-    private  static List<Vector2> closedList = new();
+    private static List<Vector2> closedList = new();
     
-    private static void AddEnemy(Enemy e)
+    private static void AddEnemy(Enemy enemy)
     {
-        Enemies.Add(e);
+        Enemies.Add(enemy);
     }
 
     public static void RemoveEnemy(Enemy enemy)
