@@ -17,8 +17,8 @@ public static class InventoryManager
     public static void Init(Player player)
     {
         _toolBar = new ToolBar(1, 9);
-        _weaponSlot = new ItemSlot(SlotType.WeaponSlot);
-        _trinketSlot = new ItemSlot(SlotType.TrinketSlot);
+        _weaponSlot = new ItemSlot(InventoryType.WeaponSlot);
+        _trinketSlot = new ItemSlot(InventoryType.TrinketSlot);
         _player = player;
         
         if (player.Items != null)

@@ -1,49 +1,91 @@
-﻿using ECS2022_23.Core.Entities.Items;
+﻿using System;
+using ECS2022_23.Core.Entities.Items;
+using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
-public class Pocket : Inventory
+
+[Serializable]
+public class Pocket : Inventory 
 {
-    public Pocket(int rowCount, int colCount) : base(rowCount, colCount)
+    public InventoryType Type;
+    
+    private bool _weaponLimitReached;
+    private UiText _text;
+  
+    public Pocket(int rowCount, int colCount, InventoryType type) : base(rowCount, colCount)
     {
+        Type = type;
         Width = PixelSize * ColCount * Scale;
         Height = PixelSize * RowCount * Scale;
-        DestinationRec = new Rectangle(Game1.ScreenWidth/2+100, Game1.ScreenHeight/2-Height/2, Width, Height);
-        CreateRows();
-    }
+        
+        if (type == InventoryType.LockerInventory)
+        {
+            DestinationRec = new Rectangle(Game1.ScreenWidth/2-100-Width, Game1.ScreenHeight/2-Height/2, Width, Height);
+            _text = UiLoader.CreateTextElement("Locker");
+        } else if (type == InventoryType.PocketInventory)
+        {
+            DestinationRec = new Rectangle(Game1.ScreenWidth/2+100, Game1.ScreenHeight/2-Height/2, Width, Height);
+            _text = UiLoader.CreateTextElement("Inventory");
+        }
 
-    public override void Draw(SpriteBatch spriteBatch)
-    {
-        base.Draw(spriteBatch);
-        DrawText(spriteBatch);
+        if (_text != null)
+        {  
+            _text.DestinationRec =
+                new Rectangle(DestinationRec.X, DestinationRec.Y - Height/RowCount/2, Width, Height);
+            _text.Scale = new Vector2(Scale/2, Scale/2);
+        }
+        
+        CreateRows();
     }
 
     public override bool AddItem(Item item)
     {
-        if(item.GetType() != typeof(Weapon)) return base.AddItem(item);
-        
-        if (WeaponLimitReached())
-        { 
-            var weapon = GetWeapon();
-            RemoveItem(weapon);
+        if (item.GetType() == typeof(Weapon))
+        {
+            if (_weaponLimitReached)
+            {
+                if (Type == InventoryType.LockerInventory)
+                {
+                    return false;
+                }
+                if(Type == InventoryType.PocketInventory)
+                {
+                    var weapon = GetWeapon();
+                    RemoveItem(weapon);
+                }
+            }
+           
+            _weaponLimitReached = base.AddItem(item);
+            return _weaponLimitReached;
         }
-        
+
         return base.AddItem(item);
     }
-    
-    private void DrawText(SpriteBatch spriteBatch)
+
+    public override bool RemoveItem(Item item)
     {
-        var text = UiLoader.CreateTextElement("Inventory");
-        text.DestinationRec =
-            new Rectangle(DestinationRec.X, DestinationRec.Y - Height/RowCount/2, Width, Height);
-        text.Scale = new Vector2(Scale/2, Scale/2);
-        text.Draw(spriteBatch);
+        var removed = base.RemoveItem(item);
+
+        if (!removed) return false;
+        
+        if (item.GetType() == typeof(Weapon))
+        {
+            _weaponLimitReached = false;
+        }
+
+        return true;
     }
     
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        base.Draw(spriteBatch);
+        _text.Draw(spriteBatch);
+    }
+
     public bool WeaponLimitReached()
     {
-        var weapon = GetWeapon();
-        return weapon != null;
+        return _weaponLimitReached;
     }
 }
