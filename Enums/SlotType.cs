@@ -2,6 +2,6 @@
 
 public enum SlotType
 {
-    Weapon,
-    Trinket
+    WeaponSlot,
+    TrinketSlot
 }

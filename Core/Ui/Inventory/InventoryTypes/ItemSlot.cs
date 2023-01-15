@@ -11,11 +11,11 @@ public class ItemSlot : Inventory
         Scale = 4;
         Width = PixelSize * ColCount * Scale;
         Height = PixelSize * RowCount * Scale;
-        if (type == SlotType.Trinket)
+        if (type == SlotType.TrinketSlot)
         {
             DestinationRec = new Rectangle(0+PixelSize+Width+16, Game1.ScreenHeight-Height, Width, Height);
         }
-        else if(type == SlotType.Weapon)
+        else if(type == SlotType.WeaponSlot)
         {
             DestinationRec = new Rectangle(0+PixelSize, Game1.ScreenHeight-Height, Width, Height);
         }
