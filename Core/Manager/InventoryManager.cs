@@ -106,7 +106,7 @@ public static class InventoryManager
     private static void UseTrinket(Player player, Trinket trinket)
     {
         _toolBar.SwitchActiveState(trinket);
-        if (trinket.ItemType == player.Trinket.ItemType)
+        if (trinket.ItemType == player.Trinket?.ItemType)
         {
             trinket.Unequip(player);
             _trinketSlot.RemoveItem(trinket);
