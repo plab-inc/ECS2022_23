@@ -31,7 +31,10 @@ public static class ItemManager
 
     private static void AddItem(Item item)
     {
-        _activeItems.Add(item);
+        if (item != null)
+        {
+            _activeItems.Add(item);
+        }
     }
     public static void DropLoot(Enemy enemy) 
     {
@@ -80,13 +83,13 @@ public static class ItemManager
         
         if (randomFloat <= umlChance)
         {
-            AddItem(GenerateUml(position));
+            AddItem(GenerateItem(position, ItemType.UmlDiagram));
             return;
         }
  
         if (randomFloat <= trinketChance)
         {
-            AddItem(GetRandomTrinket(position));
+            AddItem(GenerateItem(position, ItemType.SwimmingGoggles));
             return;
         } 
         
@@ -105,10 +108,14 @@ public static class ItemManager
         AddItem(ItemLoader.CreateItem(position, ItemType.Key));
         
     }
-    private static Item GenerateUml(Vector2 position)
+    private static Item GenerateItem(Vector2 position, ItemType itemType)
     {
-        return ItemLoader.CreateItem(position, ItemType.UmlDiagram);
-        
+        switch (itemType)
+        {
+            case ItemType.UmlDiagram: return ItemLoader.CreateItem(position, ItemType.UmlDiagram);
+            case ItemType.SwimmingGoggles: return ItemLoader.CreateItem(position, ItemType.SwimmingGoggles);
+            default: return ItemLoader.CreateItem(position, ItemType.SwimmingGoggles);
+        }
     }
 
     private static Weapon GetRandomWeapon(Vector2 position)
@@ -138,18 +145,6 @@ public static class ItemManager
         }
     }
     
-    private static Trinket GetRandomTrinket(Vector2 position)
-    {
-        var random = new Random();
-        var randomInt = random.Next(1);
-        switch (randomInt)
-        {
-            default: return (Trinket) ItemLoader.CreateItem(position, ItemType.SwimmingGoggles);
-
-        }
-    }
-    
-
     public static void PickItemUp(Player player)
     {
         foreach (var item in _activeItems)
