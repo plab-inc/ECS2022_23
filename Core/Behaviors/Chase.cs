@@ -1,13 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ECS2022_23.Core.Behaviors;
+using Microsoft.Xna.Framework;
 
 namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 
-public class Chase : Behavior
+public class Chase : TargetingBehavior
 {
-    protected Character Target;
-    public Chase(Character target)
+    public Chase(Character target) : base(target)
     {
-        Target = target;
+       
     }
 
     public override Vector2 Move(Vector2 position, float velocity)

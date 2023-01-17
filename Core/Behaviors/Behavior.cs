@@ -3,9 +3,8 @@ using Microsoft.Xna.Framework;
 
 namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 
-public abstract class Behavior
+public abstract class  Behavior
 {
-    private Pathfinding path;
     protected Enemy Owner;
     public int State { get; set;}
 

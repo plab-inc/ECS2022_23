@@ -1,9 +1,10 @@
+using ECS2022_23.Core.Behaviors;
 using ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 using Microsoft.Xna.Framework;
 
 namespace ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
 
-public class Boss : Chase
+public class Boss : TargetingBehavior
 {
     public Boss(Character target) : base(target)
     {
@@ -20,9 +21,6 @@ public class Boss : Chase
         return Vector2.Zero;
     }
     
-    public void Aim(Character target)
-    {
-        Owner.AimVector = Vector2.Normalize((target.Position - Owner.Position));
-    }
+    
     
 }

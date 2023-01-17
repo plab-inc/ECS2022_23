@@ -6,20 +6,20 @@ namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 public class RandomBehavior : Behavior
 {
     private int _delay=0;
-    Random rand = new ((int)DateTime.Now.Ticks);
-    private int oldDirection;
+    private int _oldDirection;
    
     public override Vector2 Move(Vector2 position, float velocity)
     {
+        Random rand = new ((int)DateTime.Now.Ticks);
         _delay++;
-        int newDirection=oldDirection;
+        int newDirection=_oldDirection;
         
         if (_delay >= 15)
         {
             _delay = 0;
             newDirection = rand.Next(0, 4);
         }
-        oldDirection = newDirection;
+        _oldDirection = newDirection;
         Vector2 temp = Vector2.Zero;
         
         int retry = 0;
