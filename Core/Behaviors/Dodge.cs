@@ -8,7 +8,7 @@ public class  Dodger : TargetingBehavior
 {
     public Dodger(Character target) : base(target)
     {
-        State = (int)EnemyStates.Initial;
+       
     }
 
     public override Vector2 Move(Vector2 position, float velocity)
