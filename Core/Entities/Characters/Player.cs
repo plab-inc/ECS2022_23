@@ -15,41 +15,72 @@ namespace ECS2022_23.Core.Entities.Characters;
 
 public class Player : Character
 {
+    private bool _invincible;
+    private bool _shieldBreak;
+    
     public float EP;
     public float Level;
-
     public float Armor;
-    public bool Invincible;
+    
     public bool ImmuneToWater = false;
 
     public DeathCause DeathCause;
-    public List<Item> Items = new List<Item>();
+    public List<Item> Items = new();
     public Weapon Weapon { get; set; }
     public Trinket Trinket { get; set; }
     public Room Room { get; set; }
+    
+    private float _activationRadius;
+
+    public BoundingSphere ActivationSphere;
+    
+    public bool Invincible
+    {
+        get => _invincible;
+        set
+        {
+            _invincible = value;
+            if (_invincible)
+            {
+                switch (_shieldBreak)
+                {
+                    case true: AnimationManager.StartColorChange(Color.White, Color.Aqua);
+                        break;
+                    case false: AnimationManager.StartColorChange(Color.White, new Color(236, 86, 113, 255));
+                        break;
+                }
+            }
+            else AnimationManager.StopColorChange();
+        }
+    }
     public Player(Texture2D texture, Dictionary<AnimationType, Animation> animations) : base(Vector2.Zero,texture, animations)
     {
-        SpriteWidth = 16;
         DamageSound = SoundLoader.PlayerDamageSound;
         
         Velocity = 3f;
         HP = 3;
-        EP = 0;
-        Armor = 10;
-        Level = 1;
+        Armor = 2;
         Strength = 5;
+        
+        EP = 0;
+        Level = 1;
+        _activationRadius = 100f;
+        ActivationSphere = new BoundingSphere(new Vector3(Position.X, Position.Y, 0), _activationRadius);
+
     }
     public Player(Texture2D texture, Dictionary<AnimationType, Animation> animations, float ep, float level) : base(Vector2.Zero,texture, animations)
     {
-        SpriteWidth = 16;
         DamageSound = SoundLoader.PlayerDamageSound;
         
         Velocity = 3f;
         HP = 3;
-        this.EP = ep;
-        Armor = 10;
-        this.Level = level;
+        Armor = 2;
         Strength = 5;
+
+        EP = ep;
+        Level = level;
+        _activationRadius = 100f;
+        ActivationSphere = new BoundingSphere(new Vector3(Position.X, Position.Y, 0), _activationRadius);
     }
     
     public override void Update(GameTime gameTime)
@@ -72,6 +103,9 @@ public class Player : Character
         Weapon?.SetPosition(this);
         AnimationManager.Update(gameTime);
         Weapon?.Update(gameTime);
+
+        ActivationSphere.Center = new Vector3(Position.X, Position.Y, 0);
+
     }
     public override void Draw(SpriteBatch spriteBatch)
     {
@@ -81,14 +115,6 @@ public class Player : Character
         }
         else
         {
-            if (Invincible)
-            {
-                AnimationManager.StartColorChange();
-            }
-            else
-            {
-                AnimationManager.StopColorChange();
-            }
             AnimationManager.Draw(spriteBatch, Position);
             Weapon?.Draw(spriteBatch);
         }
@@ -132,7 +158,7 @@ public class Player : Character
 
         IsAttacking = true;
     }
-    public virtual void Moves(Vector2 direction)
+    public void Moves(Vector2 direction)
     {
         var moveDirection = Helper.Transform.Vector2ToDirection(direction);
         
@@ -161,9 +187,9 @@ public class Player : Character
         Position += direction * Velocity;
         
     }
-    public override bool IsInWater(Rectangle body)
+    public override bool IsInWater(Rectangle movedBody)
     {
-        return Stage.WaterLayer.Any(rectangle => rectangle.Contains(body));
+        return Stage.WaterLayer.Any(rectangle => rectangle.Contains(movedBody));
     }
     public override bool Collides(Vector2 velocity)
     {
@@ -251,31 +277,33 @@ public class Player : Character
     {
         if (Invincible) return;
 
-        bool shieldBreak = Armor > 0;
+        _shieldBreak = Armor > 0;
 
         Armor -= damagePoints;
-            
-        if(shieldBreak && Armor<=0)
+
+        if (_shieldBreak)
+        {
             SoundManager.Play(SoundLoader.ShieldBreakSound);
-        
-        if (Armor < 0)
+        }
+
+        if (Armor <= 0)
         {
             HP += Armor;
             Armor = 0;
-            Invincible = true;
             SetAnimation(AnimationType.Hurt);
             SoundManager.Play(DamageSound);
         }
            
         if (!IsAlive())
         {
-            Invincible = true;
             DeathCause = Helper.Transform.EntityToDeathCause(entity);
             SetAnimation(AnimationType.Death);
         }
+
+        Invincible = true;
     }
 
-    public void LevelUp()
+    private void LevelUp()
     {
         if (25 <= EP)
         {
@@ -286,8 +314,9 @@ public class Player : Character
         }
     }
 
-    public void Aims(Direction getAimDirection)
+    public void Aims(Direction aimDirection)
     {
-        AimDirection = getAimDirection;
+        AimDirection = aimDirection;
     }
+
 }

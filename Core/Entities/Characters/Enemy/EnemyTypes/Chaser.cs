@@ -12,8 +12,6 @@ public class Chaser : Enemy
     public Chaser(Stage stage, Character target) : base(Vector2.Zero, UiLoader.SpriteSheet,
         AnimationLoader.CreateZombieEnemyAnimations(), new Chase(target), stage)
     {
-        Behavior.SetEnemy(this);
-        
         Velocity = 1.5f;
         HP = 10;
         Strength = 1;
@@ -22,10 +20,7 @@ public class Chaser : Enemy
         SpriteHeight = 14;
         SpriteWidth = 14;
         DeathSound = SoundLoader.BlobDeathSound;
+        ItemSpawnRate = 40f;
     }
-
-    public override void Attack()
-    {
-        
-    }
+    
 }

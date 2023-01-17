@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using ECS2022_23.Core.Entities.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -63,7 +62,7 @@ public abstract class Inventory
         
         foreach (var row in InventoryRows)
         {
-            var slot = row.FindItem(item);
+            var slot = row.FindSlotWithItem(item);
            
             if (slot != null)
             {
@@ -125,7 +124,7 @@ public abstract class Inventory
     {
         foreach (var row in InventoryRows)
         {
-            var slot = row.FindItem(item);
+            var slot = row.FindSlotWithItem(item);
             
             if (slot == null) continue;
             slot.ItemCount--;
@@ -143,7 +142,7 @@ public abstract class Inventory
     {
         foreach (var row in InventoryRows)
         {
-            var slot = row.FindItem(item);
+            var slot = row.FindSlotWithItem(item);
             if (slot == null) continue;
             slot.IsActive = !slot.IsActive;
             return;
@@ -154,7 +153,7 @@ public abstract class Inventory
     {
         foreach (var row in InventoryRows)
         {
-            var slot = row.FindItem(item);
+            var slot = row.FindSlotWithItem(item);
             if (slot == null) continue;
             return slot.IsActive;
         }

@@ -23,29 +23,26 @@ public static class ItemManager
     
     public static void Draw(SpriteBatch spriteBatch)
     {
-        try
+        foreach (var item in _activeItems)
         {
-            foreach (var item in _activeItems)
+            if (item.GetType() == typeof(Weapon))
             {
-                item.DrawIcon(spriteBatch);
+                var weapon = (Weapon)item;
+                weapon.DrawIcon(spriteBatch);
             }
-        }
-        catch (NullReferenceException e)
-        {
-            _activeItems = new List<Item>();
+            else
+            {
+                item.Draw(spriteBatch);
+            }
         }
     }
 
     private static void AddItem(Item item)
     {
-        try
+        if (item != null)
         {
             _activeItems.Add(item);
-        }  catch (NullReferenceException e)
-        {
-            _activeItems = new List<Item>();
         }
-       
     }
     public static void DropLoot(Enemy enemy) 
     {
@@ -60,38 +57,58 @@ public static class ItemManager
             }
             else
             {
-               DropRandomLoot(enemy.Position);
+               DropRandomLoot(enemy.Position, enemy.ItemSpawnRate);
             }
         }
         else
         {
-            DropRandomLoot(enemy.Position);
+            if (enemy.IsBoss)
+            {
+                DropRandomLoot(enemy.Position, enemy.ItemSpawnRate, 25);
+            }
+            else
+            {
+                DropRandomLoot(enemy.Position, enemy.ItemSpawnRate);
+            }
+
         }
     }
 
-    private static void DropRandomLoot(Vector2 position)
+    private static void DropRandomLoot(Vector2 position, float dropChance, int umlChance = 5)
     {
-        var random = new Random();
-        var randomInt = random.Next(10);
-        var dropChance = 0;
+        var randomDropChance = new Random((int) DateTime.Now.Ticks);
+        var randomDrop = new Random((int) DateTime.Now.Ticks);
         
-        if (randomInt < dropChance) return;
+        var randomFloat = randomDropChance.Next(0,100);
         
-        randomInt = random.Next(10);
-        var weaponChance = 5;
-        var trinketChance = 2;
-
-        if (randomInt < trinketChance)
+        
+        if (randomFloat >= dropChance) return;
+        
+        randomFloat = randomDrop.Next(0,100);
+        
+        var weaponChance = 30;
+        var trinketChance = 15;
+        
+        if (randomFloat <= umlChance)
         {
-            AddItem(GetRandomTrinket(position));
-        } else if (randomInt < weaponChance)
+            AddItem(GenerateItem(position, ItemType.UmlDiagram));
+            return;
+        }
+ 
+        if (randomFloat <= trinketChance)
+        {
+            AddItem(GenerateItem(position, ItemType.SwimmingGoggles));
+            return;
+        } 
+        
+        if (randomFloat <= weaponChance)
         {
             AddItem(GetRandomWeapon(position));
+            return;
         }
-        else
-        {
-            AddItem(GetRandomConsumable(position));
-        }
+        
+        AddItem(GetRandomConsumable(position));
+
     }
 
     private static void DropKey(Vector2 position)
@@ -99,18 +116,27 @@ public static class ItemManager
         AddItem(ItemLoader.CreateItem(position, ItemType.Key));
         
     }
+    private static Item GenerateItem(Vector2 position, ItemType itemType)
+    {
+        switch (itemType)
+        {
+            case ItemType.UmlDiagram: return ItemLoader.CreateItem(position, ItemType.UmlDiagram);
+            case ItemType.SwimmingGoggles: return ItemLoader.CreateItem(position, ItemType.SwimmingGoggles);
+            default: return ItemLoader.CreateItem(position, ItemType.SwimmingGoggles);
+        }
+    }
 
     private static Weapon GetRandomWeapon(Vector2 position)
     {
         var random = new Random();
-        var randomInt = random.Next(5);
+        var randomInt = random.Next(100);
         switch (randomInt)
         {
-            case 0: return (Weapon) ItemLoader.CreateItem(position, ItemType.Sword);
-            case 1: return (Weapon) ItemLoader.CreateItem(position, ItemType.Phaser);
-            case 2: return (Weapon) ItemLoader.CreateItem(position, ItemType.Crowbar);
-            case 3: return (Weapon) ItemLoader.CreateItem(position, ItemType.Knife);
-            case 4: return (Weapon) ItemLoader.CreateItem(position, ItemType.Stick);
+            case <= 20: return (Weapon) ItemLoader.CreateItem(position, ItemType.Phaser);
+            case <= 30: return (Weapon) ItemLoader.CreateItem(position, ItemType.Crowbar);
+            case <= 40: return (Weapon) ItemLoader.CreateItem(position, ItemType.Stick);
+            case <= 50: return (Weapon) ItemLoader.CreateItem(position, ItemType.Knife);
+            
             default: return (Weapon) ItemLoader.CreateItem(position, ItemType.Sword);
         }
     }
@@ -118,55 +144,36 @@ public static class ItemManager
     private static Consumable GetRandomConsumable(Vector2 position)
     {
         var random = new Random();
-        var randomInt = random.Next(3);
+        var randomInt = random.Next(100);
         switch (randomInt)
         {
-            case 0: return (Consumable) ItemLoader.CreateItem(position, ItemType.HealthPotion);
-            case 1: return (Consumable) ItemLoader.CreateItem(position, ItemType.Armor);
-            case 2: return (Consumable) ItemLoader.CreateItem(position, ItemType.Cake);
+            case <= 25: return (Consumable) ItemLoader.CreateItem(position, ItemType.Cake);
+            case <= 50: return (Consumable) ItemLoader.CreateItem(position, ItemType.Armor);
             default: return (Consumable) ItemLoader.CreateItem(position, ItemType.HealthPotion);
         }
     }
     
-    private static Trinket GetRandomTrinket(Vector2 position)
-    {
-        var random = new Random();
-        var randomInt = random.Next(1);
-        switch (randomInt)
-        {
-            default: return (Trinket) ItemLoader.CreateItem(position, ItemType.SwimmingGoggles);
-
-        }
-    }
-
     public static void PickItemUp(Player player)
     {
-        try
+        foreach (var item in _activeItems)
         {
-            foreach (var item in _activeItems)
+            if (!item.Rectangle.Intersects(player.Rectangle)) continue;
+            if (item.GetType() == typeof(Weapon))
             {
-                if (!item.Rectangle.Intersects(player.Rectangle)) continue;
-                if (item.GetType() == typeof(Weapon))
+                if (player.Weapon != null)
                 {
-                    if (player.Weapon != null)
-                    {
-                        var weapon = player.Weapon;
-                        weapon.Position = player.Position;
-                        _activeItems.Add(weapon);
-                    }
-                    InventoryManager.AddItem(item);
+                    var weapon = player.Weapon;
+                    weapon.Position = player.Position;
+                    _activeItems.Add(weapon);
                 }
-                else
-                {
-                    InventoryManager.AddItem(item);
-                }
-                _activeItems.Remove(item);
-                return;
-            } 
-        }
-        catch (NullReferenceException e)
-        {
-            _activeItems = new List<Item>();
+                InventoryManager.AddItem(item);
+            }
+            else
+            {
+                InventoryManager.AddItem(item);
+            }
+            _activeItems.Remove(item);
+            return;
         }
     }
 }

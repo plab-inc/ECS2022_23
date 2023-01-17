@@ -9,21 +9,14 @@ namespace ECS2022_23.Core.Entities.Characters.Enemy.EnemyTypes;
 public class Blob : Enemy
 {
    public Blob(Stage stage) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateBlobEnemyAnimations(), new RandomBehavior(), stage)
-    {
-        Behavior.SetEnemy(this);
-        
-        Velocity = 1f;
+   {
+       Velocity = 1f;
         HP = 10;
         Strength = 1;
         EpReward = 1;
 
         Color = Color.Cyan;
         DeathSound = SoundLoader.BlobDeathSound;
+        ItemSpawnRate = 10f;
     }
-   
-   public override void Attack()
-   {
-        
-   }
-   
 }

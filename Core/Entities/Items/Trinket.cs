@@ -10,12 +10,6 @@ public class Trinket : Item
     public Trinket(Vector2 spawn, Texture2D texture, Rectangle sourceRect, ItemType itemType) : base(spawn, texture, sourceRect, itemType)
     {
     }
-
-    public override void Update(GameTime gameTime)
-    {
-        return;
-    }
-    
     public override bool Use(Player player)
     {
         player.Trinket = this;

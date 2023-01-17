@@ -73,8 +73,6 @@ internal class GameplayScreen : GameScreen
     /// </summary>
     public override void LoadContent()
     {
-        Console.WriteLine("Loading");
-
         if (content == null)
             content = new ContentManager(ScreenManager.Game.Services, "Content");
         
@@ -103,6 +101,7 @@ internal class GameplayScreen : GameScreen
             LockerManager.Init(_gameSave.ItemsInLocker);
         }
 
+        UiLoader.InitializeUi(_player.MaxHP);
         InventoryManager.Init(_player);
         
         _camera = new Camera(ScreenManager.GraphicsDevice)
@@ -123,7 +122,6 @@ internal class GameplayScreen : GameScreen
     /// </summary>
     public override void UnloadContent()
     {
-        Console.WriteLine("Unloading");
         ContentLoader.Unload(content);
         content.Unload();
     }
@@ -141,6 +139,11 @@ internal class GameplayScreen : GameScreen
         bool coveredByOtherScreen)
     {
         base.Update(gameTime, otherScreenHasFocus, false);
+
+        if (otherScreenHasFocus || coveredByOtherScreen || _escape.WasSuccessful || _escape.Failed)
+        {
+            Serialization.Save(_gameSave);
+        }
         
         // Gradually fade in or out depending on whether we are covered by the pause screen.
         if (coveredByOtherScreen)
@@ -156,8 +159,7 @@ internal class GameplayScreen : GameScreen
         {
             _escape.Update(gameTime);
             _gameSave.Update(_player.EP,_player.Level);
-            Serialization.Save(_gameSave);
-            
+
             if (_escape.WasSuccessful)
             {
                 LoadingScreen.Load(ScreenManager, false, null,
@@ -219,7 +221,7 @@ internal class GameplayScreen : GameScreen
             }
             if (action == Action.UseItem)
             {
-                InventoryManager.UseItemAtIndex(_player, Input.ToolbarKeyDownIndex());
+                InventoryManager.UseItemAtIndex(Input.ToolbarKeyDownIndex());
             }
             
         }

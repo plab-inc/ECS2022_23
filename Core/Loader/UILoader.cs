@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
+using ECS2022_23.Core.Manager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,31 +22,30 @@ internal static class UiLoader
 
         _content = content;
         _graphicsDevice = graphicsDevice;
-        try
-        {
-            UiManager.Init();
-            SpriteSheet = _content.Load<Texture2D>("sprites/spritesheet");
-            _font = _content.Load<SpriteFont>("fonts/rainyhearts");
         
-            UiPanel statsContainer = CreateUiPanel(new Rectangle(0,0, PixelSize, PixelSize), new Rectangle(0,0, Game1.ScreenWidth, 100), UiLabel.StatsContainer);
-            
-            statsContainer.Add(CreateUiElementNew(UiLabel.HpIcon));
-            statsContainer.Add(CreateUiElementNew(UiLabel.EpIcon));
-            statsContainer.Add(CreateTextElement(UiLabel.EpText));
-            statsContainer.Add(CreateUiElementNew(UiLabel.LevelIcon));
-            statsContainer.Add(CreateTextElement(UiLabel.LevelText));
-            statsContainer.Add(CreateUiElementNew(UiLabel.ArmorIcon));
-            statsContainer.Add(CreateTextElement(UiLabel.ArmorText));
-            
-            UiManager.StatsPanel = statsContainer;
-        }
-        catch (Exception e)
-        {
-            Debug.WriteLine("Error while loading assets.\n" + e.Message);
-        }
+        SpriteSheet = _content.Load<Texture2D>("sprites/spritesheet");
+        _font = _content.Load<SpriteFont>("fonts/rainyhearts");
     }
-    
-    public static UiElement CreateUiElementNew(UiLabel label)
+
+    public static void InitializeUi(float maxHearts)
+    { 
+        UiManager.Init();
+        UiContainer statsContainer = UiManager.StatsContainer;
+            
+        statsContainer.Add(CreateUiElementNew(UiLabel.HpIcon));
+        for (int i = 0; i < maxHearts; i++)
+        {
+            statsContainer.Add(CreateUiElementNew(UiLabel.HeartIcon));
+        }
+        statsContainer.Add(CreateUiElementNew(UiLabel.EpIcon));
+        statsContainer.Add(CreateTextElement(UiLabel.EpText));
+        statsContainer.Add(CreateUiElementNew(UiLabel.LevelIcon));
+        statsContainer.Add(CreateTextElement(UiLabel.LevelText));
+        statsContainer.Add(CreateUiElementNew(UiLabel.ArmorIcon));
+        statsContainer.Add(CreateTextElement(UiLabel.ArmorText));
+    }
+
+    private static UiElement CreateUiElementNew(UiLabel label)
     {
         Rectangle sourceRectangle = default;
 
@@ -72,17 +71,14 @@ internal static class UiLoader
         return new UiElement(sourceRectangle, SpriteSheet, label);
         
     }
-    public static UiText CreateTextElement(UiLabel uiLabel)
+
+    private static UiText CreateTextElement(UiLabel uiLabel)
     {
         return new UiText(new Rectangle(0,0, PixelSize, PixelSize), _font, "0", uiLabel);
     }
-    public static UiText CreateTextElement(String text)
+    public static UiText CreateTextElement(string text)
     {
         return new UiText(new Rectangle(0,0, PixelSize, PixelSize), _font, text);
-    }
-    private static UiPanel CreateUiPanel(Rectangle sourceRect, Rectangle destRect, UiLabel label)
-    {
-        return new UiPanel(sourceRect, destRect, label);
     }
     public static Texture2D CreateColorTexture(Color color)
     {

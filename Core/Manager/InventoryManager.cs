@@ -1,6 +1,7 @@
 ﻿using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
+using ECS2022_23.Enums;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Manager;
@@ -9,15 +10,15 @@ public static class InventoryManager
 {
     private static Player _player;
     
-    private static ToolBar _toolBar;
-    private static WeaponSlot _weaponSlot;
-    private static TrinketSlot _trinketSlot;
+    private static Toolbar _toolbar;
+    private static ItemSlot _weaponSlot;
+    private static ItemSlot _trinketSlot;
     
     public static void Init(Player player)
     {
-        _toolBar = new ToolBar(1, 9);
-        _weaponSlot = new WeaponSlot();
-        _trinketSlot = new TrinketSlot();
+        _toolbar = new Toolbar(1, 9);
+        _weaponSlot = new ItemSlot(InventoryType.WeaponSlot);
+        _trinketSlot = new ItemSlot(InventoryType.TrinketSlot);
         _player = player;
         
         if (player.Items != null)
@@ -36,28 +37,28 @@ public static class InventoryManager
 
     public static void Draw(SpriteBatch spriteBatch)
     {
-        _toolBar.Draw(spriteBatch);
+        _toolbar.Draw(spriteBatch);
         _weaponSlot.Draw(spriteBatch);
         _trinketSlot.Draw(spriteBatch);
     }
     
-    public static void UseItemAtIndex(Player player, int index)
+    public static void UseItemAtIndex(int index)
     {
-        var item = _toolBar.GetItemAtIndex(index);
+        var item = _toolbar.GetItemAtIndex(index);
         if (item == null) return;
-        UseItem(player, item);
+        UseItem(item);
     }
 
-    private static void UseItem(Player player, Item item)
+    private static void UseItem(Item item)
     {
         switch (item) 
         {
             case Trinket trinket:
-                UseTrinket(player, trinket);
+                UseTrinket(trinket);
                 return;
         }
     
-        if (player.UseItem(item))
+        if (_player.UseItem(item))
         {
             RemoveItem(item);
         }
@@ -74,7 +75,7 @@ public static class InventoryManager
                 SetPlayerWeapon(weapon);
                 break;
             default:
-                _toolBar.AddItem(item);
+                _toolbar.AddItem(item);
                 _player.Items.Add(item);
                 break;
         }
@@ -90,8 +91,8 @@ public static class InventoryManager
         switch (item)
         {
             case Trinket trinket:
-                if(_toolBar.ItemIsActive(trinket)) {
-                    UseTrinket(_player, trinket);
+                if(_toolbar.ItemIsActive(trinket)) {
+                    UseTrinket(trinket);
                 }
                 break;
             case Weapon:
@@ -99,22 +100,22 @@ public static class InventoryManager
                 break;
         }
         LockerManager.RemoveFromPocket(item);
-        _toolBar.RemoveItem(item);
+        _toolbar.RemoveItem(item);
         _player.Items.Remove(item);
     }
 
-    private static void UseTrinket(Player player, Trinket trinket)
+    private static void UseTrinket(Trinket trinket)
     {
-        _toolBar.SwitchActiveState(trinket);
-        if (trinket.Equals(player.Trinket))
+        _toolbar.SwitchActiveState(trinket);
+        if (trinket.ItemType == _player.Trinket?.ItemType)
         {
-            trinket.Unequip(player);
+            trinket.Unequip(_player);
             _trinketSlot.RemoveItem(trinket);
         }
         else
         {
             _trinketSlot.AddItem(trinket);
-            player.UseItem(trinket);
+            _player.UseItem(trinket);
         }
     }
 

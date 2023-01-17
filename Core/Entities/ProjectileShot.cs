@@ -11,7 +11,6 @@ namespace ECS2022_23.Core.Entities;
 
 public class ProjectileShot : Entity
 {
-    private Weapon Weapon { get; set; }
     private Direction AimDirection { get; set; }
     private Vector2 AimVector { get; set; }
     private Rectangle SourceRectangle { get; }
@@ -19,15 +18,14 @@ public class ProjectileShot : Entity
     public bool HitTarget { get; set; }
     public Stage Stage { get; set; }
 
-    public int Origin { get; set; }
+    public DamageOrigin DamageOrigin { get; set; }
 
     public ProjectileShot(Texture2D texture2D, Rectangle sourceRect, Weapon weapon, Direction aimDirection) : base(weapon.Position, texture2D)
     {
         SourceRectangle = sourceRect;
-        Weapon = weapon;
         AimDirection = aimDirection;
         DamagePoints = weapon.DamagePoints;
-        Origin = (int)DamageOrigin.Player;
+        DamageOrigin = (int)DamageOrigin.Player;
     }
 
     public ProjectileShot(Enemy enemy, Texture2D texture2D, Rectangle sourceRect, Vector2 aimDirection) : base(enemy.Position, texture2D)
@@ -35,7 +33,7 @@ public class ProjectileShot : Entity
         SourceRectangle = sourceRect;
         AimVector = aimDirection;
         DamagePoints = enemy.Strength;
-        Origin = (int) DamageOrigin.Enemy;
+        DamageOrigin = DamageOrigin.Enemy;
     }
     
     public ProjectileShot(Vector2 position, Vector2 direction, Texture2D texture2D, Rectangle sourceRect) : base(position, texture2D)
@@ -43,7 +41,7 @@ public class ProjectileShot : Entity
         SourceRectangle = sourceRect;
         AimVector = direction;
         DamagePoints = 1;
-        Origin = (int)DamageOrigin.Enemy;
+        DamageOrigin = DamageOrigin.Enemy;
     }
 
     public override void Update(GameTime gameTime)
@@ -94,7 +92,7 @@ public class ProjectileShot : Entity
         return result;
     }
 
-    public bool Collides()
+    public bool IsInAir()
     {
         var bottom = new Point(Rectangle.Center.X, Rectangle.Bottom);
         return Stage.GroundLayer.Any(rectangle => rectangle.Contains(bottom));

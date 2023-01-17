@@ -13,63 +13,53 @@ public abstract class Entity
 {
     public Texture2D Texture; 
     public Vector2 Position { get; set; }
+    public Rectangle Rectangle => new((int) Position.X,(int) Position.Y, SpriteWidth, SpriteHeight);
     
     protected Dictionary<AnimationType, Animation> Animations;
-    protected readonly AnimationManager AnimationManager = new();
+    protected AnimationManager AnimationManager = new();
+
+    private Color[] TextureData { get; }
+    
     protected int SpriteWidth = 16;
     protected int SpriteHeight = 16;
-    [JsonIgnore]
-    public Color[] EntityTextureData { get; }
-    public Rectangle Rectangle => new((int) Position.X,(int) Position.Y, SpriteWidth, SpriteHeight);
 
     protected Entity(Vector2 spawn, Texture2D texture)
     {
         Texture = texture;
         Position = spawn;
         
-        EntityTextureData = new Color[texture.Width * texture.Height];
-        texture.GetData(EntityTextureData);
+        TextureData = new Color[texture.Width * texture.Height];
+        texture.GetData(TextureData);
     }
     
     protected Entity(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations) : this(spawn, texture)
     {
         Animations = animations;
     }
-    
-    public void AddAnimation(AnimationType name, Animation animation)
-    {
-        if (Animations == null)
-        {
-            Animations = new Dictionary<AnimationType, Animation>();
-        }
-        Animations.Add(name, animation);
-    }
-    
-    public void SetAnimation(AnimationType name)
-    {
-        try
-        {
-            AnimationManager.Play(Animations?[name]);
-        }
-        catch (KeyNotFoundException e)
-        {
-            return;
-        }
-    }
-    
-    public abstract void Update(GameTime gameTime);
 
+    public void SetAnimation(AnimationType type)
+    {
+        if (Animations.ContainsKey(type))
+        {
+            AnimationManager.Play(Animations?[type]);
+        }
+    }
     public virtual void Draw(SpriteBatch spriteBatch) {
         spriteBatch.Draw(Texture, Position, Color.White);
     }
+
+    public virtual void Update(GameTime gameTime)
+    {
+        
+    }
     
-    public bool IntersectPixels(Rectangle rectangleB, Color[] dataB)
+    public bool IntersectPixels(Entity entity)
     {
         // Find the bounds of the rectangle intersection
-        int top = Math.Max(Rectangle.Top, rectangleB.Top);
-        int bottom = Math.Min(Rectangle.Bottom, rectangleB.Bottom);
-        int left = Math.Max(Rectangle.Left, rectangleB.Left);
-        int right = Math.Min(Rectangle.Right, rectangleB.Right);
+        int top = Math.Max(Rectangle.Top, entity.Rectangle.Top);
+        int bottom = Math.Min(Rectangle.Bottom, entity.Rectangle.Bottom);
+        int left = Math.Max(Rectangle.Left, entity.Rectangle.Left);
+        int right = Math.Min(Rectangle.Right, entity.Rectangle.Right);
 
         // Check every point within the intersection bounds
         for (int y = top; y < bottom; y++)
@@ -77,10 +67,10 @@ public abstract class Entity
             for (int x = left; x < right; x++)
             {
                 // Get the color of both pixels at this point
-                Color colorA = EntityTextureData[(x - Rectangle.Left) +
+                Color colorA = TextureData[(x - Rectangle.Left) +
                                                  (y - Rectangle.Top) * Rectangle.Width];
-                Color colorB = dataB[(x - rectangleB.Left) +
-                                     (y - rectangleB.Top) * rectangleB.Width];
+                Color colorB = entity.TextureData[(x - entity.Rectangle.Left) +
+                                     (y - entity.Rectangle.Top) * entity.Rectangle.Width];
 
                 // If both pixels are not completely transparent,
                 if (colorA.A != 0 && colorB.A != 0)
@@ -90,6 +80,8 @@ public abstract class Entity
                 }
             }
         }
+        
+        
 
         // No intersection found
         return false;

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using ECS2022_23.Enums;
@@ -8,12 +9,12 @@ using TiledCS;
 
 namespace ECS2022_23.Core.World;
 
-internal static class LevelGenerator
+internal static class StageGenerator
 {
     private static readonly int PossibleStarts = Directory.GetFiles("Content/world/rooms","start*.xnb").Length;
     private static readonly Random Random = new((int)DateTime.Now.Ticks);
     
-    public static Stage GenerateLevel(int minimumRooms, int maximumRooms)
+    public static Stage GenerateStage(int minimumRooms, int maximumRooms)
     {
         List<Room> rooms = new();
         List<Rectangle> groundLayer = new();
@@ -25,7 +26,7 @@ internal static class LevelGenerator
         var bossRoomGenerations = 1;
         var roomGenerations = 1;
         
-        Console.WriteLine("Level generation started.");
+        Debug.WriteLine("Level generation started.");
         do
         {
             triesToGenerateLevel++;
@@ -58,7 +59,7 @@ internal static class LevelGenerator
             
         } while (rooms.Count < minimumRooms || bossRoom == null);
         
-        Console.WriteLine("Level generation successful after {0} tries.\n" +
+        Debug.WriteLine("Level generation successful after {0} tries.\n" +
                           "{1} Tries to generate rooms\n" +
                           "{2} Tries to generate boosroom\n" +
                           "Closing doors now.",triesToGenerateLevel,roomGenerations,bossRoomGenerations);
@@ -70,7 +71,8 @@ internal static class LevelGenerator
             CloseDoor(deadEndDoor);
         }
         
-        Console.WriteLine("Open doors closed. \nDone!");
+        Debug.WriteLine("Open doors closed. \nDone!");
+
         
         return new Stage(rooms, groundLayer, waterLayer);
     }
@@ -84,19 +86,19 @@ internal static class LevelGenerator
             
             foreach (var door in openDoors)
             {
-                Console.Write("Finding matching Bossdoor:");
+                Debug.Write("Finding matching Bossdoor:");
                 if (!CanRoomsConnect(door, map)) continue;
                 
-                    Console.Write(" Sucess! \nTest if there is enough space:");
+                    Debug.Write(" Sucess! \nTest if there is enough space:");
                     var renderPos = CalculateNewRenderPos(door, map);
 
                     if (DoRoomsIntersect(rooms, renderPos, map)) continue;
                         openDoors.Remove(door);
-                        Console.WriteLine(" Sucess! \nBossroom generation successful");
+                        Debug.WriteLine(" Sucess! \nBossroom generation successful");
                         return new Room(key, renderPos);
             }
         }
-        Console.WriteLine("Bossroom generation failed");
+        Debug.WriteLine("Bossroom generation failed");
         return null;
     }
     private static void ConnectRooms(int maximumRooms, List<Room> rooms, List<Rectangle> groundLayer, List<Rectangle> waterLayer, List<Door> deadEndDoors)
@@ -129,7 +131,7 @@ internal static class LevelGenerator
             var map = maps.Where(pair => pair.Key.Contains("room"))
                 .ElementAt(Random.Next(0, maps.Count(pair => pair.Key.Contains("room"))));
             
-            Console.Write(trys++ + ": Generating..." + map.Key);
+            Debug.Write(trys++ + ": Generating..." + map.Key);
 
             if (!CanRoomsConnect(currentDoor, map.Value)) continue;
             
@@ -152,7 +154,7 @@ internal static class LevelGenerator
                 }
                 generatedRooms++;
                 openDoors.Dequeue();
-                Console.Write(" Success!\n");
+                Debug.Write(" Success!\n");
             }
             else
             {
@@ -176,7 +178,7 @@ internal static class LevelGenerator
             }
         }
 
-        Console.Write(" Failed: Rooms can't connect \n");
+        Debug.Write(" Failed: Rooms can't connect \n");
         return false;
 
     }
@@ -186,7 +188,7 @@ internal static class LevelGenerator
         
         if (!rooms.Any(room => room.Rectangle.Intersects(rect))) return false;
         
-        Console.Write(" Failed: Rooms would intersect \n");
+        Debug.Write(" Failed: Rooms would intersect \n");
         
         return true;
 

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Characters.Enemy;
@@ -12,15 +11,16 @@ namespace ECS2022_23.Core.Manager;
 
 public static class EnemyManager
 {
-    private static List<Enemy> Enemies = new();
-   private static Enemy _keyEnemy;
+    public static List<Enemy> Enemies = new();
+    
+    private static Enemy _keyEnemy;
     public static Player Player { set; get;}
     public static Stage Stage { set; get; }
-    private  static List<Vector2> closedList = new();
+    private static List<Vector2> closedList = new();
     
-    private static void AddEnemy(Enemy e)
+    private static void AddEnemy(Enemy enemy)
     {
-        Enemies.Add(e);
+        Enemies.Add(enemy);
     }
 
     public static void RemoveEnemy(Enemy enemy)
@@ -64,8 +64,6 @@ public static class EnemyManager
                         {
                             closedList.Add(pos);
                             en.Position = pos;
-                            en.OriginalSpawn = pos;
-                            en.OriginalRoom = room;
                             AddEnemy(en);
                             CombatManager.AddEnemy(en);
                             break;
@@ -78,8 +76,6 @@ public static class EnemyManager
             {
                 Enemy boss = new GiantBlob(Stage,Player);
                 boss.Position = room.Spawns[0];
-                boss.OriginalSpawn = room.Spawns[0];
-                boss.OriginalRoom = room;
                 AddEnemy(boss);
                 CombatManager.AddEnemy(boss);
             }

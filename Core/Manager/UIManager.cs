@@ -1,75 +1,32 @@
-﻿using System.Linq;
-using ECS2022_23.Core.Entities.Characters;
-using ECS2022_23.Core.Entities.Items;
+﻿using ECS2022_23.Core.Entities.Characters;
+using ECS2022_23.Core.Ui;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.Ui;
+namespace ECS2022_23.Core.Manager;
 
 public static class UiManager
 {
-    public static UiPanel StatsPanel { get; set; }
-    private static int _preHeartCount;
-    private static bool _statsHaveChanged;
+    public static UiContainer StatsContainer { get; set; }
 
     public static void Init()
     {
-        _preHeartCount = 0;
-        _statsHaveChanged = true;
-        StatsPanel = null;
+        StatsContainer = new UiContainer();
     }
     
     public static void Update(Player player)
     {
-        _statsHaveChanged = false;
-
-        UpdateStats(player);
-        if (_statsHaveChanged)
-        {
-            StatsPanel.Update();
-        }
+        StatsContainer.HeartCount = player.HP;
+        UpdateText(StatsContainer, UiLabel.EpText, player.EP);
+        UpdateText(StatsContainer, UiLabel.LevelText, player.Level);
+        UpdateText(StatsContainer, UiLabel.ArmorText, player.Armor);
     }
 
     public static void Draw(SpriteBatch spriteBatch)
     {
-        StatsPanel.Draw(spriteBatch);
+        StatsContainer.Draw(spriteBatch);
     }
-    private static void UpdateHearts(Player player)
-    {
-        var heartCount = (int) player.HP;
-        if (heartCount == _preHeartCount) return;
-        var index = StatsPanel.GetIndexFromLabel(UiLabel.HpIcon);
-        if (index < 0) return;
-
-        if (heartCount > 0)
-        {
-          
-            var change = heartCount - _preHeartCount;
-
-            if (change > 0)
-            {
-                for (int i = 1; i <= change; i++)
-                {
-                    StatsPanel.InsertAtIndex(UiLoader.CreateUiElementNew(UiLabel.HeartIcon), index+i);
-                }
-            } else if (change < 0)
-            {
-                change *= -1;
-                for (int i = 1; i <= change; i++)
-                {
-                    StatsPanel.RemoveAtIndex(index+i,UiLabel.HeartIcon);
-                }
-            }
-            _preHeartCount = heartCount;
-        } else 
-        {
-            _preHeartCount = 0;
-            StatsPanel.RemoveAll( component => component.UiLabel == UiLabel.HeartIcon);
-        }
-
-        _statsHaveChanged = true;
-    }
-
-    private static void UpdateText(UiPanel panel, UiLabel label, float stats)
+    
+    private static void UpdateText(UiContainer panel, UiLabel label, float stats)
     {
         UiText uiText = (UiText) panel.GetComponentByLabel(label);
         if (uiText == null) return;
@@ -78,14 +35,5 @@ public static class UiManager
         uiText.Text = stats <= 0 ? "0" : $"{stats:0.##}";
         uiText.SourceRec.Width = (int) uiText.Font.MeasureString(uiText.Text).X;
         uiText.SourceRec.Height = (int) uiText.Font.MeasureString(uiText.Text).Y;
-        _statsHaveChanged = true;
-    }
-
-    private static void UpdateStats(Player player)
-    {
-        UpdateHearts(player);
-        UpdateText(StatsPanel, UiLabel.EpText, player.EP);
-        UpdateText(StatsPanel, UiLabel.LevelText, player.Level);
-        UpdateText(StatsPanel, UiLabel.ArmorText, player.Armor);
     }
 }

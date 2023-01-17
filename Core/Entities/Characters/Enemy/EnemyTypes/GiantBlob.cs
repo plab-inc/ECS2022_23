@@ -1,5 +1,5 @@
 
-using ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
+using ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.Ui;
@@ -14,11 +14,10 @@ public class GiantBlob : Enemy
     private int _shotDelay;
     
     public GiantBlob(Stage stage, Character target) : base(Vector2.Zero, UiLoader.SpriteSheet,
-        AnimationLoader.CreateBlobEnemyAnimations(), new Boss(target), stage)
+        AnimationLoader.CreateBlobEnemyAnimations(), new Chase(target), stage)
     {
         IsBoss = true;
-        Behavior.SetEnemy(this);
-
+        
         Velocity = 0.5f;
         HP = 150;
         Strength = 2;
@@ -27,6 +26,7 @@ public class GiantBlob : Enemy
         SpriteHeight = 32;
         SpriteWidth = 32;
         DeathSound = SoundLoader.BlobDeathSound;
+        ItemSpawnRate = 100f;
     }
 
     public override void Attack()
