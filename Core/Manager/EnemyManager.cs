@@ -98,13 +98,14 @@ public static class EnemyManager
     {
         Random rand = new Random();
         // rand.Next(0,5)
-        switch (4)
+        switch (5)
         {
             case 0: return new Blob(Stage);
             case 1: return new Chaser(Stage, Player);
             case 2: return new Turret(Stage, Player);
             case 3: return new Gunner(Stage, Player);
             case 4: return new Bouncer(Stage);
+            case 5: return new Exploder(Stage);
         }
         return new Blob(Stage);
     }

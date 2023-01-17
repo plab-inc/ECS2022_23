@@ -11,7 +11,7 @@ public class Bouncer : Enemy
 {
     public Bouncer(Stage stage) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(), new BounceBehavior(), stage)
     {
-        Behavior.SetEnemy(this);
+        Behavior.Owner = this;
         
         Velocity = 1.55f;
         HP = 8;

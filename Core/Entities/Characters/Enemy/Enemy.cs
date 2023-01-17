@@ -53,6 +53,11 @@ public abstract class Enemy : Character
         Attack();
     }
 
+   public virtual void OnDeath()
+   {
+       
+   }
+
    private bool Activate()
    {
        if (HP < MaxHP)

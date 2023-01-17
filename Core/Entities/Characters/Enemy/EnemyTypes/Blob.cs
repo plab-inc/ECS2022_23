@@ -10,7 +10,7 @@ public class Blob : Enemy
 {
    public Blob(Stage stage) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateBlobEnemyAnimations(), new RandomBehavior(), stage)
    {
-       Velocity = 1f;
+        Velocity = 1f;
         HP = 10;
         Strength = 1;
         EpReward = 1;
