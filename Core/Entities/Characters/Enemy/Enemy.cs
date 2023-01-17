@@ -24,6 +24,7 @@ public abstract class Enemy : Character
     public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Behavior behavior, Stage stage) : base(spawn, texture, animations)
     {
         Behavior = behavior;
+        Behavior.Owner = this;
         Stage = stage;
     }
     

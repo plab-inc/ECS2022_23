@@ -17,8 +17,7 @@ public class GiantBlob : Enemy
         AnimationLoader.CreateBlobEnemyAnimations(), new Boss(target), stage)
     {
         IsBoss = true;
-        Behavior.SetEnemy(this);
-
+        
         Velocity = 0.5f;
         HP = 150;
         Strength = 2;
