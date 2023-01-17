@@ -78,6 +78,11 @@ public static class CombatManager
         }
         _activeShotsByPlayer.RemoveAll(shot => shot.HitTarget || !shot.IsInAir());
         _activeShotsByEnemy.RemoveAll(shot => shot.HitTarget || !shot.IsInAir());
+        foreach (var enemy in _activeEnemies.Where(enemy => !enemy.IsAlive()))
+        {
+            enemy.OnDeath();
+        }
+        
         _activeEnemies.RemoveAll(enemy => !enemy.IsAlive());
     }
     

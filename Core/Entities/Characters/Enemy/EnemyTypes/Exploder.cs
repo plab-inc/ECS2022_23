@@ -18,7 +18,7 @@ public class Exploder : Enemy
         Strength = 1;
         EpReward = 1;
 
-        Color = Color.Cyan;
+        Color = Color.GreenYellow;
         DeathSound = SoundLoader.BlobDeathSound;
         ItemSpawnRate = 10f;
     }
