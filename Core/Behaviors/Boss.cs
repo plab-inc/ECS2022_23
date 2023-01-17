@@ -20,7 +20,4 @@ public class Boss : TargetingBehavior
         
         return Vector2.Zero;
     }
-    
-    
-    
 }

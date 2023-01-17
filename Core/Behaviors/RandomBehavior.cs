@@ -5,7 +5,7 @@ namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 
 public class RandomBehavior : Behavior
 {
-    private int _delay=0;
+    private int _delay;
     private int _oldDirection;
    
     public override Vector2 Move(Vector2 position, float velocity)

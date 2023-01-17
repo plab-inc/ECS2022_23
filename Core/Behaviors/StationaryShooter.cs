@@ -13,12 +13,8 @@ public class  StationaryShooter : TargetingBehavior
 
     public override Vector2 Move(Vector2 position, float velocity)
     {
-        Aim();
+        Aim(Target);
         return Vector2.Zero;
     }
-
-    private void Aim()
-    {
-        Owner.AimVector = Vector2.Normalize((Target.Position - Owner.Position));
-    }
+    
 }

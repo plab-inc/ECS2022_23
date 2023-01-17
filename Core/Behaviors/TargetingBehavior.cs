@@ -6,7 +6,7 @@ namespace ECS2022_23.Core.Behaviors;
 
 public abstract class TargetingBehavior : Behavior
 {
-    protected Character Target { set; get; }
+    protected Character Target {get; }
 
     protected TargetingBehavior(Character target)
     {
@@ -15,7 +15,7 @@ public abstract class TargetingBehavior : Behavior
 
     protected void Aim(Character target)
     {
-        Owner.AimVector = Vector2.Normalize((target.Position - Owner.Position));
+        Owner.AimVector = Vector2.Normalize(target.Position - Owner.Position);
     }
 
 }
