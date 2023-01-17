@@ -42,23 +42,23 @@ public static class InventoryManager
         _trinketSlot.Draw(spriteBatch);
     }
     
-    public static void UseItemAtIndex(Player player, int index)
+    public static void UseItemAtIndex(int index)
     {
         var item = _toolbar.GetItemAtIndex(index);
         if (item == null) return;
-        UseItem(player, item);
+        UseItem(item);
     }
 
-    private static void UseItem(Player player, Item item)
+    private static void UseItem(Item item)
     {
         switch (item) 
         {
             case Trinket trinket:
-                UseTrinket(player, trinket);
+                UseTrinket(trinket);
                 return;
         }
     
-        if (player.UseItem(item))
+        if (_player.UseItem(item))
         {
             RemoveItem(item);
         }
@@ -92,7 +92,7 @@ public static class InventoryManager
         {
             case Trinket trinket:
                 if(_toolbar.ItemIsActive(trinket)) {
-                    UseTrinket(_player, trinket);
+                    UseTrinket(trinket);
                 }
                 break;
             case Weapon:
@@ -104,18 +104,18 @@ public static class InventoryManager
         _player.Items.Remove(item);
     }
 
-    private static void UseTrinket(Player player, Trinket trinket)
+    private static void UseTrinket(Trinket trinket)
     {
         _toolbar.SwitchActiveState(trinket);
-        if (trinket.ItemType == player.Trinket?.ItemType)
+        if (trinket.ItemType == _player.Trinket?.ItemType)
         {
-            trinket.Unequip(player);
+            trinket.Unequip(_player);
             _trinketSlot.RemoveItem(trinket);
         }
         else
         {
             _trinketSlot.AddItem(trinket);
-            player.UseItem(trinket);
+            _player.UseItem(trinket);
         }
     }
 

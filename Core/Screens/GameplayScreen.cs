@@ -221,7 +221,7 @@ internal class GameplayScreen : GameScreen
             }
             if (action == Action.UseItem)
             {
-                InventoryManager.UseItemAtIndex(_player, Input.ToolbarKeyDownIndex());
+                InventoryManager.UseItemAtIndex(Input.ToolbarKeyDownIndex());
             }
             
         }

@@ -26,7 +26,7 @@ public static class LockerManager
     public static void Init(List<ItemType> itemsInLocker)
     {
         _locker = new Pocket(3, 2, InventoryType.LockerInventory);
-        _playerPocket = _playerPocket = new Pocket(3, 3, InventoryType.PocketInventory);
+        _playerPocket = new Pocket(3, 3, InventoryType.PocketInventory);
         _spriteSheet = UiLoader.SpriteSheet;
         _lockerIsActive = true;
 
