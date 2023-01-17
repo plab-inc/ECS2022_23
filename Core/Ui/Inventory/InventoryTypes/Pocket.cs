@@ -10,8 +10,7 @@ namespace ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
 public class Pocket : Inventory 
 {
     public InventoryType Type;
-    
-    private bool _weaponLimitReached;
+    public bool WeaponLimitReached { get; private set; }
     private UiText _text;
   
     public Pocket(int rowCount, int colCount, InventoryType type) : base(rowCount, colCount)
@@ -44,7 +43,7 @@ public class Pocket : Inventory
     {
         if (item.GetType() == typeof(Weapon))
         {
-            if (_weaponLimitReached)
+            if (WeaponLimitReached)
             {
                 if (Type == InventoryType.LockerInventory)
                 {
@@ -57,8 +56,8 @@ public class Pocket : Inventory
                 }
             }
            
-            _weaponLimitReached = base.AddItem(item);
-            return _weaponLimitReached;
+            WeaponLimitReached = base.AddItem(item);
+            return WeaponLimitReached;
         }
 
         return base.AddItem(item);
@@ -72,7 +71,7 @@ public class Pocket : Inventory
         
         if (item.GetType() == typeof(Weapon))
         {
-            _weaponLimitReached = false;
+            WeaponLimitReached = false;
         }
 
         return true;
@@ -82,10 +81,5 @@ public class Pocket : Inventory
     {
         base.Draw(spriteBatch);
         _text.Draw(spriteBatch);
-    }
-
-    public bool WeaponLimitReached()
-    {
-        return _weaponLimitReached;
     }
 }
