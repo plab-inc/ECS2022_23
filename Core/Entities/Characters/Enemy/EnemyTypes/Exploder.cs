@@ -13,14 +13,14 @@ public class Exploder : Enemy
     public Exploder(Stage stage) : base(Vector2.Zero, UiLoader.SpriteSheet,
         AnimationLoader.CreateBlobEnemyAnimations(), new RandomBehavior(), stage)
     {
-        Velocity = 1f;
-        HP = 10;
+        Velocity = 0.75f;
+        HP = 15;
         Strength = 1;
-        EpReward = 1;
+        EpReward = 2;
 
         Color = Color.GreenYellow;
         DeathSound = SoundLoader.BlobDeathSound;
-        ItemSpawnRate = 10f;
+        ItemSpawnRate = 20f;
     }
 
     public override void OnDeath()

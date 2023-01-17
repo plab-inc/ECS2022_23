@@ -98,7 +98,7 @@ public static class EnemyManager
     {
         Random rand = new Random();
         // rand.Next(0,5)
-        switch (5)
+        switch (rand.Next(0,6))
         {
             case 0: return new Blob(Stage);
             case 1: return new Chaser(Stage, Player);
