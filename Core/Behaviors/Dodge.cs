@@ -13,7 +13,7 @@ public class  Dodger : TargetingBehavior
 
     public override Vector2 Move(Vector2 position, float velocity)
     {
-        Aim(Target);
+        Aim();
         
         if (State is (int)EnemyStates.Initial or (int)EnemyStates.Attack)
         {

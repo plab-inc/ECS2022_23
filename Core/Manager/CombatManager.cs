@@ -16,8 +16,10 @@ namespace ECS2022_23.Core.Manager;
 public static class CombatManager
 {
     public static List<Enemy> _activeEnemies = new List<Enemy>();
+    
     private static List<ProjectileShot> _activeShotsByPlayer = new List<ProjectileShot>();
     private static List<ProjectileShot> _activeShotsByEnemy = new List<ProjectileShot>();
+    
     private static Timer _damageCooldown;
 
     public static void Init()

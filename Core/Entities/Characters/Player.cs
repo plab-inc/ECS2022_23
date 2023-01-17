@@ -83,7 +83,7 @@ public class Player : Character
         ActivationSphere = new BoundingSphere(new Vector3(Position.X, Position.Y, 0), _activationRadius);
     }
     
-    public override void Update(GameTime gameTime)
+    public virtual void Update(GameTime gameTime)
     {
         if (IsAttacking && AnimationManager.AnimationFinished)
         {

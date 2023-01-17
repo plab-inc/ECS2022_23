@@ -13,7 +13,7 @@ public class  StationaryShooter : TargetingBehavior
 
     public override Vector2 Move(Vector2 position, float velocity)
     {
-        Aim(Target);
+        Aim();
         return Vector2.Zero;
     }
     
