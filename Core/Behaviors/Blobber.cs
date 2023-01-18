@@ -5,12 +5,12 @@ using ECS2022_23.Core.Manager;
 
 namespace ECS2022_23.Core.Behaviors;
 
-public class GiantBlobBehavior : Chase
+public class Blobber : Chaser
 {
     private int _bulletWaveDelay;
     private int _shotDelay;
 
-    public GiantBlobBehavior(Character target) : base(target)
+    public Blobber(Character target) : base(target)
     {
     }
 

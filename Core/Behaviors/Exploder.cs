@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace ECS2022_23.Core.Behaviors;
 
-public class ExploderBehavior : RandomBehavior
+public class Exploder : Randomer
 {
     public override void OnDeath()
     {

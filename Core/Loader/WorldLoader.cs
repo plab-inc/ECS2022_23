@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using TiledCS;
 
-namespace ECS2022_23.Core;
+namespace ECS2022_23.Core.Loader;
 
 public static class WorldLoader
 {

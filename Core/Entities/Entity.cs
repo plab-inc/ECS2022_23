@@ -51,11 +51,7 @@ public abstract class Entity
     {
         spriteBatch.Draw(Texture, Position, Color.White);
     }
-
-    public virtual void Update(GameTime gameTime)
-    {
-    }
-
+    
     public bool IntersectPixels(Entity entity)
     {
         // Find the bounds of the rectangle intersection

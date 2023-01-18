@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 
 namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 
-public class Dodger : TargetingBehavior
+public class Dodger : Aimer
 {
     private int _delay;
 

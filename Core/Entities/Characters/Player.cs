@@ -85,7 +85,7 @@ public class Player : Character
         }
     }
 
-    public override void Update(GameTime gameTime)
+    public void Update(GameTime gameTime)
     {
         if (IsAttacking && AnimationManager.AnimationFinished) IsAttacking = false;
 

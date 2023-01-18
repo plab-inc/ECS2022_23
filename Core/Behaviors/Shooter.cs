@@ -4,11 +4,11 @@ using Microsoft.Xna.Framework;
 
 namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 
-public class StationaryShooter : TargetingBehavior
+public class Shooter : Aimer
 {
     private int _attackDelay;
 
-    public StationaryShooter(Character target) : base(target)
+    public Shooter(Character target) : base(target)
     {
     }
 

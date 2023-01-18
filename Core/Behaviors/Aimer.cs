@@ -4,9 +4,9 @@ using Microsoft.Xna.Framework;
 
 namespace ECS2022_23.Core.Behaviors;
 
-public abstract class TargetingBehavior : Behavior
+public abstract class Aimer : Behavior
 {
-    protected TargetingBehavior(Character target)
+    protected Aimer(Character target)
     {
         Target = target;
     }

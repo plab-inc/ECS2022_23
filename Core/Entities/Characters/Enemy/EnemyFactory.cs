@@ -30,7 +30,7 @@ public class EnemyFactory
     public Enemy CreateBlob(Stage stage)
     {
         var en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateBlobEnemyAnimations(),
-            new RandomBehavior(), stage)
+            new Randomer(), stage)
         {
             Velocity = 1f,
             HP = 10,
@@ -48,7 +48,7 @@ public class EnemyFactory
     public Enemy CreateChaser(Stage stage, Character target)
     {
         var en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateZombieEnemyAnimations(),
-            new Chase(target), stage)
+            new Chaser(target), stage)
         {
             Velocity = 1.5f,
             HP = 10,
@@ -67,7 +67,7 @@ public class EnemyFactory
     public Enemy CreateBouncer(Stage stage)
     {
         var en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(),
-            new BounceBehavior(), stage)
+            new Bouncer(), stage)
         {
             Velocity = 1.55f,
             HP = 8,
@@ -87,7 +87,7 @@ public class EnemyFactory
     public Enemy CreateExploder(Stage stage)
     {
         var en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet,
-            AnimationLoader.CreateBlobEnemyAnimations(), new ExploderBehavior(), stage)
+            AnimationLoader.CreateBlobEnemyAnimations(), new Exploder(), stage)
         {
             Velocity = 0.75f,
             HP = 15,
@@ -105,7 +105,7 @@ public class EnemyFactory
     public Enemy CreateGiantBlob(Stage stage, Character target)
     {
         var en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet,
-            AnimationLoader.CreateBlobEnemyAnimations(), new GiantBlobBehavior(target), stage)
+            AnimationLoader.CreateBlobEnemyAnimations(), new Blobber(target), stage)
         {
             IsBoss = true,
             Velocity = 0.5f,
@@ -143,7 +143,7 @@ public class EnemyFactory
     public Enemy CreateTurret(Stage stage, Character target)
     {
         var en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(),
-            new StationaryShooter(target), stage)
+            new Shooter(target), stage)
         {
             Velocity = 0f,
             HP = 20,

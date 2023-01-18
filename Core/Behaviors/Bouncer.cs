@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 
-public class BounceBehavior : Behavior
+public class Bouncer : Behavior
 {
     private int count;
     private Vector2 oldDirection;

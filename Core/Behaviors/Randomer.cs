@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 
-public class RandomBehavior : Behavior
+public class Randomer : Behavior
 {
     private int _delay;
     private int _oldDirection;

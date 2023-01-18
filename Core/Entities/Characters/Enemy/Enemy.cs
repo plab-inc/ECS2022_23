@@ -29,7 +29,7 @@ public class Enemy : Character
         Stage = stage;
     }
 
-    public override void Update(GameTime gameTime)
+    public void Update(GameTime gameTime)
     {
         SetAnimation(AnimationType.WalkDown);
         if (IsActive)

@@ -45,7 +45,7 @@ public class ProjectileShot : Entity
 
     public DamageOrigin DamageOrigin { get; set; }
 
-    public override void Update(GameTime gameTime)
+    public void Update(GameTime gameTime)
     {
         var speed = 2f;
 

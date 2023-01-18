@@ -1,5 +1,6 @@
 ﻿using System;
 using ECS2022_23.Core.Entities.Items;
+using ECS2022_23.Core.Loader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 

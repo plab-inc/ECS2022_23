@@ -3,9 +3,9 @@ using Microsoft.Xna.Framework;
 
 namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 
-public class Chase : TargetingBehavior
+public class Chaser : Aimer
 {
-    public Chase(Character target) : base(target)
+    public Chaser(Character target) : base(target)
     {
     }
 

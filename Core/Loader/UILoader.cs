@@ -1,10 +1,11 @@
 ﻿using System.IO;
 using ECS2022_23.Core.Manager;
+using ECS2022_23.Core.Ui;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.Ui;
+namespace ECS2022_23.Core.Loader;
 
 internal static class UiLoader
 {
