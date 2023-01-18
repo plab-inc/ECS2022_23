@@ -6,16 +6,16 @@ namespace ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
 
 public class ItemSlot : Inventory
 {
-    public ItemSlot(SlotType type) : base(1, 1)
+    public ItemSlot(InventoryType type) : base(1, 1)
     { 
         Scale = 4;
         Width = PixelSize * ColCount * Scale;
         Height = PixelSize * RowCount * Scale;
-        if (type == SlotType.TrinketSlot)
+        if (type == InventoryType.TrinketSlot)
         {
             DestinationRec = new Rectangle(0+PixelSize+Width+16, Game1.ScreenHeight-Height, Width, Height);
         }
-        else if(type == SlotType.WeaponSlot)
+        else if(type == InventoryType.WeaponSlot)
         {
             DestinationRec = new Rectangle(0+PixelSize, Game1.ScreenHeight-Height, Width, Height);
         }

@@ -1,24 +1,20 @@
+using ECS2022_23.Core.Behaviors;
 using Microsoft.Xna.Framework;
 
 namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 
-public class StationaryShooter : Behavior
+public class  StationaryShooter : TargetingBehavior
 {
-    private Character _target;
 
-    public StationaryShooter(Character target)
+    public StationaryShooter(Character target) : base(target)
     {
-        _target = target;
+        
     }
 
     public override Vector2 Move(Vector2 position, float velocity)
     {
-        Aim(_target);
+        Aim();
         return Vector2.Zero;
     }
-
-    public void Aim(Character Target)
-    {
-        Owner.AimVector = Vector2.Normalize((Target.Position - Owner.Position));
-    }
+    
 }

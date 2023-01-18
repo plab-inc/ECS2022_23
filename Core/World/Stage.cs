@@ -127,7 +127,7 @@ public class Stage
         if (tilesetFilename == null) return;
         
         var tilesetImageName = tilesetFilename.Replace("_tileset", "_image");
-        var tilesetTexture = ContentLoader.TilesetTextures[tilesetImageName];
+        var tilesetTexture = WorldLoader.TilesetTextures[tilesetImageName];
         
         var rect = startroom.Map.GetSourceRect(mapTileset, tileset, gid);
         var source = new Rectangle(rect.x, rect.y, rect.width, rect.height);

@@ -14,7 +14,6 @@ namespace ECS2022_23.Core.Loader;
 public static class ItemLoader
 {
     private static Texture2D _spritesheetPink;
-    private static Texture2D _spritesheetRed;
     private static ContentManager _content;
     
     public static void Load(ContentManager content)
@@ -23,8 +22,6 @@ public static class ItemLoader
         _content = content;
         
         _spritesheetPink = _content.Load<Texture2D>("sprites/spritesheet");
-        _spritesheetRed = _content.Load<Texture2D>("sprites/spritesheet_red");
-
     }
      public static ProjectileShot CreateLaserShot(Weapon weapon, Direction aimDirection)
      {

@@ -79,7 +79,7 @@ internal static class StageGenerator
     private static Room CreateBossRoom(List<Door> openDoors,List<Room> rooms)
     {
         
-        foreach (var (key, map) in ContentLoader.Tilemaps)
+        foreach (var (key, map) in WorldLoader.Tilemaps)
         {
             
             if (!key.Contains("boss")) continue;
@@ -115,7 +115,7 @@ internal static class StageGenerator
         var generatedRooms = 0;
         var trys = 0;
 
-        var maps = ContentLoader.Tilemaps;
+        var maps = WorldLoader.Tilemaps;
         
         while (generatedRooms < maximumRooms)
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Manager;
+using ECS2022_23.Core.World;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,6 +15,8 @@ public abstract class Entity
     public Texture2D Texture; 
     public Vector2 Position { get; set; }
     public Rectangle Rectangle => new((int) Position.X,(int) Position.Y, SpriteWidth, SpriteHeight);
+    
+    public Stage Stage { get; set; }
     
     protected Dictionary<AnimationType, Animation> Animations;
     protected AnimationManager AnimationManager = new();

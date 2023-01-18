@@ -29,7 +29,7 @@ public class Room
                     if (mapTileset.source == null) continue;
                     var filename = Path.GetFileNameWithoutExtension(mapTileset.source);
                     if (filename != null)
-                        tilesets.Add(mapTileset.firstgid, ContentLoader.Tilesets[filename]);
+                        tilesets.Add(mapTileset.firstgid, WorldLoader.Tilesets[filename]);
                 }
 
                 return tilesets;
@@ -76,7 +76,7 @@ public class Room
     {
         _renderPos = renderPos;
         MapName = mapName;
-        Map = Helper.DeepCopy.Create(ContentLoader.Tilemaps[mapName]);
+        Map = Helper.DeepCopy.Create(WorldLoader.Tilemaps[mapName]);
     }
     
     public Vector2 GetRandomSpawnPos(Entity entity)
@@ -188,7 +188,7 @@ public class Room
                     var tilesetFilename = Path.GetFileNameWithoutExtension(mapTileset.source);
 
                     var tilesetImageName = tilesetFilename.Replace("_tileset", "_image");
-                    var tilesetTexture = ContentLoader.TilesetTextures[tilesetImageName];
+                    var tilesetTexture = WorldLoader.TilesetTextures[tilesetImageName];
 
                     var rect = Map.GetSourceRect(mapTileset, tileset, gid);
                     var source = new Rectangle(rect.x, rect.y, rect.width, rect.height);
