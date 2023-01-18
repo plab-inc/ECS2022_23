@@ -1,16 +1,11 @@
-using System;
 using System.IO;
 using System.Reflection;
-using System.Reflection.Metadata;
 using System.Text.Json;
 using System.Xml.Serialization;
 using ECS2022_23.Core.Entities;
-using ECS2022_23.Core.Entities.Characters;
-using ECS2022_23.Core.Entities.Characters.Enemy;
-using ECS2022_23.Core.Entities.Characters.Enemy.EnemyTypes;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
-using Blob = ECS2022_23.Core.Entities.Characters.Enemy.EnemyTypes.Blob;
+
 
 namespace ECS2022_23.Helper;
 public static class DeepCopy
@@ -91,24 +86,5 @@ public static class Transform
         }
 
         return Direction.None;
-    }
-    public static DeathCause EntityToDeathCause(Entity entity)
-    {
-        switch (entity)
-        {
-            case Chaser:
-                return DeathCause.Chaser;
-            case Blob:
-                return DeathCause.Blob;
-            case GiantBlob:
-                return DeathCause.GiantBlob;
-            case Gunner:
-                return DeathCause.Gunner;
-            case Turret:
-                return DeathCause.Turret;
-            case ProjectileShot:
-                return DeathCause.ProjectileShot;
-        }
-        return DeathCause.None;
     }
 }

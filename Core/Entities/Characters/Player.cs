@@ -83,7 +83,7 @@ public class Player : Character
         ActivationSphere = new BoundingSphere(new Vector3(Position.X, Position.Y, 0), _activationRadius);
     }
     
-    public virtual void Update(GameTime gameTime)
+    public override void Update(GameTime gameTime)
     {
         if (IsAttacking && AnimationManager.AnimationFinished)
         {
@@ -125,7 +125,7 @@ public class Player : Character
         }
     }
 
-    public override void Attack()
+    public void Attack()
     {
         if(IsAttacking) return;
         
@@ -301,7 +301,8 @@ public class Player : Character
            
         if (!IsAlive())
         {
-            DeathCause = Helper.Transform.EntityToDeathCause(entity);
+            DeathCause = entity.DeathCause;
+            SetAnimation(AnimationType.Death);
             Kill(DeathCause);
         }
 
