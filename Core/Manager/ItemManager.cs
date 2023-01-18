@@ -87,7 +87,7 @@ public static class ItemManager
         
         randomFloat = randomDrop.Next(0,100);
         
-        var weaponChance = 30;
+        var weaponChance = 35;
         var trinketChance = 15;
         
         if (randomFloat <= umlChance)
@@ -134,9 +134,9 @@ public static class ItemManager
         var randomInt = random.Next(100);
         switch (randomInt)
         {
-            case <= 20: return (Weapon) ItemLoader.CreateItem(position, ItemType.Phaser);
-            case <= 30: return (Weapon) ItemLoader.CreateItem(position, ItemType.Crowbar);
-            case <= 40: return (Weapon) ItemLoader.CreateItem(position, ItemType.Stick);
+            case <= 30: return (Weapon) ItemLoader.CreateItem(position, ItemType.Phaser);
+            case <= 40: return (Weapon) ItemLoader.CreateItem(position, ItemType.Crowbar);
+            case <= 45: return (Weapon) ItemLoader.CreateItem(position, ItemType.Stick);
             case <= 50: return (Weapon) ItemLoader.CreateItem(position, ItemType.Knife);
             
             default: return (Weapon) ItemLoader.CreateItem(position, ItemType.Sword);
