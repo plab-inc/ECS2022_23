@@ -275,7 +275,7 @@ public class Player : Character
     
     public void TakesDamage(float damagePoints, Entity entity)
     {
-        if (Invincible) return;
+        if (Invincible || !IsAlive()) return;
 
         _shieldBreak = Armor > 0;
 
