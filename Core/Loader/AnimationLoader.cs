@@ -68,6 +68,10 @@ public static class AnimationLoader
                 new Animation(_spritesheetPink, 16, 16, 1, new Point(4, 6), true)
             },
             {
+                AnimationType.Drowning,
+                new Animation(_spritesheetPink, 16, 16, 5, new Point(8, 5), false)
+            },
+            {
                 AnimationType.Default,
                 new Animation(_spritesheetPink, 16, 16, 7, new Point(1, 2), true)
             }

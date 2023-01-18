@@ -76,13 +76,20 @@ public abstract class Character : Entity
         return HP>0;
     }
 
-    protected void Kill()
+    protected void Kill(DeathCause deathCause)
     {
         if (Animations != null)
-        {
+        {   
             AnimationManager.StopColorChange();
             AnimationManager.Stop();
-            SetAnimation(AnimationType.Death);
+            if (deathCause == DeathCause.Water)
+            {
+                SetAnimation(AnimationType.Drowning);
+            }
+            else
+            {
+                SetAnimation(AnimationType.Death);
+            }
         }
         HP = 0;
     }
