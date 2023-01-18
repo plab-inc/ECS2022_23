@@ -14,5 +14,6 @@ public enum AnimationType
     AttackRight,
     AttackLeft,
     AttackUp,
-    AttackDown
+    AttackDown,
+    Drowning
 }

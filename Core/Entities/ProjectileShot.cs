@@ -33,6 +33,7 @@ public class ProjectileShot : Entity
         AimVector = aimDirection;
         DamagePoints = enemy.Strength;
         DamageOrigin = DamageOrigin.Enemy;
+        DeathCause = DeathCause.ProjectileShot;
     }
     
     public ProjectileShot(Vector2 position, Vector2 direction, Texture2D texture2D, Rectangle sourceRect) : base(position, texture2D)

@@ -16,6 +16,12 @@ public static class SoundLoader
     public static SoundEffect PlayerDamageSound;
     public static SoundEffect ShieldBreakSound;
     public static SoundEffect LevelUpSound;
+    public static SoundEffect PickUpItemSound;
+    public static SoundEffect PlayerDrownASound;
+    public static SoundEffect PlayerDrownBSound;
+    public static SoundEffect DropKeySound;
+    public static SoundEffect UnlockDoorSound;
+    
     
     public static void LoadSounds(ContentManager content)
     {
@@ -24,6 +30,11 @@ public static class SoundLoader
         PlayerDamageSound = content.Load<SoundEffect>("Sounds/Sfx/sfx_player_damage");
         ShieldBreakSound = content.Load<SoundEffect>("Sounds/Sfx/sfx_shield_break");
         LevelUpSound = content.Load<SoundEffect>("Sounds/Sfx/sfx_level_up");
+        PickUpItemSound = content.Load<SoundEffect>("Sounds/Sfx/sfx_item_pickup");
+        PlayerDrownASound = content.Load<SoundEffect>("Sounds/Sfx/sfx_drown_1");
+        PlayerDrownBSound = content.Load<SoundEffect>("Sounds/Sfx/sfx_drown_2");
+        UnlockDoorSound = content.Load<SoundEffect>("Sounds/Sfx/sfx_door_unlock");
+        DropKeySound = content.Load<SoundEffect>("Sounds/Sfx/sfx_key_drop");
         
         Background = content.Load<SoundEffect>("GameStateManagement/Sounds/Music/music_background");
         Blueberry = content.Load<SoundEffect>("GameStateManagement/Sounds/Music/music_blueberry");

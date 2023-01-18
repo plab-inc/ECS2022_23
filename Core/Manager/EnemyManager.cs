@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Characters.Enemy;
-using ECS2022_23.Core.Entities.Characters.Enemy.EnemyTypes;
 using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,7 +15,9 @@ public static class EnemyManager
     private static Enemy _keyEnemy;
     public static Player Player { set; get;}
     public static Stage Stage { set; get; }
-    private static List<Vector2> closedList = new();
+    private static List<Vector2> _closedList = new();
+
+    private static EnemyFactory _factory = new();
     
     private static void AddEnemy(Enemy enemy)
     {
@@ -32,9 +33,8 @@ public static class EnemyManager
     }
 
     public static bool EnemyDropsKey(Enemy enemy)
-    { 
-        if (_keyEnemy == null) return false;
-        return enemy.Equals(_keyEnemy);
+    {
+        return _keyEnemy != null && enemy.Equals(_keyEnemy);
     }
     
     public static void KillEnemies()
@@ -46,7 +46,6 @@ public static class EnemyManager
     {
         Random rand = new Random();
         
-        
         foreach (var room in Stage.Rooms.Skip(1))
         {
             if (room.Spawns.Count > 0 && !room.MapName.Contains("boss"))
@@ -57,12 +56,12 @@ public static class EnemyManager
                     int rety=0;
                     do
                     {
-                        Enemy en = GetRandomEnemy();
+                        Enemy en = _factory.CreateRandomEnemy(Stage, Player);
                         Vector2 pos = room.GetRandomSpawnPos(en);
                         pos.Floor();
-                        if (!closedList.Contains(pos) && !WithinRange(pos))
+                        if (!_closedList.Contains(pos) && !WithinRange(pos))
                         {
-                            closedList.Add(pos);
+                            _closedList.Add(pos);
                             en.Position = pos;
                             AddEnemy(en);
                             CombatManager.AddEnemy(en);
@@ -74,7 +73,7 @@ public static class EnemyManager
             }
             if (room.MapName.Contains("boss"))
             {
-                Enemy boss = new GiantBlob(Stage,Player);
+                Enemy boss = _factory.CreateGiantBlob(Stage, Player);
                 boss.Position = room.Spawns[0];
                 AddEnemy(boss);
                 CombatManager.AddEnemy(boss);
@@ -85,7 +84,7 @@ public static class EnemyManager
 
     private static bool WithinRange(Vector2 vec)
     {
-        foreach (var closedVec in closedList)
+        foreach (var closedVec in _closedList)
         {
             if (vec.X - 1 == closedVec.X || vec.X + 1 == closedVec.X)
                 if (vec.Y - 1 == closedVec.Y || vec.Y + 1 == closedVec.Y)
@@ -94,19 +93,7 @@ public static class EnemyManager
         return false;
     }
     
-    private static Enemy GetRandomEnemy()
-    {
-        Random rand = new Random();
-        switch (rand.Next(0,4))
-        {
-            case 0: return new Blob(Stage);
-            case 1: return new Chaser(Stage, Player);
-            case 2: return new Turret(Stage, Player);
-            case 3: return new Gunner(Stage, Player);
-        }
-        return new Blob(Stage);
-    }
-    
+   
     public static void Update(GameTime gameTime)
     {
         foreach (var enemy in Enemies)

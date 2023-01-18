@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -83,19 +84,20 @@ public class Player : Character
         ActivationSphere = new BoundingSphere(new Vector3(Position.X, Position.Y, 0), _activationRadius);
     }
     
-    public virtual void Update(GameTime gameTime)
+    public override void Update(GameTime gameTime)
     {
         if (IsAttacking && AnimationManager.AnimationFinished)
         {
             IsAttacking = false;
         }
 
-        if (IsInWater(Rectangle))
+        if (IsInWater(Rectangle) && IsAlive())
         {
             if (!ImmuneToWater)
             {
+                SoundManager.Play(SoundLoader.PlayerDrownASound);
                 DeathCause = DeathCause.Water;
-                Kill();
+                Kill(DeathCause);
             }
         }
         
@@ -113,6 +115,11 @@ public class Player : Character
         {
             base.Draw(spriteBatch);
         }
+        else if(IsInWater(Rectangle))
+        {
+            AnimationManager.Draw(spriteBatch, Position, Color.White, 0.65f);
+            Weapon?.Draw(spriteBatch);
+        }
         else
         {
             AnimationManager.Draw(spriteBatch, Position);
@@ -120,7 +127,7 @@ public class Player : Character
         }
     }
 
-    public override void Attack()
+    public void Attack()
     {
         if(IsAttacking) return;
         
@@ -275,7 +282,7 @@ public class Player : Character
     
     public void TakesDamage(float damagePoints, Entity entity)
     {
-        if (Invincible) return;
+        if (Invincible || !IsAlive()) return;
 
         _shieldBreak = Armor > 0;
 
@@ -296,8 +303,9 @@ public class Player : Character
            
         if (!IsAlive())
         {
-            DeathCause = Helper.Transform.EntityToDeathCause(entity);
+            DeathCause = entity.DeathCause;
             SetAnimation(AnimationType.Death);
+            Kill(DeathCause);
         }
 
         Invincible = true;

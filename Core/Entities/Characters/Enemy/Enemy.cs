@@ -9,16 +9,16 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Entities.Characters.Enemy;
 
-public abstract class Enemy : Character
+public class Enemy : Character
 {
     public float EpReward;
     public Vector2 AimVector;
     public bool IsBoss;
     public float ItemSpawnRate;
 
-    protected Color Color = Color.White;
-    protected Behavior Behavior;
-    protected bool IsActive;
+    public Color Color = Color.White;
+    public Behavior Behavior;
+    public bool IsActive;
     
 
     public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Behavior behavior, Stage stage) : base(spawn, texture, animations)
@@ -50,9 +50,9 @@ public abstract class Enemy : Character
    private void Act()
     {
         Position += Behavior.Move(Position, Velocity);
-        Attack();
+        Behavior.Attack();
     }
-
+   
    private bool Activate()
    {
        if (HP < MaxHP)

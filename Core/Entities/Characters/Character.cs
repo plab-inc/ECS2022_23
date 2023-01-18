@@ -14,8 +14,8 @@ public abstract class Character : Entity
     public float MaxHP = 10;
     public float HP;
     public float Strength;
-   
-    protected float Velocity;
+
+    public float Velocity;
     public Direction AimDirection;
     public SoundEffect DamageSound;
     public SoundEffect DeathSound;
@@ -25,7 +25,7 @@ public abstract class Character : Entity
     {
         
     }
-    public virtual void Attack(){}
+    
     public virtual bool Collides(Vector2 velocity)
     {
         var newPosition = (Position + velocity).ToPoint();
@@ -44,7 +44,6 @@ public abstract class Character : Entity
                 return true;
             }
         }
-
         return false;
     }
 
@@ -76,11 +75,20 @@ public abstract class Character : Entity
         return HP>0;
     }
 
-    public void Kill()
+    protected void Kill(DeathCause deathCause)
     {
         if (Animations != null)
-        {
-            SetAnimation(AnimationType.Death);
+        {   
+            AnimationManager.StopColorChange();
+            AnimationManager.Stop();
+            if (deathCause == DeathCause.Water)
+            {
+                SetAnimation(AnimationType.Drowning);
+            }
+            else
+            {
+                SetAnimation(AnimationType.Death);
+            }
         }
         HP = 0;
     }
