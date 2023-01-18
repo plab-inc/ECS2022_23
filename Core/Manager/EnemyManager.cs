@@ -59,7 +59,7 @@ public static class EnemyManager
                     int rety=0;
                     do
                     {
-                        Enemy en = _factory.CreateBouncer(Stage);
+                        Enemy en = _factory.CreateRandomEnemy(Stage, Player);
                         Vector2 pos = room.GetRandomSpawnPos(en);
                         pos.Floor();
                         if (!closedList.Contains(pos) && !WithinRange(pos))
@@ -76,7 +76,7 @@ public static class EnemyManager
             }
             if (room.MapName.Contains("boss"))
             {
-                Enemy boss = new GiantBlob(Stage,Player);
+                Enemy boss = _factory.CreateGiantBlob(Stage, Player);
                 boss.Position = room.Spawns[0];
                 AddEnemy(boss);
                 CombatManager.AddEnemy(boss);

@@ -15,12 +15,15 @@ public class EnemyFactory
     
     public Enemy CreateRandomEnemy(Stage stage, Character target)
     {
-        Random rand = new Random();
-        // rand.Next(0,5)
-        switch (rand.Next(0,2))
+        Random rand = new Random((int)DateTime.Now.Ticks);
+        switch (rand.Next(0,6))
         {
             case 0: return CreateBlob(stage);
             case 1: return CreateChaser(stage, target);
+            case 2: return CreateBouncer(stage);
+            case 3: return CreateExploder(stage);
+            case 4: return CreateGunner(stage, target);
+            case 5: return CreateTurret(stage, target);
         }
         return CreateBlob(stage);
     }
@@ -78,10 +81,22 @@ public class EnemyFactory
 
     public Enemy CreateExploder(Stage stage)
     {
-        Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet,
-            AnimationLoader.CreateBlobEnemyAnimations(), new RandomBehavior(), stage);
+        return new Exploder(stage);
+    }
 
-        return en;
+    public Enemy CreateGiantBlob(Stage stage, Character target)
+    {
+        return new GiantBlob(stage, target);
+    }
+
+    public Enemy CreateGunner(Stage stage, Character target)
+    {
+        return new Gunner(stage, target);
+    }
+
+    public Enemy CreateTurret(Stage stage, Character target)
+    {
+        return new Turret(stage, target);
     }
 
 
