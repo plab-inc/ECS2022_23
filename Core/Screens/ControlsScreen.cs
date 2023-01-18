@@ -8,20 +8,8 @@ namespace ECS2022_23.Core.Screens;
 
 internal class ControlsScreen : GameScreen
 {
-    #region Initialization
-
-    private Texture2D _controls;
-    
-    public ControlsScreen()
-    {
-        TransitionOnTime = TimeSpan.FromSeconds(0.5);
-        TransitionOffTime = TimeSpan.FromSeconds(0.1);
-    }
-
-    #endregion Initialization
-
     #region Handle Input
-    
+
     public override void HandleInput(InputState input)
     {
         PlayerIndex playerIndex;
@@ -32,33 +20,42 @@ internal class ControlsScreen : GameScreen
         // actually provided the input. We pass that through to our Accepted and
         // Cancelled events, so they can tell which player triggered them.
 
-        if (input.IsMenuCancel(ControllingPlayer, out playerIndex))
-        {
-            ExitScreen();
-        }
+        if (input.IsMenuCancel(ControllingPlayer, out playerIndex)) ExitScreen();
     }
-    
+
     #endregion Handle Input
 
     public override void LoadContent()
     {
         base.LoadContent();
-        ContentManager content = new ContentManager(ScreenManager.Game.Services, "Content/gameStateManagement");
+        var content = new ContentManager(ScreenManager.Game.Services, "Content/gameStateManagement");
         _controls = content.Load<Texture2D>("controls");
     }
 
     public override void Draw(GameTime gameTime)
     {
-        SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
-        SpriteFont font = ScreenManager.Font;
+        var spriteBatch = ScreenManager.SpriteBatch;
+        var font = ScreenManager.Font;
 
         // Darken down any other screens that were drawn beneath the popup.
         ScreenManager.FadeBackBufferToBlack(TransitionAlpha * 2 / 2.5f);
-        
+
         spriteBatch.Begin(samplerState: SamplerState.LinearClamp);
 
-        spriteBatch.Draw(_controls,Vector2.Zero,Color.White);
+        spriteBatch.Draw(_controls, Vector2.Zero, Color.White);
 
         spriteBatch.End();
     }
+
+    #region Initialization
+
+    private Texture2D _controls;
+
+    public ControlsScreen()
+    {
+        TransitionOnTime = TimeSpan.FromSeconds(0.5);
+        TransitionOffTime = TimeSpan.FromSeconds(0.1);
+    }
+
+    #endregion Initialization
 }

@@ -11,12 +11,10 @@ namespace ECS2022_23.Core.Entities.Characters.Enemy;
 
 public class EnemyFactory
 {
-    
-    
     public Enemy CreateRandomEnemy(Stage stage, Character target)
     {
-        Random rand = new Random((int)DateTime.Now.Ticks);
-        switch (rand.Next(0,6))
+        var rand = new Random((int) DateTime.Now.Ticks);
+        switch (rand.Next(0, 6))
         {
             case 0: return CreateBlob(stage);
             case 1: return CreateChaser(stage, target);
@@ -25,12 +23,13 @@ public class EnemyFactory
             case 4: return CreateGunner(stage, target);
             case 5: return CreateTurret(stage, target);
         }
+
         return CreateBlob(stage);
     }
-    
+
     public Enemy CreateBlob(Stage stage)
     {
-        Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateBlobEnemyAnimations(),
+        var en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateBlobEnemyAnimations(),
             new RandomBehavior(), stage)
         {
             Velocity = 1f,
@@ -48,7 +47,7 @@ public class EnemyFactory
 
     public Enemy CreateChaser(Stage stage, Character target)
     {
-        Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateZombieEnemyAnimations(),
+        var en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateZombieEnemyAnimations(),
             new Chase(target), stage)
         {
             Velocity = 1.5f,
@@ -67,7 +66,7 @@ public class EnemyFactory
 
     public Enemy CreateBouncer(Stage stage)
     {
-        Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(),
+        var en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(),
             new BounceBehavior(), stage)
         {
             Velocity = 1.55f,
@@ -87,7 +86,7 @@ public class EnemyFactory
 
     public Enemy CreateExploder(Stage stage)
     {
-        Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet,
+        var en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet,
             AnimationLoader.CreateBlobEnemyAnimations(), new ExploderBehavior(), stage)
         {
             Velocity = 0.75f,
@@ -105,7 +104,7 @@ public class EnemyFactory
 
     public Enemy CreateGiantBlob(Stage stage, Character target)
     {
-        Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet,
+        var en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet,
             AnimationLoader.CreateBlobEnemyAnimations(), new GiantBlobBehavior(target), stage)
         {
             IsBoss = true,
@@ -125,7 +124,7 @@ public class EnemyFactory
 
     public Enemy CreateGunner(Stage stage, Character target)
     {
-        Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(),
+        var en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(),
             new Dodger(target), stage)
         {
             Velocity = 1.5f,
@@ -143,7 +142,7 @@ public class EnemyFactory
 
     public Enemy CreateTurret(Stage stage, Character target)
     {
-        Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(),
+        var en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(),
             new StationaryShooter(target), stage)
         {
             Velocity = 0f,

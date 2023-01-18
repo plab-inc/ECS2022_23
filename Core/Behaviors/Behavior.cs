@@ -13,15 +13,9 @@ public abstract class Behavior
         State = (int)EnemyStates.Initial;
     }
 
-    public virtual void Attack()
-    {
-        
-    }
+    public virtual void Attack(){ }
 
-    public virtual void OnDeath()
-    {
-        
-    }
+    public virtual void OnDeath() { }
 
     public abstract Vector2 Move(Vector2 position, float velocity);
 

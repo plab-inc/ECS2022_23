@@ -4,14 +4,12 @@ using Microsoft.Xna.Framework;
 
 namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 
-public class  StationaryShooter : TargetingBehavior
+public class StationaryShooter : TargetingBehavior
 {
-    
     private int _attackDelay;
 
     public StationaryShooter(Character target) : base(target)
     {
-        
     }
 
     public override Vector2 Move(Vector2 position, float velocity)

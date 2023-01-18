@@ -10,12 +10,13 @@ namespace ECS2022_23.Core.Ui.InventoryManagement;
 [Serializable]
 public class InventoryRow
 {
-    private Inventory _inventory;
-    public List<InventorySlot> Slots = new List<InventorySlot>();
     private Rectangle _destinationRec;
+    private Inventory _inventory;
+    private int _scale;
     private int _slotCount;
     private int _slotSize;
-    private int _scale;
+    public List<InventorySlot> Slots = new();
+
     public InventoryRow(Rectangle destRec, int slotCount, int slotSize, Inventory inventory)
     {
         _destinationRec = destRec;
@@ -29,17 +30,14 @@ public class InventoryRow
     private void CreateSlots()
     {
         for (var i = 0; i < _slotCount; i++)
-        {
-            Slots.Add(new InventorySlot(new Rectangle(_destinationRec.X+i*_slotSize, _destinationRec.Y, _slotSize, _slotSize), _scale, _inventory.SlotCount++));
-        }
+            Slots.Add(new InventorySlot(
+                new Rectangle(_destinationRec.X + i * _slotSize, _destinationRec.Y, _slotSize, _slotSize), _scale,
+                _inventory.SlotCount++));
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        foreach (var slot in Slots)
-        {
-            slot.Draw(spriteBatch);
-        }
+        foreach (var slot in Slots) slot.Draw(spriteBatch);
     }
 
     public InventorySlot GetFreeSlot()
@@ -51,12 +49,9 @@ public class InventoryRow
     {
         foreach (var slot in Slots)
         {
-            if(slot.Item == null) continue;
+            if (slot.Item == null) continue;
             var itemInSlot = slot.Item;
-            if (itemInSlot.ItemType == item.ItemType || itemInSlot.ItemType == item.ItemType)
-            {
-                return slot;
-            }
+            if (itemInSlot.ItemType == item.ItemType || itemInSlot.ItemType == item.ItemType) return slot;
         }
 
         return null;

@@ -9,25 +9,21 @@ namespace ECS2022_23.Core.Manager;
 public static class InventoryManager
 {
     private static Player _player;
-    
+
     private static Toolbar _toolbar;
     private static ItemSlot _weaponSlot;
     private static ItemSlot _trinketSlot;
-    
+
     public static void Init(Player player)
     {
         _toolbar = new Toolbar(1, 9);
         _weaponSlot = new ItemSlot(InventoryType.WeaponSlot);
         _trinketSlot = new ItemSlot(InventoryType.TrinketSlot);
         _player = player;
-        
+
         if (player.Items != null)
-        {
             foreach (var item in player.Items)
-            {
                 AddItem(item);
-            }
-        }
 
         if (player.Trinket != null)
         {
@@ -37,11 +33,8 @@ public static class InventoryManager
             _trinketSlot.AddItem(trinket);
             _player.UseItem(trinket);
         }
-        
-        if (player.Weapon != null)
-        {
-            AddItem(player.Weapon);
-        }
+
+        if (player.Weapon != null) AddItem(player.Weapon);
     }
 
     public static void Draw(SpriteBatch spriteBatch)
@@ -50,7 +43,7 @@ public static class InventoryManager
         _weaponSlot.Draw(spriteBatch);
         _trinketSlot.Draw(spriteBatch);
     }
-    
+
     public static void UseItemAtIndex(int index)
     {
         var item = _toolbar.GetItemAtIndex(index);
@@ -60,17 +53,15 @@ public static class InventoryManager
 
     private static void UseItem(Item item)
     {
-     if(item.GetType() == typeof(Trinket)) {
-         UseTrinket((Trinket) item);
-         return;
-     }
-    
-     if (_player.UseItem(item))
-     {
-         RemoveItem(item);
-     }
+        if (item.GetType() == typeof(Trinket))
+        {
+            UseTrinket((Trinket) item);
+            return;
+        }
+
+        if (_player.UseItem(item)) RemoveItem(item);
     }
-    
+
     public static bool AddItem(Item item)
     {
         if (item == null) return false;
@@ -86,7 +77,7 @@ public static class InventoryManager
                 _player.Items.Add(item);
                 break;
         }
-        
+
         LockerManager.AddToPocket(item);
         return true;
     }
@@ -94,18 +85,17 @@ public static class InventoryManager
     public static void RemoveItem(Item item)
     {
         if (item == null) return;
-        
+
         switch (item)
         {
             case Trinket trinket:
-                if(_toolbar.ItemIsActive(trinket)) {
-                    UseTrinket(trinket);
-                }
+                if (_toolbar.ItemIsActive(trinket)) UseTrinket(trinket);
                 break;
             case Weapon:
-                if(_weaponSlot.RemoveItem(item)) SetPlayerWeapon(null);
+                if (_weaponSlot.RemoveItem(item)) SetPlayerWeapon(null);
                 break;
         }
+
         LockerManager.RemoveFromPocket(item);
         _toolbar.RemoveItem(item);
         _player.Items.Remove(item);

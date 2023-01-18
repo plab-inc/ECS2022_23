@@ -12,98 +12,15 @@ using Microsoft.Xna.Framework.Graphics;
 #endregion Using Statements
 
 namespace ECS2022_23.Core.Screens;
+
 internal class GameOverScreen : MenuScreen
 {
+    private readonly DeathCause _deathCause;
+
+    private readonly bool _gameIsWon;
     private ContentManager content;
+    private readonly string deathMessage;
     private float StartPosition;
-    
-    private bool _gameIsWon;
-    private DeathCause _deathCause;
-    private string deathMessage;
-
-    #region Initialization
-    public GameOverScreen(DeathCause deathCause = DeathCause.None)
-        : base(deathCause == DeathCause.None ? "You escaped!" : "Game Over" )
-    {
-        if (deathCause == DeathCause.None)
-        {
-            _gameIsWon = true;
-        }
-
-        ScreenMusic = _gameIsWon ? SoundLoader.Blueberry : SoundLoader.Ominous;
-        
-        _deathCause = deathCause;
-        deathMessage = GenerateDeathCauseMessage();
-        
-        MenuEntry replayGameMenuEntry = new MenuEntry("Restart Game");
-        MenuEntry backToMenu = new MenuEntry("Return to Menu");
-            
-        replayGameMenuEntry.Selected += (sender, e) => ReplayGameMenuEntrySelected(e);
-        backToMenu.Selected += BackToMenuSelected;
-            
-        MenuEntries.Add(replayGameMenuEntry);
-        MenuEntries.Add(backToMenu);
-    }
-    
-    public override void LoadContent()
-    { 
-        if (content == null)
-            content = new ContentManager(ScreenManager.Game.Services, "Content/gameStateManagement");
-        Spritesheet = content.Load<Texture2D>("../sprites/spritesheet");
-
-        if (Spritesheet == null) return;
-        
-        switch (_gameIsWon)
-        {
-            case true:
-                //Walk Up Animation
-                Animation = new Animation(Spritesheet, 16, 16, 6, new Point(1, 5), true);
-                AnimationPosition = new Vector2(16 * 18, 16 * 21);
-                break;
-            
-            case false:
-                //Death Animation
-                Animation = new Animation(Spritesheet, 16, 16, 1, new Point(4, 6), true);
-                AnimationPosition = new Vector2(16 * 18, 16 * 21);
-                break;
-        }
-
-        Animation.FrameSpeed = FrameSpeed;
-        StartPosition = AnimationPosition.Y;
-        SetAnimation(Animation);
-    }
-
-    #endregion Initialization
-
-    #region Handle Input
-        
-    private void ReplayGameMenuEntrySelected(PlayerIndexEventArgs e)
-    {
-        LoadingScreen.Load(ScreenManager, false, e.PlayerIndex, new GameplayScreen());
-    }
-    private void BackToMenuSelected(object sender, PlayerIndexEventArgs e)
-    {
-        LoadingScreen.Load(ScreenManager, false, e.PlayerIndex, new BackgroundScreen(),
-            new MainMenuScreen());
-    }
-
-    protected override void OnCancel(PlayerIndex playerIndex)
-    {
-        const string message = "Are you sure you want to exit this game?";
-
-        MessageBoxScreen confirmExitMessageBox = new MessageBoxScreen(message);
-
-        confirmExitMessageBox.Accepted += ConfirmExitMessageBoxAccepted;
-
-        ScreenManager.AddScreen(confirmExitMessageBox, playerIndex);
-    }
-    
-    private void ConfirmExitMessageBoxAccepted(object sender, PlayerIndexEventArgs e)
-    {
-        ScreenManager.Game.Exit();
-    }
-
-    #endregion Handle Input
 
     public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
     {
@@ -111,12 +28,11 @@ internal class GameOverScreen : MenuScreen
         {
             AnimationPosition += new Vector2(0, -0.5f);
             //Check if at door 
-            if (AnimationPosition.Y <= StartPosition - 16*5)
-            {
+            if (AnimationPosition.Y <= StartPosition - 16 * 5)
                 //Stop walking when through door
                 StopAnimation();
-            }
         }
+
         base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
     }
 
@@ -125,28 +41,28 @@ internal class GameOverScreen : MenuScreen
         base.Draw(gameTime);
 
         if (_gameIsWon) return;
-        
-        GraphicsDevice graphics = ScreenManager.GraphicsDevice;
-        SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
-        SpriteFont font = ScreenManager.Font;
-            
+
+        var graphics = ScreenManager.GraphicsDevice;
+        var spriteBatch = ScreenManager.SpriteBatch;
+        var font = ScreenManager.Font;
+
         spriteBatch.Begin(samplerState: SamplerState.LinearClamp);
-        
+
         var deathMessageColor = Color.White * TransitionAlpha;
         var deathMessageScale = 0.25f;
         var deathMessagePosition = new Vector2(graphics.Viewport.Width / 2f, graphics.Viewport.Height - 100);
-        Vector2 deathMessageOrigin = font.MeasureString(deathMessage) / 2;
+        var deathMessageOrigin = font.MeasureString(deathMessage) / 2;
 
         var youDiedMessage = "You died!";
         var youDiedScale = 0.75f;
         var youDiedColor = Color.White * TransitionAlpha;
         var youDiedPosition = new Vector2(graphics.Viewport.Width / 2f, graphics.Viewport.Height - 150);
-        Vector2 youDiedOrigin = font.MeasureString(youDiedMessage) / 2;
-        
-        spriteBatch.DrawString(font, youDiedMessage, youDiedPosition, youDiedColor, 0,youDiedOrigin, 
+        var youDiedOrigin = font.MeasureString(youDiedMessage) / 2;
+
+        spriteBatch.DrawString(font, youDiedMessage, youDiedPosition, youDiedColor, 0, youDiedOrigin,
             youDiedScale, SpriteEffects.None, 0);
-        
-        spriteBatch.DrawString(font, deathMessage, deathMessagePosition, deathMessageColor, 0,deathMessageOrigin, 
+
+        spriteBatch.DrawString(font, deathMessage, deathMessagePosition, deathMessageColor, 0, deathMessageOrigin,
             deathMessageScale, SpriteEffects.None, 0);
 
         spriteBatch.End();
@@ -154,9 +70,9 @@ internal class GameOverScreen : MenuScreen
 
     private string GenerateDeathCauseMessage()
     {
-        List<string> deathCauses = new List<string>();
+        var deathCauses = new List<string>();
         var random = new Random((int) DateTime.Now.Ticks);
-        
+
         switch (_deathCause)
         {
             case DeathCause.ProjectileShot:
@@ -174,9 +90,92 @@ internal class GameOverScreen : MenuScreen
                 deathCauses.Add($"Next time you will kill that {_deathCause}");
                 break;
         }
+
         var index = random.Next(deathCauses.Count);
 
         return deathCauses[index];
-
     }
+
+    #region Initialization
+
+    public GameOverScreen(DeathCause deathCause = DeathCause.None)
+        : base(deathCause == DeathCause.None ? "You escaped!" : "Game Over")
+    {
+        if (deathCause == DeathCause.None) _gameIsWon = true;
+
+        ScreenMusic = _gameIsWon ? SoundLoader.Blueberry : SoundLoader.Ominous;
+
+        _deathCause = deathCause;
+        deathMessage = GenerateDeathCauseMessage();
+
+        var replayGameMenuEntry = new MenuEntry("Restart Game");
+        var backToMenu = new MenuEntry("Return to Menu");
+
+        replayGameMenuEntry.Selected += (sender, e) => ReplayGameMenuEntrySelected(e);
+        backToMenu.Selected += BackToMenuSelected;
+
+        MenuEntries.Add(replayGameMenuEntry);
+        MenuEntries.Add(backToMenu);
+    }
+
+    public override void LoadContent()
+    {
+        if (content == null)
+            content = new ContentManager(ScreenManager.Game.Services, "Content/gameStateManagement");
+        Spritesheet = content.Load<Texture2D>("../sprites/spritesheet");
+
+        if (Spritesheet == null) return;
+
+        switch (_gameIsWon)
+        {
+            case true:
+                //Walk Up Animation
+                Animation = new Animation(Spritesheet, 16, 16, 6, new Point(1, 5), true);
+                AnimationPosition = new Vector2(16 * 18, 16 * 21);
+                break;
+
+            case false:
+                //Death Animation
+                Animation = new Animation(Spritesheet, 16, 16, 1, new Point(4, 6), true);
+                AnimationPosition = new Vector2(16 * 18, 16 * 21);
+                break;
+        }
+
+        Animation.FrameSpeed = FrameSpeed;
+        StartPosition = AnimationPosition.Y;
+        SetAnimation(Animation);
+    }
+
+    #endregion Initialization
+
+    #region Handle Input
+
+    private void ReplayGameMenuEntrySelected(PlayerIndexEventArgs e)
+    {
+        LoadingScreen.Load(ScreenManager, false, e.PlayerIndex, new GameplayScreen());
+    }
+
+    private void BackToMenuSelected(object sender, PlayerIndexEventArgs e)
+    {
+        LoadingScreen.Load(ScreenManager, false, e.PlayerIndex, new BackgroundScreen(),
+            new MainMenuScreen());
+    }
+
+    protected override void OnCancel(PlayerIndex playerIndex)
+    {
+        const string message = "Are you sure you want to exit this game?";
+
+        var confirmExitMessageBox = new MessageBoxScreen(message);
+
+        confirmExitMessageBox.Accepted += ConfirmExitMessageBoxAccepted;
+
+        ScreenManager.AddScreen(confirmExitMessageBox, playerIndex);
+    }
+
+    private void ConfirmExitMessageBoxAccepted(object sender, PlayerIndexEventArgs e)
+    {
+        ScreenManager.Game.Exit();
+    }
+
+    #endregion Handle Input
 }

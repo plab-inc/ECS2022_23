@@ -9,32 +9,30 @@
 
 #endregion File Description
 
-using System;
-using GameStateManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Screens;
 
 /// <summary>
-/// The pause menu comes up over the top of the game,
-/// giving the player options to resume or quit.
+///     The pause menu comes up over the top of the game,
+///     giving the player options to resume or quit.
 /// </summary>
 internal class PauseMenuScreen : MenuScreen
 {
     #region Initialization
 
     /// <summary>
-    /// Constructor.
+    ///     Constructor.
     /// </summary>
     public PauseMenuScreen()
         : base("Paused")
     {
         // Create our menu entries.
-        MenuEntry resumeGameMenuEntry = new MenuEntry("Resume Game");
-        MenuEntry quitGameMenuEntry = new MenuEntry("Quit Game");
-        MenuEntry controlsMenuEntry = new MenuEntry("Controls");
-        
+        var resumeGameMenuEntry = new MenuEntry("Resume Game");
+        var quitGameMenuEntry = new MenuEntry("Quit Game");
+        var controlsMenuEntry = new MenuEntry("Controls");
+
 
         // Hook up menu event handlers.
         resumeGameMenuEntry.Selected += OnCancel;
@@ -53,33 +51,35 @@ internal class PauseMenuScreen : MenuScreen
     #region Handle Input
 
     /// <summary>
-    /// Event handler for when the Quit Game menu entry is selected.
+    ///     Event handler for when the Quit Game menu entry is selected.
     /// </summary>
     private void QuitGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
     {
         const string message = "Are you sure you want to quit this game?";
 
-        MessageBoxScreen confirmQuitMessageBox = new MessageBoxScreen(message);
+        var confirmQuitMessageBox = new MessageBoxScreen(message);
 
         confirmQuitMessageBox.Accepted += ConfirmQuitMessageBoxAccepted;
 
         ScreenManager.AddScreen(confirmQuitMessageBox, ControllingPlayer);
     }
+
     private void ControlsMenuEntrySelected(object sender, PlayerIndexEventArgs e)
     {
         ScreenManager.AddScreen(new ControlsScreen(), e.PlayerIndex);
     }
+
     protected override void UpdateMenuEntryLocations()
     {
         // start at Y = 175; each X value is generated per entry
-        Vector2 position = new Vector2(0f, 300f);
+        var position = new Vector2(0f, 300f);
 
         // update each menu entry's location in turn
         foreach (var menuEntry in menuEntries)
         {
             // each entry is to be centered horizontally
-            position.X = ScreenManager.GraphicsDevice.Viewport.Width / 4 + 
-                ScreenManager.GraphicsDevice.Viewport.Width / 4  - menuEntry.GetWidth(this) / 4;
+            position.X = ScreenManager.GraphicsDevice.Viewport.Width / 4 +
+                ScreenManager.GraphicsDevice.Viewport.Width / 4 - menuEntry.GetWidth(this) / 4;
 
             // set the entry's position
             menuEntry.Position = position;
@@ -95,16 +95,15 @@ internal class PauseMenuScreen : MenuScreen
     }
 
     /// <summary>
-    /// Event handler for when the user selects ok on the "are you sure
-    /// you want to quit" message box. This uses the loading screen to
-    /// transition from the game back to the main menu screen.
+    ///     Event handler for when the user selects ok on the "are you sure
+    ///     you want to quit" message box. This uses the loading screen to
+    ///     transition from the game back to the main menu screen.
     /// </summary>
     private void ConfirmQuitMessageBoxAccepted(object sender, PlayerIndexEventArgs e)
     {
         LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),
             new MainMenuScreen());
     }
-    
 
     #endregion Handle Input
 }

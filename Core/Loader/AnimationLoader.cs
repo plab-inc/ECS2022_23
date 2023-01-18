@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.IO;
 using ECS2022_23.Core.Animations;
 using ECS2022_23.Enums;
@@ -15,6 +13,7 @@ public static class AnimationLoader
     private static ContentManager _content;
     private static Texture2D _spritesheetPink;
     private static Texture2D _spritesheetRed;
+
     public static void Load(ContentManager content)
     {
         if (!Directory.Exists("Content")) throw new DirectoryNotFoundException();
@@ -22,12 +21,13 @@ public static class AnimationLoader
         _spritesheetPink = _content.Load<Texture2D>("sprites/spritesheet");
         _spritesheetRed = _content.Load<Texture2D>("sprites/spritesheet_red");
     }
+
     public static Dictionary<AnimationType, Animation> CreatePlayerAnimations()
     {
-        return new Dictionary<AnimationType, Animation>()
+        return new Dictionary<AnimationType, Animation>
         {
             {
-               AnimationType.WalkUp,
+                AnimationType.WalkUp,
                 new Animation(_spritesheetPink, 16, 16, 6, new Point(1, 5), true)
             },
             {
@@ -77,10 +77,10 @@ public static class AnimationLoader
             }
         };
     }
-    
+
     public static Dictionary<AnimationType, Animation> CreateBlobEnemyAnimations()
     {
-        return new Dictionary<AnimationType, Animation>()
+        return new Dictionary<AnimationType, Animation>
         {
             {
                 AnimationType.Walk,
@@ -120,10 +120,10 @@ public static class AnimationLoader
             }
         };
     }
-    
+
     public static Dictionary<AnimationType, Animation> CreateEyeEnemyAnimations()
     {
-        return new Dictionary<AnimationType, Animation>()
+        return new Dictionary<AnimationType, Animation>
         {
             {
                 AnimationType.Walk,
@@ -163,9 +163,10 @@ public static class AnimationLoader
             }
         };
     }
+
     public static Dictionary<AnimationType, Animation> CreateZombieEnemyAnimations()
     {
-        return new Dictionary<AnimationType, Animation>()
+        return new Dictionary<AnimationType, Animation>
         {
             {
                 AnimationType.WalkRight,
@@ -190,13 +191,13 @@ public static class AnimationLoader
             {
                 AnimationType.Default,
                 new Animation(_spritesheetRed, 16, 16, 2, new Point(2, 2), true)
-            },
+            }
         };
     }
 
     public static Dictionary<AnimationType, Animation> CreateSwordAnimations()
     {
-        return new Dictionary<AnimationType, Animation>()
+        return new Dictionary<AnimationType, Animation>
         {
             {
                 AnimationType.AttackRight,
@@ -208,7 +209,7 @@ public static class AnimationLoader
             },
             {
                 AnimationType.AttackUp,
-                new Animation(_spritesheetPink, 16, 16, 2, new Point(16, 2), false,false, true)
+                new Animation(_spritesheetPink, 16, 16, 2, new Point(16, 2), false, false, true)
             },
             {
                 AnimationType.AttackDown,
@@ -219,7 +220,7 @@ public static class AnimationLoader
 
     public static Dictionary<AnimationType, Animation> CreatePhaserAnimations()
     {
-        return new Dictionary<AnimationType, Animation>()
+        return new Dictionary<AnimationType, Animation>
         {
             {
                 AnimationType.AttackRight,
@@ -242,7 +243,7 @@ public static class AnimationLoader
 
     public static Dictionary<AnimationType, Animation> CreateKnifeAnimations()
     {
-        return new Dictionary<AnimationType, Animation>()
+        return new Dictionary<AnimationType, Animation>
         {
             {
                 AnimationType.AttackRight,
@@ -265,7 +266,7 @@ public static class AnimationLoader
 
     public static Dictionary<AnimationType, Animation> CreateStickAnimations()
     {
-       return new Dictionary<AnimationType, Animation>()
+        return new Dictionary<AnimationType, Animation>
         {
             {
                 AnimationType.AttackRight,
@@ -288,7 +289,7 @@ public static class AnimationLoader
 
     public static Dictionary<AnimationType, Animation> CreateCrowbarAnimations()
     {
-        return new Dictionary<AnimationType, Animation>()
+        return new Dictionary<AnimationType, Animation>
         {
             {
                 AnimationType.AttackRight,
@@ -308,5 +309,4 @@ public static class AnimationLoader
             }
         };
     }
-    
 }

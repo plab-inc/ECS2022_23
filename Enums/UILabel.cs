@@ -7,7 +7,7 @@ public enum UiLabel
     ArmorIcon,
     EpIcon,
     HeartIcon,
-    
+
     EpText,
     LevelText,
     ArmorText

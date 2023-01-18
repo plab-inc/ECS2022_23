@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using ECS2022_23.Core.Manager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -15,28 +14,26 @@ internal static class UiLoader
     public static Texture2D SpriteSheet;
     private static SpriteFont _font;
     private static GraphicsDevice _graphicsDevice;
+
     public static void Load(ContentManager content, GraphicsDevice graphicsDevice)
-    
+
     {
         if (!Directory.Exists("Content")) throw new DirectoryNotFoundException();
 
         _content = content;
         _graphicsDevice = graphicsDevice;
-        
+
         SpriteSheet = _content.Load<Texture2D>("sprites/spritesheet");
         _font = _content.Load<SpriteFont>("fonts/rainyhearts");
     }
 
     public static void InitializeUi(float maxHearts)
-    { 
+    {
         UiManager.Init();
-        UiContainer statsContainer = UiManager.StatsContainer;
-            
+        var statsContainer = UiManager.StatsContainer;
+
         statsContainer.Add(CreateUiElementNew(UiLabel.HpIcon));
-        for (int i = 0; i < maxHearts; i++)
-        {
-            statsContainer.Add(CreateUiElementNew(UiLabel.HeartIcon));
-        }
+        for (var i = 0; i < maxHearts; i++) statsContainer.Add(CreateUiElementNew(UiLabel.HeartIcon));
         statsContainer.Add(CreateUiElementNew(UiLabel.EpIcon));
         statsContainer.Add(CreateTextElement(UiLabel.EpText));
         statsContainer.Add(CreateUiElementNew(UiLabel.LevelIcon));
@@ -69,22 +66,22 @@ internal static class UiLoader
         }
 
         return new UiElement(sourceRectangle, SpriteSheet, label);
-        
     }
 
     private static UiText CreateTextElement(UiLabel uiLabel)
     {
-        return new UiText(new Rectangle(0,0, PixelSize, PixelSize), _font, "0", uiLabel);
+        return new UiText(new Rectangle(0, 0, PixelSize, PixelSize), _font, "0", uiLabel);
     }
+
     public static UiText CreateTextElement(string text)
     {
-        return new UiText(new Rectangle(0,0, PixelSize, PixelSize), _font, text);
+        return new UiText(new Rectangle(0, 0, PixelSize, PixelSize), _font, text);
     }
+
     public static Texture2D CreateColorTexture(Color color)
     {
         var recTexture = new Texture2D(_graphicsDevice, 1, 1);
-        recTexture.SetData(new Color[] { color });
+        recTexture.SetData(new[] {color});
         return recTexture;
     }
-    
 }

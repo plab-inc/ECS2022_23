@@ -4,14 +4,14 @@ namespace ECS2022_23.Helper;
 
 public class Timer
 {
-    private float _timer;
     private readonly float _limit;
-    
+    private float _timer;
+
     public Timer(float timeLimit)
     {
         _limit = timeLimit;
     }
-    
+
     public void Update(GameTime gameTime)
     {
         _timer += (float) gameTime.ElapsedGameTime.TotalSeconds;
@@ -32,5 +32,4 @@ public class Timer
     {
         _timer = 0f;
     }
-    
 }

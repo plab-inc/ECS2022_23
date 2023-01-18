@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using ECS2022_23.Core.Entities.Characters;
+﻿using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Sound;
 using ECS2022_23.Enums;
@@ -14,6 +12,7 @@ public class Key : Item
     public Key(Vector2 spawn, Texture2D texture, Rectangle sourceRect) : base(spawn, texture, sourceRect, ItemType.Key)
     {
     }
+
     public override bool Use(Player player)
     {
         if (player.Stage.PlayerIsInfrontOfBossDoor)
@@ -25,6 +24,4 @@ public class Key : Item
 
         return false;
     }
-    
-    
 }
