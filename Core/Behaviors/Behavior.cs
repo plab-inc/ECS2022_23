@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 
-public abstract class  Behavior
+public abstract class Behavior
 {
     public Enemy Owner { get; set;}
     public int State { get; set;}
@@ -13,7 +13,12 @@ public abstract class  Behavior
         State = (int)EnemyStates.Initial;
     }
 
-    protected virtual void Attack()
+    public virtual void Attack()
+    {
+        
+    }
+
+    public virtual void OnDeath()
     {
         
     }

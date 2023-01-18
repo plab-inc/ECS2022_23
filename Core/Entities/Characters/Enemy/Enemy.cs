@@ -18,7 +18,7 @@ public class Enemy : Character
 
     public Color Color = Color.White;
     public Behavior Behavior;
-    protected bool IsActive;
+    public bool IsActive;
     
 
     public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Behavior behavior, Stage stage) : base(spawn, texture, animations)
@@ -50,7 +50,7 @@ public class Enemy : Character
    private void Act()
     {
         Position += Behavior.Move(Position, Velocity);
-        Attack();
+        Behavior.Attack();
     }
 
    public virtual void OnDeath()

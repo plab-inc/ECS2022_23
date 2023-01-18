@@ -1,11 +1,10 @@
 using System;
+using ECS2022_23.Core.Behaviors;
 using ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
-using ECS2022_23.Core.Entities.Characters.Enemy.EnemyTypes;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
-using Vector2 = System.Numerics.Vector2;
 
 namespace ECS2022_23.Core.Entities.Characters.Enemy;
 
@@ -81,25 +80,70 @@ public class EnemyFactory
 
     public Enemy CreateExploder(Stage stage)
     {
-        return new Exploder(stage);
+        Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet,
+            AnimationLoader.CreateBlobEnemyAnimations(), new ExploderBehavior(), stage);
+        
+        en.Velocity = 0.75f;
+        en.HP = 15;
+        en.Strength = 1;
+        en.EpReward = 2;
+
+        en.Color = Color.GreenYellow;
+        en.DeathSound = SoundLoader.BlobDeathSound;
+        en.ItemSpawnRate = 20f;
+        
+        return en;
     }
 
     public Enemy CreateGiantBlob(Stage stage, Character target)
     {
-        return new GiantBlob(stage, target);
+        Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet,
+            AnimationLoader.CreateBlobEnemyAnimations(), new GiantBlobBehavior(target), stage);
+        
+        en.IsBoss = true;
+        
+        en.Velocity = 0.5f;
+        en.HP = 150;
+        en.Strength = 2;
+        en.EpReward = 10;
+        
+        en.SpriteHeight = 32;
+        en.SpriteWidth = 32;
+        en.DeathSound = SoundLoader.BlobDeathSound;
+        en.ItemSpawnRate = 100f;
+        
+        return en;
     }
 
     public Enemy CreateGunner(Stage stage, Character target)
     {
-        return new Gunner(stage, target);
+        Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(),
+            new Dodger(target), stage);
+
+        en.Velocity = 1.5f;
+        en.HP = 15;
+        en.Strength = 1;
+        en.EpReward = 2;
+        en.Color = Color.Cyan;
+        en.DeathSound = SoundLoader.BlobDeathSound;
+        en.ItemSpawnRate = 60f;
+        
+        return en;
     }
 
     public Enemy CreateTurret(Stage stage, Character target)
     {
-        return new Turret(stage, target);
+        Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(),
+            new StationaryShooter(target), stage);
+        
+        en.Velocity = 0f;
+        en.HP = 20;
+        en.Strength = 1;
+        en.EpReward = 1;
+        
+        en.DeathSound = SoundLoader.BlobDeathSound;
+        en.ItemSpawnRate = 30f;
+        
+        return en;
     }
-
-
-
-
 }

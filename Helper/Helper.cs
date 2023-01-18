@@ -1,13 +1,8 @@
-using System;
 using System.IO;
 using System.Reflection;
-using System.Reflection.Metadata;
 using System.Text.Json;
 using System.Xml.Serialization;
 using ECS2022_23.Core.Entities;
-using ECS2022_23.Core.Entities.Characters;
-using ECS2022_23.Core.Entities.Characters.Enemy;
-using ECS2022_23.Core.Entities.Characters.Enemy.EnemyTypes;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 

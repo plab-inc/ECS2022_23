@@ -10,7 +10,7 @@ public class BounceBehavior : Behavior
     private int count;
     public override Vector2 Move(Vector2 position, float velocity)
     {
-        Vector2 direction = oldDirection;
+        Vector2 direction;
         if (State == (int) EnemyStates.Initial)
         {
             State = (int) EnemyStates.Move;
