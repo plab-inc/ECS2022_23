@@ -58,8 +58,8 @@ public class Player : Character
         DamageSound = SoundLoader.PlayerDamageSound;
         
         Velocity = 3f;
-        HP = 1;
-        Armor = 1;
+        HP = 3;
+        Armor = 2;
         Strength = 5;
         
         EP = 0;
@@ -73,8 +73,8 @@ public class Player : Character
         DamageSound = SoundLoader.PlayerDamageSound;
         
         Velocity = 3f;
-        HP = 1;
-        Armor = 1;
+        HP = 3;
+        Armor = 2;
         Strength = 5;
 
         EP = ep;
