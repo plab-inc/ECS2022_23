@@ -197,6 +197,8 @@ internal class GameplayScreen : GameScreen
         }
         else
         {
+            if (!_player.IsAlive()) return;
+            
             Input.Update(input,playerIndex);
             
             Action action = Input.GetPlayerAction();

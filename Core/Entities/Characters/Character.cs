@@ -80,10 +80,12 @@ public abstract class Character : Entity
         return HP>0;
     }
 
-    public void Kill()
+    protected void Kill()
     {
         if (Animations != null)
         {
+            AnimationManager.StopColorChange();
+            AnimationManager.Stop();
             SetAnimation(AnimationType.Death);
         }
         HP = 0;
