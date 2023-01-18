@@ -53,7 +53,8 @@ internal class GameplayScreen : GameScreen
     private GameSave _gameSave;
         
     private float pauseAlpha;
-
+    private Timer _timer;
+    
     #endregion Fields
 
     #region Initialization
@@ -66,6 +67,7 @@ internal class GameplayScreen : GameScreen
         ScreenMusic = SoundLoader.Background;
         TransitionOnTime = TimeSpan.FromSeconds(1.5);
         TransitionOffTime = TimeSpan.FromSeconds(0.5);
+        _timer = new Timer(1.5f);
     }
 
     /// <summary>
@@ -167,8 +169,10 @@ internal class GameplayScreen : GameScreen
             }
             if (_escape.Failed)
             {
-                LoadingScreen.Load(ScreenManager, false, null,
-                    new BackgroundScreen(true, false), new GameOverScreen(_player.DeathCause));
+                _timer.Update(gameTime);
+                if(_timer.LimitReached())
+                    LoadingScreen.Load(ScreenManager, false, null,
+                        new BackgroundScreen(true, false), new GameOverScreen(_player.DeathCause));
             }
                 
             UiManager.Update(_player);
@@ -197,6 +201,8 @@ internal class GameplayScreen : GameScreen
         }
         else
         {
+            if (!_player.IsAlive()) return;
+            
             Input.Update(input,playerIndex);
             
             Action action = Input.GetPlayerAction();

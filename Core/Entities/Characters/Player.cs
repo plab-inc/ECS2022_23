@@ -90,12 +90,12 @@ public class Player : Character
             IsAttacking = false;
         }
 
-        if (IsInWater(Rectangle))
+        if (IsInWater(Rectangle) && IsAlive())
         {
             if (!ImmuneToWater)
             {
                 DeathCause = DeathCause.Water;
-                Kill();
+                Kill(DeathCause);
             }
         }
         
@@ -280,7 +280,7 @@ public class Player : Character
     
     public void TakesDamage(float damagePoints, Entity entity)
     {
-        if (Invincible) return;
+        if (Invincible || !IsAlive()) return;
 
         _shieldBreak = Armor > 0;
 
@@ -302,7 +302,7 @@ public class Player : Character
         if (!IsAlive())
         {
             DeathCause = Helper.Transform.EntityToDeathCause(entity);
-            SetAnimation(AnimationType.Death);
+            Kill(DeathCause);
         }
 
         Invincible = true;
