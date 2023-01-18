@@ -89,7 +89,7 @@ internal class GameplayScreen : GameScreen
         {
             _player = new Player(content.Load<Texture2D>("sprites/astro"), AnimationLoader.CreatePlayerAnimations())
             {
-                Weapon = (Weapon) ItemLoader.CreateItem(Vector2.Zero, ItemType.Phaser)
+                Weapon = (Weapon) ItemLoader.CreateItem(Vector2.Zero, ItemType.Sword)
             };
             _gameSave = new GameSave(_player.EP, _player.Level);
             LockerManager.Init(_gameSave.ItemsInLocker);
@@ -98,7 +98,7 @@ internal class GameplayScreen : GameScreen
         {
             _player = new Player(content.Load<Texture2D>("sprites/astro"), AnimationLoader.CreatePlayerAnimations(), _gameSave.EP, _gameSave.Level)
             {
-                Weapon = (Weapon) ItemLoader.CreateItem(Vector2.Zero, ItemType.Phaser)
+                Weapon = (Weapon) ItemLoader.CreateItem(Vector2.Zero, ItemType.Sword)
             };
             LockerManager.Init(_gameSave.ItemsInLocker);
         }
