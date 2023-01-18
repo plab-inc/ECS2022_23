@@ -1,4 +1,5 @@
-﻿using ECS2022_23.Core.Animations;
+﻿using System.Diagnostics;
+using ECS2022_23.Core.Animations;
 using ECS2022_23.Helper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -111,11 +112,13 @@ public class AnimationManager
         }
     }
     
-    public void Draw(SpriteBatch spriteBatch, Vector2 position, Color color, Vector2 scale = default)
+    public void Draw(SpriteBatch spriteBatch, Vector2 position, Color color, float sourceHeightModifier = 1.0f, Vector2 scale = default)
     {
         if (CurrentAnimation == null) return;
-        var sourceRec = new Rectangle((_currentFrame + CurrentAnimation.StartFrame.X) * CurrentAnimation.Width, CurrentAnimation.StartFrame.Y * CurrentAnimation.Height, CurrentAnimation.Width, CurrentAnimation.Height);
-
+        var sourceRec = new Rectangle((_currentFrame + CurrentAnimation.StartFrame.X) * CurrentAnimation.Width, 
+            CurrentAnimation.StartFrame.Y * CurrentAnimation.Height, 
+            CurrentAnimation.Width,  (int)(CurrentAnimation.Height*sourceHeightModifier));
+    
         if (scale == Vector2.Zero)
             scale = _scale;
         
@@ -135,7 +138,6 @@ public class AnimationManager
         {
             spriteBatch.Draw(CurrentAnimation.Texture, position, sourceRec, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
         }
-        
     }
 
     public void StartColorChange(Color color1, Color color2)

@@ -113,6 +113,11 @@ public class Player : Character
         {
             base.Draw(spriteBatch);
         }
+        else if(IsInWater(Rectangle))
+        {
+            AnimationManager.Draw(spriteBatch, Position, Color.White, 0.65f);
+            Weapon?.Draw(spriteBatch);
+        }
         else
         {
             AnimationManager.Draw(spriteBatch, Position);
