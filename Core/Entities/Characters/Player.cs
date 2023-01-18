@@ -296,7 +296,7 @@ public class Player : Character
            
         if (!IsAlive())
         {
-            DeathCause = Helper.Transform.EntityToDeathCause(entity);
+            DeathCause = (DeathCause) entity.DeathCause;
             SetAnimation(AnimationType.Death);
         }
 

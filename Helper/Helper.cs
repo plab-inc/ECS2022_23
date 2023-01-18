@@ -87,26 +87,4 @@ public static class Transform
 
         return Direction.None;
     }
-    
-    public static DeathCause EntityToDeathCause(Entity entity)
-    {
-        /*
-        switch (entity)
-        {
-            case Chaser:
-                return DeathCause.Chaser;
-            case Blob:
-                return DeathCause.Blob;
-            case GiantBlob:
-                return DeathCause.GiantBlob;
-            case Gunner:
-                return DeathCause.Gunner;
-            case Turret:
-                return DeathCause.Turret;
-            case ProjectileShot:
-                return DeathCause.ProjectileShot;
-        }
-        */
-        return DeathCause.None;
-    }
 }

@@ -4,6 +4,7 @@ using ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.World;
+using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 
 namespace ECS2022_23.Core.Entities.Characters.Enemy;
@@ -40,7 +41,7 @@ public class EnemyFactory
         en.Color = Color.Cyan;
         en.DeathSound = SoundLoader.BlobDeathSound;
         en.ItemSpawnRate = 10f;
-
+        en.DeathCause = (int)DeathCause.Blob;
         return en;
     }
 
@@ -57,7 +58,7 @@ public class EnemyFactory
         en.SpriteWidth = 14;
         en.DeathSound = SoundLoader.BlobDeathSound;
         en.ItemSpawnRate = 40f;
-        
+        en.DeathCause = (int)DeathCause.Chaser;
         return en;
     }
 
@@ -75,6 +76,7 @@ public class EnemyFactory
         en.DeathSound = SoundLoader.BlobDeathSound;
         en.Color = Color.Green;
         en.Behavior.Owner = en;
+        en.DeathCause = (int)DeathCause.Bouncer;
         return en;
     }
 
@@ -91,6 +93,7 @@ public class EnemyFactory
         en.Color = Color.GreenYellow;
         en.DeathSound = SoundLoader.BlobDeathSound;
         en.ItemSpawnRate = 20f;
+        en.DeathCause = (int)DeathCause.Exploder;
         
         return en;
     }
@@ -111,7 +114,7 @@ public class EnemyFactory
         en.SpriteWidth = 32;
         en.DeathSound = SoundLoader.BlobDeathSound;
         en.ItemSpawnRate = 100f;
-        
+        en.DeathCause = (int)DeathCause.GiantBlob;
         return en;
     }
 
@@ -127,7 +130,7 @@ public class EnemyFactory
         en.Color = Color.Cyan;
         en.DeathSound = SoundLoader.BlobDeathSound;
         en.ItemSpawnRate = 60f;
-        
+        en.DeathCause = (int)DeathCause.Gunner;
         return en;
     }
 
@@ -143,6 +146,7 @@ public class EnemyFactory
         
         en.DeathSound = SoundLoader.BlobDeathSound;
         en.ItemSpawnRate = 30f;
+        en.DeathCause = (int)DeathCause.Turret;
         
         return en;
     }
