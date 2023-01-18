@@ -95,18 +95,7 @@ public class Player : Character
         {
             if (!ImmuneToWater)
             {
-
-                Random random = new Random((int)DateTime.Now.Ticks);
-
-                if (random.NextDouble() >= 0.5)
-                {
-                    SoundManager.Play(SoundLoader.PlayerDrownASound);
-                }
-                else
-                {
-                    SoundManager.Play(SoundLoader.PlayerDrownBSound);
-                }
-                
+                SoundManager.Play(SoundLoader.PlayerDrownASound);
                 DeathCause = DeathCause.Water;
                 Kill(DeathCause);
             }

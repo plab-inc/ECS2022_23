@@ -31,8 +31,8 @@ public static class SoundLoader
         ShieldBreakSound = content.Load<SoundEffect>("Sounds/Sfx/sfx_shield_break");
         LevelUpSound = content.Load<SoundEffect>("Sounds/Sfx/sfx_level_up");
         PickUpItemSound = content.Load<SoundEffect>("Sounds/Sfx/sfx_item_pickup");
-        PlayerDrownASound = content.Load<SoundEffect>("Sounds/Sfx/sfx_drown_2");
-        PlayerDrownBSound = content.Load<SoundEffect>("Sounds/Sfx/sfx_drown_1");
+        PlayerDrownASound = content.Load<SoundEffect>("Sounds/Sfx/sfx_drown_1");
+        PlayerDrownBSound = content.Load<SoundEffect>("Sounds/Sfx/sfx_drown_2");
         UnlockDoorSound = content.Load<SoundEffect>("Sounds/Sfx/sfx_door_unlock");
         
         Background = content.Load<SoundEffect>("GameStateManagement/Sounds/Music/music_background");
