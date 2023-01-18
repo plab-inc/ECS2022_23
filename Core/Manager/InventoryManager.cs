@@ -29,6 +29,15 @@ public static class InventoryManager
             }
         }
 
+        if (player.Trinket != null)
+        {
+            var trinket = player.Trinket;
+            AddItem(trinket);
+            _toolbar.SwitchActiveState(trinket);
+            _trinketSlot.AddItem(trinket);
+            _player.UseItem(trinket);
+        }
+        
         if (player.Weapon != null)
         {
             AddItem(player.Weapon);
@@ -51,17 +60,15 @@ public static class InventoryManager
 
     private static void UseItem(Item item)
     {
-        switch (item) 
-        {
-            case Trinket trinket:
-                UseTrinket(trinket);
-                return;
-        }
+     if(item.GetType() == typeof(Trinket)) {
+         UseTrinket((Trinket) item);
+         return;
+     }
     
-        if (_player.UseItem(item))
-        {
-            RemoveItem(item);
-        }
+     if (_player.UseItem(item))
+     {
+         RemoveItem(item);
+     }
     }
     
     public static bool AddItem(Item item)
