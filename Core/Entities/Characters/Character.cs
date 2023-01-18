@@ -19,7 +19,6 @@ public abstract class Character : Entity
     public Direction AimDirection;
     public SoundEffect DamageSound;
     public SoundEffect DeathSound;
-    public Stage Stage { get; set; }
     public bool IsAttacking { get; set; }
 
     protected Character(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations) : base(spawn, texture, animations)
@@ -72,9 +71,6 @@ public abstract class Character : Entity
             AnimationManager.Draw(spriteBatch, Position);
         }
     }
-
-    public abstract void Update(GameTime gameTime);
-
     public bool IsAlive()
     {
         return HP>0;

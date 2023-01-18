@@ -13,8 +13,6 @@ public class Turret : Enemy
     
     public Turret(Stage stage, Character target) : base(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(), new StationaryShooter(target), stage)
     {
-        Behavior.SetEnemy(this);
-        
         Velocity = 0f;
         HP = 20;
         Strength = 1;

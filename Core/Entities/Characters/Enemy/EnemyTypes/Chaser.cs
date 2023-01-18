@@ -12,8 +12,6 @@ public class Chaser : Enemy
     public Chaser(Stage stage, Character target) : base(Vector2.Zero, UiLoader.SpriteSheet,
         AnimationLoader.CreateZombieEnemyAnimations(), new Chase(target), stage)
     {
-        Behavior.SetEnemy(this);
-        
         Velocity = 1.5f;
         HP = 10;
         Strength = 1;

@@ -8,7 +8,7 @@ using TiledCS;
 
 namespace ECS2022_23.Core;
 
-public static class ContentLoader
+public static class WorldLoader
 {
     private static ContentManager _content;
     private static string executingPath;

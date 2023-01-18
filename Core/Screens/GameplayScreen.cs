@@ -78,7 +78,7 @@ internal class GameplayScreen : GameScreen
         if (content == null)
             content = new ContentManager(ScreenManager.Game.Services, "Content");
         
-        ContentLoader.Load(content);
+        WorldLoader.Load(content);
         AnimationLoader.Load(content);
         ItemLoader.Load(content);
         UiLoader.Load(content, ScreenManager.GraphicsDevice);
@@ -124,7 +124,7 @@ internal class GameplayScreen : GameScreen
     /// </summary>
     public override void UnloadContent()
     {
-        ContentLoader.Unload(content);
+        WorldLoader.Unload(content);
         content.Unload();
     }
 
@@ -227,7 +227,7 @@ internal class GameplayScreen : GameScreen
             }
             if (action == Action.UseItem)
             {
-                InventoryManager.UseItemAtIndex(_player, Input.ToolbarKeyDownIndex());
+                InventoryManager.UseItemAtIndex(Input.ToolbarKeyDownIndex());
             }
             
         }

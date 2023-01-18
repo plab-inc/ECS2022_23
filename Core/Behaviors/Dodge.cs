@@ -1,21 +1,19 @@
+using ECS2022_23.Core.Behaviors;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 
 namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 
-public class Dodger : Behavior
+public class  Dodger : TargetingBehavior
 {
-    private Character Target;
-
-    public Dodger(Character target)
+    public Dodger(Character target) : base(target)
     {
-        Target = target;
-        State = (int)EnemyStates.Initial;
+       
     }
 
     public override Vector2 Move(Vector2 position, float velocity)
     {
-        Aim(Target);
+        Aim();
         
         if (State is (int)EnemyStates.Initial or (int)EnemyStates.Attack)
         {
@@ -30,11 +28,6 @@ public class Dodger : Behavior
         }
         
         return Vector2.Zero;
-    }
-    
-    public void Aim(Character Target)
-    {
-        Owner.AimVector = Vector2.Normalize((Target.Position - Owner.Position));
     }
     
 }

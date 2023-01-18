@@ -14,8 +14,6 @@ public class Gunner : Enemy
     private int delay;
     public Gunner(Stage stage, Character target) : base(Vector2.Zero, UiLoader.SpriteSheet , AnimationLoader.CreateEyeEnemyAnimations(), new Dodger(target), stage)
     {
-        Behavior.SetEnemy(this);
-        
         Velocity = 1f;
         HP = 10;
         Strength = 1;

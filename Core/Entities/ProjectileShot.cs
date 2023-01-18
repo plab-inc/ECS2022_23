@@ -16,8 +16,7 @@ public class ProjectileShot : Entity
     private Rectangle SourceRectangle { get; }
     public float DamagePoints { get; private set; }
     public bool HitTarget { get; set; }
-    public Stage Stage { get; set; }
-
+    
     public DamageOrigin DamageOrigin { get; set; }
 
     public ProjectileShot(Texture2D texture2D, Rectangle sourceRect, Weapon weapon, Direction aimDirection) : base(weapon.Position, texture2D)
