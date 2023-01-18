@@ -61,7 +61,7 @@ public class Player : Character
         Velocity = 3f;
         HP = 3;
         Armor = 2;
-        Strength = 5;
+        Strength = 1;
         
         EP = 0;
         Level = 1;
@@ -76,7 +76,7 @@ public class Player : Character
         Velocity = 3f;
         HP = 3;
         Armor = 2;
-        Strength = 5;
+        Strength = 1;
 
         EP = ep;
         Level = level;
@@ -316,7 +316,7 @@ public class Player : Character
         if (25 <= EP)
         {
             EP -= 25;
-            Strength += 1+Level*0.25f;
+            Strength += 1 + Level * 0.15f;
             Level++;
             SoundManager.Play(SoundLoader.LevelUpSound);
         }
