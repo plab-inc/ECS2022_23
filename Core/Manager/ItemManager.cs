@@ -4,6 +4,7 @@ using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Characters.Enemy;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Loader;
+using ECS2022_23.Core.Sound;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -173,6 +174,9 @@ public static class ItemManager
                 InventoryManager.AddItem(item);
             }
             _activeItems.Remove(item);
+            
+            SoundManager.Play(SoundLoader.PickUpItemSound);
+            
             return;
         }
     }

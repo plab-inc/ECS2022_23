@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -94,6 +95,18 @@ public class Player : Character
         {
             if (!ImmuneToWater)
             {
+
+                Random random = new Random((int)DateTime.Now.Ticks);
+
+                if (random.NextDouble() >= 0.5)
+                {
+                    SoundManager.Play(SoundLoader.PlayerDrownASound);
+                }
+                else
+                {
+                    SoundManager.Play(SoundLoader.PlayerDrownBSound);
+                }
+                
                 DeathCause = DeathCause.Water;
                 Kill(DeathCause);
             }
