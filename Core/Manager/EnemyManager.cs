@@ -17,6 +17,8 @@ public static class EnemyManager
     public static Player Player { set; get;}
     public static Stage Stage { set; get; }
     private static List<Vector2> closedList = new();
+
+    private static EnemyFactory _factory = new EnemyFactory();
     
     private static void AddEnemy(Enemy enemy)
     {
@@ -57,7 +59,7 @@ public static class EnemyManager
                     int rety=0;
                     do
                     {
-                        Enemy en = GetRandomEnemy();
+                        Enemy en = _factory.CreateBouncer(Stage);
                         Vector2 pos = room.GetRandomSpawnPos(en);
                         pos.Floor();
                         if (!closedList.Contains(pos) && !WithinRange(pos))
@@ -94,22 +96,7 @@ public static class EnemyManager
         return false;
     }
     
-    private static Enemy GetRandomEnemy()
-    {
-        Random rand = new Random();
-        // rand.Next(0,5)
-        switch (rand.Next(0,6))
-        {
-            case 0: return new Blob(Stage);
-            case 1: return new Chaser(Stage, Player);
-            case 2: return new Turret(Stage, Player);
-            case 3: return new Gunner(Stage, Player);
-            case 4: return new Bouncer(Stage);
-            case 5: return new Exploder(Stage);
-        }
-        return new Blob(Stage);
-    }
-    
+   
     public static void Update(GameTime gameTime)
     {
         foreach (var enemy in Enemies)

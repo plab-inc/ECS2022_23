@@ -10,7 +10,7 @@ using ECS2022_23.Core.Entities.Characters.Enemy;
 using ECS2022_23.Core.Entities.Characters.Enemy.EnemyTypes;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
-using Blob = ECS2022_23.Core.Entities.Characters.Enemy.EnemyTypes.Blob;
+
 
 namespace ECS2022_23.Helper;
 public static class DeepCopy
@@ -92,8 +92,10 @@ public static class Transform
 
         return Direction.None;
     }
+    
     public static DeathCause EntityToDeathCause(Entity entity)
     {
+        /*
         switch (entity)
         {
             case Chaser:
@@ -109,6 +111,7 @@ public static class Transform
             case ProjectileShot:
                 return DeathCause.ProjectileShot;
         }
+        */
         return DeathCause.None;
     }
 }

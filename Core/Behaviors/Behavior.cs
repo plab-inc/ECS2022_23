@@ -12,7 +12,12 @@ public abstract class  Behavior
     {
         State = (int)EnemyStates.Initial;
     }
-    
+
+    protected virtual void Attack()
+    {
+        
+    }
+
     public abstract Vector2 Move(Vector2 position, float velocity);
 
 }

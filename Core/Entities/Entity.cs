@@ -19,9 +19,9 @@ public abstract class Entity
     protected AnimationManager AnimationManager = new();
 
     private Color[] TextureData { get; }
-    
-    protected int SpriteWidth = 16;
-    protected int SpriteHeight = 16;
+
+    public int SpriteWidth = 16;
+    public int SpriteHeight = 16;
 
     protected Entity(Vector2 spawn, Texture2D texture)
     {

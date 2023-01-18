@@ -9,15 +9,15 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Entities.Characters.Enemy;
 
-public abstract class Enemy : Character
+public class Enemy : Character
 {
     public float EpReward;
     public Vector2 AimVector;
     public bool IsBoss;
     public float ItemSpawnRate;
 
-    protected Color Color = Color.White;
-    protected Behavior Behavior;
+    public Color Color = Color.White;
+    public Behavior Behavior;
     protected bool IsActive;
     
 

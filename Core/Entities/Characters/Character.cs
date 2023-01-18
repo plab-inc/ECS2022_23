@@ -14,8 +14,8 @@ public abstract class Character : Entity
     public float MaxHP = 10;
     public float HP;
     public float Strength;
-   
-    protected float Velocity;
+
+    public float Velocity;
     public Direction AimDirection;
     public SoundEffect DamageSound;
     public SoundEffect DeathSound;
