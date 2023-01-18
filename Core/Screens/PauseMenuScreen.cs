@@ -33,13 +33,18 @@ internal class PauseMenuScreen : MenuScreen
         // Create our menu entries.
         MenuEntry resumeGameMenuEntry = new MenuEntry("Resume Game");
         MenuEntry quitGameMenuEntry = new MenuEntry("Quit Game");
+        MenuEntry controlsMenuEntry = new MenuEntry("Controls");
+        
 
         // Hook up menu event handlers.
         resumeGameMenuEntry.Selected += OnCancel;
         quitGameMenuEntry.Selected += QuitGameMenuEntrySelected;
+        controlsMenuEntry.Selected += ControlsMenuEntrySelected;
+
 
         // Add entries to the menu.
         MenuEntries.Add(resumeGameMenuEntry);
+        MenuEntries.Add(controlsMenuEntry);
         MenuEntries.Add(quitGameMenuEntry);
     }
 
@@ -60,7 +65,10 @@ internal class PauseMenuScreen : MenuScreen
 
         ScreenManager.AddScreen(confirmQuitMessageBox, ControllingPlayer);
     }
-
+    private void ControlsMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+    {
+        ScreenManager.AddScreen(new ControlsScreen(), e.PlayerIndex);
+    }
     protected override void UpdateMenuEntryLocations()
     {
         // start at Y = 175; each X value is generated per entry

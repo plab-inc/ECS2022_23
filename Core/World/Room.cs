@@ -39,42 +39,9 @@ public class Room
         public int Width => Map.Width * Map.TileWidth;
         public Point Position => _renderPos;
         public Rectangle Rectangle => new(_renderPos.X, _renderPos.Y, Width, Height);
-        public List<Rectangle> GroundLayer
-        {
-            get
-            {
-                var objectLayer = Map.Layers.First(l => l.name == "Ground");
-                var groundLayer = new List<Rectangle>();
+        public List<Rectangle> GroundLayer => GetRectanglesRelativeToWorld("Ground");
+        public List<Rectangle> WaterLayer => GetRectanglesRelativeToWorld("Water");
 
-                foreach (var obj in objectLayer.objects)
-                {
-                    var x = (int) obj.x + _renderPos.X;
-                    var y = (int) obj.y + _renderPos.Y;
-
-                    groundLayer.Add(new Rectangle(x, y, (int) obj.width, (int) obj.height));
-                }
-
-                return groundLayer;
-            }
-        }
-        public List<Rectangle> WaterLayer
-        {
-            get
-            {
-                var objectLayer = Map.Layers.First(l => l.name == "Water");
-                var waterLayer = new List<Rectangle>();
-
-                foreach (var obj in objectLayer.objects)
-                {
-                    var x = (int) obj.x + _renderPos.X;
-                    var y = (int) obj.y + _renderPos.Y;
-
-                    waterLayer.Add(new Rectangle(x, y, (int) obj.width, (int) obj.height));
-                }
-
-                return waterLayer;
-            }
-        }
         public List<Door> Doors
         {
             get
@@ -99,18 +66,8 @@ public class Room
         {
             get
             {
-                var spawnObjects = Map.Layers.First(x => x.name == "Spawns").objects;
-                var spawns = new List<Vector2>();
-
-                foreach (var spawnObject in spawnObjects)
-                {
-                    var spawnX = spawnObject.x + _renderPos.X;
-                    var spawnY = spawnObject.y + _renderPos.Y;
-
-                    spawns.Add(new Vector2(spawnX, spawnY));
-                }
-
-                return spawns;
+                var spawnRectangles = GetRectanglesRelativeToWorld("Spawns");
+                return spawnRectangles.Select(spawnRectangle => new Vector2(spawnRectangle.X, spawnRectangle.Y)).ToList();
             }
         }
 
@@ -132,12 +89,9 @@ public class Room
         var spawnRect = new Rectangle((int) spawnPos.X, (int) spawnPos.Y, entity.Rectangle.Width,
             entity.Rectangle.Height);
 
-        foreach (var rectangle in GroundLayer)
+        if (GroundLayer.Any(rectangle => rectangle.Intersects(spawnRect)))
         {
-            if (rectangle.Intersects(spawnRect))
-            {
-                return spawnPos;
-            }
+            return spawnPos;
         }
 
         throw new InvalidOperationException("Spawn of entity failed in Map: " + MapName + "at position: " + spawnPos);
@@ -157,38 +111,51 @@ public class Room
 
         return layer.data[index];
     }
-
-    public List<Vector2> GetInteractablePositions(String interactableName)
+    public List<Rectangle> GetAllRectanglesFromLayer(string layerName, string objectName = "")
     {
-        var interactables = GetInteractableMapPositions(interactableName);
-        var interactablesRelativeToWorld = new List<Vector2>();
-        
-        foreach (var interactable in interactables)
+
+        if (Map.Layers.All(l => l.name != layerName))
         {
-            interactablesRelativeToWorld.Add(interactable + new Vector2(_renderPos.X,_renderPos.Y));
+            throw new ArgumentException(layerName);
         }
+        
+        var objects = Map.Layers.First(l => l.name == layerName).objects;
+        var rectangles = new List<Rectangle>();
 
-        return interactablesRelativeToWorld;
-    }
-    
-    public List<Vector2> GetInteractableMapPositions(String interactableName)
-    {
-        var interactableObjects = Map.Layers.First(l => l.name == "Interactables").objects;
-        var interactablePositions = new List<Vector2>();
-
-        foreach (var tiledObject in interactableObjects)
+        foreach (var tiledObject in objects)
         {
-            if (tiledObject.name.Contains(interactableName))
-            {
-                var posX = tiledObject.x;
-                var posY = tiledObject.y;
+            var x = (int) tiledObject.x;
+            var y = (int) tiledObject.y;
+            var rect = new Rectangle(x, y, (int) tiledObject.width, (int) tiledObject.height);
 
-                interactablePositions.Add(new Vector2(posX, posY));
+            if (objectName.Length == 0)
+            {
+                rectangles.Add(rect);
+            }
+            
+            if (objectName.Length > 0 && tiledObject.name.Equals(objectName))
+            {
+                rectangles.Add(rect);
             }
         }
+        return rectangles;
+    }
 
-        return interactablePositions;
+    public List<Rectangle> GetRectanglesRelativeToWorld(string layerName, string objectName = "")
+    {
+        var rectangles = GetAllRectanglesFromLayer(layerName, objectName);
+        var updatedRectangles = new List<Rectangle>();
         
+        foreach (var rectangle in rectangles)
+        {
+            var x = rectangle.X + _renderPos.X;
+            var y = rectangle.Y + _renderPos.Y;
+            var updatedRect = new Rectangle(x, y, rectangle.Width, rectangle.Height);
+            
+            updatedRectangles.Add(updatedRect);
+        }
+
+        return updatedRectangles;
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -265,7 +232,9 @@ public class Room
                             break;
                     }
 
-                    spriteBatch.Draw(tilesetTexture, destination, source, Color.White, rotation, Vector2.Zero, effects,
+                    var layerColor = Color.White;
+                    
+                    spriteBatch.Draw(tilesetTexture, destination, source, layerColor, rotation, Vector2.Zero, effects,
                         0);
                 }
             }

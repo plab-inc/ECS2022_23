@@ -32,10 +32,10 @@ namespace GameStateManagement
     {
         #region Fields
 
-        private List<GameScreen> screens = new List<GameScreen>();
-        private List<GameScreen> screensToUpdate = new List<GameScreen>();
+        private List<GameScreen> screens = new();
+        private List<GameScreen> screensToUpdate = new();
 
-        private InputState input = new InputState();
+        private InputState input = new();
 
         private SpriteBatch spriteBatch;
         private SpriteFont font;
@@ -227,7 +227,7 @@ namespace GameStateManagement
         /// <summary>
         /// Adds a new screen to the screen manager.
         /// </summary>
-        public void AddScreen(GameScreen screen, PlayerIndex? controllingPlayer)
+        public void AddScreen(GameScreen screen, PlayerIndex? controllingPlayer, bool playScreenMusic = false)
         {
             screen.ControllingPlayer = controllingPlayer;
             screen.ScreenManager = this;
@@ -239,6 +239,10 @@ namespace GameStateManagement
                 screen.LoadContent();
             }
 
+            if (playScreenMusic)
+            {
+                screen.PlayScreenMusic();
+            }
             screens.Add(screen);
 
             // update the TouchPanel to respond to gestures this screen is interested in
@@ -251,7 +255,7 @@ namespace GameStateManagement
         /// the screen can gradually transition off rather than just being
         /// instantly removed.
         /// </summary>
-        public void RemoveScreen(GameScreen screen)
+        public void RemoveScreen(GameScreen screen, bool stopMusic = true)
         {
             // If we have a graphics device, tell the screen to unload content.
             if (isInitialized)
@@ -259,6 +263,11 @@ namespace GameStateManagement
                 screen.UnloadContent();
             }
 
+            if (stopMusic)
+            {
+                screen.StopScreenMusic();
+            }
+            
             screens.Remove(screen);
             screensToUpdate.Remove(screen);
 

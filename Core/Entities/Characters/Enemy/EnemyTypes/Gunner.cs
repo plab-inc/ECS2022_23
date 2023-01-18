@@ -1,40 +1,41 @@
-using System.Collections.Generic;
-using ECS2022_23.Core.Animations;
-using ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
+using ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.World;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
+namespace ECS2022_23.Core.Entities.Characters.Enemy.EnemyTypes;
 
 public class Gunner : Enemy
 {
     private Character _target;
     private int delay;
-    public Gunner(Level level, Character target) : base(Vector2.Zero, UiLoader.SpriteSheet , AnimationLoader.CreateEyeEnemyAnimations(), new Dodger(target), level)
+    public Gunner(Stage stage, Character target) : base(Vector2.Zero, UiLoader.SpriteSheet , AnimationLoader.CreateEyeEnemyAnimations(), new Dodger(target), stage)
     {
+        Behavior.SetEnemy(this);
+        
         Velocity = 1f;
         HP = 10;
-        MoneyReward = 1;
-        XpReward = 1;
-        _target = target;
-        ActivationRectangle.Inflate(35, 35);
-        Behavior.SetEnemy(this);
         Strength = 1;
-        
+        EpReward = 2;
+
+       _target = target;
+
         Color = Color.Cyan;
         DeathSound = SoundLoader.BlobDeathSound;
+        ItemSpawnRate = 60f;
     }
 
     public override void Attack()
     {
+        if(!IsActive)
+            return;
+        
         if (Vector2.Distance(Position, _target.Position)>50)
         {
-            if (++delay > 30)
+            if (++delay > 50)
             {
                 delay = 0;
                 CombatManager.Shoot(this);
@@ -44,6 +45,5 @@ public class Gunner : Enemy
         {
             Behavior.State = (int)EnemyStates.Move;
         }
-        
     }
 }

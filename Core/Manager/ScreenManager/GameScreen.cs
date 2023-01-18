@@ -14,6 +14,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input.Touch;
 using System;
+using ECS2022_23.Core.Sound;
+using Microsoft.Xna.Framework.Audio;
 
 #endregion Using Statements
 
@@ -150,6 +152,8 @@ namespace GameStateManagement
 
         private GestureType enabledGestures = GestureType.None;
 
+        public SoundEffect ScreenMusic;
+
         #endregion Properties
 
         #region Initialization
@@ -186,7 +190,7 @@ namespace GameStateManagement
                 if (!UpdateTransition(gameTime, TransitionOffTime, 1))
                 {
                     // When the transition finishes, remove the screen.
-                    ScreenManager.RemoveScreen(this);
+                    ScreenManager.RemoveScreen(this,false);
                 }
             }
             else if (coveredByOtherScreen)
@@ -264,6 +268,19 @@ namespace GameStateManagement
         /// </summary>
         public virtual void Draw(GameTime gameTime) { }
 
+        public void PlayScreenMusic()
+        {
+            if (ScreenMusic != null)
+            {
+                SoundManager.PlayMusic(ScreenMusic);
+            }
+        }
+        
+        public void StopScreenMusic()
+        {
+            SoundManager.StopMusic();
+        }
+
         #endregion Update and Draw
 
         #region Public Methods
@@ -278,7 +295,7 @@ namespace GameStateManagement
             if (TransitionOffTime == TimeSpan.Zero)
             {
                 // If the screen has a zero transition time, remove it immediately.
-                ScreenManager.RemoveScreen(this);
+                ScreenManager.RemoveScreen(this,false);
             }
             else
             {

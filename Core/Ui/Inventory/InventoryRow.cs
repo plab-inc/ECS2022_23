@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Ui.Inventory;
 using Microsoft.Xna.Framework;
@@ -8,20 +7,19 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Ui.InventoryManagement;
 
+[Serializable]
 public class InventoryRow
 {
     private Inventory _inventory;
     public List<InventorySlot> Slots = new List<InventorySlot>();
     private Rectangle _destinationRec;
     private int _slotCount;
-    private Texture2D _texture;
     private int _slotSize;
     private int _scale;
     public InventoryRow(Rectangle destRec, int slotCount, int slotSize, Inventory inventory)
     {
         _destinationRec = destRec;
-        this._slotCount = slotCount;
-        _texture = UiLoader.CreateColorTexture(Color.Pink);
+        _slotCount = slotCount;
         _slotSize = slotSize;
         _scale = inventory.Scale;
         _inventory = inventory;
@@ -49,15 +47,18 @@ public class InventoryRow
         return Slots.Find(slot => slot.IsUsed == false);
     }
 
-    public InventorySlot FindItem(Item item)
+    public InventorySlot FindSlotWithItem(Item item)
     {
-        try
+        foreach (var slot in Slots)
         {
-            return Slots.Where(slot => slot.IsUsed).FirstOrDefault(slot => slot.Item.SourceRect == item.SourceRect && slot.Item.Texture == item.Texture);
+            if(slot.Item == null) continue;
+            var itemInSlot = slot.Item;
+            if (itemInSlot.ItemType == item.ItemType || itemInSlot.ItemType == item.ItemType)
+            {
+                return slot;
+            }
         }
-        catch (NullReferenceException e)
-        {
-            return null;
-        } 
+
+        return null;
     }
 }

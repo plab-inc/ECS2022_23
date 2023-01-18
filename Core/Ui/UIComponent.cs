@@ -3,15 +3,17 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Ui;
 
-public abstract class Component
+public abstract class UiComponent
 {
     public Rectangle SourceRec;
     public Rectangle DestinationRec;
-    public UiLabels UiLabel;
+    public UiLabel UiLabel;
+    public Vector2 Scale { get; set; } = Vector2.One;
+    
+    protected int PixelSize = 16;
 
-    protected Component(Rectangle sourceRec)
+    protected UiComponent()
     {
-        SourceRec = sourceRec;
     }
 
     public abstract void Draw(SpriteBatch spriteBatch);

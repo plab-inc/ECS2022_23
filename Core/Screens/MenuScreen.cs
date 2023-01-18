@@ -17,7 +17,6 @@ using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Manager;
 using GameStateManagement;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 #endregion Using Statements
@@ -67,7 +66,7 @@ internal abstract class MenuScreen : GameScreen
         TransitionOffTime = TimeSpan.FromSeconds(0.5);
         _animationManager.SetScale(new Vector2(2,2));
     }
-
+    
     #endregion Initialization
 
     #region Handle Input

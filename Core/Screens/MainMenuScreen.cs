@@ -12,7 +12,9 @@
 #region Using Statements
 
 using ECS2022_23.Core.Animations;
+using ECS2022_23.Core.Loader;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -35,28 +37,34 @@ internal class MainMenuScreen : MenuScreen
     public MainMenuScreen()
         : base("ECS20XX")
     {
+        ScreenMusic = SoundLoader.Blueberry;
+        
         // Create our menu entries.
         MenuEntry playGameMenuEntry = new MenuEntry("Play Game");
         MenuEntry optionsMenuEntry = new MenuEntry("Options");
         MenuEntry exitMenuEntry = new MenuEntry("Exit");
-
+        MenuEntry controlsMenuEntry = new MenuEntry("Controls");
+        
         // Hook up menu event handlers.
         playGameMenuEntry.Selected += PlayGameMenuEntrySelected;
         optionsMenuEntry.Selected += OptionsMenuEntrySelected;
+        controlsMenuEntry.Selected += ControlsMenuEntrySelected;
         exitMenuEntry.Selected += OnCancel;
 
         // Add entries to the menu.
         MenuEntries.Add(playGameMenuEntry);
-        MenuEntries.Add(optionsMenuEntry);
+        //MenuEntries.Add(optionsMenuEntry);
+        MenuEntries.Add(controlsMenuEntry);
         MenuEntries.Add(exitMenuEntry);
     }
-
+    
     public override void LoadContent()
-    { 
+    {
         if (content == null)
             content = new ContentManager(ScreenManager.Game.Services, "Content/gameStateManagement");
+        
         Spritesheet = content.Load<Texture2D>("../sprites/spritesheet");
-
+        
         if (Spritesheet != null)
         {
             Animation =  new Animation(Spritesheet, 16, 16, 7, new Point(1, 2), true);
@@ -77,6 +85,10 @@ internal class MainMenuScreen : MenuScreen
     {
         LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
             new GameplayScreen());
+    }
+    private void ControlsMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+    {
+        ScreenManager.AddScreen(new ControlsScreen(), e.PlayerIndex);
     }
 
     /// <summary>

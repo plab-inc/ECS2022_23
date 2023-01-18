@@ -11,27 +11,26 @@ namespace ECS2022_23.Core.Entities.Characters;
 
 public abstract class Character : Entity
 {
-    public int MaxHP = 10;
+    public float MaxHP = 10;
     public float HP;
-    
     public float Strength;
    
     protected float Velocity;
     public Direction AimDirection;
     public SoundEffect DamageSound;
     public SoundEffect DeathSound;
-    public Level Level { get; set; }
+    public Stage Stage { get; set; }
     public bool IsAttacking { get; set; }
 
     protected Character(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations) : base(spawn, texture, animations)
     {
         
     }
-    public abstract void Attack();
+    public virtual void Attack(){}
     public virtual bool Collides(Vector2 velocity)
     {
-        var newPoint = (Position + velocity).ToPoint();
-        var body = new Rectangle(newPoint, new Point(SpriteWidth, SpriteHeight)); // 16x16 für Sprite größe.
+        var newPosition = (Position + velocity).ToPoint();
+        var body = new Rectangle(newPosition, new Point(Rectangle.Width, Rectangle.Height));
         var feet = new Point(body.Center.X, body.Bottom);
 
         if (velocity == Vector2.Zero)
@@ -39,7 +38,7 @@ public abstract class Character : Entity
             return true;
         }
         
-        foreach (var rectangle in Level.GroundLayer)
+        foreach (var rectangle in Stage.GroundLayer)
         {
             if (rectangle.Contains(feet) && !IsInWater(body))
             {
@@ -50,11 +49,11 @@ public abstract class Character : Entity
         return false;
     }
 
-    public virtual bool IsInWater(Rectangle body)
+    public virtual bool IsInWater(Rectangle movedBody)
     {
-        foreach (var rectangle in Level.WaterLayer)
+        foreach (var rectangle in Stage.WaterLayer)
         {
-            if (rectangle.Intersects(body))
+            if (rectangle.Intersects(movedBody))
             {
                 return true;
             }
@@ -73,6 +72,8 @@ public abstract class Character : Entity
             AnimationManager.Draw(spriteBatch, Position);
         }
     }
+
+    public abstract void Update(GameTime gameTime);
 
     public bool IsAlive()
     {

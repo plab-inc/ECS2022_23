@@ -17,12 +17,12 @@ public class Weapon : Item
     public readonly SoundEffect AttackSound;
     public Direction AimDirection;
 
-    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Rectangle sourceRect, float damagePoints) : base(spawn, texture, sourceRect)
+    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Rectangle sourceRect, ItemType itemType, float damagePoints) : base(spawn, texture, sourceRect, itemType)
     {
         DamagePoints = damagePoints;
         Animations = animations;
     }
-    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Rectangle sourceRect, float damagePoints, WeaponType type) : base(spawn, texture, sourceRect)
+    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Rectangle sourceRect, ItemType itemType, float damagePoints, WeaponType type) : base(spawn, texture, sourceRect, itemType)
     {
         DamagePoints = damagePoints;
         Animations = animations;
@@ -39,26 +39,6 @@ public class Weapon : Item
     {
         AnimationManager.Draw(spriteBatch, Position);
     }
-    
-    public override bool Equals(object obj)
-    {
-        if (obj == null) return false;
-        if (obj.GetType() != typeof(Weapon))
-        {
-            return false;
-        }
-
-        var toCompare = (Weapon)obj;
-        return toCompare.Texture == this.Texture && this.Position == toCompare.Position 
-               && DamagePoints.Equals(toCompare.DamagePoints) 
-               && WeaponType == toCompare.WeaponType && Equals(AttackSound, toCompare.AttackSound);
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(base.GetHashCode(), DamagePoints, (int)WeaponType, AttackSound);
-    }
-
     public void SetAnimationDirection(Direction direction)
     {
         AimDirection = direction;
@@ -116,10 +96,4 @@ public class Weapon : Item
                 break;
         }
     }
-}
-
-public enum WeaponType
-{
-    Close,
-    Range
 }

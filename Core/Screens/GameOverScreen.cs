@@ -1,7 +1,10 @@
 #region Using Statements
 
+using System;
+using System.Collections.Generic;
 using ECS2022_23.Core.Animations;
-using GameStateManagement;
+using ECS2022_23.Core.Loader;
+using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -13,13 +16,25 @@ internal class GameOverScreen : MenuScreen
 {
     private ContentManager content;
     private float StartPosition;
-    private bool gameIsWon;
     
+    private bool _gameIsWon;
+    private DeathCause _deathCause;
+    private string deathMessage;
+
     #region Initialization
-    public GameOverScreen(bool gameIsWon)
-        : base(gameIsWon ? "You escaped!" : "Game Over" )
+    public GameOverScreen(DeathCause deathCause = DeathCause.None)
+        : base(deathCause == DeathCause.None ? "You escaped!" : "Game Over" )
     {
-        this.gameIsWon = gameIsWon;
+        if (deathCause == DeathCause.None)
+        {
+            _gameIsWon = true;
+        }
+
+        ScreenMusic = _gameIsWon ? SoundLoader.Blueberry : SoundLoader.Ominous;
+        
+        _deathCause = deathCause;
+        deathMessage = GenerateDeathCauseMessage();
+        
         MenuEntry replayGameMenuEntry = new MenuEntry("Restart Game");
         MenuEntry backToMenu = new MenuEntry("Return to Menu");
             
@@ -36,24 +51,26 @@ internal class GameOverScreen : MenuScreen
             content = new ContentManager(ScreenManager.Game.Services, "Content/gameStateManagement");
         Spritesheet = content.Load<Texture2D>("../sprites/spritesheet");
 
-        if (Spritesheet != null)
+        if (Spritesheet == null) return;
+        
+        switch (_gameIsWon)
         {
-            if (gameIsWon)
-            {
+            case true:
                 //Walk Up Animation
                 Animation = new Animation(Spritesheet, 16, 16, 6, new Point(1, 5), true);
                 AnimationPosition = new Vector2(16 * 18, 16 * 21);
-            }
-            else
-            {
+                break;
+            
+            case false:
                 //Death Animation
                 Animation = new Animation(Spritesheet, 16, 16, 1, new Point(4, 6), true);
                 AnimationPosition = new Vector2(16 * 18, 16 * 21);
-            }
-            Animation.FrameSpeed = FrameSpeed;
-            StartPosition = AnimationPosition.Y;
-            SetAnimation(Animation);
+                break;
         }
+
+        Animation.FrameSpeed = FrameSpeed;
+        StartPosition = AnimationPosition.Y;
+        SetAnimation(Animation);
     }
 
     #endregion Initialization
@@ -90,7 +107,7 @@ internal class GameOverScreen : MenuScreen
 
     public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
     {
-        if (gameIsWon)
+        if (_gameIsWon)
         {
             AnimationPosition += new Vector2(0, -0.5f);
             //Check if at door 
@@ -101,5 +118,65 @@ internal class GameOverScreen : MenuScreen
             }
         }
         base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+    }
+
+    public override void Draw(GameTime gameTime)
+    {
+        base.Draw(gameTime);
+
+        if (_gameIsWon) return;
+        
+        GraphicsDevice graphics = ScreenManager.GraphicsDevice;
+        SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
+        SpriteFont font = ScreenManager.Font;
+            
+        spriteBatch.Begin(samplerState: SamplerState.LinearClamp);
+        
+        var deathMessageColor = Color.White * TransitionAlpha;
+        var deathMessageScale = 0.25f;
+        var deathMessagePosition = new Vector2(graphics.Viewport.Width / 2f, graphics.Viewport.Height - 100);
+        Vector2 deathMessageOrigin = font.MeasureString(deathMessage) / 2;
+
+        var youDiedMessage = "You died!";
+        var youDiedScale = 0.75f;
+        var youDiedColor = Color.White * TransitionAlpha;
+        var youDiedPosition = new Vector2(graphics.Viewport.Width / 2f, graphics.Viewport.Height - 150);
+        Vector2 youDiedOrigin = font.MeasureString(youDiedMessage) / 2;
+        
+        spriteBatch.DrawString(font, youDiedMessage, youDiedPosition, youDiedColor, 0,youDiedOrigin, 
+            youDiedScale, SpriteEffects.None, 0);
+        
+        spriteBatch.DrawString(font, deathMessage, deathMessagePosition, deathMessageColor, 0,deathMessageOrigin, 
+            deathMessageScale, SpriteEffects.None, 0);
+
+        spriteBatch.End();
+    }
+
+    private string GenerateDeathCauseMessage()
+    {
+        List<string> deathCauses = new List<string>();
+        var random = new Random((int) DateTime.Now.Ticks);
+        
+        switch (_deathCause)
+        {
+            case DeathCause.ProjectileShot:
+                deathCauses.Add("Maybe avoid that projectile the next time");
+                deathCauses.Add("Why not dodge that?");
+                break;
+            case DeathCause.Water:
+                deathCauses.Add("You never learned to swim?");
+                deathCauses.Add("Try to find the diving goggles");
+                deathCauses.Add("Jumping into water is no way out of here");
+                break;
+            default:
+                deathCauses.Add($"That {_deathCause} did not like you");
+                deathCauses.Add($"{_deathCause} is not your friend");
+                deathCauses.Add($"Next time you will kill that {_deathCause}");
+                break;
+        }
+        var index = random.Next(deathCauses.Count);
+
+        return deathCauses[index];
+
     }
 }

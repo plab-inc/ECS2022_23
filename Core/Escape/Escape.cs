@@ -1,6 +1,5 @@
 using Comora;
 using ECS2022_23.Core.Entities.Characters;
-using ECS2022_23.Core.Entities.Characters.enemy;
 using ECS2022_23.Core.Screens;
 using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.Sound;
@@ -13,23 +12,23 @@ namespace ECS2022_23.Core.Game;
 
 public class Escape
 {
-    private Level _currentLevel;
-    public Player _player;
-    private Camera _camera;
-    
-
-    private int _difficulty;
-    private int _levelsCompleted;
-    private int _levelsToComplete;
+    private Player _player;
     public bool WasSuccessful { get; private set; }
     public bool Failed { get; private set; }
     
-    public Escape(Player player, int startDifficulty, int levelsToComplete)
+    private Stage _currentStage;
+    private Camera _camera;
+    
+    private int _difficulty;
+    private int _stagesCompleted;
+    private int _stagesToComplete;
+    
+    public Escape(Player player, int startDifficulty, int stagesToComplete)
     {
         
         _player = player;
         _difficulty = startDifficulty;
-        _levelsToComplete = levelsToComplete;
+        _stagesToComplete = stagesToComplete;
         
         InitializeLevel();
         
@@ -38,18 +37,18 @@ public class Escape
     { 
         CombatManager.Init();
         ItemManager.Init();
-        _currentLevel = LevelGenerator.GenerateLevel(_difficulty * 2, _difficulty * 4);
-        _currentLevel.Player = _player;
-        _player.Level = _currentLevel;
-        _player.Room = _currentLevel.StartRoom;
+        _currentStage = StageGenerator.GenerateStage(_difficulty * 2, _difficulty * 4);
+        _currentStage.Player = _player;
+        _player.Stage = _currentStage;
+        _player.Room = _currentStage.StartRoom;
         _player.Position = Vector2.Zero;
-        _player.Position = _currentLevel.StartRoom.GetRandomSpawnPos(_player);
+        _player.Position = _currentStage.StartRoom.GetRandomSpawnPos(_player);
         
-        EnemyManager.Level = _currentLevel;
+        EnemyManager.Stage = _currentStage;
         EnemyManager.Player = _player;
         
         EnemyManager.KillEnemies();
-        EnemyManager.SpawnEnemies();
+        EnemyManager.SpawnMultipleEnemies(_difficulty);
     }
     public void AttachCamera(Camera camera)
     {
@@ -58,7 +57,7 @@ public class Escape
     
     public void Draw(SpriteBatch spriteBatch)
     {
-        _currentLevel.Draw(spriteBatch);
+        _currentStage.Draw(spriteBatch);
         _player.Draw(spriteBatch);
         EnemyManager.Draw(spriteBatch);
     }
@@ -67,7 +66,7 @@ public class Escape
         _camera.Position = _player.Position;
         _camera.Update(gameTime);
         _player.Update(gameTime);
-        _currentLevel.Update(gameTime);
+        _currentStage.Update(gameTime);
         EnemyManager.Update(gameTime);
 
         if (!_player.IsAlive())
@@ -75,11 +74,11 @@ public class Escape
             Failed = true;
         }
 
-        if (!_currentLevel.IsCompleted) return;
+        if (!_currentStage.IsCompleted) return;
         
-        _levelsCompleted++;
+        _stagesCompleted++;
             
-        if (_levelsCompleted < _levelsToComplete)
+        if (_stagesCompleted < _stagesToComplete)
         {
             _difficulty++;
             InitializeLevel();

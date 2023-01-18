@@ -1,28 +1,23 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
 using ECS2022_23.Core.Entities.Characters;
-using ECS2022_23.Core.Entities.Characters.enemy;
-using ECS2022_23.Core.Entities.Characters.enemy.EnemyTypes;
+using ECS2022_23.Core.Entities.Characters.Enemy;
+using ECS2022_23.Core.Entities.Characters.Enemy.EnemyTypes;
 using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
 namespace ECS2022_23.Core.Manager;
 
 public static class EnemyManager
 {
-    private static List<Enemy> Enemies = new();
-    private static List<Enemy> _enemyTypes = new();
+    public static List<Enemy> Enemies = new();
+    
     private static Enemy _keyEnemy;
     public static Player Player { set; get;}
-    public static Level Level { set; get; }
-
-    static EnemyManager()
-    {
-
-    }
-
+    public static Stage Stage { set; get; }
+    private  static List<Vector2> closedList = new();
+    
     private static void AddEnemy(Enemy e)
     {
         Enemies.Add(e);
@@ -46,55 +41,72 @@ public static class EnemyManager
     {
         Enemies.Clear();
     }
-
-    public static void SpawnEnemies()
+    
+    public static void SpawnMultipleEnemies(int enemyLimit)
     {
-        bool skipFirst = true;
         Random rand = new Random();
-        foreach (var room in Level.Rooms)
+        
+        
+        foreach (var room in Stage.Rooms.Skip(1))
         {
-            if (skipFirst)
+            if (room.Spawns.Count > 0 && !room.MapName.Contains("boss"))
             {
-                skipFirst = false;
-                continue;
+                int amount = rand.Next(1,Math.Min(room.Spawns.Count, enemyLimit));
+                for (int a = 0; a < amount; a++)
+                {
+                    int rety=0;
+                    do
+                    {
+                        Enemy en = GetRandomEnemy();
+                        Vector2 pos = room.GetRandomSpawnPos(en);
+                        pos.Floor();
+                        if (!closedList.Contains(pos) && !WithinRange(pos))
+                        {
+                            closedList.Add(pos);
+                            en.Position = pos;
+                            AddEnemy(en);
+                            CombatManager.AddEnemy(en);
+                            break;
+                        }
+                        rety++;
+                    } while (rety < 4);
+                }
             }
-
-            if (room.Spawns != null && room.Spawns.Count > 0)
+            if (room.MapName.Contains("boss"))
             {
-                Enemy en = GetRandomEnemy();
-                en.Position = room.GetRandomSpawnPos(en);
-                AddEnemy(en);
-                CombatManager.AddEnemy(en);
+                Enemy boss = new GiantBlob(Stage,Player);
+                boss.Position = room.Spawns[0];
+                AddEnemy(boss);
+                CombatManager.AddEnemy(boss);
             }
         }
         ChooseEnemyForKey();
     }
 
+    private static bool WithinRange(Vector2 vec)
+    {
+        foreach (var closedVec in closedList)
+        {
+            if (vec.X - 1 == closedVec.X || vec.X + 1 == closedVec.X)
+                if (vec.Y - 1 == closedVec.Y || vec.Y + 1 == closedVec.Y)
+                    return true;
+        }
+        return false;
+    }
+    
     private static Enemy GetRandomEnemy()
     {
         Random rand = new Random();
-        switch (rand.Next(0, 4))
+        switch (rand.Next(0,4))
         {
-            case 0: return new Walker(Level);
-            case 1: return new Chaser(Level, Player);
-            case 2: return new Turret(Level, Player);
-            case 3: return new Gunner(Level, Player);
+            case 0: return new Blob(Stage);
+            case 1: return new Chaser(Stage, Player);
+            case 2: return new Turret(Stage, Player);
+            case 3: return new Gunner(Stage, Player);
         }
-
-        return new Walker(Level);
+        return new Blob(Stage);
     }
-
-    public static void CheckEnemyStatus()
-    {
-        foreach (var enemy in Enemies)
-        {
-            if (!enemy.IsAlive())
-            {
-                RemoveEnemy(enemy);
-            }
-        }
-    }
-
+    
     public static void Update(GameTime gameTime)
     {
         foreach (var enemy in Enemies)
@@ -124,5 +136,4 @@ public static class EnemyManager
             _keyEnemy = Enemies[randomInt];
         }
     }
-
 }

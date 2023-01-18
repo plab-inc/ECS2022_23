@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
+using ECS2022_23.Core.Manager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,73 +22,69 @@ internal static class UiLoader
 
         _content = content;
         _graphicsDevice = graphicsDevice;
-        try
-        {
-            UiManager.Init();
-            SpriteSheet = _content.Load<Texture2D>("sprites/spritesheet");
-            _font = _content.Load<SpriteFont>("fonts/rainyhearts");
         
-            UiPanel statsContainer = CreateUiPanel(new Rectangle(0,0, PixelSize, PixelSize), new Rectangle(0,0, Game1.ScreenWidth, 100), UiLabels.StatsContainer);
-            statsContainer.Add(CreateHpIcon());
-            statsContainer.Add(CreateCoinIcon());
-            statsContainer.Add(CreateTextElement(UiLabels.CoinText));
-            statsContainer.Add(CreateXpIcon());
-            statsContainer.Add(CreateTextElement(UiLabels.XpText));
-            statsContainer.Add(CreateIcon(new Rectangle(14*16, 4*16, PixelSize, PixelSize), UiLabels.ArmorIcon));
-            statsContainer.Add(CreateTextElement(UiLabels.ArmorText));
-            UiManager.StatsPanel = statsContainer;
-        }
-        catch (Exception e)
+        SpriteSheet = _content.Load<Texture2D>("sprites/spritesheet");
+        _font = _content.Load<SpriteFont>("fonts/rainyhearts");
+    }
+
+    public static void InitializeUi(float maxHearts)
+    { 
+        UiManager.Init();
+        UiContainer statsContainer = UiManager.StatsContainer;
+            
+        statsContainer.Add(CreateUiElementNew(UiLabel.HpIcon));
+        for (int i = 0; i < maxHearts; i++)
         {
-            Debug.WriteLine("Error while loading assets.\n" + e.Message);
+            statsContainer.Add(CreateUiElementNew(UiLabel.HeartIcon));
         }
+        statsContainer.Add(CreateUiElementNew(UiLabel.EpIcon));
+        statsContainer.Add(CreateTextElement(UiLabel.EpText));
+        statsContainer.Add(CreateUiElementNew(UiLabel.LevelIcon));
+        statsContainer.Add(CreateTextElement(UiLabel.LevelText));
+        statsContainer.Add(CreateUiElementNew(UiLabel.ArmorIcon));
+        statsContainer.Add(CreateTextElement(UiLabel.ArmorText));
     }
 
-    private static UiElement CreateHpIcon()
+    private static UiElement CreateUiElementNew(UiLabel label)
     {
-        return new UiElement(new Rectangle(11*16, 4*16, PixelSize, PixelSize), SpriteSheet, UiLabels.HpIcon);
+        Rectangle sourceRectangle = default;
+
+        switch (label)
+        {
+            case UiLabel.ArmorIcon:
+                sourceRectangle = new Rectangle(14 * PixelSize, 4 * PixelSize, PixelSize, PixelSize);
+                break;
+            case UiLabel.HpIcon:
+                sourceRectangle = new Rectangle(11 * PixelSize, 4 * PixelSize, PixelSize, PixelSize);
+                break;
+            case UiLabel.LevelIcon:
+                sourceRectangle = new Rectangle(15 * PixelSize, 4 * PixelSize, PixelSize, PixelSize);
+                break;
+            case UiLabel.EpIcon:
+                sourceRectangle = new Rectangle(13 * PixelSize, 4 * PixelSize, PixelSize, PixelSize);
+                break;
+            case UiLabel.HeartIcon:
+                sourceRectangle = new Rectangle(16 * PixelSize, 4 * PixelSize, PixelSize, PixelSize);
+                break;
+        }
+
+        return new UiElement(sourceRectangle, SpriteSheet, label);
+        
     }
 
-    private static UiElement CreateCoinIcon()
-    {
-        return new UiElement(new Rectangle(13*16, 4*16, PixelSize, PixelSize), SpriteSheet, UiLabels.CoinIcon);
-    }
-
-    private static UiElement CreateXpIcon()
-    {
-        return new UiElement(new Rectangle(15*16, 4*16, PixelSize, PixelSize), SpriteSheet, UiLabels.XpIcon);
-    }
-    
-    public static UiElement CreateHeart()
-    {
-        return new UiElement(new Rectangle(16*16, 4*16, PixelSize, PixelSize), SpriteSheet, UiLabels.Heart);
-    }
-
-    public static UiText CreateTextElement(UiLabels uiLabel)
+    private static UiText CreateTextElement(UiLabel uiLabel)
     {
         return new UiText(new Rectangle(0,0, PixelSize, PixelSize), _font, "0", uiLabel);
     }
-    
     public static UiText CreateTextElement(String text)
     {
         return new UiText(new Rectangle(0,0, PixelSize, PixelSize), _font, text);
     }
-
-    private static UiElement CreateIcon(Rectangle sourceRect, UiLabels label)
-    {
-        return new UiElement(sourceRect, SpriteSheet, label);
-    }
-
-    private static UiPanel CreateUiPanel(Rectangle sourceRect, Rectangle destRect, UiLabels label)
-    {
-        return new UiPanel(sourceRect, destRect, label);
-    }
-
     public static Texture2D CreateColorTexture(Color color)
     {
         var recTexture = new Texture2D(_graphicsDevice, 1, 1);
         recTexture.SetData(new Color[] { color });
         return recTexture;
     }
-
+    
 }

@@ -12,15 +12,20 @@
 #region Using Statements
 
 using System;
+using System.Collections.Generic;
 using Comora;
 using ECS2022_23.Core.Entities.Characters;
+using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Game;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Manager;
-using ECS2022_23.Core.Sound;
 using ECS2022_23.Core.Ui;
+using ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
+using ECS2022_23.Enums;
+using ECS2022_23.Helper;
 using GameStateManagement;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Action = ECS2022_23.Enums.Action;
@@ -44,6 +49,8 @@ internal class GameplayScreen : GameScreen
     private Player _player;
     private Escape _escape;
     private Camera _camera;
+
+    private GameSave _gameSave;
         
     private float pauseAlpha;
 
@@ -56,6 +63,7 @@ internal class GameplayScreen : GameScreen
     /// </summary>
     public GameplayScreen()
     {
+        ScreenMusic = SoundLoader.Background;
         TransitionOnTime = TimeSpan.FromSeconds(1.5);
         TransitionOffTime = TimeSpan.FromSeconds(0.5);
     }
@@ -65,31 +73,44 @@ internal class GameplayScreen : GameScreen
     /// </summary>
     public override void LoadContent()
     {
-        Console.WriteLine("Loading");
-            
         if (content == null)
             content = new ContentManager(ScreenManager.Game.Services, "Content");
+        
+        ContentLoader.Load(content);
+        AnimationLoader.Load(content);
+        ItemLoader.Load(content);
+        UiLoader.Load(content, ScreenManager.GraphicsDevice);
+        
+        _gameSave = Serialization.Load<GameSave>("GameSave.json");
 
+        if (_gameSave == null)
+        {
+            _player = new Player(content.Load<Texture2D>("sprites/astro"), AnimationLoader.CreatePlayerAnimations())
+            {
+                Weapon = (Weapon) ItemLoader.CreateItem(Vector2.Zero, ItemType.Phaser)
+            };
+            _gameSave = new GameSave(_player.EP, _player.Level);
+            LockerManager.Init(_gameSave.ItemsInLocker);
+        }
+        if (_gameSave != null)
+        {
+            _player = new Player(content.Load<Texture2D>("sprites/astro"), AnimationLoader.CreatePlayerAnimations(), _gameSave.EP, _gameSave.Level)
+            {
+                Weapon = (Weapon) ItemLoader.CreateItem(Vector2.Zero, ItemType.Phaser)
+            };
+            LockerManager.Init(_gameSave.ItemsInLocker);
+        }
+
+        UiLoader.InitializeUi(_player.MaxHP);
+        InventoryManager.Init(_player);
+        
         _camera = new Camera(ScreenManager.GraphicsDevice)
         {
             Zoom = 3f
         };
-            
-        ContentLoader.Load(content);
-        SoundLoader.LoadSounds(content);
-        AnimationLoader.Load(content);
-        ItemLoader.Load(content);
-        SoundManager.Initialize();
-        UiLoader.Load(content, ScreenManager.GraphicsDevice);
-
-        _player = new Player(content.Load<Texture2D>("sprites/astro"), AnimationLoader.CreatePlayerAnimations())
-        {
-            Weapon = ItemLoader.CreatePhaserWeapon(Vector2.Zero)
-        };
-        InventoryManager.Init(_player);
+        
         _escape = new Escape(_player, 3,1);
         _escape.AttachCamera(_camera);
-            
         // once the load has finished, we use ResetElapsedTime to tell the game's
         // timing mechanism that we have just finished a very long frame, and that
         // it should not try to catch up.
@@ -101,7 +122,6 @@ internal class GameplayScreen : GameScreen
     /// </summary>
     public override void UnloadContent()
     {
-        Console.WriteLine("Unloading");
         ContentLoader.Unload(content);
         content.Unload();
     }
@@ -120,6 +140,11 @@ internal class GameplayScreen : GameScreen
     {
         base.Update(gameTime, otherScreenHasFocus, false);
 
+        if (otherScreenHasFocus || coveredByOtherScreen || _escape.WasSuccessful || _escape.Failed)
+        {
+            Serialization.Save(_gameSave);
+        }
+        
         // Gradually fade in or out depending on whether we are covered by the pause screen.
         if (coveredByOtherScreen)
         {
@@ -133,21 +158,21 @@ internal class GameplayScreen : GameScreen
         if (IsActive)
         {
             _escape.Update(gameTime);
+            _gameSave.Update(_player.EP,_player.Level);
 
             if (_escape.WasSuccessful)
             {
                 LoadingScreen.Load(ScreenManager, false, null,
-                    new BackgroundScreen(true, true), new GameOverScreen(true));
+                    new BackgroundScreen(true, true), new GameOverScreen());
             }
             if (_escape.Failed)
             {
                 LoadingScreen.Load(ScreenManager, false, null,
-                    new BackgroundScreen(true, false), new GameOverScreen(false));
+                    new BackgroundScreen(true, false), new GameOverScreen(_player.DeathCause));
             }
                 
             UiManager.Update(_player);
             CombatManager.Update(gameTime, _player);
-            InventoryManager.Update(_player);
         }
     }
 
@@ -189,7 +214,7 @@ internal class GameplayScreen : GameScreen
             }
             if (action == Action.OpensLocker)
             {
-                if (_player.Level.PlayerIsInfrontOfLocker)
+                if (_player.Stage.PlayerIsInfrontOfLocker)
                 {
                     ScreenManager.AddScreen(new LockerMenuScreen(),ControllingPlayer);
                 }

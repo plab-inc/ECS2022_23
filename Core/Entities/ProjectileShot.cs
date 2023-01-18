@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using ECS2022_23.Core.Entities.Characters;
-using ECS2022_23.Core.Entities.Characters.enemy;
+using ECS2022_23.Core.Entities.Characters.Enemy;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.World;
 using ECS2022_23.Enums;
@@ -11,23 +11,21 @@ namespace ECS2022_23.Core.Entities;
 
 public class ProjectileShot : Entity
 {
-    private Weapon Weapon { get; set; }
     private Direction AimDirection { get; set; }
     private Vector2 AimVector { get; set; }
     private Rectangle SourceRectangle { get; }
     public float DamagePoints { get; private set; }
     public bool HitTarget { get; set; }
-    public Level Level { get; set; }
+    public Stage Stage { get; set; }
 
-    public int Origin { get; set; }
+    public DamageOrigin DamageOrigin { get; set; }
 
     public ProjectileShot(Texture2D texture2D, Rectangle sourceRect, Weapon weapon, Direction aimDirection) : base(weapon.Position, texture2D)
     {
         SourceRectangle = sourceRect;
-        Weapon = weapon;
         AimDirection = aimDirection;
         DamagePoints = weapon.DamagePoints;
-        Origin = (int)DamageOrigin.Player;
+        DamageOrigin = (int)DamageOrigin.Player;
     }
 
     public ProjectileShot(Enemy enemy, Texture2D texture2D, Rectangle sourceRect, Vector2 aimDirection) : base(enemy.Position, texture2D)
@@ -35,9 +33,16 @@ public class ProjectileShot : Entity
         SourceRectangle = sourceRect;
         AimVector = aimDirection;
         DamagePoints = enemy.Strength;
-        Origin = (int)DamageOrigin.Enemy;
+        DamageOrigin = DamageOrigin.Enemy;
     }
-
+    
+    public ProjectileShot(Vector2 position, Vector2 direction, Texture2D texture2D, Rectangle sourceRect) : base(position, texture2D)
+    {
+        SourceRectangle = sourceRect;
+        AimVector = direction;
+        DamagePoints = 1;
+        DamageOrigin = DamageOrigin.Enemy;
+    }
 
     public override void Update(GameTime gameTime)
     { 
@@ -87,9 +92,9 @@ public class ProjectileShot : Entity
         return result;
     }
 
-    public bool Collides()
+    public bool IsInAir()
     {
         var bottom = new Point(Rectangle.Center.X, Rectangle.Bottom);
-        return Level.GroundLayer.Any(rectangle => rectangle.Contains(bottom));
+        return Stage.GroundLayer.Any(rectangle => rectangle.Contains(bottom));
     }
 }

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
-using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
 
-namespace ECS2022_23.Core.Entities.Characters.enemy.enemyBehavior;
+namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 
 public class RandomBehavior : Behavior
 {
