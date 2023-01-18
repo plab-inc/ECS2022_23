@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -94,6 +95,7 @@ public class Player : Character
         {
             if (!ImmuneToWater)
             {
+                SoundManager.Play(SoundLoader.PlayerDrownASound);
                 DeathCause = DeathCause.Water;
                 Kill(DeathCause);
             }

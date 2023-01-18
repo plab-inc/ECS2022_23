@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using ECS2022_23.Core.Entities.Characters;
+using ECS2022_23.Core.Loader;
+using ECS2022_23.Core.Sound;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -17,6 +19,7 @@ public class Key : Item
         if (player.Stage.PlayerIsInfrontOfBossDoor)
         {
             player.Stage.OpenBossDoor();
+            SoundManager.Play(SoundLoader.UnlockDoorSound);
             return true;
         }
 
