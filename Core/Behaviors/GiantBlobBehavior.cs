@@ -35,7 +35,6 @@ public class GiantBlobBehavior : Chase
     
     private void SpawnBulletWave()
     {
-        
         CombatManager.Shoot(Owner.Position, new Vector2(0,-1), Owner.Stage);
         CombatManager.Shoot(Owner.Position, new Vector2(1,-1), Owner.Stage);
         CombatManager.Shoot(Owner.Position, new Vector2(1,0), Owner.Stage);

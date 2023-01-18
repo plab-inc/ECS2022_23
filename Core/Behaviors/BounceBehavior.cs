@@ -14,7 +14,7 @@ public class BounceBehavior : Behavior
         if (State == (int) EnemyStates.Initial)
         {
             State = (int) EnemyStates.Move;
-            direction = getRandomDirection();
+            direction = GetRandomDirection();
             if(Owner.Collides(direction))
                 oldDirection = direction;
             return oldDirection;
@@ -30,7 +30,7 @@ public class BounceBehavior : Behavior
         if (count >= 2)
         {
             count = 0;
-            direction = getRandomDirection();
+            direction = GetRandomDirection();
             if(Owner.Collides(direction))
                 oldDirection = direction;
         }
@@ -39,7 +39,7 @@ public class BounceBehavior : Behavior
         
     }
 
-    private Vector2 getRandomDirection()
+    private Vector2 GetRandomDirection()
     {
         Random rand = new Random((int)DateTime.Now.Ticks);
         switch (rand.Next(0, 5))
@@ -52,11 +52,11 @@ public class BounceBehavior : Behavior
                 return new Vector2(-1, 1);
             case 4:
                 return new Vector2(-1, -1);
-           default: return getRandomDirection();
+           default: return GetRandomDirection();
         }
     }
 
-    public Vector2 Bounce(Vector2 oldPos)
+    private Vector2 Bounce(Vector2 oldPos)
     {
         count++;
         if (oldPos == new Vector2(1, -1)) 
@@ -73,6 +73,4 @@ public class BounceBehavior : Behavior
         
         return oldPos;
     }
-
-
 }

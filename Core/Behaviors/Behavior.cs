@@ -6,7 +6,7 @@ namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 public abstract class Behavior
 {
     public Enemy Owner { get; set;}
-    public int State { get; set;}
+    protected int State { get; set;}
 
     protected Behavior()
     {

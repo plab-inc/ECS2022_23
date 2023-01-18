@@ -45,7 +45,6 @@ public abstract class Character : Entity
                 return true;
             }
         }
-
         return false;
     }
 

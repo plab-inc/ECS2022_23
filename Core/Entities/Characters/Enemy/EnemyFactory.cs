@@ -31,50 +31,55 @@ public class EnemyFactory
     public Enemy CreateBlob(Stage stage)
     {
         Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateBlobEnemyAnimations(),
-            new RandomBehavior(), stage);
-        
-        en.Velocity = 1f;
-        en.HP = 10;
-        en.Strength = 1;
-        en.EpReward = 1;
+            new RandomBehavior(), stage)
+        {
+            Velocity = 1f,
+            HP = 10,
+            Strength = 1,
+            EpReward = 1,
+            Color = Color.Cyan,
+            DeathSound = SoundLoader.BlobDeathSound,
+            ItemSpawnRate = 10f,
+            DeathCause = (int)DeathCause.Blob
+        };
 
-        en.Color = Color.Cyan;
-        en.DeathSound = SoundLoader.BlobDeathSound;
-        en.ItemSpawnRate = 10f;
-        en.DeathCause = (int)DeathCause.Blob;
         return en;
     }
 
     public Enemy CreateChaser(Stage stage, Character target)
     {
         Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateZombieEnemyAnimations(),
-            new Chase(target), stage);
+            new Chase(target), stage)
+        {
+            Velocity = 1.5f,
+            HP = 10,
+            Strength = 1,
+            EpReward = 2,
+            SpriteHeight = 14,
+            SpriteWidth = 14,
+            DeathSound = SoundLoader.BlobDeathSound,
+            ItemSpawnRate = 40f,
+            DeathCause = (int)DeathCause.Chaser
+        };
 
-        en.Velocity = 1.5f;
-        en.HP = 10;
-        en.Strength = 1;
-        en.EpReward = 2;
-        en.SpriteHeight = 14;
-        en.SpriteWidth = 14;
-        en.DeathSound = SoundLoader.BlobDeathSound;
-        en.ItemSpawnRate = 40f;
-        en.DeathCause = (int)DeathCause.Chaser;
         return en;
     }
 
     public Enemy CreateBouncer(Stage stage)
     {
         Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(),
-            new BounceBehavior(), stage);
-        
-        en.Velocity = 1.55f;
-        en.HP = 8;
-        en.Strength = 1;
-        en.EpReward = 1;
-        en.SpriteHeight = 16;
-        en.SpriteWidth = 16;
-        en.DeathSound = SoundLoader.BlobDeathSound;
-        en.Color = Color.Green;
+            new BounceBehavior(), stage)
+        {
+            Velocity = 1.55f,
+            HP = 8,
+            Strength = 1,
+            EpReward = 1,
+            SpriteHeight = 16,
+            SpriteWidth = 16,
+            DeathSound = SoundLoader.BlobDeathSound,
+            Color = Color.Green
+        };
+
         en.Behavior.Owner = en;
         en.DeathCause = (int)DeathCause.Bouncer;
         return en;
@@ -83,71 +88,73 @@ public class EnemyFactory
     public Enemy CreateExploder(Stage stage)
     {
         Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet,
-            AnimationLoader.CreateBlobEnemyAnimations(), new ExploderBehavior(), stage);
-        
-        en.Velocity = 0.75f;
-        en.HP = 15;
-        en.Strength = 1;
-        en.EpReward = 2;
+            AnimationLoader.CreateBlobEnemyAnimations(), new ExploderBehavior(), stage)
+        {
+            Velocity = 0.75f,
+            HP = 15,
+            Strength = 1,
+            EpReward = 2,
+            Color = Color.GreenYellow,
+            DeathSound = SoundLoader.BlobDeathSound,
+            ItemSpawnRate = 20f,
+            DeathCause = (int)DeathCause.Exploder
+        };
 
-        en.Color = Color.GreenYellow;
-        en.DeathSound = SoundLoader.BlobDeathSound;
-        en.ItemSpawnRate = 20f;
-        en.DeathCause = (int)DeathCause.Exploder;
-        
         return en;
     }
 
     public Enemy CreateGiantBlob(Stage stage, Character target)
     {
         Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet,
-            AnimationLoader.CreateBlobEnemyAnimations(), new GiantBlobBehavior(target), stage);
-        
-        en.IsBoss = true;
-        
-        en.Velocity = 0.5f;
-        en.HP = 150;
-        en.Strength = 2;
-        en.EpReward = 10;
-        
-        en.SpriteHeight = 32;
-        en.SpriteWidth = 32;
-        en.DeathSound = SoundLoader.BlobDeathSound;
-        en.ItemSpawnRate = 100f;
-        en.DeathCause = (int)DeathCause.GiantBlob;
+            AnimationLoader.CreateBlobEnemyAnimations(), new GiantBlobBehavior(target), stage)
+        {
+            IsBoss = true,
+            Velocity = 0.5f,
+            HP = 150,
+            Strength = 2,
+            EpReward = 10,
+            SpriteHeight = 32,
+            SpriteWidth = 32,
+            DeathSound = SoundLoader.BlobDeathSound,
+            ItemSpawnRate = 100f,
+            DeathCause = (int)DeathCause.GiantBlob
+        };
+
         return en;
     }
 
     public Enemy CreateGunner(Stage stage, Character target)
     {
         Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(),
-            new Dodger(target), stage);
+            new Dodger(target), stage)
+        {
+            Velocity = 1.5f,
+            HP = 15,
+            Strength = 1,
+            EpReward = 2,
+            Color = Color.Cyan,
+            DeathSound = SoundLoader.BlobDeathSound,
+            ItemSpawnRate = 60f,
+            DeathCause = (int)DeathCause.Gunner
+        };
 
-        en.Velocity = 1.5f;
-        en.HP = 15;
-        en.Strength = 1;
-        en.EpReward = 2;
-        en.Color = Color.Cyan;
-        en.DeathSound = SoundLoader.BlobDeathSound;
-        en.ItemSpawnRate = 60f;
-        en.DeathCause = (int)DeathCause.Gunner;
         return en;
     }
 
     public Enemy CreateTurret(Stage stage, Character target)
     {
         Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(),
-            new StationaryShooter(target), stage);
-        
-        en.Velocity = 0f;
-        en.HP = 20;
-        en.Strength = 1;
-        en.EpReward = 1;
-        
-        en.DeathSound = SoundLoader.BlobDeathSound;
-        en.ItemSpawnRate = 30f;
-        en.DeathCause = (int)DeathCause.Turret;
-        
+            new StationaryShooter(target), stage)
+        {
+            Velocity = 0f,
+            HP = 20,
+            Strength = 1,
+            EpReward = 1,
+            DeathSound = SoundLoader.BlobDeathSound,
+            ItemSpawnRate = 30f,
+            DeathCause = (int)DeathCause.Turret
+        };
+
         return en;
     }
 }

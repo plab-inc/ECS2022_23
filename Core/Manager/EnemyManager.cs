@@ -15,9 +15,9 @@ public static class EnemyManager
     private static Enemy _keyEnemy;
     public static Player Player { set; get;}
     public static Stage Stage { set; get; }
-    private static List<Vector2> closedList = new();
+    private static List<Vector2> _closedList = new();
 
-    private static EnemyFactory _factory = new EnemyFactory();
+    private static EnemyFactory _factory = new();
     
     private static void AddEnemy(Enemy enemy)
     {
@@ -33,9 +33,8 @@ public static class EnemyManager
     }
 
     public static bool EnemyDropsKey(Enemy enemy)
-    { 
-        if (_keyEnemy == null) return false;
-        return enemy.Equals(_keyEnemy);
+    {
+        return _keyEnemy != null && enemy.Equals(_keyEnemy);
     }
     
     public static void KillEnemies()
@@ -46,7 +45,6 @@ public static class EnemyManager
     public static void SpawnMultipleEnemies(int enemyLimit)
     {
         Random rand = new Random();
-        
         
         foreach (var room in Stage.Rooms.Skip(1))
         {
@@ -61,9 +59,9 @@ public static class EnemyManager
                         Enemy en = _factory.CreateRandomEnemy(Stage, Player);
                         Vector2 pos = room.GetRandomSpawnPos(en);
                         pos.Floor();
-                        if (!closedList.Contains(pos) && !WithinRange(pos))
+                        if (!_closedList.Contains(pos) && !WithinRange(pos))
                         {
-                            closedList.Add(pos);
+                            _closedList.Add(pos);
                             en.Position = pos;
                             AddEnemy(en);
                             CombatManager.AddEnemy(en);
@@ -86,7 +84,7 @@ public static class EnemyManager
 
     private static bool WithinRange(Vector2 vec)
     {
-        foreach (var closedVec in closedList)
+        foreach (var closedVec in _closedList)
         {
             if (vec.X - 1 == closedVec.X || vec.X + 1 == closedVec.X)
                 if (vec.Y - 1 == closedVec.Y || vec.Y + 1 == closedVec.Y)

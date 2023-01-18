@@ -82,7 +82,6 @@ public static class CombatManager
         {
             enemy.Behavior.OnDeath();
         }
-        
         _activeEnemies.RemoveAll(enemy => !enemy.IsAlive());
     }
     
