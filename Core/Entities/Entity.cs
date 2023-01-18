@@ -25,7 +25,7 @@ public abstract class Entity
 
     public int SpriteWidth = 16;
     public int SpriteHeight = 16;
-    public int DeathCause {get; set;}
+    public DeathCause DeathCause {get; set;}
 
     protected Entity(Vector2 spawn, Texture2D texture)
     {

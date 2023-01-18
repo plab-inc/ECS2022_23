@@ -40,7 +40,7 @@ public class EnemyFactory
             Color = Color.Cyan,
             DeathSound = SoundLoader.BlobDeathSound,
             ItemSpawnRate = 10f,
-            DeathCause = (int)DeathCause.Blob
+            DeathCause = DeathCause.Blob
         };
 
         return en;
@@ -59,7 +59,7 @@ public class EnemyFactory
             SpriteWidth = 14,
             DeathSound = SoundLoader.BlobDeathSound,
             ItemSpawnRate = 40f,
-            DeathCause = (int)DeathCause.Chaser
+            DeathCause = DeathCause.Chaser
         };
 
         return en;
@@ -81,7 +81,7 @@ public class EnemyFactory
         };
 
         en.Behavior.Owner = en;
-        en.DeathCause = (int)DeathCause.Bouncer;
+        en.DeathCause = DeathCause.Bouncer;
         return en;
     }
 
@@ -97,7 +97,7 @@ public class EnemyFactory
             Color = Color.GreenYellow,
             DeathSound = SoundLoader.BlobDeathSound,
             ItemSpawnRate = 20f,
-            DeathCause = (int)DeathCause.Exploder
+            DeathCause = DeathCause.Exploder
         };
 
         return en;
@@ -117,7 +117,7 @@ public class EnemyFactory
             SpriteWidth = 32,
             DeathSound = SoundLoader.BlobDeathSound,
             ItemSpawnRate = 100f,
-            DeathCause = (int)DeathCause.GiantBlob
+            DeathCause = DeathCause.GiantBlob
         };
 
         return en;
@@ -135,7 +135,7 @@ public class EnemyFactory
             Color = Color.Cyan,
             DeathSound = SoundLoader.BlobDeathSound,
             ItemSpawnRate = 60f,
-            DeathCause = (int)DeathCause.Gunner
+            DeathCause = DeathCause.Gunner
         };
 
         return en;
@@ -152,7 +152,7 @@ public class EnemyFactory
             EpReward = 1,
             DeathSound = SoundLoader.BlobDeathSound,
             ItemSpawnRate = 30f,
-            DeathCause = (int)DeathCause.Turret
+            DeathCause = DeathCause.Turret
         };
 
         return en;
