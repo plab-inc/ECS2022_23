@@ -136,6 +136,12 @@
 /processorParam:Quality=Best
 /build:../Assets/Sounds/SFX/sfx_item_pickup.wav;Sounds/Sfx/sfx_item_pickup.wav
 
+#begin ../Assets/Sounds/SFX/sfx_key_drop.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:../Assets/Sounds/SFX/sfx_key_drop.wav;Sounds/Sfx/sfx_key_drop.wav
+
 #begin ../Assets/Sounds/Sfx/sfx_laser_sound.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

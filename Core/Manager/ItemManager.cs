@@ -115,6 +115,7 @@ public static class ItemManager
     private static void DropKey(Vector2 position)
     {
         AddItem(ItemLoader.CreateItem(position, ItemType.Key));
+        SoundManager.Play(SoundLoader.DropKeySound);
         
     }
     private static Item GenerateItem(Vector2 position, ItemType itemType)
