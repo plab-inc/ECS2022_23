@@ -53,7 +53,8 @@ internal class GameplayScreen : GameScreen
     private GameSave _gameSave;
         
     private float pauseAlpha;
-
+    private Timer _timer;
+    
     #endregion Fields
 
     #region Initialization
@@ -66,6 +67,7 @@ internal class GameplayScreen : GameScreen
         ScreenMusic = SoundLoader.Background;
         TransitionOnTime = TimeSpan.FromSeconds(1.5);
         TransitionOffTime = TimeSpan.FromSeconds(0.5);
+        _timer = new Timer(1.5f);
     }
 
     /// <summary>
@@ -76,7 +78,7 @@ internal class GameplayScreen : GameScreen
         if (content == null)
             content = new ContentManager(ScreenManager.Game.Services, "Content");
         
-        ContentLoader.Load(content);
+        WorldLoader.Load(content);
         AnimationLoader.Load(content);
         ItemLoader.Load(content);
         UiLoader.Load(content, ScreenManager.GraphicsDevice);
@@ -122,7 +124,7 @@ internal class GameplayScreen : GameScreen
     /// </summary>
     public override void UnloadContent()
     {
-        ContentLoader.Unload(content);
+        WorldLoader.Unload(content);
         content.Unload();
     }
 
@@ -167,8 +169,10 @@ internal class GameplayScreen : GameScreen
             }
             if (_escape.Failed)
             {
-                LoadingScreen.Load(ScreenManager, false, null,
-                    new BackgroundScreen(true, false), new GameOverScreen(_player.DeathCause));
+                _timer.Update(gameTime);
+                if(_timer.LimitReached())
+                    LoadingScreen.Load(ScreenManager, false, null,
+                        new BackgroundScreen(true, false), new GameOverScreen(_player.DeathCause));
             }
                 
             UiManager.Update(_player);
@@ -197,6 +201,8 @@ internal class GameplayScreen : GameScreen
         }
         else
         {
+            if (!_player.IsAlive()) return;
+            
             Input.Update(input,playerIndex);
             
             Action action = Input.GetPlayerAction();

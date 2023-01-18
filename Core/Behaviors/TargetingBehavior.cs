@@ -13,9 +13,9 @@ public abstract class TargetingBehavior : Behavior
         Target = target;
     }
 
-    protected void Aim(Character target)
+    protected void Aim()
     {
-        Owner.AimVector = Vector2.Normalize(target.Position - Owner.Position);
+        Owner.AimVector = Vector2.Normalize(Target.Position - Owner.Position);
     }
 
 }

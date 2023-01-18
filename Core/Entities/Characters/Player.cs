@@ -83,19 +83,19 @@ public class Player : Character
         ActivationSphere = new BoundingSphere(new Vector3(Position.X, Position.Y, 0), _activationRadius);
     }
     
-    public override void Update(GameTime gameTime)
+    public virtual void Update(GameTime gameTime)
     {
         if (IsAttacking && AnimationManager.AnimationFinished)
         {
             IsAttacking = false;
         }
 
-        if (IsInWater(Rectangle))
+        if (IsInWater(Rectangle) && IsAlive())
         {
             if (!ImmuneToWater)
             {
                 DeathCause = DeathCause.Water;
-                Kill();
+                Kill(DeathCause);
             }
         }
         
@@ -112,6 +112,11 @@ public class Player : Character
         if (Animations == null)
         {
             base.Draw(spriteBatch);
+        }
+        else if(IsInWater(Rectangle))
+        {
+            AnimationManager.Draw(spriteBatch, Position, Color.White, 0.65f);
+            Weapon?.Draw(spriteBatch);
         }
         else
         {
@@ -275,7 +280,7 @@ public class Player : Character
     
     public void TakesDamage(float damagePoints, Entity entity)
     {
-        if (Invincible) return;
+        if (Invincible || !IsAlive()) return;
 
         _shieldBreak = Armor > 0;
 

@@ -11,10 +11,5 @@ public abstract class UiComponent
     public Vector2 Scale { get; set; } = Vector2.One;
     
     protected int PixelSize = 16;
-
-    protected UiComponent()
-    {
-    }
-
     public abstract void Draw(SpriteBatch spriteBatch);
 }

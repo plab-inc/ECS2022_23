@@ -142,7 +142,7 @@ public static class LockerManager
 
     private static bool SwitchBothWeapons(Pocket fromInventory, Pocket toInventory, Item toTransfer)
     {
-        if (!_locker.WeaponLimitReached() || !_playerPocket.WeaponLimitReached()) return false;
+        if (!_locker.WeaponLimitReached || !_playerPocket.WeaponLimitReached) return false;
         
         var toSwitch = toInventory.GetWeapon();
         
