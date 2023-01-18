@@ -120,7 +120,7 @@ public class Player : Character
         }
     }
 
-    public override void Attack()
+    public void Attack()
     {
         if(IsAttacking) return;
         

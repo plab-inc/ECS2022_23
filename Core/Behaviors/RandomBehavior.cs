@@ -10,7 +10,6 @@ public class RandomBehavior : Behavior
    
     public override Vector2 Move(Vector2 position, float velocity)
     {
-        Owner.Attack();
         Random rand = new ((int)DateTime.Now.Ticks);
         _delay++;
         int newDirection=_oldDirection;

@@ -26,7 +26,7 @@ public abstract class Character : Entity
     {
         
     }
-    public virtual void Attack(){}
+    
     public virtual bool Collides(Vector2 velocity)
     {
         var newPosition = (Position + velocity).ToPoint();

@@ -52,12 +52,7 @@ public class Enemy : Character
         Position += Behavior.Move(Position, Velocity);
         Behavior.Attack();
     }
-
-   public virtual void OnDeath()
-   {
-       
-   }
-
+   
    private bool Activate()
    {
        if (HP < MaxHP)
