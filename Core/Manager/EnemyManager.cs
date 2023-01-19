@@ -106,9 +106,9 @@ public static class EnemyManager
     private static void ChooseEnemyForKey()
     {
         var random = new Random();
-        //Zum Testen dropped der erste Enemy den Schlüssel, damit man ihn nicht extra suchen muss, sonst Enemies.Count als Grenze setzen
-        //var randomInt = random.Next(Enemies.Count);
-        var randomInt = random.Next(1);
+        
+        var randomInt = random.Next(Enemies.Count);
+        //var randomInt = random.Next(1);
 
         if (randomInt >= 0 && randomInt < Enemies.Count) _keyEnemy = Enemies[randomInt];
     }
