@@ -112,6 +112,36 @@
 /processorParam:Quality=Best
 /build:../Assets/GameStateManagement/Sounds/Music/music_ominous.wav;GameStateManagement/Sounds/Music/music_ominous.wav
 
+#begin ../Assets/Sounds/SFX/sfx_door_unlock.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:../Assets/Sounds/SFX/sfx_door_unlock.wav;Sounds/Sfx/sfx_door_unlock.wav
+
+#begin ../Assets/Sounds/SFX/sfx_drown_1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:../Assets/Sounds/SFX/sfx_drown_1.wav;Sounds/Sfx/sfx_drown_1.wav
+
+#begin ../Assets/Sounds/SFX/sfx_drown_2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:../Assets/Sounds/SFX/sfx_drown_2.wav;Sounds/Sfx/sfx_drown_2.wav
+
+#begin ../Assets/Sounds/SFX/sfx_item_pickup.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:../Assets/Sounds/SFX/sfx_item_pickup.wav;Sounds/Sfx/sfx_item_pickup.wav
+
+#begin ../Assets/Sounds/SFX/sfx_key_drop.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:../Assets/Sounds/SFX/sfx_key_drop.wav;Sounds/Sfx/sfx_key_drop.wav
+
 #begin ../Assets/Sounds/Sfx/sfx_laser_sound.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -262,6 +292,11 @@
 /importer:TiledImporter
 /processor:TiledProcessor
 /build:../Assets/World/Rooms/room014.tmx;World/Rooms/room014.tmx
+
+#begin ../Assets/World/rooms/room015.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/World/rooms/room015.tmx;World/Rooms/room015.tmx
 
 #begin ../Assets/World/Rooms/start000.tmx
 /importer:TiledImporter

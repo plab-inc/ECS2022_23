@@ -9,5 +9,7 @@ public enum DeathCause
     Chaser,
     Turret,
     Gunner,
+    Exploder,
+    Bouncer,
     ProjectileShot
 }

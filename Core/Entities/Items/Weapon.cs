@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using ECS2022_23.Core.Animations;
+﻿using System.Collections.Generic;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Enums;
@@ -12,25 +10,29 @@ namespace ECS2022_23.Core.Entities.Items;
 
 public class Weapon : Item
 {
+    public readonly SoundEffect AttackSound;
     public readonly float DamagePoints;
     public readonly WeaponType WeaponType = WeaponType.Close;
-    public readonly SoundEffect AttackSound;
     public Direction AimDirection;
 
-    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Rectangle sourceRect, ItemType itemType, float damagePoints) : base(spawn, texture, sourceRect, itemType)
+    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation.Animation> animations,
+        Rectangle sourceRect, ItemType itemType, float damagePoints) : base(spawn, texture, sourceRect, itemType)
     {
         DamagePoints = damagePoints;
         Animations = animations;
     }
-    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Rectangle sourceRect, ItemType itemType, float damagePoints, WeaponType type) : base(spawn, texture, sourceRect, itemType)
+
+    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation.Animation> animations,
+        Rectangle sourceRect, ItemType itemType, float damagePoints, WeaponType type) : base(spawn, texture, sourceRect,
+        itemType)
     {
         DamagePoints = damagePoints;
         Animations = animations;
         WeaponType = type;
         AttackSound = SoundLoader.LaserSound;
     }
-    
-    public override void Update(GameTime gameTime)
+
+    public void Update(GameTime gameTime)
     {
         AnimationManager.Update(gameTime);
     }
@@ -39,6 +41,12 @@ public class Weapon : Item
     {
         AnimationManager.Draw(spriteBatch, Position);
     }
+
+    public void DrawIcon(SpriteBatch spriteBatch)
+    {
+        base.Draw(spriteBatch);
+    }
+
     public void SetAnimationDirection(Direction direction)
     {
         AimDirection = direction;
@@ -70,10 +78,7 @@ public class Weapon : Item
         var direction = player.AimDirection;
         var playerPos = player.Position;
         var width = player.Rectangle.Width;
-        if (!AnimationManager.AnimationFinished)
-        {
-            direction = AimDirection;
-        }
+        if (!AnimationManager.AnimationFinished) direction = AimDirection;
         switch (direction)
         {
             case Direction.Right:

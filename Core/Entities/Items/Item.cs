@@ -5,18 +5,20 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Entities.Items;
+
 [Serializable]
 public abstract class Item : Entity
 {
-    public Rectangle SourceRect { get; }
     public ItemType ItemType;
 
     protected Item(Vector2 spawn, Texture2D texture, Rectangle sourceRect, ItemType itemType) : base(spawn, texture)
     {
         SourceRect = sourceRect;
-        this.ItemType = itemType;
+        ItemType = itemType;
     }
-    
+
+    public Rectangle SourceRect { get; }
+
     public virtual bool Use(Player player)
     {
         return true;

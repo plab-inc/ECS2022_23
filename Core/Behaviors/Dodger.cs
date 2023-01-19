@@ -1,40 +1,50 @@
+using ECS2022_23.Core.Entities.Characters;
+using ECS2022_23.Core.Manager;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 
-namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
+namespace ECS2022_23.Core.Behaviors;
 
-public class Dodger : Behavior
+public class Dodger : Aimer
 {
-    private Character Target;
+    private int _delay;
 
-    public Dodger(Character target)
+    public Dodger(Character target) : base(target)
     {
-        Target = target;
-        State = (int)EnemyStates.Initial;
     }
 
     public override Vector2 Move(Vector2 position, float velocity)
     {
-        Aim(Target);
-        
-        if (State is (int)EnemyStates.Initial or (int)EnemyStates.Attack)
-        {
-            return Vector2.Zero;
-        }
+        Aim();
+
+        if (State is (int) EnemyStates.Initial or (int) EnemyStates.Attack) return Vector2.Zero;
 
         if (State == (int) EnemyStates.Move)
         {
-            Vector2 direction = -Vector2.Normalize(Target.Position - position) * velocity;
+            var direction = -Vector2.Normalize(Target.Position - position) * velocity;
             if (Owner.Collides(direction))
                 return direction;
         }
-        
+
         return Vector2.Zero;
     }
-    
-    public void Aim(Character Target)
+
+    public override void Attack()
     {
-        Owner.AimVector = Vector2.Normalize((Target.Position - Owner.Position));
+        if (!Owner.IsActive)
+            return;
+
+        if (Vector2.Distance(Owner.Position, Target.Position) > 50)
+        {
+            if (++_delay > 50)
+            {
+                _delay = 0;
+                CombatManager.Shoot(Owner);
+            }
+        }
+        else
+        {
+            State = (int) EnemyStates.Move;
+        }
     }
-    
 }
