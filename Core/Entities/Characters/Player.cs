@@ -27,7 +27,8 @@ public class Player : Character
     public List<Item> Items = new();
     public float Level;
 
-    public Player(Texture2D texture, Dictionary<AnimationType, Animation.Animation> animations) : base(Vector2.Zero, texture,
+    public Player(Texture2D texture, Dictionary<AnimationType, Animation.Animation> animations) : base(Vector2.Zero,
+        texture,
         animations)
     {
         DamageSound = SoundLoader.PlayerDamageSound;
@@ -35,16 +36,17 @@ public class Player : Character
         Velocity = 3f;
         HP = 3;
         Armor = 2;
-        
+
         Strength = 1;
-        
+
         EP = 0;
         Level = 1;
         _activationRadius = 100f;
         ActivationSphere = new BoundingSphere(new Vector3(Position.X, Position.Y, 0), _activationRadius);
     }
 
-    public Player(Texture2D texture, Dictionary<AnimationType, Animation.Animation> animations, float ep, float level) : base(
+    public Player(Texture2D texture, Dictionary<AnimationType, Animation.Animation> animations, float ep,
+        float level) : base(
         Vector2.Zero, texture, animations)
     {
         DamageSound = SoundLoader.PlayerDamageSound;

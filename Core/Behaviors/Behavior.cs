@@ -6,18 +6,21 @@ namespace ECS2022_23.Core.Behaviors;
 
 public abstract class Behavior
 {
-    public Enemy Owner { get; set;}
-    protected int State { get; set;}
-
     protected Behavior()
     {
-        State = (int)EnemyStates.Initial;
+        State = (int) EnemyStates.Initial;
     }
 
-    public virtual void Attack(){ }
+    public Enemy Owner { get; set; }
+    protected int State { get; set; }
 
-    public virtual void OnDeath() { }
+    public virtual void Attack()
+    {
+    }
+
+    public virtual void OnDeath()
+    {
+    }
 
     public abstract Vector2 Move(Vector2 position, float velocity);
-
 }

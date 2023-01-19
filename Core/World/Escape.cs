@@ -1,22 +1,21 @@
 using Comora;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Manager;
-using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.Escape;
+namespace ECS2022_23.Core.World;
 
 public class Escape
 {
+    private readonly Player _player;
+    private readonly int _stagesToComplete;
     private Camera _camera;
 
     private Stage _currentStage;
 
     private int _difficulty;
-    private readonly Player _player;
     private int _stagesCompleted;
-    private readonly int _stagesToComplete;
 
     public Escape(Player player, int startDifficulty, int stagesToComplete)
     {

@@ -52,8 +52,8 @@ public class Bouncer : Behavior
                 return new Vector2(-1, 1);
             case 4:
                 return new Vector2(-1, -1);
-           default:
-               return new Vector2(1, 1);
+            default:
+                return new Vector2(1, 1);
         }
     }
 

@@ -6,9 +6,8 @@ namespace ECS2022_23.Core.Manager;
 
 public class AnimationManager
 {
-    private Color _activeColor = Color.White;
-
     private readonly Timer _colorTimer = new(0.3f);
+    private Color _activeColor = Color.White;
     private int _currentFrame;
     private Color _prevColor = new(236, 86, 113, 255);
     private Vector2 _scale = new(1, 1);

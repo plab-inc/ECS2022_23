@@ -10,13 +10,13 @@ namespace ECS2022_23.Core.Ui.Inventory;
 public class InventoryRow
 {
     private Rectangle _destinationRec;
-    private Inventory _inventory;
+    private InventoryTypes.Inventory _inventory;
     private int _scale;
     private int _slotCount;
     private int _slotSize;
     public List<InventorySlot> Slots = new();
 
-    public InventoryRow(Rectangle destRec, int slotCount, int slotSize, Inventory inventory)
+    public InventoryRow(Rectangle destRec, int slotCount, int slotSize, InventoryTypes.Inventory inventory)
     {
         _destinationRec = destRec;
         _slotCount = slotCount;

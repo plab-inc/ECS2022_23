@@ -106,7 +106,7 @@ public static class EnemyManager
     private static void ChooseEnemyForKey()
     {
         var random = new Random();
-        
+
         var randomInt = random.Next(Enemies.Count);
         //var randomInt = random.Next(1);
 

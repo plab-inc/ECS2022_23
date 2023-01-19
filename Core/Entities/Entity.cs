@@ -27,8 +27,9 @@ public abstract class Entity
         texture.GetData(TextureData);
     }
 
-    protected Entity(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation.Animation> animations) : this(spawn,
-        texture)
+    protected Entity(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation.Animation> animations) :
+        this(spawn,
+            texture)
     {
         Animations = animations;
     }
@@ -50,7 +51,7 @@ public abstract class Entity
     {
         spriteBatch.Draw(Texture, Position, Color.White);
     }
-    
+
     public bool IntersectPixels(Entity entity)
     {
         // Find the bounds of the rectangle intersection

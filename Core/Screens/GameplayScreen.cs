@@ -18,6 +18,7 @@ using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.Manager.ScreenManager;
+using ECS2022_23.Core.World;
 using ECS2022_23.Enums;
 using ECS2022_23.Helper;
 using Microsoft.Xna.Framework;
@@ -42,7 +43,7 @@ internal class GameplayScreen : GameScreen
     private SpriteFont gameFont;
 
     private Player _player;
-    private Escape.Escape _escape;
+    private Escape _escape;
     private Camera _camera;
 
     private GameSave _gameSave;
@@ -89,6 +90,7 @@ internal class GameplayScreen : GameScreen
             _gameSave = new GameSave(_player.EP, _player.Level);
             LockerManager.Init(_gameSave.ItemsInLocker);
         }
+
         if (_gameSave != null)
         {
             _player = new Player(content.Load<Texture2D>("sprites/astro"), AnimationLoader.CreatePlayerAnimations(),
@@ -106,8 +108,8 @@ internal class GameplayScreen : GameScreen
         {
             Zoom = 3f
         };
-        
-        _escape = new Escape(_player, 3,3);
+
+        _escape = new Escape(_player, 3, 3);
         _escape.AttachCamera(_camera);
         // once the load has finished, we use ResetElapsedTime to tell the game's
         // timing mechanism that we have just finished a very long frame, and that

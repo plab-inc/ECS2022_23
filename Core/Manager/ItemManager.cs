@@ -4,7 +4,6 @@ using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Characters.Enemy;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Loader;
-using ECS2022_23.Core.Sound;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,7 +24,6 @@ public static class ItemManager
     public static void Draw(SpriteBatch spriteBatch)
     {
         foreach (var item in _activeItems)
-        {
             if (item.GetType() == typeof(Weapon))
             {
                 var weapon = (Weapon) item;
@@ -35,7 +33,6 @@ public static class ItemManager
             {
                 item.Draw(spriteBatch);
             }
-        }
     }
 
     private static void AddItem(Item item)
@@ -74,11 +71,11 @@ public static class ItemManager
         var randomDrop = new Random((int) DateTime.Now.Ticks);
 
         var randomFloat = randomDropChance.Next(0, 100);
-        
+
         if (randomFloat >= dropChance) return;
-        
-        randomFloat = randomDrop.Next(0,100);
-        
+
+        randomFloat = randomDrop.Next(0, 100);
+
         var weaponChance = 35;
         var trinketChance = 15;
 
@@ -101,14 +98,12 @@ public static class ItemManager
         }
 
         AddItem(GetRandomConsumable(position));
-
     }
 
     private static void DropKey(Vector2 position)
     {
         AddItem(ItemLoader.CreateItem(position, ItemType.Key));
         SoundManager.Play(SoundLoader.DropKeySound);
-        
     }
 
     private static Item GenerateItem(Vector2 position, ItemType itemType)

@@ -20,7 +20,8 @@ public class Enemy : Character
     public float ItemSpawnRate;
 
 
-    public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation.Animation> animations, Behavior behavior,
+    public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation.Animation> animations,
+        Behavior behavior,
         Stage stage) : base(spawn, texture, animations)
     {
         Behavior = behavior;

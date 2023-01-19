@@ -17,8 +17,8 @@ internal class GameOverScreen : MenuScreen
     private readonly DeathCause _deathCause;
 
     private readonly bool _gameIsWon;
-    private ContentManager content;
     private readonly string deathMessage;
+    private ContentManager content;
     private float StartPosition;
 
     public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)

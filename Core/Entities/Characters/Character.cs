@@ -17,8 +17,9 @@ public abstract class Character : Entity
 
     public float Velocity;
 
-    protected Character(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation.Animation> animations) : base(spawn,
-        texture, animations)
+    protected Character(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation.Animation> animations) :
+        base(spawn,
+            texture, animations)
     {
     }
 

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Loader;
-using ECS2022_23.Core.Ui.Inventory;
 using ECS2022_23.Core.Ui.Inventory.InventoryTypes;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
