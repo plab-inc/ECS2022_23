@@ -293,6 +293,11 @@
 /processor:TiledProcessor
 /build:../Assets/World/Rooms/room014.tmx;World/Rooms/room014.tmx
 
+#begin ../Assets/World/rooms/room015.tmx
+/importer:TiledImporter
+/processor:TiledProcessor
+/build:../Assets/World/rooms/room015.tmx;World/Rooms/room015.tmx
+
 #begin ../Assets/World/Rooms/start000.tmx
 /importer:TiledImporter
 /processor:TiledProcessor

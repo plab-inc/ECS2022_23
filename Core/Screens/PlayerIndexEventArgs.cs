@@ -19,26 +19,21 @@ using Microsoft.Xna.Framework;
 namespace ECS2022_23.Core.Screens;
 
 /// <summary>
-/// Custom event argument which includes the index of the player who
-/// triggered the event. This is used by the MenuEntry.Selected event.
+///     Custom event argument which includes the index of the player who
+///     triggered the event. This is used by the MenuEntry.Selected event.
 /// </summary>
 internal class PlayerIndexEventArgs : EventArgs
 {
     /// <summary>
-    /// Constructor.
+    ///     Constructor.
     /// </summary>
     public PlayerIndexEventArgs(PlayerIndex playerIndex)
     {
-        this.playerIndex = playerIndex;
+        PlayerIndex = playerIndex;
     }
 
     /// <summary>
-    /// Gets the index of the player who triggered this event.
+    ///     Gets the index of the player who triggered this event.
     /// </summary>
-    public PlayerIndex PlayerIndex
-    {
-        get { return playerIndex; }
-    }
-
-    private PlayerIndex playerIndex;
+    public PlayerIndex PlayerIndex { get; }
 }

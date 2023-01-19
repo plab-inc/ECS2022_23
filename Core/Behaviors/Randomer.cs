@@ -1,33 +1,34 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 
-namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
+namespace ECS2022_23.Core.Behaviors;
 
-public class RandomBehavior : Behavior
+public class Randomer : Behavior
 {
     private int _delay;
     private int _oldDirection;
-   
+
     public override Vector2 Move(Vector2 position, float velocity)
     {
-        Random rand = new ((int)DateTime.Now.Ticks);
+        Random rand = new((int) DateTime.Now.Ticks);
         _delay++;
-        int newDirection=_oldDirection;
-        
+        var newDirection = _oldDirection;
+
         if (_delay >= 15)
         {
             _delay = 0;
             newDirection = rand.Next(0, 4);
         }
+
         _oldDirection = newDirection;
-        Vector2 temp = Vector2.Zero;
-        
-        int retry = 0;
+        var temp = Vector2.Zero;
+
+        var retry = 0;
         do
         {
             switch (newDirection)
             {
-                case 0 :
+                case 0:
                     temp = new Vector2(0, velocity);
                     break;
                 case 1:
@@ -42,12 +43,9 @@ public class RandomBehavior : Behavior
             }
 
             retry++;
-        } while (!Owner.Collides(temp) && retry<4);
+        } while (!Owner.Collides(temp) && retry < 4);
 
-        if (retry>=4)
-        {
-            return Vector2.Zero;
-        }
+        if (retry >= 4) return Vector2.Zero;
         return temp;
     }
 }

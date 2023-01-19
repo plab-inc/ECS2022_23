@@ -7,9 +7,11 @@ namespace ECS2022_23.Core.Entities.Items;
 
 public class Trinket : Item
 {
-    public Trinket(Vector2 spawn, Texture2D texture, Rectangle sourceRect, ItemType itemType) : base(spawn, texture, sourceRect, itemType)
+    public Trinket(Vector2 spawn, Texture2D texture, Rectangle sourceRect, ItemType itemType) : base(spawn, texture,
+        sourceRect, itemType)
     {
     }
+
     public override bool Use(Player player)
     {
         player.Trinket = this;

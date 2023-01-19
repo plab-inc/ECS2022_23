@@ -1,8 +1,6 @@
 using System;
 using ECS2022_23.Core.Behaviors;
-using ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 using ECS2022_23.Core.Loader;
-using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.World;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
@@ -11,12 +9,10 @@ namespace ECS2022_23.Core.Entities.Characters.Enemy;
 
 public class EnemyFactory
 {
-    
-    
     public Enemy CreateRandomEnemy(Stage stage, Character target)
     {
-        Random rand = new Random((int)DateTime.Now.Ticks);
-        switch (rand.Next(0,6))
+        var rand = new Random((int) DateTime.Now.Ticks);
+        switch (rand.Next(0, 6))
         {
             case 0: return CreateBlob(stage);
             case 1: return CreateChaser(stage, target);
@@ -25,13 +21,14 @@ public class EnemyFactory
             case 4: return CreateGunner(stage, target);
             case 5: return CreateTurret(stage, target);
         }
+
         return CreateBlob(stage);
     }
-    
+
     public Enemy CreateBlob(Stage stage)
     {
-        Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateBlobEnemyAnimations(),
-            new RandomBehavior(), stage)
+        var en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateBlobEnemyAnimations(),
+            new Randomer(), stage)
         {
             Velocity = 1f,
             HP = 10,
@@ -48,8 +45,8 @@ public class EnemyFactory
 
     public Enemy CreateChaser(Stage stage, Character target)
     {
-        Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateZombieEnemyAnimations(),
-            new Chase(target), stage)
+        var en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateZombieEnemyAnimations(),
+            new Chaser(target), stage)
         {
             Velocity = 1.5f,
             HP = 10,
@@ -67,8 +64,8 @@ public class EnemyFactory
 
     public Enemy CreateBouncer(Stage stage)
     {
-        Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(),
-            new BounceBehavior(), stage)
+        var en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(),
+            new Bouncer(), stage)
         {
             Velocity = 1.55f,
             HP = 8,
@@ -87,8 +84,8 @@ public class EnemyFactory
 
     public Enemy CreateExploder(Stage stage)
     {
-        Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet,
-            AnimationLoader.CreateBlobEnemyAnimations(), new ExploderBehavior(), stage)
+        var en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet,
+            AnimationLoader.CreateBlobEnemyAnimations(), new Exploder(), stage)
         {
             Velocity = 0.75f,
             HP = 15,
@@ -105,8 +102,8 @@ public class EnemyFactory
 
     public Enemy CreateGiantBlob(Stage stage, Character target)
     {
-        Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet,
-            AnimationLoader.CreateBlobEnemyAnimations(), new GiantBlobBehavior(target), stage)
+        var en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet,
+            AnimationLoader.CreateBlobEnemyAnimations(), new Blobber(target), stage)
         {
             IsBoss = true,
             Velocity = 0.5f,
@@ -125,7 +122,7 @@ public class EnemyFactory
 
     public Enemy CreateGunner(Stage stage, Character target)
     {
-        Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(),
+        var en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(),
             new Dodger(target), stage)
         {
             Velocity = 1.5f,
@@ -143,8 +140,8 @@ public class EnemyFactory
 
     public Enemy CreateTurret(Stage stage, Character target)
     {
-        Enemy en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(),
-            new StationaryShooter(target), stage)
+        var en = new Enemy(Vector2.Zero, UiLoader.SpriteSheet, AnimationLoader.CreateEyeEnemyAnimations(),
+            new Shooter(target), stage)
         {
             Velocity = 0f,
             HP = 20,

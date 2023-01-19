@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Loader;
-using ECS2022_23.Core.Ui;
-using ECS2022_23.Core.Ui.InventoryManagement;
-using ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
+using ECS2022_23.Core.Ui.Inventory.InventoryTypes;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,14 +12,14 @@ namespace ECS2022_23.Core.Manager;
 public static class LockerManager
 {
     private static Pocket _playerPocket;
-    private static Pocket _locker { get; set; }
     private static bool _lockerIsActive;
-    
+
     private static Texture2D _spriteSheet;
-    private static Rectangle _sourceRecOfArrow = new Rectangle(9*16, 3*16, 16, 16);
-    private static Point _scale = new Point(6, 6);
-    
-    private static List<ItemType> _itemsInLocker = new List<ItemType>();
+    private static readonly Rectangle _sourceRecOfArrow = new(9 * 16, 3 * 16, 16, 16);
+    private static readonly Point _scale = new(6, 6);
+
+    private static List<ItemType> _itemsInLocker = new();
+    private static Pocket _locker { get; set; }
 
     public static void Init(List<ItemType> itemsInLocker)
     {
@@ -32,12 +30,9 @@ public static class LockerManager
 
         _itemsInLocker = itemsInLocker;
 
-        foreach (var itemType in itemsInLocker)
-        {
-            _locker.AddItem(ItemLoader.CreateItem(Vector2.Zero, itemType));
-        }
+        foreach (var itemType in itemsInLocker) _locker.AddItem(ItemLoader.CreateItem(Vector2.Zero, itemType));
     }
-    
+
     public static void AddToPocket(Item item)
     {
         _playerPocket.AddItem(item);
@@ -50,9 +45,9 @@ public static class LockerManager
 
     public static void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(_spriteSheet, new Rectangle(Game1.ScreenWidth/2-(16*_scale.X/2), 
-            Game1.ScreenHeight/2-(16*_scale.Y/2), 
-            16*_scale.X, 16*_scale.Y), _sourceRecOfArrow, Color.White);
+        spriteBatch.Draw(_spriteSheet, new Rectangle(Game1.ScreenWidth / 2 - 16 * _scale.X / 2,
+            Game1.ScreenHeight / 2 - 16 * _scale.Y / 2,
+            16 * _scale.X, 16 * _scale.Y), _sourceRecOfArrow, Color.White);
         _locker.Draw(spriteBatch);
         _playerPocket.Draw(spriteBatch);
     }
@@ -62,19 +57,17 @@ public static class LockerManager
         SwitchActiveInventory(actionKey);
         switch (actionKey)
         {
-            case Keys.Right: MoveIndex(1);
+            case Keys.Right:
+                MoveIndex(1);
                 break;
-            case Keys.Left: MoveIndex(-1);
+            case Keys.Left:
+                MoveIndex(-1);
                 break;
             case Keys.Enter:
                 if (_lockerIsActive)
-                {
                     TransferSelectedItem(_locker, _playerPocket);
-                }
                 else
-                {
                     TransferSelectedItem(_playerPocket, _locker);
-                }
                 break;
         }
     }
@@ -83,12 +76,12 @@ public static class LockerManager
     {
         switch (_lockerIsActive)
         {
-          case true:
-              MoveIndex(_locker, i);
-              break;
-          case false:
-              MoveIndex(_playerPocket, i);
-              break;
+            case true:
+                MoveIndex(_locker, i);
+                break;
+            case false:
+                MoveIndex(_playerPocket, i);
+                break;
         }
     }
 
@@ -108,18 +101,14 @@ public static class LockerManager
     private static void TransferSelectedItem(Pocket fromInventory, Pocket toInventory)
     {
         var toTransfer = fromInventory.GetSelectedItem();
-        
+
         if (toTransfer == null) return;
 
-        if (toTransfer.ItemType == ItemType.Key || toTransfer.GetType() == typeof(Key))
-        {
-            return;
-        }
+        if (toTransfer.ItemType == ItemType.Key || toTransfer.GetType() == typeof(Key)) return;
 
         if (toTransfer.GetType() == typeof(Weapon))
-        {
-            if (SwitchBothWeapons(fromInventory, toInventory, toTransfer)) return;
-        }
+            if (SwitchBothWeapons(fromInventory, toInventory, toTransfer))
+                return;
 
         switch (fromInventory.Type)
         {
@@ -129,6 +118,7 @@ public static class LockerManager
                     fromInventory.RemoveItem(toTransfer);
                     _itemsInLocker.Remove(toTransfer.ItemType);
                 }
+
                 break;
             case InventoryType.PocketInventory:
                 if (_locker.AddItem(toTransfer))
@@ -136,6 +126,7 @@ public static class LockerManager
                     InventoryManager.RemoveItem(toTransfer);
                     _itemsInLocker.Add(toTransfer.ItemType);
                 }
+
                 break;
         }
     }
@@ -143,9 +134,9 @@ public static class LockerManager
     private static bool SwitchBothWeapons(Pocket fromInventory, Pocket toInventory, Item toTransfer)
     {
         if (!_locker.WeaponLimitReached || !_playerPocket.WeaponLimitReached) return false;
-        
+
         var toSwitch = toInventory.GetWeapon();
-        
+
         switch (fromInventory.Type)
         {
             case InventoryType.LockerInventory:
@@ -157,6 +148,7 @@ public static class LockerManager
                     _itemsInLocker.Remove(toTransfer.ItemType);
                     _itemsInLocker.Add(toSwitch.ItemType);
                 }
+
                 break;
             case InventoryType.PocketInventory:
                 _locker.RemoveItem(toSwitch);
@@ -167,8 +159,10 @@ public static class LockerManager
                     InventoryManager.AddItem(toSwitch);
                     _itemsInLocker.Add(toTransfer.ItemType);
                 }
+
                 break;
         }
+
         return true;
     }
 
@@ -188,5 +182,4 @@ public static class LockerManager
             }
         }
     }
-    
 }

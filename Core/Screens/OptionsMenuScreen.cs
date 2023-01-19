@@ -12,30 +12,30 @@
 namespace ECS2022_23.Core.Screens;
 
 /// <summary>
-/// The options screen is brought up over the top of the main menu
-/// screen, and gives the user a chance to configure the game
-/// in various hopefully useful ways.
+///     The options screen is brought up over the top of the main menu
+///     screen, and gives the user a chance to configure the game
+///     in various hopefully useful ways.
 /// </summary>
 internal class OptionsMenuScreen : MenuScreen
 {
     #region Fields
 
-    private MenuEntry ungulateMenuEntry;
-    private MenuEntry languageMenuEntry;
-    private MenuEntry frobnicateMenuEntry;
-    private MenuEntry elfMenuEntry;
+    private readonly MenuEntry ungulateMenuEntry;
+    private readonly MenuEntry languageMenuEntry;
+    private readonly MenuEntry frobnicateMenuEntry;
+    private readonly MenuEntry elfMenuEntry;
 
     private enum Ungulate
     {
         BactrianCamel,
         Dromedary,
-        Llama,
+        Llama
     }
 
     private static Ungulate currentUngulate = Ungulate.Dromedary;
 
-    private static string[] languages = { "C#", "French", "Deoxyribonucleic acid" };
-    private static int currentLanguage = 0;
+    private static readonly string[] languages = {"C#", "French", "Deoxyribonucleic acid"};
+    private static int currentLanguage;
 
     private static bool frobnicate = true;
 
@@ -46,7 +46,7 @@ internal class OptionsMenuScreen : MenuScreen
     #region Initialization
 
     /// <summary>
-    /// Constructor.
+    ///     Constructor.
     /// </summary>
     public OptionsMenuScreen()
         : base("Options")
@@ -59,7 +59,7 @@ internal class OptionsMenuScreen : MenuScreen
 
         SetMenuEntryText();
 
-        MenuEntry back = new MenuEntry("Back");
+        var back = new MenuEntry("Back");
 
         // Hook up menu event handlers.
         ungulateMenuEntry.Selected += UngulateMenuEntrySelected;
@@ -77,7 +77,7 @@ internal class OptionsMenuScreen : MenuScreen
     }
 
     /// <summary>
-    /// Fills in the latest values for the options screen menu text.
+    ///     Fills in the latest values for the options screen menu text.
     /// </summary>
     private void SetMenuEntryText()
     {
@@ -92,7 +92,7 @@ internal class OptionsMenuScreen : MenuScreen
     #region Handle Input
 
     /// <summary>
-    /// Event handler for when the Ungulate menu entry is selected.
+    ///     Event handler for when the Ungulate menu entry is selected.
     /// </summary>
     private void UngulateMenuEntrySelected(object sender, PlayerIndexEventArgs e)
     {
@@ -105,7 +105,7 @@ internal class OptionsMenuScreen : MenuScreen
     }
 
     /// <summary>
-    /// Event handler for when the Language menu entry is selected.
+    ///     Event handler for when the Language menu entry is selected.
     /// </summary>
     private void LanguageMenuEntrySelected(object sender, PlayerIndexEventArgs e)
     {
@@ -115,7 +115,7 @@ internal class OptionsMenuScreen : MenuScreen
     }
 
     /// <summary>
-    /// Event handler for when the Frobnicate menu entry is selected.
+    ///     Event handler for when the Frobnicate menu entry is selected.
     /// </summary>
     private void FrobnicateMenuEntrySelected(object sender, PlayerIndexEventArgs e)
     {
@@ -125,7 +125,7 @@ internal class OptionsMenuScreen : MenuScreen
     }
 
     /// <summary>
-    /// Event handler for when the Elf menu entry is selected.
+    ///     Event handler for when the Elf menu entry is selected.
     /// </summary>
     private void ElfMenuEntrySelected(object sender, PlayerIndexEventArgs e)
     {

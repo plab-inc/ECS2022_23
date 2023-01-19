@@ -1,17 +1,15 @@
-using ECS2022_23.Core.Behaviors;
+using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Manager;
 using Microsoft.Xna.Framework;
 
-namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
+namespace ECS2022_23.Core.Behaviors;
 
-public class  StationaryShooter : TargetingBehavior
+public class Shooter : Aimer
 {
-    
     private int _attackDelay;
 
-    public StationaryShooter(Character target) : base(target)
+    public Shooter(Character target) : base(target)
     {
-        
     }
 
     public override Vector2 Move(Vector2 position, float velocity)

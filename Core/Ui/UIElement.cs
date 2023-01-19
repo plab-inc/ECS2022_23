@@ -1,12 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ECS2022_23.Enums;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS2022_23.Core.Ui;
 
 public class UiElement : UiComponent
 {
-    private Texture2D _texture;
- 
+    private readonly Texture2D _texture;
+
     public UiElement(Rectangle sourceRec, Texture2D texture, UiLabel uiLabel)
     {
         SourceRec = sourceRec;
@@ -18,6 +19,4 @@ public class UiElement : UiComponent
     {
         spriteBatch.Draw(_texture, DestinationRec, SourceRec, Color.White);
     }
-    
 }
-

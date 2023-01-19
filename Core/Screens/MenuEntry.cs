@@ -12,7 +12,6 @@
 #region Using Statements
 
 using System;
-using GameStateManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -21,31 +20,43 @@ using Microsoft.Xna.Framework.Graphics;
 namespace ECS2022_23.Core.Screens;
 
 /// <summary>
-/// Helper class represents a single entry in a MenuScreen. By default this
-/// just draws the entry text string, but it can be customized to display menu
-/// entries in different ways. This also provides an event that will be raised
-/// when the menu entry is selected.
+///     Helper class represents a single entry in a MenuScreen. By default this
+///     just draws the entry text string, but it can be customized to display menu
+///     entries in different ways. This also provides an event that will be raised
+///     when the menu entry is selected.
 /// </summary>
 internal class MenuEntry
 {
+    #region Initialization
+
+    /// <summary>
+    ///     Constructs a new menu entry with the specified text.
+    /// </summary>
+    public MenuEntry(string text)
+    {
+        this.text = text;
+    }
+
+    #endregion Initialization
+
     #region Fields
 
     /// <summary>
-    /// The text rendered for this entry.
+    ///     The text rendered for this entry.
     /// </summary>
     private string text;
 
     /// <summary>
-    /// Tracks a fading selection effect on the entry.
+    ///     Tracks a fading selection effect on the entry.
     /// </summary>
     /// <remarks>
-    /// The entries transition out of the selection effect when they are deselected.
+    ///     The entries transition out of the selection effect when they are deselected.
     /// </remarks>
     private float selectionFade;
 
     /// <summary>
-    /// The position at which the entry is drawn. This is set by the MenuScreen
-    /// each frame in Update.
+    ///     The position at which the entry is drawn. This is set by the MenuScreen
+    ///     each frame in Update.
     /// </summary>
     private Vector2 position;
 
@@ -54,21 +65,21 @@ internal class MenuEntry
     #region Properties
 
     /// <summary>
-    /// Gets or sets the text of this menu entry.
+    ///     Gets or sets the text of this menu entry.
     /// </summary>
     public string Text
     {
-        get { return text; }
-        set { text = value; }
+        get => text;
+        set => text = value;
     }
 
     /// <summary>
-    /// Gets or sets the position at which to draw this menu entry.
+    ///     Gets or sets the position at which to draw this menu entry.
     /// </summary>
     public Vector2 Position
     {
-        get { return position; }
-        set { position = value; }
+        get => position;
+        set => position = value;
     }
 
     #endregion Properties
@@ -76,12 +87,12 @@ internal class MenuEntry
     #region Events
 
     /// <summary>
-    /// Event raised when the menu entry is selected.
+    ///     Event raised when the menu entry is selected.
     /// </summary>
     public event EventHandler<PlayerIndexEventArgs> Selected;
 
     /// <summary>
-    /// Method for raising the Selected event.
+    ///     Method for raising the Selected event.
     /// </summary>
     protected internal virtual void OnSelectEntry(PlayerIndex playerIndex)
     {
@@ -91,22 +102,10 @@ internal class MenuEntry
 
     #endregion Events
 
-    #region Initialization
-
-    /// <summary>
-    /// Constructs a new menu entry with the specified text.
-    /// </summary>
-    public MenuEntry(string text)
-    {
-        this.text = text;
-    }
-
-    #endregion Initialization
-
     #region Update and Draw
 
     /// <summary>
-    /// Updates the menu entry.
+    ///     Updates the menu entry.
     /// </summary>
     public virtual void Update(MenuScreen screen, bool isSelected, GameTime gameTime)
     {
@@ -119,7 +118,7 @@ internal class MenuEntry
         // When the menu selection changes, entries gradually fade between
         // their selected and deselected appearance, rather than instantly
         // popping to the new state.
-        float fadeSpeed = (float)gameTime.ElapsedGameTime.TotalSeconds * 4;
+        var fadeSpeed = (float) gameTime.ElapsedGameTime.TotalSeconds * 4;
 
         if (isSelected)
             selectionFade = Math.Min(selectionFade + fadeSpeed, 1);
@@ -128,7 +127,7 @@ internal class MenuEntry
     }
 
     /// <summary>
-    /// Draws the menu entry. This can be overridden to customize the appearance.
+    ///     Draws the menu entry. This can be overridden to customize the appearance.
     /// </summary>
     public virtual void Draw(MenuScreen screen, bool isSelected, GameTime gameTime)
     {
@@ -139,30 +138,30 @@ internal class MenuEntry
 #endif
 
         // Draw the selected entry in yellow, otherwise white.
-        Color color = isSelected ? Color.Yellow : Color.White;
+        var color = isSelected ? Color.Yellow : Color.White;
 
         // Pulsate the size of the selected menu entry.
         //double time = gameTime.TotalGameTime.TotalSeconds;
         //float pulsate = (float)Math.Sin(time * 6) + 0.5f;
-        
+
         //float scale = 0.5f + pulsate * 0.1f * selectionFade;
-        float scale = 0.5f;
+        var scale = 0.5f;
         // Modify the alpha to fade text out during transitions.
         color *= screen.TransitionAlpha;
 
         // Draw text, centered on the middle of each line.
-        ScreenManager screenManager = screen.ScreenManager;
-        SpriteBatch spriteBatch = screenManager.SpriteBatch;
-        SpriteFont font = screenManager.Font;
+        var screenManager = screen.ScreenManager;
+        var spriteBatch = screenManager.SpriteBatch;
+        var font = screenManager.Font;
 
-        Vector2 origin = new Vector2(0, font.LineSpacing / 2f);
+        var origin = new Vector2(0, font.LineSpacing / 2f);
 
         spriteBatch.DrawString(font, text, position, color, 0,
             origin, scale, SpriteEffects.None, 0);
     }
 
     /// <summary>
-    /// Queries how much space this menu entry requires.
+    ///     Queries how much space this menu entry requires.
     /// </summary>
     public virtual int GetHeight(MenuScreen screen)
     {
@@ -170,7 +169,7 @@ internal class MenuEntry
     }
 
     /// <summary>
-    /// Queries how wide the entry is, used for centering on the screen.
+    ///     Queries how wide the entry is, used for centering on the screen.
     /// </summary>
     public virtual int GetWidth(MenuScreen screen)
     {
