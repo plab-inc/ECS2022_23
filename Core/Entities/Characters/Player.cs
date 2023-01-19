@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ECS2022_23.Core.Entities.Items;
@@ -54,7 +55,7 @@ public class Player : Character
         Velocity = 3f;
         HP = 3;
         Armor = 2;
-        Strength = 1;
+        Strength = level;
 
         EP = ep;
         Level = level;
@@ -88,6 +89,8 @@ public class Player : Character
 
     public void Update(GameTime gameTime)
     {
+        
+        Console.WriteLine(Strength);
         if (IsAttacking && AnimationManager.AnimationFinished) IsAttacking = false;
 
         if (IsInWater(Rectangle) && IsAlive())
@@ -287,7 +290,7 @@ public class Player : Character
         if (25 <= EP)
         {
             EP -= 25;
-            Strength += 1 + Level * 0.15f;
+            Strength += 1.15f;
             Level++;
             SoundManager.Play(SoundLoader.LevelUpSound);
         }
