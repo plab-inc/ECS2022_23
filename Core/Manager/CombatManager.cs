@@ -98,7 +98,12 @@ public static class CombatManager
 
     private static bool WeaponCollide(Player attacker, Entity defender)
     {
-        return defender.IntersectPixels(attacker.Weapon);
+        if (attacker.Weapon != null)
+        {
+            return defender.IntersectPixels(attacker.Weapon);
+        }
+
+        return false;
     }
 
     public static void AddEnemy(Enemy enemy)
