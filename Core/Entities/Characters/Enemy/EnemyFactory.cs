@@ -1,8 +1,6 @@
 using System;
 using ECS2022_23.Core.Behaviors;
-using ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 using ECS2022_23.Core.Loader;
-using ECS2022_23.Core.Ui;
 using ECS2022_23.Core.World;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;

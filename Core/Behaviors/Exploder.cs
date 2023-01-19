@@ -1,4 +1,3 @@
-using ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 using ECS2022_23.Core.Manager;
 using Microsoft.Xna.Framework;
 

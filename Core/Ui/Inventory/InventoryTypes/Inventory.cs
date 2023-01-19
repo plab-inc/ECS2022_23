@@ -5,7 +5,7 @@ using ECS2022_23.Core.Loader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.Ui.InventoryManagement;
+namespace ECS2022_23.Core.Ui.Inventory;
 
 [Serializable]
 public abstract class Inventory

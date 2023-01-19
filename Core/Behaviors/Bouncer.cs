@@ -2,7 +2,7 @@ using System;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 
-namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
+namespace ECS2022_23.Core.Behaviors;
 
 public class Bouncer : Behavior
 {

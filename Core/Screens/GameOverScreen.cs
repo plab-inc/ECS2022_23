@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
@@ -130,13 +129,13 @@ internal class GameOverScreen : MenuScreen
         {
             case true:
                 //Walk Up Animation
-                Animation = new Animation(Spritesheet, 16, 16, 6, new Point(1, 5), true);
+                Animation = new Animation.Animation(Spritesheet, 16, 16, 6, new Point(1, 5), true);
                 AnimationPosition = new Vector2(16 * 18, 16 * 21);
                 break;
 
             case false:
                 //Death Animation
-                Animation = new Animation(Spritesheet, 16, 16, 1, new Point(4, 6), true);
+                Animation = new Animation.Animation(Spritesheet, 16, 16, 1, new Point(4, 6), true);
                 AnimationPosition = new Vector2(16 * 18, 16 * 21);
                 break;
         }

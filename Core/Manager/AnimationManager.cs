@@ -1,5 +1,4 @@
-﻿using ECS2022_23.Core.Animations;
-using ECS2022_23.Helper;
+﻿using ECS2022_23.Helper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -15,10 +14,10 @@ public class AnimationManager
     private Vector2 _scale = new(1, 1);
     private bool _switchingColors;
     private float _timer;
-    private Animation CurrentAnimation { get; set; }
+    private Animation.Animation CurrentAnimation { get; set; }
     public bool AnimationFinished { get; private set; } = true;
 
-    public void Play(Animation animation)
+    public void Play(Animation.Animation animation)
     {
         if (AnimationFinished == false) return;
         if (CurrentAnimation == animation) return;

@@ -2,7 +2,7 @@
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 
-namespace ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
+namespace ECS2022_23.Core.Ui.Inventory.InventoryTypes;
 
 public class ItemSlot : Inventory
 {

@@ -1,8 +1,8 @@
-using ECS2022_23.Core.Behaviors;
+using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Manager;
 using Microsoft.Xna.Framework;
 
-namespace ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
+namespace ECS2022_23.Core.Behaviors;
 
 public class Shooter : Aimer
 {

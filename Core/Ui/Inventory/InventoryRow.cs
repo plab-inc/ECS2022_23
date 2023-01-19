@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using ECS2022_23.Core.Entities.Items;
-using ECS2022_23.Core.Ui.Inventory;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.Ui.InventoryManagement;
+namespace ECS2022_23.Core.Ui.Inventory;
 
 [Serializable]
 public class InventoryRow

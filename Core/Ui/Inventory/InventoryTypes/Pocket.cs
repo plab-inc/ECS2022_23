@@ -5,7 +5,7 @@ using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
+namespace ECS2022_23.Core.Ui.Inventory.InventoryTypes;
 
 [Serializable]
 public class Pocket : Inventory

@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework.Audio;
 
-namespace ECS2022_23.Core.Sound;
+namespace ECS2022_23.Core.Manager;
 
 public static class SoundManager
 {

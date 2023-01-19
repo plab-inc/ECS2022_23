@@ -1,8 +1,8 @@
 ﻿using System;
 using ECS2022_23.Core.Loader;
+using ECS2022_23.Core.Manager;
+using ECS2022_23.Core.Manager.ScreenManager;
 using ECS2022_23.Core.Screens;
-using ECS2022_23.Core.Sound;
-using GameStateManagement;
 using Microsoft.Xna.Framework;
 
 namespace ECS2022_23;

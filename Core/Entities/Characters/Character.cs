@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using ECS2022_23.Core.Animations;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -18,7 +17,7 @@ public abstract class Character : Entity
 
     public float Velocity;
 
-    protected Character(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations) : base(spawn,
+    protected Character(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation.Animation> animations) : base(spawn,
         texture, animations)
     {
     }

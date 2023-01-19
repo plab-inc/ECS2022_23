@@ -12,14 +12,13 @@
 #region Using Statements
 
 using System;
-using ECS2022_23.Core.Sound;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input.Touch;
 
 #endregion Using Statements
 
-namespace GameStateManagement;
+namespace ECS2022_23.Core.Manager.ScreenManager;
 
 /// <summary>
 ///     Enum describes the screen transition state.

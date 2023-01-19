@@ -1,6 +1,5 @@
 using System.Numerics;
 using ECS2022_23.Core.Entities.Characters;
-using ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
 using ECS2022_23.Core.Manager;
 
 namespace ECS2022_23.Core.Behaviors;

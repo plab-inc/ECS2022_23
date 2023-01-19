@@ -19,7 +19,7 @@ using Microsoft.Xna.Framework.Input.Touch;
 
 #endregion Using Statements
 
-namespace GameStateManagement;
+namespace ECS2022_23.Core.Manager.ScreenManager;
 
 /// <summary>
 ///     The screen manager is a component which manages one or more GameScreen

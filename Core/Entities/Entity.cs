@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.World;
 using ECS2022_23.Enums;
@@ -13,7 +12,7 @@ public abstract class Entity
 {
     protected AnimationManager AnimationManager = new();
 
-    protected Dictionary<AnimationType, Animation> Animations;
+    protected Dictionary<AnimationType, Animation.Animation> Animations;
     public int SpriteHeight = 16;
 
     public int SpriteWidth = 16;
@@ -28,7 +27,7 @@ public abstract class Entity
         texture.GetData(TextureData);
     }
 
-    protected Entity(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations) : this(spawn,
+    protected Entity(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation.Animation> animations) : this(spawn,
         texture)
     {
         Animations = animations;

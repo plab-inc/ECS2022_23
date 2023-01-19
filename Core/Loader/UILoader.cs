@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.Ui;
+using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;

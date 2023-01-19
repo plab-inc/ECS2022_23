@@ -16,7 +16,7 @@ using Microsoft.Xna.Framework.Input;
 
 #endregion Using Statements
 
-namespace GameStateManagement;
+namespace ECS2022_23.Core.Manager.ScreenManager;
 
 /// <summary>
 ///     Helper for reading input from keyboard, gamepad, and touch input. This class

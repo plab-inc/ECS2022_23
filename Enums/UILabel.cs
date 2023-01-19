@@ -1,4 +1,4 @@
-﻿namespace ECS2022_23.Core.Ui;
+﻿namespace ECS2022_23.Enums;
 
 public enum UiLabel
 {

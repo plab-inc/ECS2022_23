@@ -1,6 +1,6 @@
 ﻿using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Items;
-using ECS2022_23.Core.Ui.InventoryManagement.InventoryTypes;
+using ECS2022_23.Core.Ui.Inventory.InventoryTypes;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework.Graphics;
 

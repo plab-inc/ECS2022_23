@@ -10,9 +10,8 @@
 #endregion File Description
 
 using System;
-using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Manager;
-using GameStateManagement;
+using ECS2022_23.Core.Manager.ScreenManager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -31,7 +30,7 @@ internal class BackgroundScreen : GameScreen
     private ContentManager content;
     private Texture2D backgroundTexture;
     private AnimationManager _animationManager;
-    private Animation _idleAnimation;
+    private Animation.Animation _idleAnimation;
 
     private readonly bool _gameOver;
     private readonly bool _playerWins;

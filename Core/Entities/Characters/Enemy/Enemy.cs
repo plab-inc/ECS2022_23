@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using ECS2022_23.Core.Animations;
-using ECS2022_23.Core.Entities.Characters.Enemy.Behaviors;
+using ECS2022_23.Core.Behaviors;
 using ECS2022_23.Core.Manager;
 using ECS2022_23.Core.World;
 using ECS2022_23.Enums;
@@ -21,7 +20,7 @@ public class Enemy : Character
     public float ItemSpawnRate;
 
 
-    public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations, Behavior behavior,
+    public Enemy(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation.Animation> animations, Behavior behavior,
         Stage stage) : base(spawn, texture, animations)
     {
         Behavior = behavior;

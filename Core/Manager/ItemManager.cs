@@ -4,7 +4,6 @@ using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Characters.Enemy;
 using ECS2022_23.Core.Entities.Items;
 using ECS2022_23.Core.Loader;
-using ECS2022_23.Core.Sound;
 using ECS2022_23.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Enums;
@@ -16,14 +15,14 @@ public class Weapon : Item
     public readonly WeaponType WeaponType = WeaponType.Close;
     public Direction AimDirection;
 
-    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations,
+    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation.Animation> animations,
         Rectangle sourceRect, ItemType itemType, float damagePoints) : base(spawn, texture, sourceRect, itemType)
     {
         DamagePoints = damagePoints;
         Animations = animations;
     }
 
-    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation> animations,
+    public Weapon(Vector2 spawn, Texture2D texture, Dictionary<AnimationType, Animation.Animation> animations,
         Rectangle sourceRect, ItemType itemType, float damagePoints, WeaponType type) : base(spawn, texture, sourceRect,
         itemType)
     {

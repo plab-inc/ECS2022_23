@@ -5,7 +5,7 @@ using ECS2022_23.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ECS2022_23.Core.Game;
+namespace ECS2022_23.Core.Escape;
 
 public class Escape
 {

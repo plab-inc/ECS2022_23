@@ -12,7 +12,7 @@
 #region Using Statements
 
 using System;
-using GameStateManagement;
+using ECS2022_23.Core.Manager.ScreenManager;
 using Microsoft.Xna.Framework;
 
 #endregion Using Statements

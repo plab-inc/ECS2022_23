@@ -15,13 +15,11 @@ using System;
 using Comora;
 using ECS2022_23.Core.Entities.Characters;
 using ECS2022_23.Core.Entities.Items;
-using ECS2022_23.Core.Game;
 using ECS2022_23.Core.Loader;
 using ECS2022_23.Core.Manager;
-using ECS2022_23.Core.Ui;
+using ECS2022_23.Core.Manager.ScreenManager;
 using ECS2022_23.Enums;
 using ECS2022_23.Helper;
-using GameStateManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -44,7 +42,7 @@ internal class GameplayScreen : GameScreen
     private SpriteFont gameFont;
 
     private Player _player;
-    private Escape _escape;
+    private Escape.Escape _escape;
     private Camera _camera;
 
     private GameSave _gameSave;
@@ -110,7 +108,7 @@ internal class GameplayScreen : GameScreen
             Zoom = 3f
         };
 
-        _escape = new Escape(_player, 3, 1);
+        _escape = new Escape.Escape(_player, 3, 1);
         _escape.AttachCamera(_camera);
         // once the load has finished, we use ResetElapsedTime to tell the game's
         // timing mechanism that we have just finished a very long frame, and that

@@ -13,9 +13,8 @@
 
 using System;
 using System.Collections.Generic;
-using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Manager;
-using GameStateManagement;
+using ECS2022_23.Core.Manager.ScreenManager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -64,7 +63,7 @@ internal abstract class MenuScreen : GameScreen
     private AnimationManager _animationManager = new();
     protected const float FrameSpeed = 0.4f;
     protected Vector2 AnimationPosition;
-    protected Animation Animation;
+    protected Animation.Animation Animation;
     protected Texture2D Spritesheet;
 
     #endregion Fields
@@ -220,7 +219,7 @@ internal abstract class MenuScreen : GameScreen
         spriteBatch.End();
     }
 
-    protected void SetAnimation(Animation animation)
+    protected void SetAnimation(Animation.Animation animation)
     {
         _animationManager ??= new AnimationManager();
         _animationManager.Play(animation);

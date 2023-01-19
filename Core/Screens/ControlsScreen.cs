@@ -1,5 +1,5 @@
 using System;
-using GameStateManagement;
+using ECS2022_23.Core.Manager.ScreenManager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;

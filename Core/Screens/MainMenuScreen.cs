@@ -11,7 +11,6 @@
 
 #region Using Statements
 
-using ECS2022_23.Core.Animations;
 using ECS2022_23.Core.Loader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -66,7 +65,7 @@ internal class MainMenuScreen : MenuScreen
 
         if (Spritesheet != null)
         {
-            Animation = new Animation(Spritesheet, 16, 16, 7, new Point(1, 2), true);
+            Animation = new Animation.Animation(Spritesheet, 16, 16, 7, new Point(1, 2), true);
             AnimationPosition = new Vector2(16 * 18, 16 * 21);
             Animation.FrameSpeed = FrameSpeed;
             SetAnimation(Animation);
