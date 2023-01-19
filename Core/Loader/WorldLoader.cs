@@ -53,8 +53,7 @@ public static class WorldLoader
                 Tilesets.Add(fileName, _content.Load<TiledTileset>("world/tilesets/tilesets/" + fileName));
             if (fileName.Contains("_image_"))
                 TilesetTextures.Add(fileName, _content.Load<Texture2D>("world/tilesets/images/" + fileName));
-
-            //TODO: Make sure tileset picture is there
+            
         }
     }
 

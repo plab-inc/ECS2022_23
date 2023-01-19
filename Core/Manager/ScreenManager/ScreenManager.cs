@@ -131,8 +131,7 @@ public class ScreenManager : DrawableGameComponent
 
         foreach (var screen in screens)
             screensToUpdate.Add(screen);
-
-        //TODO Revert change
+        
         //bool otherScreenHasFocus = !Game.IsActive;
         var otherScreenHasFocus = false;
         var coveredByOtherScreen = false;
