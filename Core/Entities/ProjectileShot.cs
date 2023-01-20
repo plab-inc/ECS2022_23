@@ -15,7 +15,7 @@ public class ProjectileShot : Entity
         SourceRectangle = sourceRect;
         AimDirection = aimDirection;
         DamagePoints = weapon.DamagePoints;
-        DamageOrigin = (int) DamageOrigin.Player;
+        DamageOrigin = DamageOrigin.Player;
         DeathCause = DeathCause.ProjectileShot;
     }
 
