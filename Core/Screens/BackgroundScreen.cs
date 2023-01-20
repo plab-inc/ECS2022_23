@@ -65,7 +65,7 @@ internal class BackgroundScreen : GameScreen
     public override void LoadContent()
     {
         if (content == null)
-            content = new ContentManager(ScreenManager.Game.Services, "Content/gameStateManagement");
+            content = new ContentManager(ScreenManager.Game.Services, "Content/GameStateManagement");
 
         if (!_gameOver) backgroundTexture = content.Load<Texture2D>("background_default");
 

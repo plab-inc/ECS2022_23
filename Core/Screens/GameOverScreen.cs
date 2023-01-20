@@ -120,8 +120,8 @@ internal class GameOverScreen : MenuScreen
     public override void LoadContent()
     {
         if (content == null)
-            content = new ContentManager(ScreenManager.Game.Services, "Content/gameStateManagement");
-        Spritesheet = content.Load<Texture2D>("../sprites/spritesheet");
+            content = new ContentManager(ScreenManager.Game.Services, "Content/GameStateManagement");
+        Spritesheet = content.Load<Texture2D>("../Sprites/spritesheet");
 
         if (Spritesheet == null) return;
 
