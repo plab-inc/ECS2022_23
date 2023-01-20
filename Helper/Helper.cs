@@ -21,7 +21,7 @@ public static class DeepCopy
 
 public static class Serialization
 {
-    private static readonly string _executingPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+    private static readonly string _executingPath = Path.GetDirectoryName(System.AppContext.BaseDirectory);
 
     public static void Save<T>(T obj)
     {

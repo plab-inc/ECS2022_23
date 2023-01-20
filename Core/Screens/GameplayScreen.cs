@@ -40,8 +40,7 @@ internal class GameplayScreen : GameScreen
     #region Fields
 
     private ContentManager content;
-    private SpriteFont gameFont;
-
+    
     private Player _player;
     private Escape _escape;
     private Camera _camera;
