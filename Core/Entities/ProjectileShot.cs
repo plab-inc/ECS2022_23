@@ -16,6 +16,7 @@ public class ProjectileShot : Entity
         AimDirection = aimDirection;
         DamagePoints = weapon.DamagePoints;
         DamageOrigin = (int) DamageOrigin.Player;
+        DeathCause = DeathCause.ProjectileShot;
     }
 
     public ProjectileShot(Enemy enemy, Texture2D texture2D, Rectangle sourceRect, Vector2 aimDirection) : base(
@@ -35,6 +36,7 @@ public class ProjectileShot : Entity
         AimVector = direction;
         DamagePoints = 1;
         DamageOrigin = DamageOrigin.Enemy;
+        DeathCause = DeathCause.ProjectileShot;
     }
 
     private Direction AimDirection { get; }
