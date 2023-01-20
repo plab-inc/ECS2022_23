@@ -82,7 +82,7 @@ internal class GameplayScreen : GameScreen
 
         if (_gameSave == null)
         {
-            _player = new Player(content.Load<Texture2D>("sprites/astro"), AnimationLoader.CreatePlayerAnimations())
+            _player = new Player(content.Load<Texture2D>("Sprites/astro"), AnimationLoader.CreatePlayerAnimations())
             {
                 Weapon = (Weapon) ItemLoader.CreateItem(Vector2.Zero, ItemType.Sword)
             };
@@ -92,7 +92,7 @@ internal class GameplayScreen : GameScreen
 
         if (_gameSave != null)
         {
-            _player = new Player(content.Load<Texture2D>("sprites/astro"), AnimationLoader.CreatePlayerAnimations(),
+            _player = new Player(content.Load<Texture2D>("Sprites/astro"), AnimationLoader.CreatePlayerAnimations(),
                 _gameSave.EP, _gameSave.Level)
             {
                 Weapon = (Weapon) ItemLoader.CreateItem(Vector2.Zero, ItemType.Sword)

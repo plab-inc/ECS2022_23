@@ -20,7 +20,7 @@ public static class ItemLoader
         if (!Directory.Exists("Content")) throw new DirectoryNotFoundException();
         _content = content;
 
-        _spritesheetPink = _content.Load<Texture2D>("sprites/spritesheet");
+        _spritesheetPink = _content.Load<Texture2D>("Sprites/spritesheet");
     }
 
     public static ProjectileShot CreateLaserShot(Weapon weapon, Direction aimDirection)

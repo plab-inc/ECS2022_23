@@ -28,7 +28,7 @@ internal class ControlsScreen : GameScreen
     public override void LoadContent()
     {
         base.LoadContent();
-        var content = new ContentManager(ScreenManager.Game.Services, "Content/gameStateManagement");
+        var content = new ContentManager(ScreenManager.Game.Services, "Content/GameStateManagement");
         _controls = content.Load<Texture2D>("controls");
     }
 

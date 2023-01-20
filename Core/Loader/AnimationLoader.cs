@@ -17,8 +17,8 @@ public static class AnimationLoader
     {
         if (!Directory.Exists("Content")) throw new DirectoryNotFoundException();
         _content = content;
-        _spritesheetPink = _content.Load<Texture2D>("sprites/spritesheet");
-        _spritesheetRed = _content.Load<Texture2D>("sprites/spritesheet_red");
+        _spritesheetPink = _content.Load<Texture2D>("Sprites/spritesheet");
+        _spritesheetRed = _content.Load<Texture2D>("Sprites/spritesheet_red");
     }
 
     public static Dictionary<AnimationType, Animation.Animation> CreatePlayerAnimations()

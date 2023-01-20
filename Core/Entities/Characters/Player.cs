@@ -20,7 +20,7 @@ public class Player : Character
     public BoundingSphere ActivationSphere;
     public float Armor;
 
-    public DeathCause DeathCause;
+    public new DeathCause DeathCause;
 
     public float EP;
 

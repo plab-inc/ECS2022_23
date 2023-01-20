@@ -25,8 +25,8 @@ internal static class UiLoader
         _content = content;
         _graphicsDevice = graphicsDevice;
 
-        SpriteSheet = _content.Load<Texture2D>("sprites/spritesheet");
-        _font = _content.Load<SpriteFont>("fonts/rainyhearts");
+        SpriteSheet = _content.Load<Texture2D>("Sprites/spritesheet");
+        _font = _content.Load<SpriteFont>("Fonts/rainyhearts");
     }
 
     public static void InitializeUi(float maxHearts)
