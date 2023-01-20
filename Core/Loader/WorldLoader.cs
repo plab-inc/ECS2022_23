@@ -18,7 +18,7 @@ public static class WorldLoader
 
     public static void Load(ContentManager content)
     {
-        executingPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        executingPath = Path.GetDirectoryName(System.AppContext.BaseDirectory);
         if (executingPath != null) Directory.SetCurrentDirectory(executingPath);
 
         if (!Directory.Exists(content.RootDirectory)) throw new DirectoryNotFoundException();

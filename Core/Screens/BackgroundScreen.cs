@@ -29,9 +29,7 @@ internal class BackgroundScreen : GameScreen
 
     private ContentManager content;
     private Texture2D backgroundTexture;
-    private AnimationManager _animationManager;
-    private Animation.Animation _idleAnimation;
-
+    
     private readonly bool _gameOver;
     private readonly bool _playerWins;
 

@@ -89,8 +89,6 @@ public class Player : Character
 
     public void Update(GameTime gameTime)
     {
-        
-        Console.WriteLine(Strength);
         if (IsAttacking && AnimationManager.AnimationFinished) IsAttacking = false;
 
         if (IsInWater(Rectangle) && IsAlive())
