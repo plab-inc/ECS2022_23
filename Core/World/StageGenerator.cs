@@ -12,7 +12,7 @@ namespace ECS2022_23.Core.World;
 
 internal static class StageGenerator
 {
-    private static readonly int PossibleStarts = Directory.GetFiles("Content/world/rooms", "start*.xnb").Length;
+    private static readonly int PossibleStarts = Directory.GetFiles("Content/World/Rooms", "start*.xnb").Length;
     private static readonly Random Random = new((int) DateTime.Now.Ticks);
 
     public static Stage GenerateStage(int minimumRooms, int maximumRooms)

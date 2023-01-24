@@ -97,8 +97,8 @@ public class ScreenManager : DrawableGameComponent
         var content = Game.Content;
 
         SpriteBatch = new SpriteBatch(GraphicsDevice);
-        Font = content.Load<SpriteFont>("gameStateManagement/menufont");
-        blankTexture = content.Load<Texture2D>("gameStateManagement/blank");
+        Font = content.Load<SpriteFont>("GameStateManagement/menufont");
+        blankTexture = content.Load<Texture2D>("GameStateManagement/blank");
 
         // Tell each of the screens to load their content.
         foreach (var screen in screens) screen.LoadContent();

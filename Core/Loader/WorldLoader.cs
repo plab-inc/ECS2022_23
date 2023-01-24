@@ -43,44 +43,44 @@ public static class WorldLoader
 
     private static void LoadTilesets()
     {
-        var tilesets = Directory.GetFiles("Content/world/tilesets", "tileset???_*", SearchOption.AllDirectories);
+        var tilesets = Directory.GetFiles("Content/World/Tilesets", "tileset???_*", SearchOption.AllDirectories);
 
         foreach (var tileset in tilesets)
         {
             var fileName = Path.GetFileNameWithoutExtension(tileset);
 
             if (fileName.Contains("_tileset_"))
-                Tilesets.Add(fileName, _content.Load<TiledTileset>("world/tilesets/tilesets/" + fileName));
+                Tilesets.Add(fileName, _content.Load<TiledTileset>("World/Tilesets/Tilesets/" + fileName));
             if (fileName.Contains("_image_"))
-                TilesetTextures.Add(fileName, _content.Load<Texture2D>("world/tilesets/images/" + fileName));
+                TilesetTextures.Add(fileName, _content.Load<Texture2D>("World/Tilesets/Images/" + fileName));
         }
     }
 
     private static void LoadRooms()
     {
-        var rooms = Directory.GetFiles("Content/world/rooms", "room*.xnb");
-        var starts = Directory.GetFiles("Content/world/rooms", "start*.xnb");
-        var bosses = Directory.GetFiles("Content/world/rooms", "boss*.xnb");
+        var rooms = Directory.GetFiles("Content/World/Rooms", "room*.xnb");
+        var starts = Directory.GetFiles("Content/World/Rooms", "start*.xnb");
+        var bosses = Directory.GetFiles("Content/World/Rooms", "boss*.xnb");
 
         foreach (var room in rooms)
         {
             var fileName = Path.GetFileNameWithoutExtension(room);
             Tilemaps.Add(fileName,
-                _content.Load<TiledMap>("world/rooms/" + Path.GetFileNameWithoutExtension(fileName)));
+                _content.Load<TiledMap>("World/Rooms/" + Path.GetFileNameWithoutExtension(fileName)));
         }
 
         foreach (var start in starts)
         {
             var fileName = Path.GetFileNameWithoutExtension(start);
             Tilemaps.Add(fileName,
-                _content.Load<TiledMap>("world/rooms/" + Path.GetFileNameWithoutExtension(fileName)));
+                _content.Load<TiledMap>("World/Rooms/" + Path.GetFileNameWithoutExtension(fileName)));
         }
 
         foreach (var boss in bosses)
         {
             var fileName = Path.GetFileNameWithoutExtension(boss);
             Tilemaps.Add(fileName,
-                _content.Load<TiledMap>("world/rooms/" + Path.GetFileNameWithoutExtension(fileName)));
+                _content.Load<TiledMap>("World/Rooms/" + Path.GetFileNameWithoutExtension(fileName)));
         }
     }
 }

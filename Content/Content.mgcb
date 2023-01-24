@@ -293,10 +293,10 @@
 /processor:TiledProcessor
 /build:../Assets/World/Rooms/room014.tmx;World/Rooms/room014.tmx
 
-#begin ../Assets/World/rooms/room015.tmx
+#begin ../Assets/World/Rooms/room015.tmx
 /importer:TiledImporter
 /processor:TiledProcessor
-/build:../Assets/World/rooms/room015.tmx;World/Rooms/room015.tmx
+/build:../Assets/World/Rooms/room015.tmx;World/Rooms/room015.tmx
 
 #begin ../Assets/World/Rooms/start000.tmx
 /importer:TiledImporter
@@ -313,7 +313,7 @@
 /processor:TiledProcessor
 /build:../Assets/World/Rooms/start002.tmx;World/Rooms/start002.tmx
 
-#begin ../Assets/World/Tilesets/images/tileset001_image_purple.png
+#begin ../Assets/World/Tilesets/Images/tileset001_image_purple.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -323,10 +323,10 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:../Assets/World/Tilesets/images/tileset001_image_purple.png;World/Tilesets/Images/tileset001_image_purple.png
+/build:../Assets/World/Tilesets/Images/tileset001_image_purple.png;World/Tilesets/Images/tileset001_image_purple.png
 
-#begin ../Assets/World/Tilesets/tilesets/tileset001_tileset_purple.tsx
+#begin ../Assets/World/Tilesets/Tilesets/tileset001_tileset_purple.tsx
 /importer:TiledImporter
 /processor:TiledProcessor
-/build:../Assets/World/Tilesets/tilesets/tileset001_tileset_purple.tsx;World/Tilesets/Tilesets/tileset001_tileset_purple.tsx
+/build:../Assets/World/Tilesets/Tilesets/tileset001_tileset_purple.tsx;World/Tilesets/Tilesets/tileset001_tileset_purple.tsx
 
