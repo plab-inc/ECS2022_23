@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <AssemblyName>TiledPipelineExtension</AssemblyName>
+        <RootNamespace>TiledPipelineExtension</RootNamespace>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="MonoGame.Framework.Content.Pipeline" Version="3.8.1.303">
+            <PrivateAssets>All</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303">
+            <PrivateAssets>All</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Include="..\..\.nuget\packages\monogame.framework.content.pipeline\3.8.1.303\contentFiles\any\net6.0\TiledExtension\TiledContentContainer.cs">
+        <Link>TiledExtension\TiledContentContainer.cs</Link>
+      </Compile>
+      <Compile Include="..\..\.nuget\packages\monogame.framework.content.pipeline\3.8.1.303\contentFiles\any\net6.0\TiledExtension\TiledContentWriter.cs">
+        <Link>TiledExtension\TiledContentWriter.cs</Link>
+      </Compile>
+      <Compile Include="..\..\.nuget\packages\monogame.framework.content.pipeline\3.8.1.303\contentFiles\any\net6.0\TiledExtension\TiledImporter.cs">
+        <Link>TiledExtension\TiledImporter.cs</Link>
+      </Compile>
+      <Compile Include="..\..\.nuget\packages\monogame.framework.content.pipeline\3.8.1.303\contentFiles\any\net6.0\TiledExtension\TiledProcessor.cs">
+        <Link>TiledExtension\TiledProcessor.cs</Link>
+      </Compile>
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Update="..\..\.nuget\packages\monogame.framework.content.pipeline\3.8.1.303\contentFiles\any\net6.0\TiledExtension" />
+    </ItemGroup>
+</Project>
